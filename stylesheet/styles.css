@@ -1,12 +1,13 @@
 :root {
     --black: #000;
+    --light_grey: #f5f5f5;
     --white: #fff;
     --blue: #0070ff;    
     --red: #ff0800;
     --green: #138808;
     --yellow: #ffbf00;
 
-    --font-size-big: 4em;
+    --font-size-big: 3em;
     --font-size-medium: 2em;
     --font-size-standart: 1em;
     --font-size-small: 0.8em;
@@ -171,6 +172,6 @@ p {
     overflow-x: hidden;
     transition: transform 550ms ease-in-out;
 }
-#menu a:hover::after {
+#menu a.active:hover::after {
     transform: scaleX(1);
 }
