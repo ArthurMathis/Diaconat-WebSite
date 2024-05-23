@@ -7,10 +7,10 @@
     --green: #138808;
     --yellow: #ffbf00;
 
-    --font-size-big: 3em;
-    --font-size-medium: 2em;
+    --font-size-big: 2.56em;
+    --font-size-medium: 1.6em;
     --font-size-standart: 1em;
-    --font-size-small: 0.8em;
+    --font-size-small: 0.625em;
 
     --margin: 20px;
     --padding: 40px;
@@ -36,8 +36,43 @@ body {
     margin-top: var(--nav-barre-size);
 }
 
+h1 {
+    text-transform: uppercase;
+    font-size: var(--font-size-big);
+    letter-spacing: 0.1em;
+}
+
+h2 {
+    text-transform: capitalize;
+    font-size: var(--font-size-medium);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+}
+
 p {
     font-size: var(--font-size-standart);
+    font-weight: 300;
+}
+
+button {
+    padding: calc(var(--margin) / 2) calc(var(--margin) * 2 /3);
+
+    color: var(--blue);
+    border: none;
+    border-radius: var(--margin);
+    background-color: transparent;
+
+    will-change: color, background-color;
+    transition: 150ms ease color, 150ms ease background-color;
+}
+button:hover {
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
 }
 
 .barre-de-navigation {
@@ -119,6 +154,15 @@ p {
 #menu-icon:hover span::after{
     transform: translateY(9px);
 }
+#menu-icon.is-opened span{
+    background: transparent;
+}
+#menu-icon.is-opened span::before{
+    transform: translateY(0) rotate(45deg);
+}
+#menu-icon.is-opened span::after{
+    transform: translateY(0) rotate(-45deg);
+}
 
 #menu {
     position: fixed;
@@ -131,6 +175,7 @@ p {
 
     width: 100%;
     height: calc(100dvh - var(--nav-barre-size));
+    z-index: 1;
 
     padding: calc(2 * var(--padding));
 
@@ -148,6 +193,8 @@ p {
     font-size: var(--font-size-big);
     text-decoration: none;
     color: var(--black);
+    letter-spacing: 0.1em;
+    font-weight: 300;
 
     opacity: 0;
     will-change: opacity;

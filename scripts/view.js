@@ -17,21 +17,32 @@ let isOpen = false;
 menuIcon.addEventListener('click', function() {
     // menu.classList.toggle('active');
     if(isOpen) {
+        isOpen = false;
+        menuIcon.classList.remove('is-opened');
+        
         menuItem.forEach(item => {
             item.classList.remove('active');
         });
         setTimeout(() => {
             menu.classList.remove('active');
-        }, 450);
+        }, 400);
     
-        isOpen = false;
     } else {
+        isOpen =  true;
+        menuIcon.classList.add('is-opened');
+
         menu.classList.add('active');
         for(let i = 0; i < menuItem.length; i++) {
             setTimeout(() => {
                 menuItem[i].classList.add('active');
-            }, (i + 1) * 150);
+            }, (i + 1) * 50);
         }
-        isOpen =  true;
     }
 });
+
+const onglets = document.querySelectorAll('aside article');
+for(let i = 0; i < onglets.length; i++) {
+    setTimeout(() => {
+        onglets[i].classList.add('visible');
+    }, (i + 1) * 50);
+}

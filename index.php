@@ -3,74 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diaconat - Gestionnaire de candidatures</title>
+    <title>Diaconat - Connexion</title>
 
-    <link rel="stylesheet" href="stylesheet/styles.css">
-    <link rel="stylesheet" href="stylesheet/index.css">
+    <link rel="stylesheet" href="stylesheet\styles.css">
+    <link rel="stylesheet" href="stylesheet\connexion.css">
+    <link rel="stylesheet" href="stylesheet\AnimateLignes.css">
 </head>
 <body>
-    <nav class="barre-de-navigation">
-        <div id="menu-icon">
-            <span></span>
-        </div>
-        <img src="assets/ico_diaconat_mulhouse.webp" alt="Logo de l'application">
-        <div>
-            <p id="calendrier"></p>
-            <p id="horloge"></p>
-            <p>Mathis Arthur</p>
-        </div>
-    </nav>
-    <section id="menu">
-        <a href="#">Candidatures</a>
-        <a href="#">Employés</a>
-        <a href="#">Besoins</a>
-        <a href="#">Statistiques</a>
-        <a href="#">Préférences</a>
-    </section>
-    <content>
-        <section></section>
-        <aside>
-            <article>
-                <div class="entete">
-                    <h2>Candidatures en attente</h2>
-                    <h2>6</h2>
-                </div>
-                <span class="ligne">
-                <div class="container">
-                    <div class="item">
-                        <p>Mathis</p>
-                        <p>Jean-françois</p>
-                        <p>Accuponcteur-homéopathe</p>
-                    </div>
-                    <div class="item">
-                        <p>Deroussin</p>
-                        <p>Esteban</p>
-                        <p>Directeur artisique, UX/UI design</p>
-                    </div>
-                    <div class="item">
-                        <p>Bouadballah</p>
-                        <p>Narimane</p>
-                        <p>Ingénieur en intelligence artificielle</p>
-                    </div>
-                    <div class="item">
-                        <p>Mathis</p>
-                        <p>Stéphanie</p>
-                        <p>Médecin coordinateur et gériatre</p>
-                    </div>
-                </div>
-                <div class="boutons">
-                    <a href="">+</a>
-                    <a href="">Consulter</a>
-                </div>
-                
-            </article>
-            <article></article>
-            <article></article>
-            <article></article>
-        </aside>
-    </content>
+    <?php include("components/connect_server.php") ?>
 
-    <script src="scripts\data.js"></script>
-    <script src="scripts\view.js"></script>
+    <img src="assets\img\ico_diaconat_mulhouse.webp">
+
+    <?php 
+        // à compléter
+    ?>
+
+    <form method="post">
+        <h1>Se connecter</h1>
+        <div class="separator"></div>
+        <section>
+            <label for="identifiant">Identifiant :</label>
+            <input type="text" id="identifiant" name="identifiant">
+        </section>
+        <section>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password">
+        </section>
+        <section class="buttons_actions">
+            <a class="LignesHover" href="view/inscription.php">Nouvel utilisateur</a>
+        <button type="submit" class="submit_button" value="new_user">Valider</button>
+        </section>
+    </form>
 </body>
 </html>

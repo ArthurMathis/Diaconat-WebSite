@@ -1,5 +1,6 @@
 body {
     height: 100dvh;
+    overflow: hidden;
 }
 
 content {
@@ -9,7 +10,6 @@ content {
 }
 content section {
     width: 65%;
-    background-color: blue;
 }
 aside {
     display: flex;
@@ -21,29 +21,37 @@ aside {
     padding: var(--margin);
 }
 aside article {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     width: 100%;
+    height: 21.5%;
+    z-index: 0;
 
     padding: calc(1.5 * var(--margin));
 
     background-color: var(--light_grey);
     border-radius: var(--margin);
+
+    opacity: 1;
 }
 aside article .entete {
-    position: relative;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     padding-bottom: calc(var(--margin) / 2);
-    margin-bottom: calc(var(--margin) / 2);
+    margin-bottom: calc(var(--margin) / 2.5);
     border-bottom: 1px solid var(--black);
 }
 
 aside article .container {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--margin) / 3);
+    gap: calc(var(--margin) / 2);
 }
 aside article .container .item{
     display: flex;
@@ -51,4 +59,32 @@ aside article .container .item{
 aside article .container .item p:first-of-type,
 aside article .container .item p:nth-of-type(2) {
     width: 20%;
+}
+
+aside article .boutons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: var(--margin);
+
+    width: 100%;
+}
+aside article .boutons a{
+    min-width: calc(var(--margin) * 2);
+    padding: calc(var(--margin) / 2);
+
+    text-align: center;
+    text-decoration: none;
+    color: var(--white);
+
+    border-radius: var(--margin);
+    background-color: var(--blue);
+
+
+    will-change: color background-color;
+    transition: color ease 250ms, background-color ease 250ms;
 }
