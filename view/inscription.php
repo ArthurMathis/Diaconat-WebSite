@@ -84,7 +84,7 @@
         session_start();
         $_SESSION['user'] = [$new_user];
         // On redirige la page
-        header("Location: accueil.php");
+        header("Location: ../index.php");
         exit;
     ?>
 

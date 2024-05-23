@@ -25,6 +25,7 @@ class Utilisateurs {
     public function getIdentifiant(){ return $this->identifiant; }
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
+    public function getRole(){ return $this->role; }
 
     private function setIdentifiant($identifiant){
         // On vérifie que le nom est non-vide
@@ -67,5 +68,20 @@ class Utilisateurs {
         // On implémente
             throw new InvalideUtilisateurExceptions("Le mot de passe d'un utilisateur doit être une chaine de caractères");
         $this->role = $role;
+    }
+
+    static function searchRole($bdd, $role) {
+        // On initialise la requête
+        $sql = "SELECT * FROM roles WHERE Id = :Id";
+        $query = $bdd->prepare($sql);
+        
+        // On lance la requête
+        $query->execute(["Id" => $role]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        // On teste les résultats
+        if(empty($result))
+            throw new Exception("Role introuvable");
+        else return $result;
     }
 }
