@@ -10,83 +10,79 @@
     <link rel="stylesheet" href="../stylesheet\AnimateLignes.css">
 </head>
 <body>
-    <?php require_once("../components/connect_server.php") ?>
-
     <img src="../assets\img\ico_diaconat_mulhouse.webp">
 
     <?php 
-        require_once("../objects/Utilisateurs.php");
+    require_once("../components/connect_server.php");
+    require_once("../objects/Utilisateurs.php");
 
-        // On récupère l'accès à la base de données
-        global $bdd;
+    // On récupère l'accès à la base de données
+    global $bdd;
 
-        // On réagit à la validation du formulaire
-        if($_SERVER["REQUEST_METHOD"] == "POST") try {
-            // On récupère les données saisies
-            $identifiant = $_POST["identifiant"];
-            $motdepasse = $_POST["motdepasse"];
+    // On réagit à la validation du formulaire
+    if($_SERVER["REQUEST_METHOD"] == "POST") try {
+        // On récupère les données saisies
+        $identifiant = $_POST["identifiant"];
+        $motdepasse = $_POST["motdepasse"];
 
-            // On vérifie leur intégrité
-            if(empty($identifiant)) {
-                throw new Exception("Le champs identifiant doit être rempli !");
-            } elseif(empty($motdepasse)) {
-                throw new Exception("Le champs mot de passe doit être rempli !");
-            } 
+        // On vérifie leur intégrité
+        if(empty($identifiant)) {
+            throw new Exception("Le champs identifiant doit être rempli !");
+        } elseif(empty($motdepasse)) {
+            throw new Exception("Le champs mot de passe doit être rempli !");
+        } 
 
-            // On récupère les rôles
-            $sql = "SELECT * FROM utilisateurs WHERE Nom = :Identifiant";
-            $query = $bdd->prepare($sql);
-            $query->execute([
-                "Identifiant" => $identifiant
-            ]);
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        // On récupère les rôles
+        $sql = "SELECT * FROM utilisateurs WHERE Nom = :Identifiant";
+        $query = $bdd->prepare($sql);
+        $query->execute([
+            "Identifiant" => $identifiant
+        ]);
+        $users = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            // On vérifie qu'il y a des utilisateurs
-            if(empty($result)) 
-            // On émet une erreur si la base de données est vide
-                throw new Exception("Aucun utilisateur enregistré");
+        // On vérifie qu'il y a des utilisateurs
+        if(empty($users)) 
+        // On émet une erreur si la base de données est vide
+            throw new Exception("Aucun utilisateur enregistré");
 
-            // Sinon, on cherche le profil de l'utilisateur    
-            else {
-                // On déclare les variables tampons
-                $i = 0;
-                $size = count($result);
-                $find = false;
-                // On fait défiler la table
-                while($i < $size && !$find) {
-                    // if($result[$i]["Nom"] == $identifiant && $result[$i]["MotDePasse"] == $motdepasse) {
-                    if($result[$i]["Nom"] == $identifiant && password_verify($motdepasse, $result[$i]["MotDePasse"])) {
-                        // On implémente find
-                        $find = true;
+        // Sinon, on cherche le profil de l'utilisateur    
+        else {
+            // On déclare les variables tampons
+            $i = 0;
+            $size = count($users);
+            $find = false;
 
-                        // On récupère le rôle de l'utilisateur
-                        $role = Utilisateurs::searchRole($bdd, $result[$i]["Id_Roles"]);
-                    
-                        // On construit l'utilisateur php
-                        $user = new Utilisateurs($result[$i]["Nom"], $result[$i]["Email"], $motdepasse, $role["Intitule"]);
+            // On fait défiler la table
+            while($i < $size && !$find) {
+                if($users[$i]["Nom"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse"])) {
+                    // On implémente find
+                    $find = true;
+                    // On récupère le rôle de l'utilisateur
+                    $role = Utilisateurs::searchRole($bdd, $users[$i]["Id_Roles"]);
+                    // On construit l'utilisateur php
+                    $user = new Utilisateurs($users[$i]["Nom"], $users[$i]["Email"], $motdepasse, $role["Intitule"]);
 
-                        // On prépare la redirection del'utilisateur
-                        session_start();
-                        $_SESSION['user'] = $user->exportToArray();
-                        // On redirige la page
-                        header("Location: ../index.php");
-                        exit;
-                    }
-                    echo "<script>console.log(\"".$result[$i]["Nom"]."\");</script>";
-                    echo "<script>console.log(\"".$result[$i]["MotDePasse"]."\");</script>";
-                    echo "<script>console.log(\"".password_hash($motdepasse, PASSWORD_DEFAULT)."\");</script>";
+                    // On enregistre la connexion de l'utilisateur
+                    include ('../components/connect_user.php');
 
-                    $i++;
+                    // On prépare la redirection de l'utilisateur
+                    session_start();
+                    $_SESSION['user'] = $user->exportToArray();
+                    // On redirige la page
+                    header("Location: ../index.php");
+                    exit;
                 }
-                if($i == $size) {
-                    throw new Exception("Aucun utilisateur correspondant");
-                }
+                $i++;
             }
-        } catch(PDOException $e){
-            echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
-        } catch(Exception $e){
-            echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
+            if($i == $size) 
+                throw new Exception("Aucun utilisateur correspondant");
+            
         }
+    } catch(PDOException $e){
+        echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
+    } catch(Exception $e){
+        echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
+    }
     ?>
 
     <form method="post">

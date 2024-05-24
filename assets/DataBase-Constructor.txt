@@ -34,6 +34,9 @@ CREATE TABLE Types (
     Intitule VARCHAR(32) NOT NULL UNIQUE
 );
 
+INSERT INTO types (Intitule) VALUES ('Connexion'), 
+('Deconnexion');
+
 CREATE TABLE Instants (
 	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
     Jour DATE NOT NULL,
@@ -52,6 +55,8 @@ CREATE TABLE Actions (
     FOREIGN KEY (Id_Types) REFERENCES Types(Id),
     FOREIGN KEY (Id_Instants) REFERENCES Instants(Id)
 );
+
+// Utile ??
 
 CREATE TABLE Se_connecter (
     Id_Utilisateurs INTEGER NOT NULL,
