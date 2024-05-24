@@ -99,13 +99,23 @@ class Utilisateurs {
             $data['role']
         );
     }
-    // Méthode retournant l'item sous forme d'un tableau associatif
+    /// Méthode retournant l'item sous forme d'un tableau associatif
     public function exportToArray() {
         return [
             'identifiant' => $this->getIdentifiant(),
             'email' => $this->getEmail(),
             'motdepasse' => $this->getMotdepasse(),
             'role' => $this->getRole(),
+        ];
+    }
+
+    /// Méthode publique exportant l'item sous-forme de tableau associatif avec le mot de passe haché
+    public function exportToSQL(){
+        return [
+            'nom' => $this->getIdentifiant(),
+            'email' => $this->getEmail(),
+            'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
+            'id_Roles' => $this->getRole(),
         ];
     }
 }

@@ -34,11 +34,10 @@
             } 
 
             // On récupère les rôles
-            $sql = "SELECT * FROM utilisateurs WHERE Nom = :Identifiant AND MotDePasse = :Motdepasse";
+            $sql = "SELECT * FROM utilisateurs WHERE Nom = :Identifiant";
             $query = $bdd->prepare($sql);
             $query->execute([
-                "Identifiant" => $identifiant,
-                "Motdepasse" => $motdepasse
+                "Identifiant" => $identifiant
             ]);
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -55,10 +54,10 @@
                 $find = false;
                 // On fait défiler la table
                 while($i < $size && !$find) {
-                    if($result[$i]["Nom"] == $identifiant && $result[$i]["MotDePasse"] == $motdepasse) {
+                    // if($result[$i]["Nom"] == $identifiant && $result[$i]["MotDePasse"] == $motdepasse) {
+                    if($result[$i]["Nom"] == $identifiant && password_verify($motdepasse, $result[$i]["MotDePasse"])) {
                         // On implémente find
                         $find = true;
-                        echo "<script>console.log(\"".$result[$i]["Nom"]."/".$result[$i]["MotDePasse"]."\");</script>";
 
                         // On récupère le rôle de l'utilisateur
                         $role = Utilisateurs::searchRole($bdd, $result[$i]["Id_Roles"]);
@@ -73,6 +72,10 @@
                         header("Location: ../index.php");
                         exit;
                     }
+                    echo "<script>console.log(\"".$result[$i]["Nom"]."\");</script>";
+                    echo "<script>console.log(\"".$result[$i]["MotDePasse"]."\");</script>";
+                    echo "<script>console.log(\"".password_hash($motdepasse, PASSWORD_DEFAULT)."\");</script>";
+
                     $i++;
                 }
                 if($i == $size) {

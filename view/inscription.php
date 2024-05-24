@@ -60,12 +60,22 @@
             // On génère une requête MySQL
             $query =  $bdd->prepare("INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)");
             // On envoie la requête au serveur
+            $query->execute($new_user->exportToSQL());
+            /*
             $query->execute([
                 "nom" => $new_user->getIdentifiant(),
                 "email" => $new_user->getEmail(),
                 "motdepasse" =>  $new_user->getMotdepasse(), 
                 "id_Roles" => $role_id
             ]);
+            */
+
+            // On prépare la redirection del'utilisateur
+            session_start();
+            $_SESSION['user'] = $new_user->exportToArray();
+            // On redirige la page
+            header("Location: ../index.php");
+            exit;
         } catch(Exception $e) {
             echo "<script>
                     console.log(\" . " . $e->getMessage() . " . \")
@@ -79,13 +89,6 @@
                     console.log(\" . " . $e->getMessage() . " . \")
                 </script>";
         }
-
-        // On prépare la redirection del'utilisateur
-        session_start();
-        $_SESSION['user'] = $user->exportToArray();
-        // On redirige la page
-        header("Location: ../index.php");
-        exit;
     ?>
 
     <form method="post">
