@@ -7,8 +7,10 @@ class InvalideUtilisateurExceptions extends Exception {
 }
 
 class Utilisateurs {
+    /// Attributs privés de la classe
     private $identifiant, $email, $motdepasse, $role;
     
+    /// Constructeur de la classe
     public function __construct($identifiant, $email, $motdepasse, $role){
         try{
             $this->setIdentifiant($identifiant);
@@ -22,11 +24,14 @@ class Utilisateurs {
         }
     }
 
+    /// Getters
     public function getIdentifiant(){ return $this->identifiant; }
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
     public function getRole(){ return $this->role; }
 
+
+    /// Setters
     private function setIdentifiant($identifiant){
         // On vérifie que le nom est non-vide
         if(empty($identifiant))
@@ -83,5 +88,24 @@ class Utilisateurs {
         if(empty($result))
             throw new Exception("Role introuvable");
         else return $result;
+    }
+
+    /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
+    public static function createFromArray(array $data) {
+        return new self(
+            $data['identifiant'],
+            $data['email'],
+            $data['motdepasse'],
+            $data['role']
+        );
+    }
+    // Méthode retournant l'item sous forme d'un tableau associatif
+    public function exportToArray() {
+        return [
+            'identifiant' => $this->getIdentifiant(),
+            'email' => $this->getEmail(),
+            'motdepasse' => $this->getMotdepasse(),
+            'role' => $this->getRole(),
+        ];
     }
 }

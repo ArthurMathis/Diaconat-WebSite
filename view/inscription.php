@@ -82,7 +82,7 @@
 
         // On prépare la redirection del'utilisateur
         session_start();
-        $_SESSION['user'] = [$new_user];
+        $_SESSION['user'] = $user->exportToArray();
         // On redirige la page
         header("Location: ../index.php");
         exit;

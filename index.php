@@ -10,13 +10,20 @@
 </head>
 <body>
     <?php
-    include ("objects/Utilisateurs.php");
-        // On récupère la requête
         session_start();
+
+        // Debugging des données de session
+        var_dump($_SESSION['user']);
+
+        include ("objects/Utilisateurs.php");
+
+        // On récupère la requête
+    
         $user= $_SESSION['user'];
-        if(empty($user))
+        if(empty($user)) {
             header("Location: view/connexion.php");
-        
+            exit;
+        } 
     ?>
     <nav class="barre-de-navigation">
         <div id="menu-icon">
@@ -26,7 +33,7 @@
         <div>
             <p id="calendrier"></p>
             <p id="horloge">00 : 00 : 00</p>
-            <p>Nom Prénom</p>
+            <p><?php echo $user["identifiant"]; ?></p>
         </div>
     </nav>
     <section id="menu">

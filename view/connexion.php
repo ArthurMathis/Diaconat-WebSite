@@ -68,33 +68,16 @@
 
                         // On prépare la redirection del'utilisateur
                         session_start();
-                        $_SESSION['user'] = [$user];
+                        $_SESSION['user'] = $user->exportToArray();
                         // On redirige la page
                         header("Location: ../index.php");
                         exit;
                     }
                     $i++;
                 }
-                /*
-                foreach($result as $item) {
-                    if($item["Nom"] == $identifiant && $item["MotDePasse"] == $motdepasse) {
-                        // On récupère le rôle correspondant à l'Id_Role
-                        $role = Utilisateurs::searchRole($bdd, $item["Id_Roles"]);
-                        $user = new Utilisateurs($identifiant, $item["Email"], $motdepasse, $role);
-
-                        // On prépare la redirection del'utilisateur
-                        session_start();
-                        $_SESSION['user'] = [$user];
-                        // On redirige la page
-                        header("Location: ../index.php");
-                        exit;
-
-                        // On arrête la boucle
-                        break;
-                    }
-                        
+                if($i == $size) {
+                    throw new Exception("Aucun utilisateur correspondant");
                 }
-                */
             }
         } catch(PDOException $e){
             echo "<script>
