@@ -21,6 +21,10 @@
 .LignesHover {
   position: relative;
   width: fit-content;
+
+  color: var(--black);
+  background-color: transparent;
+  border: none;
 }
 .LignesHover::after {
   content: "";

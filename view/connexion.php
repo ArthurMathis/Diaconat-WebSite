@@ -83,13 +83,9 @@
                 }
             }
         } catch(PDOException $e){
-            echo "<script>
-                    console.log(\"" . $e->getMessage() . "\")
-                </script>";
+            echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
         } catch(Exception $e){
-            echo "<script>
-                    console.log(\"" . $e->getMessage() . "\")
-                </script>";
+            echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
         }
     ?>
 

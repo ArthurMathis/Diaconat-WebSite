@@ -54,7 +54,7 @@ p {
     font-weight: 300;
 }
 
-button {
+.action_button {
     padding: calc(var(--margin) / 2) calc(var(--margin) * 2 /3);
 
     color: var(--blue);
@@ -65,7 +65,7 @@ button {
     will-change: color, background-color;
     transition: 150ms ease color, 150ms ease background-color;
 }
-button:hover {
+.action_button:hover {
     color: var(--white);
     background-color: var(--blue);
 }
@@ -105,7 +105,11 @@ a {
 
     height: 100%;
 }
-.barre-de-navigation > div p:last-of-type{
+.barre-de-navigation > div p:last-of-type {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
     margin-left: var(--margin);
 }
 
@@ -221,4 +225,23 @@ a {
 }
 #menu a.active:hover::after {
     transform: scaleX(1);
+}
+
+#menu-deconnexion {
+    position: fixed;
+    top: var(--nav-barre-size);
+    right: 0;
+    z-index: 1;
+
+    padding: var(--margin);
+
+    background-color: var(--light_grey);
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+
+    transform: scaleY(1);
+    will-change: transform;
+    transform-origin: top;
+    transition: transform ease 250ms;
+    overflow-y: hidden;
 }

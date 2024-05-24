@@ -6,14 +6,12 @@
     <title>Diaconat - Gestionnaire de candidatures</title>
 
     <link rel="stylesheet" href="stylesheet/styles.css">
+    <link rel="stylesheet" href="stylesheet/AnimateLignes.css">
     <link rel="stylesheet" href="stylesheet/index.css">
 </head>
 <body>
     <?php
         session_start();
-
-        // Debugging des données de session
-        // var_dump($_SESSION['user']);
 
         include ("objects/Utilisateurs.php");
 
@@ -32,9 +30,12 @@
         <div>
             <p id="calendrier"></p>
             <p id="horloge">00 : 00 : 00</p>
-            <p><?php echo $user["identifiant"]; ?></p>
+            <p class="user-info"><?php echo $user["identifiant"]; ?></p>
         </div>
     </nav>
+    <form id="menu-deconnexion" method="POST" action="components/logout.php">
+        <button type="submit" class="LignesHover">Se déconnecter</button>
+    </form>
     <section id="menu">
         <a href="#">Candidatures</a>
         <a href="#">Employés</a>
@@ -42,6 +43,7 @@
         <a href="#">Statistiques</a>
         <a href="#">Préférences</a>
     </section>
+    
     <content>
         <section>
             
@@ -60,7 +62,7 @@
                         <p>Accuponcteur-homéopathe</p>
                     </div>
                 </div>
-                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
+                <div class="boutons" <?php if($user["role"] == "Invite") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -88,7 +90,7 @@
                         <p>Ingénieur en automobile</p>
                     </div>
                 </div>
-                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
+                <div class="boutons" <?php if($user["role"] == "Invite") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -116,7 +118,7 @@
                         <p>Ingénieur en intelligence artificielle</p>
                     </div>
                 </div>
-                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
+                <div class="boutons" <?php if($user["role"] == "Invite") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -144,7 +146,7 @@
                         <p>Ingénieur en intelligence artificielle</p>
                     </div>
                 </div>
-                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
+                <div class="boutons" <?php if($user["role"] == "Invite") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
