@@ -89,6 +89,24 @@ class Utilisateurs {
             throw new Exception("Role introuvable");
         else return $result;
     }
+    public function searchRole_id($bdd) {
+        // On initialise la requête
+        $sql = "SELECT * FROM Roles WHERE Intitule = :Intitule";
+        $query = $bdd->prepare($sql);
+        
+        // On lance la requête
+        $query->execute(["Intitule" => $this->getRole()]);
+        
+        // On récupère le résultat de la requête
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        
+        // On teste si la requête a renvoyé des résultats
+        if(!$result) {
+            throw new Exception("Rôle introuvable");
+        } else {
+            return $result['Id'];
+        }
+    }
 
     /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
     public static function createFromArray(array $data) {
@@ -110,12 +128,12 @@ class Utilisateurs {
     }
 
     /// Méthode publique exportant l'item sous-forme de tableau associatif avec le mot de passe haché
-    public function exportToSQL(){
+    public function exportToSQL($bdd){
         return [
             'nom' => $this->getIdentifiant(),
             'email' => $this->getEmail(),
             'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
-            'id_Roles' => $this->getRole(),
+            'id_Roles' => $this->searchRole_id($bdd),
         ];
     }
 }

@@ -43,15 +43,15 @@
             // On récupère les rôles
             $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
             $query = $bdd->prepare($sql);
-            $query->execute(["Intitule" => "Administrateur"]);
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            $query->execute(["Intitule" => "Invite"]);
+            $result = $query->fetch(PDO::FETCH_ASSOC);
 
             if(empty($result)) 
                 throw new Exception("Erreur de récupération du rôle l'utilisateur");
 
             else {
-                $role = $result[0]['Intitule'];
-                $role_id = $result[0]['Id'];
+                $role = $result['Intitule'];
+                $role_id = $result['Id'];
             }
 
             // On génère un nouvel Utilisateur selon les données
@@ -60,15 +60,7 @@
             // On génère une requête MySQL
             $query =  $bdd->prepare("INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)");
             // On envoie la requête au serveur
-            $query->execute($new_user->exportToSQL());
-            /*
-            $query->execute([
-                "nom" => $new_user->getIdentifiant(),
-                "email" => $new_user->getEmail(),
-                "motdepasse" =>  $new_user->getMotdepasse(), 
-                "id_Roles" => $role_id
-            ]);
-            */
+            $query->execute($new_user->exportToSQL($bdd));
 
             // On prépare la redirection del'utilisateur
             session_start();

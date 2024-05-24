@@ -105,7 +105,7 @@
             <input type="password" id="motdepasse" name="motdepasse">
         </section>
         <section class="buttons_actions">
-            <a class="LignesHover" href="view/inscription.php">Nouvel utilisateur</a>
+            <a class="LignesHover" href="inscription.php">Nouvel utilisateur</a>
         <button type="submit" class="submit_button" value="new_user">Valider</button>
         </section>
     </form>

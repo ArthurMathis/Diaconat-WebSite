@@ -13,12 +13,11 @@
         session_start();
 
         // Debugging des données de session
-        var_dump($_SESSION['user']);
+        // var_dump($_SESSION['user']);
 
         include ("objects/Utilisateurs.php");
 
         // On récupère la requête
-    
         $user= $_SESSION['user'];
         if(empty($user)) {
             header("Location: view/connexion.php");
@@ -60,18 +59,8 @@
                         <p>Jean-françois</p>
                         <p>Accuponcteur-homéopathe</p>
                     </div>
-                    <div class="item">
-                        <p>Deroussin</p>
-                        <p>Esteban</p>
-                        <p>Directeur artisique, UX/UI design</p>
-                    </div>
-                    <div class="item">
-                        <p>Bouadballah</p>
-                        <p>Narimane</p>
-                        <p>Ingénieur en intelligence artificielle</p>
-                    </div>
                 </div>
-                <div class="boutons">
+                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -99,7 +88,7 @@
                         <p>Ingénieur en automobile</p>
                     </div>
                 </div>
-                <div class="boutons">
+                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -127,7 +116,7 @@
                         <p>Ingénieur en intelligence artificielle</p>
                     </div>
                 </div>
-                <div class="boutons">
+                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
@@ -155,7 +144,7 @@
                         <p>Ingénieur en intelligence artificielle</p>
                     </div>
                 </div>
-                <div class="boutons">
+                <div class="boutons" <?php if($user["role"] != "Administrateur") echo "style=\"display: none; \""; ?>>
                     <a href="">+</a>
                     <a href="">Consulter</a>
                 </div>
