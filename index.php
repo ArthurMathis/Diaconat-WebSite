@@ -42,8 +42,7 @@
         <a href="#">Besoins</a>
         <a href="#">Statistiques</a>
         <a href="#">Préférences</a>
-    </section>
-    
+    </section> 
     <content>
         <section>
             

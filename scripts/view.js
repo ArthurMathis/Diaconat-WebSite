@@ -58,10 +58,16 @@ userInfo.addEventListener('mouseover', function() {
     logoutMenu.style.transform = 'scaleY(1)';
 });
 userInfo.addEventListener('mouseout', function(event) {
-    if(logoutMenu.contains(event.relatedTarget)) {
-        logoutMenu.addEventListener('mouseout', function (event) {
-            logoutMenu.style.transform = 'scaleY(0)';
-        });
-    } else 
+    if (!logoutMenu.contains(event.relatedTarget)) {
         logoutMenu.style.transform = 'scaleY(0)';
+    }
+});
+
+logoutMenu.addEventListener('mouseover', function() {
+    logoutMenu.style.transform = 'scaleY(1)';
+});
+logoutMenu.addEventListener('mouseout', function(event) {
+    if (!userInfo.contains(event.relatedTarget)) {
+        logoutMenu.style.transform = 'scaleY(0)';
+    }
 });

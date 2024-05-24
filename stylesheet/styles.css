@@ -239,9 +239,9 @@ a {
     border-left: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
 
-    transform: scaleY(1);
+    transform: scaleY(0);
     will-change: transform;
     transform-origin: top;
-    transition: transform ease 250ms;
+    transition: transform ease-in-out 300ms;
     overflow-y: hidden;
 }
