@@ -42,10 +42,40 @@
             ]);
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
+            // On vérifie qu'il y a des utilisateurs
             if(empty($result)) 
-                throw new Exception("Aucun utilisateur correspondant");
+            // On émet une erreur si la base de données est vide
+                throw new Exception("Aucun utilisateur enregistré");
 
+            // Sinon, on cherche le profil de l'utilisateur    
             else {
+                // On déclare les variables tampons
+                $i = 0;
+                $size = count($result);
+                $find = false;
+                // On fait défiler la table
+                while($i < $size && !$find) {
+                    if($result[$i]["Nom"] == $identifiant && $result[$i]["MotDePasse"] == $motdepasse) {
+                        // On implémente find
+                        $find = true;
+                        echo "<script>console.log(\"".$result[$i]["Nom"]."/".$result[$i]["MotDePasse"]."\");</script>";
+
+                        // On récupère le rôle de l'utilisateur
+                        $role = Utilisateurs::searchRole($bdd, $result[$i]["Id_Roles"]);
+                    
+                        // On construit l'utilisateur php
+                        $user = new Utilisateurs($result[$i]["Nom"], $result[$i]["Email"], $motdepasse, $role["Intitule"]);
+
+                        // On prépare la redirection del'utilisateur
+                        session_start();
+                        $_SESSION['user'] = [$user];
+                        // On redirige la page
+                        header("Location: ../index.php");
+                        exit;
+                    }
+                    $i++;
+                }
+                /*
                 foreach($result as $item) {
                     if($item["Nom"] == $identifiant && $item["MotDePasse"] == $motdepasse) {
                         // On récupère le rôle correspondant à l'Id_Role
@@ -64,6 +94,7 @@
                     }
                         
                 }
+                */
             }
         } catch(PDOException $e){
             echo "<script>

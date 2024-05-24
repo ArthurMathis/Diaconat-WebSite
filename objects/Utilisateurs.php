@@ -56,7 +56,7 @@ class Utilisateurs {
         // On vérifie que le mot de passe est un string
         elseif(!is_string($motdepasse))
         // On implémente
-            throw new InvalideUtilisateurExceptions("Le mot de passe d'un utilisateur doit être une chaine de caractères");
+            throw new InvalideUtilisateurExceptions("Le mot de passe d'un utilisateur doit être une chaine de caractères. Le mot de passe !");
         $this->motdepasse = $motdepasse;
     }
     private function setRole($role){
@@ -66,7 +66,7 @@ class Utilisateurs {
         // On vérifie que le mot de passe est un string
         elseif(!is_string($role))
         // On implémente
-            throw new InvalideUtilisateurExceptions("Le mot de passe d'un utilisateur doit être une chaine de caractères");
+            throw new InvalideUtilisateurExceptions("Le rôle d'un utilisateur doit être une chaine de caractères");
         $this->role = $role;
     }
 
