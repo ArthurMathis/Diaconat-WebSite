@@ -79,9 +79,9 @@
             
         }
     } catch(PDOException $e){
-        echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
+        echo "<script>console.log(\"PDOException : " . $e->getMessage() . "\"); </script>";
     } catch(Exception $e){
-        echo "<script>console.log(\"" . $e->getMessage() . "\"); </script>";
+        echo "<script>console.log(\"Exception : " . $e->getMessage() . "\"); </script>";
     }
     ?>
 
@@ -97,9 +97,9 @@
             <input type="password" id="motdepasse" name="motdepasse">
         </section>
         <section class="buttons_actions">
-            <a class="LignesHover" href="inscription.php">Nouvel utilisateur</a>
-        <button type="submit" class="submit_button" value="new_user">Valider</button>
+            <button type="submit" class="submit_button" value="new_user">Valider</button>
         </section>
     </form>
+    <a class="LignesHover user-link" href="inscription.php">Nouvel utilisateur</a>
 </body>
 </html>

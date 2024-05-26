@@ -46,6 +46,11 @@ form label {
 }
 form .buttons_actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
+}
+
+.user-link {
+    vertical-align: bottom;
+    margin: auto auto var(--padding) auto;
 }

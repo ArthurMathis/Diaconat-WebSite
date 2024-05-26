@@ -1,11 +1,4 @@
-// A supprimer 
-
-CREATE TABLE Droits_acces (
-	Id INTEGER NOT NULL PRIMARY KEY,
-    Intitule VARCHAR(32) NOT NULL UNIQUE
-);
-
-// A supprimer fin
+CREATE DATABASE diaconat_database;
 
 CREATE TABLE Roles (
 	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -20,8 +13,8 @@ INSERT INTO Roles (Intitule) VALUES
 
 CREATE TABLE Utilisateurs (
 	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Nom VARCHAR(256) NOT NULL,
-    MotDePasse VARCHAR(32) NOT NULL,
+    Nom VARCHAR(64) NOT NULL,
+    MotDePasse VARCHAR(256) NOT NULL,
     Email VARCHAR(64) UNIQUE,
     CodeProvisoir VARCHAR(16),
     CodeDeRecuperation VARCHAR(16),

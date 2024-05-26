@@ -20,12 +20,10 @@ try {
 
 // On récupère les ventuelles erreurs de connexion
 } catch (PDOException $e) {
-    // En cas d'erreur de connexion, afficher le message d'erreur
-    /*echo "<script>
-            const notif = new notification(\"".$e->getMessage()."\").affiche();
-            document.body.appendChild(notif);
-            setTimeout(function() {
-                notif.remove();
-            }, 3000);
-        </script>";*/
+    // On prépare la redirection de l'utilisateur
+    session_start();
+    $_SESSION['erreur'] = $e;
+    // On redirige la page
+    header("Location: ../view/erreur.php");
+    exit;
 }

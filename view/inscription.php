@@ -103,9 +103,9 @@
             <input type="password" id="confirmation" name="confirmation">
         </section>
         <section class="buttons_actions">
-            <a class="LignesHover" href="../index.php">Se connecter</a>
-        <button type="submit" class="submit_button" value="new_user">Valider</button>
+            <button type="submit" class="submit_button" value="new_user">Valider</button>
         </section>
     </form>
+    <a class="LignesHover user-link" href="../index.php">Se connecter</a>
 </body>
 </html>
