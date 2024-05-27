@@ -33,7 +33,6 @@ class Utilisateurs {
     public function getRole(){ return $this->role; }
     public function getCle(){ return $this->cle; }
 
-
     /// Setters
     private function setIdentifiant($identifiant){
         // On vérifie que le nom est non-vide
@@ -145,19 +144,19 @@ class Utilisateurs {
                 // On émet une erreur si la base de données est vide
                 throw new Exception("Erreur lors de la récupération de la clé de l'utilisateur");
    
-        } catch(PDOException $e){
+        } catch(PDOException $e) {
             echo "<script>
                 console.log(\"Erreur PDO : " . $e->getMessage() . " \");
                 console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
             </script>";
-        } catch(Exception $e){
+        } catch(Exception $e) {
             echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
         }
 
         // Afficher le contenu de $user
         if (empty($user)) 
             echo "<script>console.log('Aucun utilisateur trouvé');</script>";
-        
+
         else $this->setCle($user["Id"]);
     }
 
@@ -178,6 +177,7 @@ class Utilisateurs {
             'email' => $this->getEmail(),
             'motdepasse' => $this->getMotdepasse(),
             'role' => $this->getRole(),
+            'cle' => $this->getCle()
         ];
     }
 

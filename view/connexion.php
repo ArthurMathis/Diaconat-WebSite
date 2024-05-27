@@ -84,13 +84,15 @@
                 $role = Utilisateurs::searchRole($bdd, $users[$i]["Id_Roles"]);
                 // On construit l'utilisateur php
                 $user = new Utilisateurs($users[$i]["Nom"], $users[$i]["Email"], $motdepasse, $role["Intitule"]);
-
-                // On enregistre la connexion de l'utilisateur
-                // require_once ('../components/connect_user.php');
+                $user->searchCle($bdd);
 
                 // On prépare la redirection de l'utilisateur
                 session_start();
                 $_SESSION['user'] = $user->exportToArray();
+
+                // On enregistre la connexion de l'utilisateur
+                require_once ('../components/connect_user.php');
+
                 // On redirige la page
                 header("Location: ../index.php");
                 exit;
