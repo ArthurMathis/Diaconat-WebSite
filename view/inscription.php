@@ -12,14 +12,13 @@
     <img src="../assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
     
     <?php 
-        require_once('../components/connect_server.php');
-        require_once("../objects/Utilisateurs.php");
 
-        // On récupère l'accès à la base de données
-        global $bdd;
+    require_once('../components/connect_server.php');
+    require_once("../objects/Utilisateurs.php");
 
-        // On réagit à la validation du formulaire
-        if($_SERVER["REQUEST_METHOD"] == "POST") try {
+    // On réagit à la validation du formulaire
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        try {
             // On récupère les données saisies
             $identifiant = $_POST["identifiant"];
             $email = $_POST["email"];
@@ -38,53 +37,79 @@
             } elseif($motdepasse != $confirmation) {
                 throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
             }
+        } catch(Exception $e){
+            session_start();
+            $_SESSION['erreur'] = $e;
+            // On redirige la page
+            header("Location: erreur.php");
+            exit;
+        }
 
-            // On récupère les rôles
-            $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-            $query = $bdd->prepare($sql);
-            $query->execute(["Intitule" => "Invite"]);
-            $result = $query->fetch(PDO::FETCH_ASSOC);
+        global $identifiant;
+        global $email;
+        global $motdepasse;
+        global $confirmation;
 
-            if(empty($result)) 
-                throw new Exception("Erreur de récupération du rôle l'utilisateur");
+        try {
+           // On récupère les rôles
+           $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
+           $query = $bdd->prepare($sql);
+           $query->execute(["Intitule" => "Invite"]);
+           $result = $query->fetch(PDO::FETCH_ASSOC);
 
+           if(empty($result)) 
+               throw new Exception("Erreur de récupération du rôle l'utilisateur");
+            
             else {
                 $role = $result['Intitule'];
                 $role_id = $result['Id'];
             }
+   
+        } catch(PDOException $e){
+            echo "<script>
+                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
+                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
+            </script>";
+        } catch(Exception $e){
+            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
+        }
 
+        global $role;
+        global $role_id;
+
+        try {
             // On génère un nouvel Utilisateur selon les données
             $new_user = new Utilisateurs($identifiant, $email, $motdepasse, $role);
-        
+
             // On génère une requête MySQL
             $query =  $bdd->prepare("INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)");
             // On envoie la requête au serveur
             $query->execute($new_user->exportToSQL($bdd));
 
-            // On prépare la redirection del'utilisateur
+        } catch(InvalideUtilisateurExceptions $e) {
             session_start();
-            $_SESSION['user'] = $new_user->exportToArray();
+            $_SESSION['erreur'] = $e;
             // On redirige la page
-            header("Location: ../index.php");
+            header("Location: erreur.php");
             exit;
-        } catch(Exception $e) {
-            echo "<script>
-                    console.log(\" . " . $e->getMessage() . " . \")
-                </script>";
-        }  catch(InvalideUtilisateurExceptions $e) {
-            echo "<script>
-                    console.log(\" . " . $e->getMessage() . " . \")
-                </script>";
         } catch(PDOException $e){
-            echo "<script>
-                    console.log(\"Erreur PDO : " . $e->getMessage() . " \");
-                    console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
-                    console.log(\"Trace de l'erreur : " . $e->getTraceAsString() . " \");
-                    // Si vous avez une requête préparée, affichez également la requête SQL
-                    // echo \"Requête SQL : \" . $query->queryString;
-                </script>";
+            session_start();
+            $_SESSION['erreur'] = $e;
+            // On redirige la page
+            header("Location: erreur.php");
+            exit;
         }
+
+        // On enregistre la connexion de l'utilisateur
+        // require_once ('../components/connect_user.php');
         
+        // On prépare la redirection del'utilisateur
+        session_start();
+        $_SESSION['user'] = $new_user->exportToArray();
+        // On redirige la page
+        header("Location: ../index.php");
+        exit;
+    }
     ?>
 
     <form method="post">
