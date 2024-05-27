@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diaconat - Connexion</title>
+    <title>Diaconat - Inscription</title>
 
     <link rel="stylesheet" href="../stylesheet\styles.css">
     <link rel="stylesheet" href="../stylesheet\connexion.css">
-    <link rel="stylesheet" href="../stylesheet\AnimateLignes.css">
 </head>
 <body>
-    <img src="../assets\img\ico_diaconat_mulhouse.webp">
-
+    <img src="../assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
+    
     <?php 
         require_once('../components/connect_server.php');
         require_once("../objects/Utilisateurs.php");
@@ -84,28 +83,22 @@
     ?>
 
     <form method="post">
-        <h1>S'inscrire</h1>
-        <div class="separator"></div>
-        <section>
-            <label for="identifiant">Identifiant :</label>
-            <input type="text" id="identifiant" name="identifiant">
-        </section>
-        <section>
-            <label for="email">Email :</label>
-            <input type="text" id="email" name="email">
-        </section>
-        <section>
-            <label for="motdepasse">Mot de passe :</label>
-            <input type="password" id="motdepasse" name="motdepasse">
-        </section>
-        <section>
-            <label for="confirmation">Confirmer le mot de passe :</label>
-            <input type="password" id="confirmation" name="confirmation">
+        <img src="../assets\img\ico_diaconat_mulhouse.webp">
+        <h2>Saisissez vos infrmations pour vous inscrire</h2>
+        <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
+        <input type="text" id="email" name="email" placeholder="Adresse mail">
+        <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
+        <input type="password" id="confirmation" name="confirmation" placeholder="Confirmation du mot de passe">
+        <section class="checkbox-liste">
+            <div class="checkbox-item">
+                <label for="remember1">Se souvenir de moi</label>
+                <input type="checkbox" id="remember1" name="option1" value="option1">
+            </div>
         </section>
         <section class="buttons_actions">
             <button type="submit" class="submit_button" value="new_user">Valider</button>
         </section>
+        <p class="user-link">Vous avez déjà un compte <a href="connexion.php">Connectez-vous</a><p>
     </form>
-    <a class="LignesHover user-link" href="../index.php">Se connecter</a>
 </body>
 </html>
