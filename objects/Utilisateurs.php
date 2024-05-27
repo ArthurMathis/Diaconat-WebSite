@@ -8,10 +8,12 @@ class InvalideUtilisateurExceptions extends Exception {
 
 class Utilisateurs {
     /// Attributs privés de la classe
-    private $identifiant, $email, $motdepasse, $role;
-    
+    private $identifiant, $email, $motdepasse, $role, $cle;
+
     /// Constructeur de la classe
-    public function __construct($identifiant, $email, $motdepasse, $role){
+    public function __construct($identifiant, $email, $motdepasse, $role) {
+        $this->cle == null;
+
         try{
             $this->setIdentifiant($identifiant);
             $this->setEmail($email);
@@ -29,6 +31,7 @@ class Utilisateurs {
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
     public function getRole(){ return $this->role; }
+    public function getCle(){ return $this->cle; }
 
 
     /// Setters
@@ -39,7 +42,8 @@ class Utilisateurs {
         // On vérifie que le nom est un string
         elseif(!is_string($identifiant))
             throw new InvalideUtilisateurExceptions("L'identifiant d'un utilisateur doit être une chaine de caractères !");
-        // On implémente
+        
+            // On implémente
         else $this->identifiant = $identifiant;
     }
     private function setEmail($email){
@@ -51,6 +55,7 @@ class Utilisateurs {
             throw new InvalideUtilisateurExceptions("L'email d'un utilisateur doit être une chaine de caractères !");
         elseif(!filter_var($email, FILTER_VALIDATE_EMAIL))
             throw new InvalideUtilisateurExceptions("L'email doit contenir un nom, un @ et une adresse ! (ex: nom.prenom@diaconat-mulhouse.fr)");
+        
         // On implémente
         else $this->email = $email;
     }
@@ -62,7 +67,8 @@ class Utilisateurs {
         elseif(!is_string($motdepasse))
         // On implémente
             throw new InvalideUtilisateurExceptions("Le mot de passe d'un utilisateur doit être une chaine de caractères. Le mot de passe !");
-        $this->motdepasse = $motdepasse;
+        
+        else $this->motdepasse = $motdepasse;
     }
     private function setRole($role){
         // On vérifie que le role est non-vide
@@ -70,9 +76,21 @@ class Utilisateurs {
             throw new InvalideUtilisateurExceptions("Le rôle d'un utilisateur ne peut être vide !");
         // On vérifie que le mot de passe est un string
         elseif(!is_string($role))
-        // On implémente
             throw new InvalideUtilisateurExceptions("Le rôle d'un utilisateur doit être une chaine de caractères");
-        $this->role = $role;
+        
+            // On implémente
+        else $this->role = $role;
+    }
+    public function setCle($cle) {
+        // On vérifie que l'id est un nombre positif ou nul
+        if(!is_numeric($cle)) 
+            throw new InvalideUtilisateurExceptions("La clé primaire doit être un entier !");
+        // On vérifie que l'id est un nombre positif ou nul
+        elseif($cle < 0) 
+            throw new InvalideUtilisateurExceptions("La clé primaire doit être supéieure ou égale à 0 !");
+
+        // On implémente
+        else $this->cle = $cle;
     }
 
     static function searchRole($bdd, $role) {
@@ -109,6 +127,39 @@ class Utilisateurs {
             return $result['Id'];
         }
     }
+    public function searchCle($bdd) {
+        try {
+            // On récupère l'utilisateur dans la base de données
+            $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
+            $query = $bdd->prepare($sql);
+            $params = [
+                'nom' => $this->getIdentifiant(),
+                'email' => $this->getEmail(),
+                'id_Roles' => $this->searchRole_id($bdd)
+            ];
+            $query->execute($params);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            
+            // On vérifie qu'il y a des utilisateurs
+            if(empty($user)) 
+                // On émet une erreur si la base de données est vide
+                throw new Exception("Erreur lors de la récupération de la clé de l'utilisateur");
+   
+        } catch(PDOException $e){
+            echo "<script>
+                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
+                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
+            </script>";
+        } catch(Exception $e){
+            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
+        }
+
+        // Afficher le contenu de $user
+        if (empty($user)) 
+            echo "<script>console.log('Aucun utilisateur trouvé');</script>";
+        
+        else $this->setCle($user["Id"]);
+    }
 
     /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
     public static function createFromArray(array $data) {
@@ -116,7 +167,8 @@ class Utilisateurs {
             $data['identifiant'],
             $data['email'],
             $data['motdepasse'],
-            $data['role']
+            $data['role'], 
+            $data['cle']
         );
     }
     /// Méthode retournant l'item sous forme d'un tableau associatif

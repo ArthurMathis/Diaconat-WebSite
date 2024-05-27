@@ -13,8 +13,6 @@
     <?php
         session_start();
 
-        // include ("objects/Utilisateurs.php");
-
         // On récupère la requête
         $user= $_SESSION['user'];
         if(empty($user)) {
