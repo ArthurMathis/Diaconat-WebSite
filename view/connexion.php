@@ -12,76 +12,94 @@
 <body>
     <img src="../assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
 
-    <?php 
+    <?php
+    
     require_once("../components/connect_server.php");
     require_once("../objects/Utilisateurs.php");
 
     // On récupère l'accès à la base de données
     global $bdd;
 
-    // On réagit à la validation du formulaire
-    if($_SERVER["REQUEST_METHOD"] == "POST") try {
-        // On récupère les données saisies
-        $identifiant = $_POST["identifiant"];
-        $motdepasse = $_POST["motdepasse"];
+    if(empty($bdd)) 
+        header("Location: erreur.php"); 
 
-        // On vérifie leur intégrité
-        if(empty($identifiant)) {
-            throw new Exception("Le champs identifiant doit être rempli !");
-        } elseif(empty($motdepasse)) {
-            throw new Exception("Le champs mot de passe doit être rempli !");
-        } 
-
-        // On récupère les rôles
-        $sql = "SELECT * FROM utilisateurs WHERE Nom = :Identifiant";
-        $query = $bdd->prepare($sql);
-        $query->execute([
-            "Identifiant" => $identifiant
-        ]);
-        $users = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        // On vérifie qu'il y a des utilisateurs
-        if(empty($users)) 
-        // On émet une erreur si la base de données est vide
-            throw new Exception("Aucun utilisateur enregistré");
-
-        // Sinon, on cherche le profil de l'utilisateur    
-        else {
-            // On déclare les variables tampons
-            $i = 0;
-            $size = count($users);
-            $find = false;
-
-            // On fait défiler la table
-            while($i < $size && !$find) {
-                if($users[$i]["Nom"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse"])) {
-                    // On implémente find
-                    $find = true;
-                    // On récupère le rôle de l'utilisateur
-                    $role = Utilisateurs::searchRole($bdd, $users[$i]["Id_Roles"]);
-                    // On construit l'utilisateur php
-                    $user = new Utilisateurs($users[$i]["Nom"], $users[$i]["Email"], $motdepasse, $role["Intitule"]);
-
-                    // On enregistre la connexion de l'utilisateur
-                    include ('../components/connect_user.php');
-
-                    // On prépare la redirection de l'utilisateur
-                    session_start();
-                    $_SESSION['user'] = $user->exportToArray();
-                    // On redirige la page
-                    header("Location: ../index.php");
-                    exit;
-                }
-                $i++;
-            }
-            if($i == $size) 
-                throw new Exception("Aucun utilisateur correspondant");
+    elseif($_SERVER["REQUEST_METHOD"] == "POST") {
+        try {
+            // On récupère les données saisies
+            $identifiant = $_POST["identifiant"];
+            $motdepasse = $_POST["motdepasse"];
             
+            // On vérifie leur intégrité
+            if(empty($identifiant)) {
+                throw new Exception("Le champs identifiant doit être rempli !");
+            } elseif(empty($motdepasse)) {
+                throw new Exception("Le champs mot de passe doit être rempli !");
+            } 
+
+        } catch(Exception $e){
+            session_start();
+            $_SESSION['erreur'] = $e;
+            // On redirige la page
+            header("Location: erreur.php");
+            exit;
         }
-    } catch(PDOException $e){
-        echo "<script>console.log(\"PDOException : " . $e->getMessage() . "\"); </script>";
-    } catch(Exception $e){
-        echo "<script>console.log(\"Exception : " . $e->getMessage() . "\"); </script>";
+
+        global $identifiant;
+        global $motdepasse;
+
+        try {
+            // On récupère les rôles
+            $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
+            $query = $bdd->prepare($sql);
+            $query->execute([":nom" => $identifiant]);
+            $users = $query->fetchAll(PDO::FETCH_ASSOC);
+            
+            // On vérifie qu'il y a des utilisateurs
+            if(empty($users)) 
+                // On émet une erreur si la base de données est vide
+                throw new Exception("Aucun utilisateur enregistré");
+   
+        } catch(PDOException $e){
+            echo "<script>
+                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
+                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
+            </script>";
+        } catch(Exception $e){
+            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
+        }
+
+        global $users;
+
+        // On déclare les variables tampons
+        $i = 0;
+        $size = count($users);
+        $find = false;  
+
+        // On fait défiler la table
+        while($i < $size && !$find) {
+            if($users[$i]["Nom"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse"])) {              
+                // On implémente find
+                $find = true;
+                // On récupère le rôle de l'utilisateur
+                $role = Utilisateurs::searchRole($bdd, $users[$i]["Id_Roles"]);
+                // On construit l'utilisateur php
+                $user = new Utilisateurs($users[$i]["Nom"], $users[$i]["Email"], $motdepasse, $role["Intitule"]);
+
+                // On enregistre la connexion de l'utilisateur
+                // require_once ('../components/connect_user.php');
+
+                // On prépare la redirection de l'utilisateur
+                session_start();
+                $_SESSION['user'] = $user->exportToArray();
+                // On redirige la page
+                header("Location: ../index.php");
+                exit;
+            }
+            $i++;
+        }
+        if($i == $size) 
+            throw new Exception("Aucun utilisateur correspondant");
+        
     }
     ?>
     

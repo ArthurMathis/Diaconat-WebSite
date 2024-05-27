@@ -77,9 +77,14 @@
                 </script>";
         } catch(PDOException $e){
             echo "<script>
-                    console.log(\" . " . $e->getMessage() . " . \")
+                    console.log(\"Erreur PDO : " . $e->getMessage() . " \");
+                    console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
+                    console.log(\"Trace de l'erreur : " . $e->getTraceAsString() . " \");
+                    // Si vous avez une requête préparée, affichez également la requête SQL
+                    // echo \"Requête SQL : \" . $query->queryString;
                 </script>";
         }
+        
     ?>
 
     <form method="post">

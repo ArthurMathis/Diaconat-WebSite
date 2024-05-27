@@ -13,7 +13,7 @@
     <?php 
     session_start();
     // On récupère la requête
-    $e= $_SESSION['erreur'];
+    $e = $_SESSION['erreur'];
     if(!empty($e)) {
         echo $e->getMessage();
         exit;

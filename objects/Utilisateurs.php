@@ -91,7 +91,7 @@ class Utilisateurs {
     }
     public function searchRole_id($bdd) {
         // On initialise la requête
-        $sql = "SELECT * FROM Roles WHERE Intitule = :Intitule";
+        $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
         $query = $bdd->prepare($sql);
         
         // On lance la requête
@@ -103,6 +103,8 @@ class Utilisateurs {
         // On teste si la requête a renvoyé des résultats
         if(!$result) {
             throw new Exception("Rôle introuvable");
+            return null;
+            
         } else {
             return $result['Id'];
         }
