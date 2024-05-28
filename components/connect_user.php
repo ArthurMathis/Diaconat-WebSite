@@ -31,14 +31,12 @@ if(empty($user)) {
         $instants = Instants::currentInstants();
         // J'enregistre mon instant dans la base de données
         $sql = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
-        $query = $bdd->prepare($sql);
-        $query->execute($instants->exportToSQL());
-
+        $data = $instants->exportToSQL();
+        post_request($bdd, $sql, $data);
 
         // On récupère l'id de mon instant 
         $sql = "SELECT * FROM instants WHERE Jour = :jour AND Heure = :heure";
         $query = $bdd->prepare($sql);
-        $data = $instants->exportToSQL();
         // On implémente
         $result = get_request($bdd, $sql, $data);
         $instant_id = $result['Id'];
@@ -48,32 +46,18 @@ if(empty($user)) {
         // On redirige la page
         header("Location: ../view.erreur.php");
         exit;
-    } catch(PDOException $e){
-        $_SESSION['erreur'] = $e;
-        // On redirige la page
-        header("Location: ../view.erreur.php");
-        exit;
-    }
+    } 
 
-    try {
-        // On prépare la requête d'ajout à la base de données
-        $sql = "INSERT INTO actions (Intitule, Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:intitule,   :user_id, :type_id, :instant_id)";
-        $query = $bdd->prepare($sql);
-        // On vérifie que l'intitulé de l'action a bien été récupéré
-        if(empty($intitule)) 
-            $intitule = "Connexion de ".$user["identifiant"];
-        // On envoie la requête au serveur
-        $query->execute([
-            "intitule" => $intitule,
-            "user_id" => $user['cle'],
-            "type_id" => $type_id,
-            "instant_id" => $instant_id
-        ]);
-        
-    } catch(PDOException $e){
-        $_SESSION['erreur'] = $e;
-        // On redirige la page
-        header("Location: erreur.php");
-        exit;
-    }
+    // On ajoute l'action à la base de données
+    $sql = "INSERT INTO actions (Intitule, Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:intitule,   :user_id, :type_id, :instant_id)";
+    // On vérifie que l'intitulé de l'action a bien été récupéré
+    if(empty($intitule)) 
+    $intitule = "Connexion de ".$user["identifiant"];
+    $data = [
+        "intitule" => $intitule,
+        "user_id" => $user['cle'],
+        "type_id" => $type_id,
+        "instant_id" => $instant_id
+    ];
+    post_request($bdd, $sql, $data);
 }
