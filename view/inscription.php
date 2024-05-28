@@ -99,13 +99,15 @@
             header("Location: erreur.php");
             exit;
         }
-
-        // On enregistre la connexion de l'utilisateur
-        // require_once ('../components/connect_user.php');
         
         // On prépare la redirection del'utilisateur
         session_start();
         $_SESSION['user'] = $new_user->exportToArray();
+        $_SESSION['intitule'] = "Inscription de " . $new_user->getIdentifiant();
+
+        // On enregistre la connexion de l'utilisateur
+        require_once ('../components/connect_user.php');
+
         // On redirige la page
         header("Location: ../index.php");
         exit;

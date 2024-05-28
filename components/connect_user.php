@@ -5,6 +5,8 @@ require_once('../objects/Instants.php');
 
 // On récupère la requête
 $user = $_SESSION['user'];
+$intitule = $_SESSIon['intitule'];
+
 if(empty($user)) {
     $e = new Exception("Profil utilisateur introuvable");
     $_SESSION['erreur'] = $e;
@@ -73,24 +75,24 @@ if(empty($user)) {
     }
 
     try {
+        // On prépare la requête d'ajout à la base de données
         $sql = "INSERT INTO actions (Intitule, Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:intitule,   :user_id, :type_id, :instant_id)";
         $query = $bdd->prepare($sql);
-
-
-        echo "<script>console.log(\"Clé utilisateur : " . $user["cle"] . "\");</script>";
-
+        // On vérifie que l'intitulé de l'action a bien été récupéré
+        if(empty($intitule)) 
+            $intitule = "Connexion de ".$user["identifiant"];
+        // On envoie la requête au serveur
         $query->execute([
-            "intitule" => "Connexion de ".$user["identifiant"],
+            "intitule" => $intitule,
             "user_id" => $user['cle'],
             "type_id" => $type_id,
             "instant_id" => $instant_id
         ]);
+        
     } catch(PDOException $e){
-        /* 
         $_SESSION['erreur'] = $e;
         // On redirige la page
         header("Location: erreur.php");
         exit;
-        */
     }
 }

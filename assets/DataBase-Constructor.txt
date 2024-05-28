@@ -37,7 +37,7 @@ CREATE TABLE Instants (
 
 CREATE TABLE Actions (
 	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(32) NOT NULL UNIQUE,
+    Intitule VARCHAR(32) NOT NULL,
     Description TEXT, 
     Id_Utilisateurs INTEGER NOT NULL,
     Id_Types INTEGER NOT NULL,
