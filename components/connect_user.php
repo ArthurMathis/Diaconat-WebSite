@@ -28,17 +28,6 @@ if(empty($user)) {
     try {
         // On génère l'instant actuel (date et heure actuelles)
         $instants = Instants::currentInstants();
-        // J'enregistre mon instant dans la base de données
-        $sql = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
-        $data = $instants->exportToSQL();
-        post_request($bdd, $sql, $data);
-
-        // On récupère l'id de mon instant 
-        $sql = "SELECT * FROM instants WHERE Jour = :jour AND Heure = :heure";
-        $query = $bdd->prepare($sql);
-        // On implémente
-        $result = get_request($bdd, $sql, $data, true, true);
-        $instant_id = $result['Id'];
 
     } catch(InvalideInstantExceptions $e){
         $_SESSION['erreur'] = $e;
@@ -46,6 +35,18 @@ if(empty($user)) {
         header("Location: ../view.erreur.php");
         exit;
     } 
+
+    // J'enregistre mon instant dans la base de données
+    $sql = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
+    $data = $instants->exportToSQL();
+    post_request($bdd, $sql, $data);
+
+    // On récupère l'id de mon instant 
+    $sql = "SELECT * FROM instants WHERE Jour = :jour AND Heure = :heure";
+    $query = $bdd->prepare($sql);
+    // On implémente
+    $result = get_request($bdd, $sql, $data, true, true);
+    $instant_id = $result['Id'];
 
     // On ajoute l'action à la base de données
     $sql = "INSERT INTO actions (Intitule, Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:intitule,   :user_id, :type_id, :instant_id)";

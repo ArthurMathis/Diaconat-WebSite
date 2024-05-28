@@ -45,35 +45,10 @@
             exit;
         }
 
-        // // On récupère les rôles
-        // $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
-        // $data = [":nom" => $identifiant];
-        // $users = get_request($bdd, $sql, $data, false, true);
-        // // On vérifie qu'il y a des utilisateurs
-        // if(empty($users)) 
-        //     // On émet une erreur si la base de données est vide
-        //     throw new Exception("Aucun utilisateur enregistré");
-
-        try {
-            // On récupère les rôles
-            $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
-            $query = $bdd->prepare($sql);
-            $query->execute([":nom" => $identifiant]);
-            $users = $query->fetchAll(PDO::FETCH_ASSOC);
-            
-            // On vérifie qu'il y a des utilisateurs
-            if(empty($users)) 
-                // On émet une erreur si la base de données est vide
-                throw new Exception("Aucun utilisateur enregistré");
-        
-        } catch(PDOException $e){
-            echo "<script>
-                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
-                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
-            </script>";
-        } catch(Exception $e){
-            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
-        }
+        // On récupère les Utilisateurs
+        $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
+        $data = [":nom" => $identifiant];
+        $users = get_request($bdd, $sql, $data, false, true);
 
         // On déclare les variables tampons
         $i = 0;
@@ -107,7 +82,6 @@
         }
         if($i == $size) 
             throw new Exception("Aucun utilisateur correspondant");
-        
     }
     ?>
     
