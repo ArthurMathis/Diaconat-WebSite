@@ -105,20 +105,6 @@ class Utilisateurs {
         // On retourne le rôle
         return $result;
     }
-    // static function searchRole($bdd, $role) {
-    //     // On initialise la requête
-    //     $sql = "SELECT * FROM roles WHERE Id = :Id";
-    //     $query = $bdd->prepare($sql);
-    //     
-    //     // On lance la requête
-    //     $query->execute(["Id" => $role]);
-    //     $result = $query->fetch(PDO::FETCH_ASSOC);
-    // 
-    //     // On teste les résultats
-    //     if(empty($result))
-    //         throw new Exception("Role introuvable");
-    //     else return $result;
-    // }
     // public function searchRole_id($bdd) {
     //     // On initialise la requête
     //     $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
@@ -165,42 +151,9 @@ class Utilisateurs {
         // On implémente
         $this->setCle($user["Id"]);
     }
-    // public function searchCle($bdd) {
-    //     try {
-    //         // On récupère l'utilisateur dans la base de données
-    //         $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
-    //         $query = $bdd->prepare($sql);
-    //         $params = [
-    //             'nom' => $this->getIdentifiant(),
-    //             'email' => $this->getEmail(),
-    //             'id_Roles' => $this->searchRole_id($bdd)
-    //         ];
-    //         $query->execute($params);
-    //         $user = $query->fetch(PDO::FETCH_ASSOC);
-    //         
-    //         // On vérifie qu'il y a des utilisateurs
-    //         if(empty($user)) 
-    //             // On émet une erreur si la base de données est vide
-    //             throw new Exception("Erreur lors de la récupération de la clé de l'utilisateur");
-    // 
-    //     } catch(PDOException $e) {
-    //         echo "<script>
-    //             console.log(\"Erreur PDO : " . $e->getMessage() . " \");
-    //             console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
-    //         </script>";
-    //     } catch(Exception $e) {
-    //         echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
-    //     }
-    // 
-    //     // Afficher le contenu de $user
-    //     if (empty($user)) 
-    //         echo "<script>console.log('Aucun utilisateur trouvé');</script>";
-    // 
-    //     else $this->setCle($user["Id"]);
-    // }
 
     /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
-    public static function createFromArray(array $data) {
+    public static function createFromArray(array $data): Utilisateurs {
         return new self(
             $data['identifiant'],
             $data['email'],
@@ -210,7 +163,7 @@ class Utilisateurs {
         );
     }
     /// Méthode retournant l'item sous forme d'un tableau associatif
-    public function exportToArray() {
+    public function exportToArray(): array {
         return [
             'identifiant' => $this->getIdentifiant(),
             'email' => $this->getEmail(),
@@ -221,7 +174,7 @@ class Utilisateurs {
     }
 
     /// Méthode publique exportant l'item sous-forme de tableau associatif avec le mot de passe haché
-    public function exportToSQL($bdd){
+    public function exportToSQL($bdd): array {
         return [
             'nom' => $this->getIdentifiant(),
             'email' => $this->getEmail(),

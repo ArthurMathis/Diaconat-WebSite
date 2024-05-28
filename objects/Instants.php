@@ -49,7 +49,7 @@ class Instants {
         return $dateTime && $dateTime->format($format) === $heureString;
     }
 
-    public static function currentInstants() {
+    public static function currentInstants(): Instants {
         // On crée un objet DateTime représentant la date et l'heure actuelle
         $now = new DateTime('now', new DateTimeZone('UTC'));
         
@@ -60,7 +60,7 @@ class Instants {
         // On crée un nouvel objet Instants avec la date et l'heure actuelles
         return new Instants($date, $heure);
     }
-    public function exportToSQL(){
+    public function exportToSQL(): array {
         return [
             "jour" => $this->getdate(), 
             "heure" => $this->getHeure()
