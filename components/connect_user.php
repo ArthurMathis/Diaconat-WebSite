@@ -2,6 +2,7 @@
 
 require_once("../components/connect_server.php");
 require_once('../objects/Instants.php');
+include ("../components/data_requets.php");
 
 // On récupère la requête
 $user = $_SESSION['user'];
@@ -17,27 +18,11 @@ if(empty($user)) {
     // On récupère l'accès à la base de données
     global $bdd;
 
-    try {
-        // On récupère les types d'actions
-        $sql = "SELECT * FROM types WHERE Intitule = :Intitule";
-        $query = $bdd->prepare($sql);
-        $query->execute(["Intitule" => "Connexion"]);
-
-        // On récupère le résultat de la requête
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if(empty($result)) 
-            throw new Exception("Erreur de récupération du type d'action");
-        else {
-            $type = $result['Intitule'];
-            $type_id = $result['Id'];
-        }
-
-    } catch(PDOException $e){
-        $_SESSION['erreur'] = $e;
-        // On redirige la page
-        header("Location: ../view/erreur.php");
-        exit;
-    }
+    $sql = "SELECT * FROM types WHERE Intitule = :Intitule";
+    $data = ["Intitule" => "Connexion"];
+    $result = get_request($bdd, $sql, $data);
+    $type = $result['Intitule'];
+    $type_id = $result['Id'];
 
     try {
         // On génère l'instant actuel (date et heure actuelles)
