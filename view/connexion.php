@@ -14,8 +14,9 @@
 
     <?php
     
-    require_once("../components/connect_server.php");
-    require_once("../objects/Utilisateurs.php");
+    require_once "../components/connect_server.php";
+    require_once "../objects/Utilisateurs.php";
+    require_once "../components/data_requests.php";
 
     // On récupère l'accès à la base de données
     global $bdd;
@@ -43,7 +44,16 @@
             header("Location: erreur.php");
             exit;
         }
-        
+
+        // // On récupère les rôles
+        // $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
+        // $data = [":nom" => $identifiant];
+        // $users = get_request($bdd, $sql, $data, false);
+        // // On vérifie qu'il y a des utilisateurs
+        // if(empty($users)) 
+        //     // On émet une erreur si la base de données est vide
+        //     throw new Exception("Aucun utilisateur enregistré");
+
         try {
             // On récupère les rôles
             $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
@@ -55,7 +65,7 @@
             if(empty($users)) 
                 // On émet une erreur si la base de données est vide
                 throw new Exception("Aucun utilisateur enregistré");
-   
+        
         } catch(PDOException $e){
             echo "<script>
                 console.log(\"Erreur PDO : " . $e->getMessage() . " \");
@@ -87,7 +97,7 @@
                 $_SESSION['intitule'] = "Connexion de " . $user->getIdentifiant();
 
                 // On enregistre la connexion de l'utilisateur
-                require_once ('../components/connect_user.php');
+                include '../components/connect_user.php';
 
                 // On redirige la page
                 header("Location: ../index.php");

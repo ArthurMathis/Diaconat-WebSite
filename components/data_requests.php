@@ -17,7 +17,11 @@ function test_data_request($bdd, $sql, $data): bool {
     return $res;
 }
 
-function get_request($bdd, $sql, $data): ?array {
+function get_request($bdd, $sql, $data, $unique): ?array {
+    // On vérifie le paramètre uniquue
+    if(empty($unique)) 
+        $unique = true;
+
     // On vérifie l'intégrité des paramètres
     if(test_data_request($bdd, $sql, $data)) try {
         // On prépare la requête
@@ -25,9 +29,12 @@ function get_request($bdd, $sql, $data): ?array {
         $query->execute($data);
 
         // On récupère le résultat de la requête
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if(empty($result)) 
-            throw new Exception("Erreur de récupération du type d'action");
+        if($unique) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if(empty($result)) 
+                throw new Exception("Requête: " . $sql ."\nAucun résultat correspondant");
+
+        } else $result = $query->fetchAll(PDO::FETCH_ASSOC);
         
         // On retourne le résultat de la requête 
         return $result;
@@ -44,6 +51,34 @@ function get_request($bdd, $sql, $data): ?array {
         exit;
     } 
 }
+
+// function get_request($bdd, $sql, $data): ?array {
+//     // On vérifie l'intégrité des paramètres
+//     if(test_data_request($bdd, $sql, $data)) try {
+//         // On prépare la requête
+//         $query = $bdd->prepare($sql);
+//         $query->execute($data);
+// 
+//         // On récupère le résultat de la requête
+//         $result = $query->fetch(PDO::FETCH_ASSOC);
+//         if(empty($result)) 
+//             throw new Exception("Requête: " . $sql ."\nAucun résultat correspondant");
+//         
+//         // On retourne le résultat de la requête 
+//         return $result;
+// 
+//     } catch(Exception $e){
+//         $_SESSION['erreur'] = $e;
+//         // On redirige la page
+//         header("Location: ../view/erreur.php");
+//         exit;
+//     } catch(PDOException $e){
+//         $_SESSION['erreur'] = $e;
+//         // On redirige la page
+//         header("Location: ../view/erreur.php");
+//         exit;
+//     } 
+// }
 
 function post_request($bdd, $sql, $data): bool {
     // On déclare une variable tampon
