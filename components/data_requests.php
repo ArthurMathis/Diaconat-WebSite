@@ -1,6 +1,6 @@
 <?php 
 
-function get_request($bdd, $sql, $data) {
+function get_request($bdd, $sql, $data): ?array {
     // On vérifie l'intégrité des paramètres
     if(empty($bdd) || !$bdd instanceof PDO) 
         throw new Exception("La base de données doit être passée en paramètre !");
@@ -34,3 +34,4 @@ function get_request($bdd, $sql, $data) {
         exit;
     }   
 }
+

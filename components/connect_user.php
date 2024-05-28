@@ -2,7 +2,7 @@
 
 require_once("../components/connect_server.php");
 require_once('../objects/Instants.php');
-include ("../components/data_requets.php");
+include ("../components/data_requests.php");
 
 // On récupère la requête
 $user = $_SESSION['user'];
@@ -18,9 +18,11 @@ if(empty($user)) {
     // On récupère l'accès à la base de données
     global $bdd;
 
+    // On récupère le type connexion 
     $sql = "SELECT * FROM types WHERE Intitule = :Intitule";
     $data = ["Intitule" => "Connexion"];
     $result = get_request($bdd, $sql, $data);
+    // On implémente
     $type = $result['Intitule'];
     $type_id = $result['Id'];
 
@@ -36,13 +38,10 @@ if(empty($user)) {
         // On récupère l'id de mon instant 
         $sql = "SELECT * FROM instants WHERE Jour = :jour AND Heure = :heure";
         $query = $bdd->prepare($sql);
-        $query->execute($instants->exportToSQL());
-
-        // On récupère le résultat de la requête
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if(empty($result)) 
-            throw new Exception("Erreur de récupération du type d'action");
-        else $instant_id = $result['Id'];
+        $data = $instants->exportToSQL();
+        // On implémente
+        $result = get_request($bdd, $sql, $data);
+        $instant_id = $result['Id'];
 
     } catch(InvalideInstantExceptions $e){
         $_SESSION['erreur'] = $e;
