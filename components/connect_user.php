@@ -49,12 +49,9 @@ if(empty($user)) {
     $instant_id = $result['Id'];
 
     // On ajoute l'action à la base de données
-    $sql = "INSERT INTO actions (Intitule, Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:intitule,   :user_id, :type_id, :instant_id)";
+    $sql = "INSERT INTO actions (Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:user_id, :type_id, :instant_id)";
     // On vérifie que l'intitulé de l'action a bien été récupéré
-    if(empty($intitule)) 
-    $intitule = "Connexion de ".$user["identifiant"];
     $data = [
-        "intitule" => $intitule,
         "user_id" => $user['cle'],
         "type_id" => $type_id,
         "instant_id" => $instant_id

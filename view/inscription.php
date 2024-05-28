@@ -81,7 +81,7 @@
                 // On prépare la redirection de l'utilisateur
                 session_start();
                 $_SESSION['user'] = $user->exportToArray();
-                $_SESSION['intitule'] = "Première connexion de " . $user->getIdentifiant();
+                // $_SESSION['intitule'] = "Première connexion de " . $user->getIdentifiant();
 
                 // On enregistre la connexion de l'utilisateur
                 require_once ('../components/connect_user.php');
