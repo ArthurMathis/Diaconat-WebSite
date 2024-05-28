@@ -47,14 +47,3 @@ CREATE TABLE Actions (
     FOREIGN KEY (Id_Types) REFERENCES Types(Id),
     FOREIGN KEY (Id_Instants) REFERENCES Instants(Id)
 );
-
-// Utile ??
-
-CREATE TABLE Se_connecter (
-    Id_Utilisateurs INTEGER NOT NULL,
-    Id_Instants INTEGER NOT NULL,
-
-    PRIMARY KEY (Id_Utilisateurs, Id_Instants),
-    FOREIGN KEY (Id_Utilisateurs) REFERENCES Utilisateurs(Id),
-    FOREIGN KEY (Id_Instants) REFERENCES Instants(Id)
-);

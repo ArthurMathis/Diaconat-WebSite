@@ -39,9 +39,6 @@ if(empty($user)) {
         exit;
     }
 
-    global $type;
-    global $type_id;
-
     try {
         // On génère l'instant actuel (date et heure actuelles)
         $instants = Instants::currentInstants();

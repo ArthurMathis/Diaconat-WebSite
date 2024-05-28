@@ -37,6 +37,7 @@
             } elseif($motdepasse != $confirmation) {
                 throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
             }
+
         } catch(Exception $e){
             session_start();
             $_SESSION['erreur'] = $e;
@@ -44,11 +45,6 @@
             header("Location: erreur.php");
             exit;
         }
-
-        global $identifiant;
-        global $email;
-        global $motdepasse;
-        global $confirmation;
 
         try {
            // On récupère les rôles
@@ -74,9 +70,6 @@
             echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
         }
 
-        global $role;
-        global $role_id;
-
         try {
             // On génère un nouvel Utilisateur selon les données
             $new_user = new Utilisateurs($identifiant, $email, $motdepasse, $role);
@@ -99,7 +92,67 @@
             header("Location: erreur.php");
             exit;
         }
+
+        // Ajout 
+
+        try {
+            // On récupère les rôles
+            $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
+            $query = $bdd->prepare($sql);
+            $query->execute([":nom" => $identifiant]);
+            $users = $query->fetchAll(PDO::FETCH_ASSOC);
+            
+            // On vérifie qu'il y a des utilisateurs
+            if(empty($users)) 
+                // On émet une erreur si la base de données est vide
+                throw new Exception("Aucun utilisateur enregistré");
+   
+        } catch(PDOException $e){
+            echo "<script>
+                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
+                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
+            </script>";
+        } catch(Exception $e){
+            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
+        }
+
+        // On déclare les variables tampons
+        $i = 0;
+        $size = count($users);
+        $find = false;  
+
+        // On fait défiler la table
+        while($i < $size && !$find) {
+            if($users[$i]["Nom"] == $new_user->getIdentifiant() && $users[$i]["Email"] == $new_user->getEmail()) {              
+                // On implémente find
+                $find = true;
+                // On récupère le rôle de l'utilisateur
+                $role = Utilisateurs::searchRole($bdd, $users[$i]["Id_Roles"]);
+                // On construit l'utilisateur php
+                $user = new Utilisateurs($users[$i]["Nom"], $users[$i]["Email"], $motdepasse, $role["Intitule"]);
+                $user->searchCle($bdd);
+
+                // On prépare la redirection de l'utilisateur
+                session_start();
+                $_SESSION['user'] = $user->exportToArray();
+                $_SESSION['intitule'] = "Première connexion de " . $user->getIdentifiant();
+
+                // On enregistre la connexion de l'utilisateur
+                require_once ('../components/connect_user.php');
+
+                // On redirige la page
+                header("Location: ../index.php");
+                exit;
+            }
+            $i++;
+        }
+        if($i == $size) 
+            throw new Exception("Erreur lors du chargement du profil");
+
+        // Fin de l'ajout
         
+
+        /*
         // On prépare la redirection del'utilisateur
         session_start();
         $_SESSION['user'] = $new_user->exportToArray();
@@ -111,6 +164,7 @@
         // On redirige la page
         header("Location: ../index.php");
         exit;
+        */
     }
     ?>
 

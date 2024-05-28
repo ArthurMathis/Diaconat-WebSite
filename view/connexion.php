@@ -43,10 +43,7 @@
             header("Location: erreur.php");
             exit;
         }
-
-        global $identifiant;
-        global $motdepasse;
-
+        
         try {
             // On récupère les rôles
             $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
@@ -67,8 +64,6 @@
         } catch(Exception $e){
             echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
         }
-
-        global $users;
 
         // On déclare les variables tampons
         $i = 0;
