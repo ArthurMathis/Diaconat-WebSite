@@ -47,8 +47,7 @@
         }
 
         // On récupère le rôle invité
-        $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-        $result = get_request($bdd, $sql, ["Intitule" => "Invite"], true, true);
+        $result = Utilisateurs::searchRole($bdd, "Invite");
         // On implémente
         $role = $result['Intitule'];
         $role_id = $result['Id'];

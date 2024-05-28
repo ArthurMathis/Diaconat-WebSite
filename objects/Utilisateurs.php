@@ -94,10 +94,21 @@ class Utilisateurs {
         else $this->cle = $cle;
     }
 
-    static function searchRole($bdd, $role) {
+    static function searchRole($bdd, $role): array {
         // On initialise la requête
-        $sql = "SELECT * FROM roles WHERE Id = :Id";
-        $data = ["Id" => $role];
+        if(is_numeric($role)) {
+            $sql = "SELECT * FROM roles WHERE Id = :Id";
+            $data = ["Id" => $role];
+
+        } elseif(is_string($role)) {
+            $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
+            $data = ["Intitule" => $role];
+
+        } else 
+            throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+
+        echo "<script>console.log(\"" . $sql . "\");</script>";
+        echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
 
         // On lance la requête
         $result = get_request($bdd, $sql, $data, true, true);
@@ -105,6 +116,17 @@ class Utilisateurs {
         // On retourne le rôle
         return $result;
     }
+    // static function searchRole($bdd, $role): array {
+    //     // On initialise la requête
+    //     $sql = "SELECT * FROM roles WHERE Id = :Id";
+    //     $data = ["Id" => $role];
+    // 
+    //     // On lance la requête
+    //     $result = get_request($bdd, $sql, $data, true, true);
+    // 
+    //     // On retourne le rôle
+    //     return $result;
+    // }
     // public function searchRole_id($bdd) {
     //     // On initialise la requête
     //     $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
