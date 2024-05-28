@@ -17,10 +17,13 @@ function test_data_request($bdd, $sql, $data): bool {
     return $res;
 }
 
-function get_request($bdd, $sql, $data, $unique): ?array {
+function get_request($bdd, $sql, $data, $unique, $present): ?array {
     // On vérifie le paramètre uniquue
-    if(empty($unique)) 
-        $unique = true;
+    if(empty($unique) || !is_bool($unique)) 
+        $unique = false;
+    // On vérifie le paramètre uniquue
+    if(empty($present) || !is_bool($present)) 
+        $present = false;
 
     // On vérifie l'intégrité des paramètres
     if(test_data_request($bdd, $sql, $data)) try {
@@ -29,12 +32,13 @@ function get_request($bdd, $sql, $data, $unique): ?array {
         $query->execute($data);
 
         // On récupère le résultat de la requête
-        if($unique) {
+        if($unique) 
             $result = $query->fetch(PDO::FETCH_ASSOC);
-            if(empty($result)) 
-                throw new Exception("Requête: " . $sql ."\nAucun résultat correspondant");
+        else 
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        } else $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if($present && empty($result)) 
+            throw new Exception("Requête: " . $sql ."\nAucun résultat correspondant");
         
         // On retourne le résultat de la requête 
         return $result;

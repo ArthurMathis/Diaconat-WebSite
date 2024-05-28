@@ -21,7 +21,7 @@ if(empty($user)) {
     // On récupère le type connexion 
     $sql = "SELECT * FROM types WHERE Intitule = :Intitule";
     $data = ["Intitule" => "Connexion"];
-    $result = get_request($bdd, $sql, $data, true);
+    $result = get_request($bdd, $sql, $data, true, true);
     // On implémente
     $type = $result['Intitule'];
     $type_id = $result['Id'];
@@ -38,7 +38,7 @@ if(empty($user)) {
         $sql = "SELECT * FROM instants WHERE Jour = :jour AND Heure = :heure";
         $query = $bdd->prepare($sql);
         // On implémente
-        $result = get_request($bdd, $sql, $data, true);
+        $result = get_request($bdd, $sql, $data, true, true);
         $instant_id = $result['Id'];
 
     } catch(InvalideInstantExceptions $e){

@@ -48,7 +48,7 @@
         // // On récupère les rôles
         // $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
         // $data = [":nom" => $identifiant];
-        // $users = get_request($bdd, $sql, $data, false);
+        // $users = get_request($bdd, $sql, $data, false, true);
         // // On vérifie qu'il y a des utilisateurs
         // if(empty($users)) 
         //     // On émet une erreur si la base de données est vide

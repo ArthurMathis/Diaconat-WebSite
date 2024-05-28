@@ -100,7 +100,7 @@ class Utilisateurs {
         $data = ["Id" => $role];
 
         // On lance la requête
-        $result = get_request($bdd, $sql, $data, true);
+        $result = get_request($bdd, $sql, $data, true, true);
 
         // On retourne le rôle
         return $result;
@@ -146,7 +146,7 @@ class Utilisateurs {
         ];
     
         // On lance la requête
-        $user = get_request($bdd, $sql, $params, true);
+        $user = get_request($bdd, $sql, $params, true, true);
     
         // On implémente
         $this->setCle($user["Id"]);
