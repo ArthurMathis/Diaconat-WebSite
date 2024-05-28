@@ -20,8 +20,7 @@ if(empty($user)) {
 
     // On récupère le type connexion 
     $sql = "SELECT * FROM types WHERE Intitule = :Intitule";
-    $data = ["Intitule" => "Connexion"];
-    $result = get_request($bdd, $sql, $data, true, true);
+    $result = get_request($bdd, $sql, ["Intitule" => "Connexion"], true, true);
     // On implémente
     $type = $result['Intitule'];
     $type_id = $result['Id'];

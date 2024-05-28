@@ -46,57 +46,20 @@
             exit;
         }
 
-        try {
-           // On récupère les rôles
-           $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-           $query = $bdd->prepare($sql);
-           $query->execute(["Intitule" => "Invite"]);
-           $result = $query->fetch(PDO::FETCH_ASSOC);
+        // On récupère le rôle invité
+        $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
+        $result = get_request($bdd, $sql, ["Intitule" => "Invite"], true, true);
+        // On implémente
+        $role = $result['Intitule'];
+        $role_id = $result['Id'];
 
-           if(empty($result)) 
-               throw new Exception("Erreur de récupération du rôle l'utilisateur");
-            
-            else {
-                $role = $result['Intitule'];
-                $role_id = $result['Id'];
-            }
-   
-        } catch(PDOException $e){
-            echo "<script>
-                console.log(\"Erreur PDO : " . $e->getMessage() . " \");
-                console.log(\"Code d'erreur PDO : " . $e->getCode() . " \");
-            </script>";
-        } catch(Exception $e){
-            echo "<script>console.log(\"Aucun utilisateur enregistré correspondant à la requête\");</script>";
-        }
+        // On génère un nouvel Utilisateur selon les données
+        $new_user = new Utilisateurs($identifiant, $email, $motdepasse, $role);
+        $sql = "INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)";
+        post_request($bdd, $sql, $new_user->exportToSQL($bdd));
 
         try {
-            // On génère un nouvel Utilisateur selon les données
-            $new_user = new Utilisateurs($identifiant, $email, $motdepasse, $role);
-
-            // On génère une requête MySQL
-            $query =  $bdd->prepare("INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)");
-            // On envoie la requête au serveur
-            $query->execute($new_user->exportToSQL($bdd));
-
-        } catch(InvalideUtilisateurExceptions $e) {
-            session_start();
-            $_SESSION['erreur'] = $e;
-            // On redirige la page
-            header("Location: erreur.php");
-            exit;
-        } catch(PDOException $e){
-            session_start();
-            $_SESSION['erreur'] = $e;
-            // On redirige la page
-            header("Location: erreur.php");
-            exit;
-        }
-
-        // Ajout 
-
-        try {
-            // On récupère les rôles
+            // On récupère les utilisateurs
             $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
             $query = $bdd->prepare($sql);
             $query->execute([":nom" => $identifiant]);
@@ -148,23 +111,6 @@
         }
         if($i == $size) 
             throw new Exception("Erreur lors du chargement du profil");
-
-        // Fin de l'ajout
-        
-
-        /*
-        // On prépare la redirection del'utilisateur
-        session_start();
-        $_SESSION['user'] = $new_user->exportToArray();
-        $_SESSION['intitule'] = "Inscription de " . $new_user->getIdentifiant();
-
-        // On enregistre la connexion de l'utilisateur
-        require_once ('../components/connect_user.php');
-
-        // On redirige la page
-        header("Location: ../index.php");
-        exit;
-        */
     }
     ?>
 
