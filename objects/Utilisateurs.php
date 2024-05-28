@@ -1,6 +1,6 @@
 <?php
 
-include "../components/data_requests.php";
+require_once "../components/data_requests.php";
 
 class InvalideUtilisateurExceptions extends Exception {
     public function __construct($message){
@@ -116,47 +116,9 @@ class Utilisateurs {
         // On retourne le rôle
         return $result;
     }
-    // static function searchRole($bdd, $role): array {
-    //     // On initialise la requête
-    //     $sql = "SELECT * FROM roles WHERE Id = :Id";
-    //     $data = ["Id" => $role];
-    // 
-    //     // On lance la requête
-    //     $result = get_request($bdd, $sql, $data, true, true);
-    // 
-    //     // On retourne le rôle
-    //     return $result;
-    // }
-    // public function searchRole_id($bdd) {
-    //     // On initialise la requête
-    //     $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-    //     $data = ["Intitule" => $this->getRole()];
-    //     
-    //     // On lance la requête
-    //     $result = get_request($bdd, $sql, $data, true);
-    // 
-    //     // On retourne le rôle
-    //     return $result;
-    // }
     public function searchRole_id($bdd) {
-        // On initialise la requête
-        $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-        $query = $bdd->prepare($sql);
-        
-        // On lance la requête
-        $query->execute(["Intitule" => $this->getRole()]);
-        
-        // On récupère le résultat de la requête
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        
-        // On teste si la requête a renvoyé des résultats
-        if(!$result) {
-            throw new Exception("Rôle introuvable");
-            return null;
-            
-        } else {
-            return $result['Id'];
-        }
+        $role = Utilisateurs::searchRole($bdd, $this->getRole());
+        return $role['Id'];
     }
     public function searchCle($bdd) {
         // On initialise la requête

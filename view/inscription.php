@@ -13,8 +13,8 @@
     
     <?php 
 
-    require_once('../components/connect_server.php');
-    require_once("../objects/Utilisateurs.php");
+    require_once "../components/connect_server.php";
+    require_once "../objects/Utilisateurs.php";
 
     // On réagit à la validation du formulaire
     if($_SERVER["REQUEST_METHOD"] == "POST") {
