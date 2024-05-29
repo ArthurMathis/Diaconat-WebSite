@@ -68,7 +68,7 @@ class Login {
 
         // On déclare les variables tampons
         $i = 0;
-        $size = count($users);
+        $size = $users != null ? count($users) : 0;    
         $find = false;  
 
         // On fait défiler la table
@@ -87,7 +87,7 @@ class Login {
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    echo "<script>console.log(\"" . $e->getMessage() . "\");</script>";
+                    echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
                 }
 
                 // On retourne notre utilisateur, la connexion est validée
@@ -173,7 +173,7 @@ class Login {
         return $res;
     }
     /// Méthode privée exécutant une requête GET à la base de données
-    protected function get_request($request, $params, $unique, $present): ?array {
+    protected function get_request($request, $params, $unique=false, $present=false): ?array {
         // On vérifie le paramètre uniquue
         if(empty($unique) || !is_bool($unique)) 
             $unique = false;
@@ -200,21 +200,15 @@ class Login {
             return $result;
     
         } catch(Exception $e){
-            echo "<script>console.log(\"" . $e->getMessage() . "\");</script>";
-            // $_SESSION['erreur'] = $e;
-            // // On redirige la page
-            // header("Location: ../view/erreur.php");
-            // exit;
+            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
         } catch(PDOException $e){
-            echo "<script>console.log(\"" . $e->getMessage() . "\");</script>";
-            // $_SESSION['erreur'] = $e;
-            // // On redirige la page
-            // header("Location: ../view/erreur.php");
-            // exit;
+            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
         } 
+
+        return null;
     }
     /// Méthode privée exécutant une requête POST à la base de données
-    private function post_request($request, $params): bool {
+    protected function post_request($request, $params): bool {
         // On déclare une variable tampon
         $res = true;
     
@@ -229,7 +223,7 @@ class Login {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            echo "<script>console.log(\"" . $e->getMessage() . "\");</script>";
+            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
             // $_SESSION['erreur'] = $e;
             // // On redirige la page
             // header("Location: ../view/erreur.php");

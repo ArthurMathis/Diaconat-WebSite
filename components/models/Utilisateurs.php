@@ -106,48 +106,6 @@ class Utilisateurs {
         else $this->role_id = $role_id;
     }
 
-    // static function searchRole($bdd, $role): array {
-    //     // On initialise la requête
-    //     if(is_numeric($role)) {
-    //         $sql = "SELECT * FROM roles WHERE Id = :Id";
-    //         $data = ["Id" => $role];
-    // 
-    //     } elseif(is_string($role)) {
-    //         $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-    //         $data = ["Intitule" => $role];
-    // 
-    //     } else 
-    //         throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
-    // 
-    //     echo "<script>console.log(\"" . $sql . "\");</script>";
-    //     echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
-    // 
-    //     // On lance la requête
-    //     $result = get_request($bdd, $sql, $data, true, true);
-    // 
-    //     // On retourne le rôle
-    //     return $result;
-    // }
-    // public function searchRole_id($bdd) {
-    //     $role = Utilisateurs::searchRole($bdd, $this->getRole());
-    //     return $role['Id'];
-    // }
-    // public function searchCle($bdd) {
-    //     // On initialise la requête
-    //     $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
-    //     $params = [
-    //         'nom' => $this->getIdentifiant(),
-    //         'email' => $this->getEmail(),
-    //         'id_Roles' => $this->searchRole_id($bdd)
-    //     ];
-    // 
-    //     // On lance la requête
-    //     $user = get_request($bdd, $sql, $params, true, true);
-    // 
-    //     // On implémente
-    //     $this->setCle($user["Id"]);
-    // }
-
     /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
     public static function createFromArray(array $data): Utilisateurs {
         return new self(
@@ -168,14 +126,4 @@ class Utilisateurs {
             'cle' => $this->getCle()
         ];
     }
-
-    /// Méthode publique exportant l'item sous-forme de tableau associatif avec le mot de passe haché
-    // public function exportToSQL($bdd): array {
-    //     return [
-    //         'nom' => $this->getIdentifiant(),
-    //         'email' => $this->getEmail(),
-    //         'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
-    //         'id_Roles' => $this->searchRole_id($bdd),
-    //     ];
-    // }
 }
