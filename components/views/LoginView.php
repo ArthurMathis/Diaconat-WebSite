@@ -1,7 +1,8 @@
 <?php
 
-class TransfertView extends View
-{
+require_once 'View.php';
+
+class LoginView extends View {
     public function getContent() {
         $this->generateCommonHeader();
         include LAYOUTS.DS.'login.php';

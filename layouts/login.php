@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="\assets\stylesheet\connexion.css">
-
-<img src="../assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
+<img src="layouts/assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
 <form method="post" action="">
-    <img src="../assets/img/ico_diaconat_mulhouse.webp">
+    <img src="layouts/assets/img/ico_diaconat_mulhouse.webp">
     <h2>Entrez votre identifiant et mot de passe pour accéder au site web</h2>
     <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
     <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe">

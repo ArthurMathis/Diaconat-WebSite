@@ -21,13 +21,13 @@ class Connexion {
             $db_host = str_replace('/', '', $db_host);
     
             $db_fetch = "$db_connection:host=$db_host;port=$db_port;dbname=$db_name";
-            
+
             $this->connection = new PDO($db_fetch, $db_user, $db_password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             echo "<script>console.log(\"Connexion à " . $db_fetch . "réussie !\");</script>";
-        }
-        catch(PDOException $Exception) {
+            
+        } catch(PDOException $Exception) {
             echo $Exception->getMessage();
         }
         return $this->connection;

@@ -2,10 +2,10 @@
 
 class View {
     public function generateCommonHeader($name=null) {
-        return LAYOUTS.'entete.php';
+        include LAYOUTS.DS.'entete.php';
     }
 
     public function generateCommonFooter() {
-        return LAYOUTS.DS.'footer.php';
+        include LAYOUTS.DS.'footer.php';
     }
 }

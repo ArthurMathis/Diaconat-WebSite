@@ -13,6 +13,9 @@ define ('CONTROLLERS', COMPONENTS.DS.'controllers');
 
 // On définit le chemin vers le sous-répertoire de page web
 define ('LAYOUTS', ROOT.DS.'layouts');
+define ('ASSETS', LAYOUTS.DS.'assets');
+define ('STYLESHEET', ASSETS.DS.'stylesheet');
+define ('IMG', ASSETS.DS.'img');
 
 // Utile ?
 define('LOG', 'log');
