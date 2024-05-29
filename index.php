@@ -9,7 +9,26 @@ session_start();
 
 // On lance la connexion à la base de données
 env_start();
-$server = new Connexion();
 
-$c = new LoginController();
-$c->displayLogin();
+global $bdd;
+
+if(isset($_GET['login'])) {
+    switch($_GET['login']) {
+        case 'connexion' : 
+            echo "Bonjour !";
+            break;
+
+        case 'deconnexion' : 
+            break;
+
+        default : 
+            $c = new LoginController();
+            $c->displayLogin();
+            break;
+    }
+
+} else {
+    $c = new LoginController();
+    $c->displayLogin();
+}
+

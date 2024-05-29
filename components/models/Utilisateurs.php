@@ -1,6 +1,6 @@
 <?php
 
-require_once "../components/data_requests.php";
+// require_once "../components/data_requests.php";
 
 class InvalideUtilisateurExceptions extends Exception {
     public function __construct($message){
@@ -10,7 +10,7 @@ class InvalideUtilisateurExceptions extends Exception {
 
 class Utilisateurs {
     /// Attributs privés de la classe
-    private $identifiant, $email, $motdepasse, $role, $cle;
+    private $cle, $identifiant, $email, $motdepasse, $role, $role_id;
 
     /// Constructeur de la classe
     public function __construct($identifiant, $email, $motdepasse, $role) {
@@ -33,6 +33,7 @@ class Utilisateurs {
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
     public function getRole(){ return $this->role; }
+    public function getRole_id(){ /* ... */ }
     public function getCle(){ return $this->cle; }
 
     /// Setters
@@ -93,48 +94,59 @@ class Utilisateurs {
         // On implémente
         else $this->cle = $cle;
     }
+    public function setRole_id($role_id) {
+        // On vérifie que l'id est un nombre positif ou nul
+        if(!is_numeric($role_id)) 
+            throw new InvalideUtilisateurExceptions("La clé extrene de rôle doit être un entier !");
+        // On vérifie que l'id est un nombre positif ou nul
+        elseif($role_id < 0) 
+            throw new InvalideUtilisateurExceptions("La clé extrene de rôle doit être supéieure ou égale à 0 !");
 
-    static function searchRole($bdd, $role): array {
-        // On initialise la requête
-        if(is_numeric($role)) {
-            $sql = "SELECT * FROM roles WHERE Id = :Id";
-            $data = ["Id" => $role];
-
-        } elseif(is_string($role)) {
-            $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-            $data = ["Intitule" => $role];
-
-        } else 
-            throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
-
-        echo "<script>console.log(\"" . $sql . "\");</script>";
-        echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
-
-        // On lance la requête
-        $result = get_request($bdd, $sql, $data, true, true);
-
-        // On retourne le rôle
-        return $result;
-    }
-    public function searchRole_id($bdd) {
-        $role = Utilisateurs::searchRole($bdd, $this->getRole());
-        return $role['Id'];
-    }
-    public function searchCle($bdd) {
-        // On initialise la requête
-        $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
-        $params = [
-            'nom' => $this->getIdentifiant(),
-            'email' => $this->getEmail(),
-            'id_Roles' => $this->searchRole_id($bdd)
-        ];
-    
-        // On lance la requête
-        $user = get_request($bdd, $sql, $params, true, true);
-    
         // On implémente
-        $this->setCle($user["Id"]);
+        else $this->role_id = $role_id;
     }
+
+    // static function searchRole($bdd, $role): array {
+    //     // On initialise la requête
+    //     if(is_numeric($role)) {
+    //         $sql = "SELECT * FROM roles WHERE Id = :Id";
+    //         $data = ["Id" => $role];
+    // 
+    //     } elseif(is_string($role)) {
+    //         $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
+    //         $data = ["Intitule" => $role];
+    // 
+    //     } else 
+    //         throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+    // 
+    //     echo "<script>console.log(\"" . $sql . "\");</script>";
+    //     echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
+    // 
+    //     // On lance la requête
+    //     $result = get_request($bdd, $sql, $data, true, true);
+    // 
+    //     // On retourne le rôle
+    //     return $result;
+    // }
+    // public function searchRole_id($bdd) {
+    //     $role = Utilisateurs::searchRole($bdd, $this->getRole());
+    //     return $role['Id'];
+    // }
+    // public function searchCle($bdd) {
+    //     // On initialise la requête
+    //     $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
+    //     $params = [
+    //         'nom' => $this->getIdentifiant(),
+    //         'email' => $this->getEmail(),
+    //         'id_Roles' => $this->searchRole_id($bdd)
+    //     ];
+    // 
+    //     // On lance la requête
+    //     $user = get_request($bdd, $sql, $params, true, true);
+    // 
+    //     // On implémente
+    //     $this->setCle($user["Id"]);
+    // }
 
     /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
     public static function createFromArray(array $data): Utilisateurs {
@@ -158,12 +170,12 @@ class Utilisateurs {
     }
 
     /// Méthode publique exportant l'item sous-forme de tableau associatif avec le mot de passe haché
-    public function exportToSQL($bdd): array {
-        return [
-            'nom' => $this->getIdentifiant(),
-            'email' => $this->getEmail(),
-            'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
-            'id_Roles' => $this->searchRole_id($bdd),
-        ];
-    }
+    // public function exportToSQL($bdd): array {
+    //     return [
+    //         'nom' => $this->getIdentifiant(),
+    //         'email' => $this->getEmail(),
+    //         'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
+    //         'id_Roles' => $this->searchRole_id($bdd),
+    //     ];
+    // }
 }
