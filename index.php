@@ -14,7 +14,7 @@
         session_start();
 
         // On récupère la requête
-        $user= $_SESSION['user'];
+        $user = $_SESSION['user'];
         if(empty($user)) {
             header("Location: view/connexion.php");
             exit;
