@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    align-items: center;
+
+    width: 100dvw;
+    height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+body > img {
+    width: 50%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+form {
+    width: 50%;
+}
+
+@media screen and (max-width: 1120px) {
+    body > img {
+        display: none;
+    }
+
+    form {
+        width: 100%;
+    }
+}
+  

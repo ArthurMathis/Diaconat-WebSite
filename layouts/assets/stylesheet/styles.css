@@ -4,9 +4,6 @@
     --light-grey: #D9D9D9;
     --white: #fff;
     --blue: #3264A9;    
-    --red: #ff0800;
-    --green: #138808;
-    --yellow: #ffbf00;
 
     --font-size-big: 3.5em;
     --font-size-medium:2.1em;
@@ -37,6 +34,9 @@ body {
     margin-top: var(--nav-barre-size);
 }
 
+
+/******** STYLE PAR DEFAULT ********/
+
 h1 {
     text-transform: uppercase;
     font-size: var(--font-size-big);
@@ -47,12 +47,16 @@ h2 {
     font-size: var(--font-size-medium);
     font-weight: 400;
     font-style: italic;
-    /*letter-spacing: 0.1em;*/
 }
 
 p {
     font-size: var(--font-size-standart);
     font-weight: 300;
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
 }
 
 .action_button {
@@ -71,10 +75,133 @@ p {
     background-color: var(--blue);
 }
 
-a {
-    color: var(--black);
-    text-decoration: none;
+form {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--margin);
+
+    height: 100%;
+
+    padding: 5% 5% 10% 5%;
 }
+form img {
+    width: 8em;
+    align-items: center;
+    margin: 0 auto; 
+}
+form h2 {
+    text-align: center;
+}
+form input {
+    width: 100%;
+    height: 45px;
+
+    padding: 0 1em;
+
+    border: 1px solid var(--black);
+    border-radius: 5px;
+}
+form input::placeholder {
+    color: var(--grey)
+}
+form button {
+    width: 100%;
+    height: 45px;
+    
+    color: var(--white);
+    background-color: var(--black);
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+form .checkbox-liste {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+form .checkbox-liste .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+form .checkbox-liste .checkbox-item input {
+    position: relative;
+
+    width: 0;
+    height: 0;
+
+    margin: 0 10px;
+}
+form .checkbox-liste .checkbox-item input::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: calc(var(--font-size-standart) * 2 / 3);
+    height: calc(var(--font-size-standart) * 2 / 3);
+
+    background-color: var(--light-grey);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+form .checkbox-liste .checkbox-item input:checked::before {
+    opacity: 0;
+}
+form .checkbox-liste .checkbox-item input:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: calc(var(--font-size-standart) * 2 / 3);
+    height: calc(var(--font-size-standart) * 2 / 3);
+
+    background-color: var(--blue);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.user-link{
+    position: absolute;
+    bottom: var(--margin);
+    left: 50%;
+
+    color: var(--grey);
+    text-align: center;
+    transform: translateX(-50%);
+}
+.user-link a {
+    position: relative;
+    width: fit-content;
+  
+    color: var(--blue);
+    background-color: transparent;
+    border: none;
+}
+.user-link a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--blue);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 450ms ease-in-out;
+}
+.user-link a:hover::after {
+    transform: scaleX(1);
+}
+
+
+/******** BARRE DE NAVIGATION ********/
 
 .barre-de-navigation {
     position: fixed;
@@ -245,4 +372,74 @@ a {
     transform-origin: top;
     transition: transform ease-in-out 300ms;
     overflow-y: hidden;
+}
+
+/******** ANIMATION DES LIGNES ********/
+
+.lignes {
+    position: relative;
+}
+.lignes::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 850ms ease-in-out;
+}
+.lignes.active::after {
+    transform: scaleX(1);
+}
+
+.LignesHover {
+    position: relative;
+    width: fit-content;
+
+    color: var(--black);
+    background-color: transparent;
+    border: none;
+}
+.LignesHover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 450ms ease-in-out;
+}
+.LignesHover:hover::after {
+    transform: scaleX(1);
+}
+
+/******** ANIMATION DE TEXTE ********/
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity transform;
+    transition: opacity 750ms ease, transform 750ms ease;
+}
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.opacity {
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 750ms ease;
+}
+.opacity.active {
+    opacity: 1;
 }
