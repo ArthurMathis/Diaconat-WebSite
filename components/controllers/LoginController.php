@@ -11,9 +11,15 @@ class LoginController extends Controller {
     function displayLogin() {
         return $this->View->getContent();
     }
+    function displaySignin() {
+        return $this->View->getSigninContent();
+    }
 
     public function checkIdentification($identifiant, $motdepasse) {
         $this->Model->connectUser($identifiant, $motdepasse);
+        header('Location: index.php');
+    }
+    public function createIdentification($identifiant, $email, $motdepasse) {
         header('Location: index.php');
     }
 }

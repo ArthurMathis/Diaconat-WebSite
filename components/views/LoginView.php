@@ -8,4 +8,10 @@ class LoginView extends View {
         include LAYOUTS.DS.'login.php';
         $this->generateCommonFooter();
     }
+
+    public function getSigninContent() {
+        $this->generateCommonHeader();
+        include LAYOUTS.DS.'signin.php';
+        $this->generateCommonFooter();
+    }
 }

@@ -29,7 +29,7 @@ class Login {
             $this->connection = new PDO($db_fetch, $db_user, $db_password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            echo "<script>console.log(\"Connexion à " . $db_fetch . "réussie !\");</script>";
+            echo "<script>console.log(\"Connexion à " . $db_fetch . " réussie !\");</script>";
             
         } catch(PDOException $Exception) {
             echo $Exception->getMessage();
@@ -54,6 +54,31 @@ class Login {
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();
         $_SESSIon['user_role_id']       = $user->getRole_id();
+    }
+    public function inscriptUser($identifiant, $email, $motdepasse) {
+        // On récupère le rôle invité pour l'asigner à l'utilisateur
+        $role = $this->searchRole('Invite');        
+
+        // On crée l'utilisateur
+        $user = new Utilisateurs($identifiant, $email, $motdepasse, $role['Intitule']);
+
+        // On prépare la requête SQL
+        $request = "INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)";
+        $params = [
+            'nom' => $user->getIdentifiant(),
+            'email' => $user->getEmail(),
+            'motdepasse' => password_hash($user->getMotdepasse(), PASSWORD_DEFAULT),
+            'id_Roles' => $role['Id']
+        ];
+        // On exécute la requête
+        $this->post_request($request, $params);
+    }
+    public function firstConnectUser($identifiant, $email, $motdepasse) {
+        // On ajoute l'utilisateur à la base de données
+        $this->inscriptUser($identifiant, $email, $motdepasse);
+
+        // On récupère l'utilisateur et son identifiant 
+        $this->connectUser($identifiant, $motdepasse);
     }
 
 
@@ -81,7 +106,7 @@ class Login {
                 $role = $this->searchRole($users[$i]["Id_Roles"]);
                 try {
                     // On construit notre Utilisateur
-                    $user = new Utilisateurs($identifiant, $users[$i]['Email'], $motdepasse, $role);
+                    $user = new Utilisateurs($identifiant, $users[$i]['Email'], $motdepasse, $role['Intitule']);
                     $user->setcle($users[$i]['Id']);
                     $user->setRole_id($users[$i]['Id_Roles']);
 
@@ -100,15 +125,41 @@ class Login {
         if($i == $size) 
             throw new Exception("Aucun utilisateur correspondant");
     }
-
     protected function searchCle($user) {
+        // On initialise la requête
+        $request = "SELECT Id FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
+        $params = [
+            'nom' => $user->getIdentifiant(),
+            'email' => $user->getEmail(),
+            'id_Roles' => $this->searchRole($user->getRole())
+        ];
 
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le rôle
+        return $result;
     }
-    protected function searchRole($role_id) {
+    protected function searchRole($role_id): array {
+        // On initialise la requête
+        if(is_numeric($role_id)) {
+            $request = "SELECT * FROM roles WHERE Id = :Id";
+            $params = ["Id" => $role_id];
 
-    }
-    protected function searRole_id($role) {
+        } elseif(is_string($role_id)) {
+            $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
+            $data = ["Intitule" => $role_id];
+        } else 
+        throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
 
+        echo "<script>console.log(\"" . $sql . "\");</script>";
+        echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le rôle
+        return $result;
     }
 
     //  protected function searchRole($bdd, $role): array {

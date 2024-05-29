@@ -10,10 +10,10 @@ session_start();
 // On lance la connexion à la base de données
 env_start();
 
-global $bdd;
-
 if(isset($_GET['login'])) {
+    $login = new LoginController();
     switch($_GET['login']) {
+        // On connecte l'utilisateur     
         case 'connexion' : 
             try {
                 // On récupère les données saisies
@@ -28,26 +28,80 @@ if(isset($_GET['login'])) {
                 } 
     
             } catch(Exception $e){
-                session_start();
-                $_SESSION['erreur'] = $e;
-                // On redirige la page
-                header("Location: erreur.php");
+                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
                 exit;
             }
 
             try {
-                $login = new LoginController();
+                // $login = new LoginController();
                 $login->checkIdentification($identifiant, $motdepasse);
-                
+
             } catch(Exception $e) {
                 echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                return ;
             }
 
             echo "Bonjour " . $_SESSION['user_identifiant'] . " !";
             break;
 
+        // On inscrit l'utilisateur    
+        case 'inscription' : 
+            try {
+                // On récupère les données saisies
+                $identifiant = $_POST["identifiant"];
+                $email = $_POST["email"];
+                $motdepasse = $_POST["motdepasse"];
+                $confirmation = $_POST["confirmation"];
+    
+                // On vérifie leur intégrité
+                if(empty($identifiant)) {
+                    throw new Exception("Le champs identifiant doit être rempli !");
+                } elseif(empty($email)) {
+                    throw new Exception("Le champs email doit être rempli !");
+                }  elseif(empty($motdepasse)) {
+                    throw new Exception("Le champs mot de passe doit être rempli !");
+                }  elseif(empty($confirmation)) {
+                    throw new Exception("Le champs confirmation doit être rempli !");
+                } elseif($motdepasse != $confirmation) {
+                    throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
+                }
+
+                echo "<script>console.log('Identifiant: " . $identifiant . "');</script>";
+                echo "<script>console.log('Email: " . $email . "');</script>";
+                echo "<script>console.log('Mot de passe: " . $motdepasse . "');</script>";
+                echo "<script>console.log('Confirmation: " . $confirmation . "');</script>";
+
+            } catch(Exception $e){
+                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                exit;
+            }
+
+            try {
+                // $login = new LoginController();
+                $login->createIdentification($identifiant, $email, $motdepasse);
+
+            } catch(Exception $e) {
+                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                exit;
+            }
+
+
+            echo "Bonjour " . $_SESSION['user_identifiant'] . " !";
+            break;    
+
+        // On déconnecte l'utilisateur    
         case 'deconnexion' : 
             break;
+
+        // On retourne le formulaire de connexion
+        case 'get_connexion' :
+            $login->displayLogin(); 
+            break;
+
+        // On retourne le formulaire d'inscription
+        case 'get_inscription' : 
+            $login->displaySignin();
+            break;    
 
         default : 
             $c = new LoginController();
