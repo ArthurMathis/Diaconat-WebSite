@@ -60,7 +60,7 @@ class Login {
         $_SESSION['user_role_id']       = $user->getRole_id();
 
         // On enregistre les logs
-        $this->writteLogs($_SESSION['user_cle'], "Connexion");
+        $this->writeLogs($_SESSION['user_cle'], "Connexion");
     }
     public function inscriptUser($identifiant, $email, $motdepasse) {
         // On récupère le rôle invité pour l'asigner à l'utilisateur
@@ -88,48 +88,48 @@ class Login {
     }
 
     public function deconnectUser() {
+        $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
         session_destroy();
     }
-
-    private function writteLogs($user_cle, $action) {
-        // On récupère le type connexion 
-        $request = "SELECT * FROM types WHERE Intitule = :Intitule";
-        $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
-
+    private function writeLogs($user_cle, $action) {
         try {
+            // On récupère le type d'action
+            $request = "SELECT Id FROM Types WHERE Intitule = :Intitule";
+            $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
+    
             // On génère l'instant actuel (date et heure actuelles)
             $instant = Instants::currentInstants();
+            error_log("Instant actuel: " . print_r($instant, true));
     
-        } catch(InvalideInstantExceptions $e){
+            // J'enregistre mon instant dans la base de données
+            $request = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
+            $params = $instant->exportToSQL();
+            $this->post_request($request, $params);
+    
+            // On récupère l'id de mon instant 
+            $request = "SELECT Id FROM Instants WHERE Jour = :jour AND Heure = :heure";
+            $instant_id = $this->get_request($request, $params, true, true);
+            error_log("Instant ID: " . print_r($instant_id, true));
+    
+            // On ajoute l'action à la base de données
+            $request = "INSERT INTO Actions (Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:user_id, :type_id, :instant_id)";
+            $params = [
+                "user_id" => $user_cle,
+                "type_id" => $action_type['Id'],
+                "instant_id" => $instant_id['Id']
+            ];
+            $res = $this->post_request($request, $params);
+
+        } catch (Exception $e) {
             $Error = new ErrorView();
             $Error->getErrorContent($e);
-            exit;
-        } 
-
-        // J'enregistre mon instant dans la base de données
-        $request = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
-        $params = $instant->exportToSQL();
-        $this->post_request($request, $params);
-
-        // On récupère l'id de mon instant 
-        $request = "SELECT Id FROM instants WHERE Jour = :jour AND Heure = :heure";
-        $instant = $this->get_request($request, $params, true, true);
-    
-        // On ajoute l'action à la base de données
-        $request = "INSERT INTO actions (Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:user_id, :type_id, :instant_id)";
-        $params = [
-            "user_id" => $user_cle,
-            "type_id" => $action_type['Id'],
-            "instant_id" => $instant
-        ];
-        $this->post_request($request, $params);
+        }
     }
-
 
 
     // METHODES DE MANIPULATIONS ES UTILISATEURS //
 
-    protected function searchUser($identifiant, $motdepasse) {
+    protected function searchUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
         $request = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
         $params = [":nom" => $identifiant];
@@ -171,7 +171,7 @@ class Login {
         if($i == $size) 
             throw new Exception("Aucun utilisateur correspondant");
     }
-    protected function searchCle($user) {
+    protected function searchCle($user): ?int {
         // On initialise la requête
         $request = "SELECT Id FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
         $params = [
@@ -281,7 +281,6 @@ class Login {
         } catch(PDOException $e){
             $Error = new ErrorView();
             $Error->getErrorContent($e);
-            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
         } 
     
         // On retourne le résultat

@@ -27,19 +27,23 @@ if(isset($_GET['login'])) {
                     throw new Exception("Le champs mot de passe doit être rempli !");
                 } 
     
+            // On récupère et retourne les éventuelles erreurs    
             } catch(Exception $e){
                 $login->displayErreur($e);
                 exit;
             }
 
             try {
+                // On identifie l'utilisateur
                 $login->checkIdentification($identifiant, $motdepasse);
 
+            // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
                 $login->displayErreur($e);
                 return ;
             }
 
+            // On sort de la boucle swicth
             break;
 
         // On inscrit l'utilisateur    
@@ -64,19 +68,23 @@ if(isset($_GET['login'])) {
                     throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
                 }
 
+            // On récupère les éventuelles erreurs    
             } catch(Exception $e){
                 $login->displayErreur($e);
                 exit;
             }
 
             try {
+                // On inscrit l'utilisateur
                 $login->createIdentification($identifiant, $email, $motdepasse);
 
+            // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
                 $login->displayErreur($e);
                 exit;
             }
 
+            // On sort de la boucle swicth
             break;    
 
         // On déconnecte l'utilisateur    
