@@ -83,8 +83,6 @@ form {
     justify-content: center;
     gap: var(--margin);
 
-    height: 100%;
-
     padding: 5% 5% 10% 5%;
 }
 form img {
@@ -163,6 +161,77 @@ form .checkbox-liste .checkbox-item input:checked::after {
     background-color: var(--blue);
     border-radius: 50%;
     transform: translate(-50%, -50%);
+}
+
+
+/******** ANIMATION DES LIGNES ********/
+
+.lignes {
+    position: relative;
+}
+.lignes::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 850ms ease-in-out;
+}
+.lignes.active::after {
+    transform: scaleX(1);
+}
+
+.LignesHover {
+    position: relative;
+    width: fit-content;
+
+    color: var(--black);
+    background-color: transparent;
+    border: none;
+}
+.LignesHover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 450ms ease-in-out;
+}
+.LignesHover:hover::after {
+    transform: scaleX(1);
+}
+
+/******** ANIMATION DE TEXTE ********/
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity transform;
+    transition: opacity 750ms ease, transform 750ms ease;
+}
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+.opacity {
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 750ms ease;
+}
+.opacity.active {
+    opacity: 1;
 }
 
 
@@ -338,73 +407,10 @@ form .checkbox-liste .checkbox-item input:checked::after {
     transition: transform ease-in-out 300ms;
     overflow-y: hidden;
 }
+#menu-deconnexion button {
+    height: fit-content;
+    padding: 5px;
 
-/******** ANIMATION DES LIGNES ********/
-
-.lignes {
-    position: relative;
-}
-.lignes::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--black);
-    transform: scaleX(0);
-    will-change: transform;
-    transform-origin: left;
-    overflow-x: hidden;
-    transition: transform 850ms ease-in-out;
-}
-.lignes.active::after {
-    transform: scaleX(1);
-}
-
-.LignesHover {
-    position: relative;
-    width: fit-content;
-
-    color: var(--black);
-    background-color: transparent;
-    border: none;
-}
-.LignesHover::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--black);
-    transform: scaleX(0);
-    will-change: transform;
-    transform-origin: left;
-    overflow-x: hidden;
-    transition: transform 450ms ease-in-out;
-}
-.LignesHover:hover::after {
-    transform: scaleX(1);
-}
-
-/******** ANIMATION DE TEXTE ********/
-
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    will-change: opacity transform;
-    transition: opacity 750ms ease, transform 750ms ease;
-}
-.fade-in.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-  
-.opacity {
-    opacity: 0;
-    will-change: opacity;
-    transition: opacity 750ms ease;
-}
-.opacity.active {
-    opacity: 1;
+    text-decoration: none;
+    text-transform: none;
 }

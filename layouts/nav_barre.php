@@ -2,7 +2,7 @@
     <div id="menu-icon">
         <span></span>
     </div>
-    <img src="assets/img/ico_diaconat_mulhouse.webp" alt="Logo de l'application">
+    <img src="layouts\assets\img\ico_diaconat_mulhouse.webp" alt="Logo de l'application">
     <div>
         <p id="calendrier"></p>
         <p id="horloge">00 : 00 : 00</p>

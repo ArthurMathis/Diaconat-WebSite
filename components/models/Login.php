@@ -1,6 +1,7 @@
 <?php 
 
 require_once(MODELS.DS.'Utilisateurs.php');
+require_once(MODELS.DS.'Instants.php');
 require_once(VIEWS.DS.'ErrorView.php');
 
 class Login {
@@ -57,6 +58,9 @@ class Login {
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();
         $_SESSIon['user_role_id']       = $user->getRole_id();
+
+        // On enregistre les logs
+        $this->writteLogs($_SESSION['user_cle']);
     }
     public function inscriptUser($identifiant, $email, $motdepasse) {
         // On récupère le rôle invité pour l'asigner à l'utilisateur
@@ -81,6 +85,40 @@ class Login {
         $this->inscriptUser($identifiant, $email, $motdepasse);
         // On récupère l'utilisateur et son identifiant 
         $this->connectUser($identifiant, $motdepasse);
+    }
+
+    private function writteLogs($user_cle) {
+        // On récupère le type connexion 
+        $request = "SELECT * FROM types WHERE Intitule = :Intitule";
+        $action_type = $this->get_request($request, ["Intitule" => "Connexion"], true, true);
+
+        try {
+            // On génère l'instant actuel (date et heure actuelles)
+            $instant = Instants::currentInstants();
+    
+        } catch(InvalideInstantExceptions $e){
+            $Error = new ErrorView();
+            $Error->getErrorContent($e);
+            exit;
+        } 
+
+        // J'enregistre mon instant dans la base de données
+        $request = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
+        $params = $instant->exportToSQL();
+        $this->post_request($request, $params);
+
+        // On récupère l'id de mon instant 
+        $request = "SELECT Id FROM instants WHERE Jour = :jour AND Heure = :heure";
+        $instant = $this->get_request($request, $params, true, true);
+    
+        // On ajoute l'action à la base de données
+        $request = "INSERT INTO actions (Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:user_id, :type_id, :instant_id)";
+        $params = [
+            "user_id" => $user_cle,
+            "type_id" => $action_type['Id'],
+            "instant_id" => $instant
+        ];
+        $this->post_request($request, $params);
     }
 
 
