@@ -9,17 +9,10 @@ session_start();
 // On lance la connexion à la base de données
 env_start();
 
-try {
-    $login = new LoginController();
-    throw new Exception("Bonjour");
+if(isset($_SESSION['user_cle'])) {
+    echo "bonjour " . $_SESSION['user_identifiant'];
 
-} catch(Exception $e) {
-    $login->displayErreur($e);
-}
-
-/*
-
-if(isset($_GET['login'])) {
+} else if(isset($_GET['login'])) {
     $login = new LoginController();
     switch($_GET['login']) {
         // On connecte l'utilisateur     
@@ -37,20 +30,20 @@ if(isset($_GET['login'])) {
                 } 
     
             } catch(Exception $e){
-                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                $login->displayErreur($e);
                 exit;
             }
 
             try {
-                // $login = new LoginController();
                 $login->checkIdentification($identifiant, $motdepasse);
 
             } catch(Exception $e) {
-                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                $login->displayErreur($e);
                 return ;
             }
 
-            echo "Bonjour " . $_SESSION['user_identifiant'] . " !";
             break;
 
         // On inscrit l'utilisateur    
@@ -81,21 +74,20 @@ if(isset($_GET['login'])) {
                 echo "<script>console.log('Confirmation: " . $confirmation . "');</script>";
 
             } catch(Exception $e){
-                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                $login->displayErreur($e);
                 exit;
             }
 
             try {
-                // $login = new LoginController();
                 $login->createIdentification($identifiant, $email, $motdepasse);
 
             } catch(Exception $e) {
-                echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
+                $login->displayErreur($e);
                 exit;
             }
 
-
-            echo "Bonjour " . $_SESSION['user_identifiant'] . " !";
             break;    
 
         // On déconnecte l'utilisateur    
@@ -122,6 +114,3 @@ if(isset($_GET['login'])) {
     $c = new LoginController();
     $c->displayLogin();
 }
-
-*/
-

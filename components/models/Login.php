@@ -1,6 +1,7 @@
 <?php 
 
-require_once MODELS.DS.'Utilisateurs.php';
+require_once(MODELS.DS.'Utilisateurs.php');
+require_once(VIEWS.DS.'ErrorView.php');
 
 class Login {
     /// Attribut privé contenant la connexion à la base de données
@@ -32,7 +33,9 @@ class Login {
             echo "<script>console.log(\"Connexion à " . $db_fetch . " réussie !\");</script>";
             
         } catch(PDOException $Exception) {
-            echo $Exception->getMessage();
+            // echo $Exception->getMessage();
+            $Error = new ErrorView();
+            $Error->getErrorContent($Exception);
         }
         return $this->connection;
     }
@@ -111,7 +114,9 @@ class Login {
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+                    // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+                    $Error = new ErrorView();
+                    $Error->getErrorContent($e);
                 }
 
                 // On retourne notre utilisateur, la connexion est validée
@@ -161,49 +166,7 @@ class Login {
         return $result;
     }
 
-    //  protected function searchRole($bdd, $role): array {
-    //      // On initialise la requête
-    //      if(is_numeric($role)) {
-    //          $sql = "SELECT * FROM roles WHERE Id = :Id";
-    //          $data = ["Id" => $role];
-    //  
-    //     } elseif(is_string($role)) {
-    //         $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-    //         $data = ["Intitule" => $role];
-    //  
-    //      } else 
-    //          throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
-    //  
-    //      echo "<script>console.log(\"" . $sql . "\");</script>";
-    //      echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
-    //  
-    //      // On lance la requête
-    //      $result = get_request($bdd, $sql, $data, true, true);
-    //  
-    //      // On retourne le rôle
-    //      return $result;
-    //  }
-    // public function searchRole_id($bdd) {
-    //     $role = Utilisateurs::searchRole($bdd, $this->getRole());
-    //     return $role['Id'];
-    // }
-    // public function searchCle($bdd) {
-    //     // On initialise la requête
-    //     $sql = "SELECT * FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
-    //     $params = [
-    //         'nom' => $this->getIdentifiant(),
-    //         'email' => $this->getEmail(),
-    //         'id_Roles' => $this->searchRole_id($bdd)
-    //     ];
-    // 
-    //     // On lance la requête
-    //     $user = get_request($bdd, $sql, $params, true, true);
-    // 
-    //     // On implémente
-    //     $this->setCle($user["Id"]);
-    // }
-
-
+    
 
     // METHODES DE REQUETES A LA BASE DE DONNEES //
     
@@ -250,9 +213,13 @@ class Login {
             return $result;
     
         } catch(Exception $e){
-            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+            $Error = new ErrorView();
+            $Error->getErrorContent($e);
         } catch(PDOException $e){
-            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
+            $Error = new ErrorView();
+            $Error->getErrorContent($e);
         } 
 
         return null;
@@ -273,11 +240,9 @@ class Login {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
-            // $_SESSION['erreur'] = $e;
-            // // On redirige la page
-            // header("Location: ../view/erreur.php");
-            // exit;
+            $Error = new ErrorView();
+            $Error->getErrorContent($e);
+            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
         } 
     
         // On retourne le résultat

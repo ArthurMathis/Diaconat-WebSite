@@ -19,9 +19,11 @@ class LoginController extends Controller {
     public function checkIdentification($identifiant, $motdepasse) {
         $this->Model->connectUser($identifiant, $motdepasse);
         header('Location: index.php');
+        exit;
     }
     public function createIdentification($identifiant, $email, $motdepasse) {
         $this->Model->firstConnectUser($identifiant, $email, $motdepasse);
         header('Location: index.php');
+        exit;
     }
 }
