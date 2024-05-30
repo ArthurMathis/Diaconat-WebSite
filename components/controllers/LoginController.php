@@ -26,4 +26,9 @@ class LoginController extends Controller {
         header('Location: index.php');
         exit;
     }
+    public function closeSession() {
+        $this->Model->deconnectUser();
+        header('Location: index.php');
+        exit;
+    }
 }

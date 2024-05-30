@@ -90,6 +90,7 @@ if(isset($_GET['login'])) {
 
         // On déconnecte l'utilisateur    
         case 'deconnexion' : 
+            $login->closeSession();
             break;
 
         // On retourne le formulaire de connexion

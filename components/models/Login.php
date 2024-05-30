@@ -57,10 +57,10 @@ class Login {
         $_SESSION['user_email']         = $user->getEmail();
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();
-        $_SESSIon['user_role_id']       = $user->getRole_id();
+        $_SESSION['user_role_id']       = $user->getRole_id();
 
         // On enregistre les logs
-        $this->writteLogs($_SESSION['user_cle']);
+        $this->writteLogs($_SESSION['user_cle'], "Connexion");
     }
     public function inscriptUser($identifiant, $email, $motdepasse) {
         // On récupère le rôle invité pour l'asigner à l'utilisateur
@@ -87,10 +87,14 @@ class Login {
         $this->connectUser($identifiant, $motdepasse);
     }
 
-    private function writteLogs($user_cle) {
+    public function deconnectUser() {
+        session_destroy();
+    }
+
+    private function writteLogs($user_cle, $action) {
         // On récupère le type connexion 
         $request = "SELECT * FROM types WHERE Intitule = :Intitule";
-        $action_type = $this->get_request($request, ["Intitule" => "Connexion"], true, true);
+        $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
 
         try {
             // On génère l'instant actuel (date et heure actuelles)

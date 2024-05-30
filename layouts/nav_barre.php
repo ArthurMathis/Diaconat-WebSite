@@ -9,7 +9,7 @@
         <p class="user-info"><?php echo $_SESSION["user_identifiant"]; ?></p>
     </div>
 </nav>
-<form id="menu-deconnexion" method="POST" action="">
+<form id="menu-deconnexion" method="POST" action="index.php?login=deconnexion">
     <button type="submit" class="LignesHover">Se déconnecter</button>
 </form>
 <section id="menu">
