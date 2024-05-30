@@ -2,6 +2,7 @@
 
 require_once('define.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
+require_once(CONTROLLERS.DS.'HomeController.php');
 
 // On démarre la session de l'utilisateur
 session_start();
@@ -9,10 +10,7 @@ session_start();
 // On lance la connexion à la base de données
 env_start();
 
-if(isset($_SESSION['user_cle'])) {
-    echo "bonjour " . $_SESSION['user_identifiant'];
-
-} else if(isset($_GET['login'])) {
+if(isset($_GET['login'])) {
     $login = new LoginController();
     switch($_GET['login']) {
         // On connecte l'utilisateur     
@@ -109,6 +107,10 @@ if(isset($_SESSION['user_cle'])) {
             $c->displayLogin();
             break;
     }
+
+} elseif(isset($_SESSION['user_cle'])) {
+    $home = new HomeController();
+    $home->displayHome();
 
 } else {
     $c = new LoginController();
