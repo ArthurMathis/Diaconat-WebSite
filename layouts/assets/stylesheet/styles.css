@@ -414,3 +414,36 @@ form .checkbox-liste .checkbox-item input:checked::after {
     text-decoration: none;
     text-transform: none;
 }
+
+/******** STYLE DES LISTES D'OBJETS ********/
+.liste_items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin);
+
+    padding: var(--padding);
+}
+.liste_items .entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: fit-content;
+
+    padding: var(--margin) 0;
+}
+.liste_items table th {
+    text-align: left;
+}    
+.liste_items table tbody th {
+    font-weight: 400;
+}
+.liste_items table th, td {
+    padding: calc(var(--margin) / 2) 0; 
+    text-align: left;
+}
+
+tr:hover {
+    background-color: #f7f7f7;
+}

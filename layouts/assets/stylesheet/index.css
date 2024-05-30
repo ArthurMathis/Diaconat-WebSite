@@ -1,5 +1,4 @@
 body {
-    height: 100dvh;
     overflow: hidden;
 }
 
@@ -13,6 +12,7 @@ content section {
     width: 65%;
 }
 aside {
+    position: sticky;
     display: flex;
     flex-direction: column;
     gap: var(--margin);

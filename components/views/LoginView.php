@@ -5,7 +5,7 @@ require_once 'View.php';
 class LoginView extends View {
     public function getContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Cennexion', 
+        $this->generateCommonHeader('Diaconat - Connexion', 
                 ["layouts\assets\stylesheet\connexion.css"]);
 
         // On ajoute le formulaire de connexion
