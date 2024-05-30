@@ -28,7 +28,6 @@ if(isset($_GET['login'])) {
                 } 
     
             } catch(Exception $e){
-                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
                 $login->displayErreur($e);
                 exit;
             }
@@ -37,7 +36,6 @@ if(isset($_GET['login'])) {
                 $login->checkIdentification($identifiant, $motdepasse);
 
             } catch(Exception $e) {
-                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
                 $login->displayErreur($e);
                 return ;
             }
@@ -66,13 +64,7 @@ if(isset($_GET['login'])) {
                     throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
                 }
 
-                echo "<script>console.log('Identifiant: " . $identifiant . "');</script>";
-                echo "<script>console.log('Email: " . $email . "');</script>";
-                echo "<script>console.log('Mot de passe: " . $motdepasse . "');</script>";
-                echo "<script>console.log('Confirmation: " . $confirmation . "');</script>";
-
             } catch(Exception $e){
-                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
                 $login->displayErreur($e);
                 exit;
             }
@@ -81,7 +73,6 @@ if(isset($_GET['login'])) {
                 $login->createIdentification($identifiant, $email, $motdepasse);
 
             } catch(Exception $e) {
-                // echo "<script>alert('Erreur: " . $e->getMessage() . "');</script>";
                 $login->displayErreur($e);
                 exit;
             }
@@ -104,7 +95,6 @@ if(isset($_GET['login'])) {
             break;    
 
         default : 
-            $c = new LoginController();
             $c->displayLogin();
             break;
     }

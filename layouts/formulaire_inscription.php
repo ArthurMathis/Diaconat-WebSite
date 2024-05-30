@@ -1,5 +1,5 @@
 <img src="layouts/assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
-<form method="post" ation="index.php?login=inscription">
+<form method="post" action="index.php?login=inscription">
     <img src="layouts/assets/img/ico_diaconat_mulhouse.webp">
     <h2>Saisissez vos infrmations pour vous inscrire</h2>
     <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">

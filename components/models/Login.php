@@ -193,13 +193,10 @@ class Login {
             $params = ["Id" => $role_id];
 
         } elseif(is_string($role_id)) {
-            $sql = "SELECT * FROM roles WHERE Intitule = :Intitule";
-            $data = ["Intitule" => $role_id];
+            $request = "SELECT * FROM roles WHERE Intitule = :Intitule";
+            $params = ["Intitule" => $role_id];
         } else 
         throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
-
-        echo "<script>console.log(\"" . $sql . "\");</script>";
-        echo "<script>console.log(\"" . $data['Intitule'] . "\");</script>";
 
         // On lance la requête
         $result = $this->get_request($request, $params, true, true);
