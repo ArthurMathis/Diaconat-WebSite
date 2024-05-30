@@ -76,7 +76,6 @@ class Login {
     public function firstConnectUser($identifiant, $email, $motdepasse) {
         // On ajoute l'utilisateur à la base de données
         $this->inscriptUser($identifiant, $email, $motdepasse);
-
         // On récupère l'utilisateur et son identifiant 
         $this->connectUser($identifiant, $motdepasse);
     }

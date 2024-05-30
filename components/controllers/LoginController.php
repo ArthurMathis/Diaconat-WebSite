@@ -4,6 +4,7 @@ require_once 'Controller.php';
 
 class LoginController extends Controller {
     public function __construct() {
+        parent::__construct();
         $this->loadModel('Login');
         $this->loadView('LoginView');
     }
@@ -20,6 +21,7 @@ class LoginController extends Controller {
         header('Location: index.php');
     }
     public function createIdentification($identifiant, $email, $motdepasse) {
+        $this->Model->firstConnectUser($identifiant, $email, $motdepasse);
         header('Location: index.php');
     }
 }

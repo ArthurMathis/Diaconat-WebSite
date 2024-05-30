@@ -1,7 +1,5 @@
 <?php
 
-// require_once "../components/data_requests.php";
-
 class InvalideUtilisateurExceptions extends Exception {
     public function __construct($message){
         parent::__construct($message);
