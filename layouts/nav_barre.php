@@ -16,11 +16,6 @@
     <form class="link-form" method="post" action =""><button type="submit">Statistiques</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Préférences</button></form>
     <form class="link-form" method="post" action ="index.php?login=deconnexion"><button type="submit">Se déconnecter</button></form>
-    <!--<a href="#">Candidatures</a>
-    <a href="#">Employés</a>
-    <a href="#">Besoins</a>
-    <a href="#">Statistiques</a>
-    <a href="#">Préférences</a>-->
 </section> 
 
 <script src="layouts\assets\scripts\objects\Date_Time.js"></script>

@@ -1,52 +1,11 @@
 <?php 
 
+require_once(MODELS.DS.'Model.php');
 require_once(MODELS.DS.'Utilisateurs.php');
 require_once(MODELS.DS.'Instants.php');
 require_once(VIEWS.DS.'ErrorView.php');
 
-class Login {
-    /// Attribut privé contenant la connexion à la base de données
-    private $connection;
-
-    /// Constructeur de la classe
-    public function __construct() {
-        $this->makeConnection();
-    }
-
-    /// Méthode protégée connectant l'application à la base de données
-    protected function makeConnection() {
-        try {
-            $db_connection  = getenv('DB_CONNEXION');
-            $db_host        = getenv('DB_HOST');
-            $db_port        = getenv('DB_PORT');
-            $db_name        = getenv('DB_NAME');
-            $db_user        = getenv('DB_USER');
-            $db_password    = getenv('DB_PASS');
-    
-            // Supprimez le slash dans la valeur de DB_HOST
-            $db_host = str_replace('/', '', $db_host);
-    
-            $db_fetch = "$db_connection:host=$db_host;port=$db_port;dbname=$db_name";
-
-            $this->connection = new PDO($db_fetch, $db_user, $db_password);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            echo "<script>console.log(\"Connexion à " . $db_fetch . " réussie !\");</script>";
-            
-        } catch(PDOException $Exception) {
-            // echo $Exception->getMessage();
-            $Error = new ErrorView();
-            $Error->getErrorContent($Exception);
-        }
-        return $this->connection;
-    }
-
-    protected function getConnection() {
-        return $this->connection;
-    }
-
-
-
+class Login extends Model {
     public function connectUser($identifiant, $motdepasse) {
         // On cherche l'utilisateur dans la base de données
         $user = $this->searchUser($identifiant, $motdepasse);
@@ -67,15 +26,15 @@ class Login {
         $role = $this->searchRole('Invite');        
 
         // On crée l'utilisateur
-        $user = new Utilisateurs($identifiant, $email, $motdepasse, $role['Intitule']);
+        $user = new Utilisateurs($identifiant, $email, $motdepasse, $role['Intitule_Role']);
 
         // On prépare la requête SQL
-        $request = "INSERT INTO utilisateurs (nom, email, motdepasse, id_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)";
+        $request = "INSERT INTO utilisateurs (nom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:nom, :email, :motdepasse, :id_Roles)";
         $params = [
             'nom' => $user->getIdentifiant(),
             'email' => $user->getEmail(),
             'motdepasse' => password_hash($user->getMotdepasse(), PASSWORD_DEFAULT),
-            'id_Roles' => $role['Id']
+            'id_Roles' => $role['Id_Role']
         ];
         // On exécute la requête
         $this->post_request($request, $params);
@@ -94,25 +53,23 @@ class Login {
     private function writeLogs($user_cle, $action) {
         try {
             // On récupère le type d'action
-            $request = "SELECT Id FROM Types WHERE Intitule = :Intitule";
+            $request = "SELECT Id_Types FROM Types WHERE Intitule_Types = :Intitule";
             $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
     
             // On génère l'instant actuel (date et heure actuelles)
             $instant = Instants::currentInstants();
-            error_log("Instant actuel: " . print_r($instant, true));
     
             // J'enregistre mon instant dans la base de données
-            $request = "INSERT INTO Instants (Jour, Heure) VALUES (:jour, :heure)";
+            $request = "INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES (:jour, :heure)";
             $params = $instant->exportToSQL();
             $this->post_request($request, $params);
     
             // On récupère l'id de mon instant 
-            $request = "SELECT Id FROM Instants WHERE Jour = :jour AND Heure = :heure";
+            $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
             $instant_id = $this->get_request($request, $params, true, true);
-            error_log("Instant ID: " . print_r($instant_id, true));
     
             // On ajoute l'action à la base de données
-            $request = "INSERT INTO Actions (Id_Utilisateurs, Id_Types, Id_Instants) VALUES (:user_id, :type_id, :instant_id)";
+            $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
             $params = [
                 "user_id" => $user_cle,
                 "type_id" => $action_type['Id'],
@@ -131,7 +88,7 @@ class Login {
 
     protected function searchUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
-        $request = "SELECT * FROM Utilisateurs WHERE Nom = :nom";
+        $request = "SELECT * FROM Utilisateurs WHERE Nom_Utilisateurs = :nom";
         $params = [":nom" => $identifiant];
         $users = $this->get_request($request, $params, false, true);
 
@@ -142,17 +99,17 @@ class Login {
 
         // On fait défiler la table
         while($i < $size && !$find) {
-            if($users[$i]["Nom"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse"])) {
+            if($users[$i]["Nom_Utilisateurs"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse_Utilisateurs"])) {
                 // On implémente find
                 $find = true;
 
                 // On récupère le rôle de l'utilisateur 
-                $role = $this->searchRole($users[$i]["Id_Roles"]);
+                $role = $this->searchRole($users[$i]["Cle_Roles"]);
                 try {
                     // On construit notre Utilisateur
-                    $user = new Utilisateurs($identifiant, $users[$i]['Email'], $motdepasse, $role['Intitule']);
-                    $user->setcle($users[$i]['Id']);
-                    $user->setRole_id($users[$i]['Id_Roles']);
+                    $user = new Utilisateurs($identifiant, $users[$i]['Email_Utilisateurs'], $motdepasse, $role['Intitule_Role']);
+                    $user->setcle($users[$i]['Id_Utilisateurs']);
+                    $user->setRole_id($users[$i]['Cle_Roles']);
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
@@ -173,7 +130,7 @@ class Login {
     }
     protected function searchCle($user): ?int {
         // On initialise la requête
-        $request = "SELECT Id FROM Utilisateurs WHERE Nom = :nom AND Email = :email AND Id_Roles = :id_Roles";
+        $request = "SELECT Id_Utilisateurs FROM Utilisateurs WHERE Nom_Utilisateurs = :nom AND Email_Utilisateurs = :email AND Cle_Roles = :id_Roles";
         $params = [
             'nom' => $user->getIdentifiant(),
             'email' => $user->getEmail(),
@@ -189,11 +146,11 @@ class Login {
     protected function searchRole($role_id): array {
         // On initialise la requête
         if(is_numeric($role_id)) {
-            $request = "SELECT * FROM roles WHERE Id = :Id";
+            $request = "SELECT * FROM roles WHERE Id_Role = :Id";
             $params = ["Id" => $role_id];
 
         } elseif(is_string($role_id)) {
-            $request = "SELECT * FROM roles WHERE Intitule = :Intitule";
+            $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
             $params = ["Intitule" => $role_id];
         } else 
         throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
@@ -203,87 +160,5 @@ class Login {
 
         // On retourne le rôle
         return $result;
-    }
-
-    
-
-    // METHODES DE REQUETES A LA BASE DE DONNEES //
-    
-    /// Méthode privée permettant de vérifier les paramètres fournis au fonction de requêtes
-    private function test_data_request($sql, $data): bool {
-        // On déclare une variable tampon
-        $res = false;
-    
-        // On vérifie l'intégrité des paramètres
-        if(empty($sql) || !is_string($sql)) 
-            throw new Exception("La requête doit être passée en paramètre !");
-        elseif(empty($data) || !is_array($data)) 
-            throw new Exception("Les données de la requête doivent être passsée en paramètre !");
-    
-        // On retourne le résultat
-        else $res = true;
-        return $res;
-    }
-    /// Méthode privée exécutant une requête GET à la base de données
-    protected function get_request($request, $params, $unique=false, $present=false): ?array {
-        // On vérifie le paramètre uniquue
-        if(empty($unique) || !is_bool($unique)) 
-            $unique = false;
-        // On vérifie le paramètre uniquue
-        if(empty($present) || !is_bool($present)) 
-            $present = false;
-    
-        // On vérifie l'intégrité des paramètres
-        if($this->test_data_request($request, $params)) try {
-            // On prépare la requête
-            $query = $this->getConnection()->prepare($request);
-            $query->execute($params);
-    
-            // On récupère le résultat de la requête
-            if($unique) 
-                $result = $query->fetch(PDO::FETCH_ASSOC);
-            else 
-                $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    
-            if($present && empty($result)) 
-                throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
-            
-            // On retourne le résultat de la requête 
-            return $result;
-    
-        } catch(Exception $e){
-            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-        } catch(PDOException $e){
-            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-        } 
-
-        return null;
-    }
-    /// Méthode privée exécutant une requête POST à la base de données
-    protected function post_request($request, $params): bool {
-        // On déclare une variable tampon
-        $res = true;
-    
-        // On vérifie l'intégrité des paramètres
-        if(!$this->test_data_request($request, $params)) 
-            $res = false;
-    
-        else try {
-            // On prépare la requête
-            $query = $this->getConnection()->prepare($request);
-            $query->execute($params);
-    
-        // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
-        } catch(PDOException $e){
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-        } 
-    
-        // On retourne le résultat
-        return $res;
     }
 }

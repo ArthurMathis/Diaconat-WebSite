@@ -1,66 +1,67 @@
 CREATE TABLE Roles (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(32) NOT NULL UNIQUE
+	Id_Role INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Role VARCHAR(32) NOT NULL UNIQUE
 );
 
-INSERT INTO Roles (Intitule) VALUES
+INSERT INTO Roles (Intitule_Role) VALUES
 ('Administrateur'),
 ('Modérateur'),
 ('Utilisateur'),
 ('Invité');
 
 CREATE TABLE Utilisateurs (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Nom VARCHAR(64) NOT NULL,
-    MotDePasse VARCHAR(256) NOT NULL,
-    Email VARCHAR(64) UNIQUE,
-    CodeProvisoir VARCHAR(16),
-    CodeDeRecuperation VARCHAR(16),
-    Id_Roles INTEGER NOT NULL,
-    FOREIGN KEY (Id_Roles) REFERENCES Roles(Id)
+	Id_Utilisateurs INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Nom_Utilisateurs VARCHAR(64) NOT NULL,
+    MotDePasse_Utilisateurs VARCHAR(256) NOT NULL,
+    Email_Utilisateurs VARCHAR(64) UNIQUE,
+
+    Cle_Roles INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Roles) REFERENCES Roles(Id_Role)
 );
 
 CREATE TABLE Types (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(32) NOT NULL UNIQUE
+	Id_Types INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Types VARCHAR(32) NOT NULL UNIQUE
 );
 
-INSERT INTO types (Intitule) VALUES 
+INSERT INTO types (Intitule_Types) VALUES 
 ('Connexion'), 
 ('Deconnexion');
 
 CREATE TABLE Instants (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Jour DATE NOT NULL,
-    Heure TIME NOT NULL
+	Id_Instants INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Jour_Instants DATE NOT NULL,
+    Heure_Instants TIME NOT NULL
 );
 
 CREATE TABLE Actions (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Id_Utilisateurs INTEGER NOT NULL,
-    Id_Types INTEGER NOT NULL,
-    Id_Instants INTEGER NOT NULL,
+	Id_Actions INTEGER AUTO_INCREMENT PRIMARY KEY,
+
+    Cle_Utilisateurs INTEGER NOT NULL,
+    Cle_Types INTEGER NOT NULL,
+    CLe_Instants INTEGER NOT NULL,
     
-    FOREIGN KEY (Id_Utilisateurs) REFERENCES Utilisateurs(Id),
-    FOREIGN KEY (Id_Types) REFERENCES Types(Id),
-    FOREIGN KEY (Id_Instants) REFERENCES Instants(Id)
+    FOREIGN KEY (Cle_Utilisateurs) REFERENCES Utilisateurs(Id_Utilisateurs),
+    FOREIGN KEY (Cle_Types) REFERENCES Types(Id_Types),
+    FOREIGN KEY (CLe_Instants) REFERENCES Instants(Id_Instants)
 );
 
 
 
 CREATE TABLE Candidats (
-    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Nom VARCHAR(64) NOT NULL,
-    Prenom VARCHAR(64) NOT NULL,
-    Telephone VARCHAR(10) UNIQUE NOT NULL,
-    Email VARCHAR(64) UNIQUE NOT NULL, 
-    Adresse VARCHAR(256),
-    CodePostale VARCHAR(5), 
-    Disponibilite DATE NOT NULL,
-    VisiteMedicale BOOLEAN NOT NULL
+    Id_Candidats INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Nom_Candidats VARCHAR(64) NOT NULL,
+    Prenom_Candidats VARCHAR(64) NOT NULL,
+    Telephone_Candidats VARCHAR(10) UNIQUE NOT NULL,
+    Email_Candidats VARCHAR(64) UNIQUE NOT NULL, 
+    Adresse_Candidats VARCHAR(256),
+    CodePostale_Candidats VARCHAR(5), 
+    Disponibilite_Candidats DATE NOT NULL,
+    VisiteMedicale_Candidats BOOLEAN NOT NULL
 );
 
-INSERT INTO Candidats (Nom, Prenom, Telephone, Email, Adresse, CodePostale, Disponibilite, VisiteMedicale) VALUES
+INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats) VALUES
     ('Dupont', 'Jean', '0123456789', 'jean.dupont@example.com', '123 Rue de la République, Paris', '75001', '2024-06-01', TRUE),
     ('Martin', 'Lucie', '0987654321', 'lucie.martin@example.com', '456 Avenue des Champs-Élysées, Paris', '75008', '2024-06-02', FALSE),
     ('Bernard', 'Marie', '0765432189', 'marie.bernard@example.com', '789 Boulevard Saint-Germain, Paris', '75006', '2024-06-03', TRUE),
@@ -79,42 +80,44 @@ INSERT INTO Candidats (Nom, Prenom, Telephone, Email, Adresse, CodePostale, Disp
 ;
 
 CREATE TABLE Poles (
-    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(8) NOT NULL UNIQUE,
-    Description TEXT
+    Id_Poles INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Poles VARCHAR(8) NOT NULL UNIQUE,
+    Description_Poles TEXT
 );
 
-INSERT INTO Poles (Intitule, Description) VALUES 
+INSERT INTO Poles (Intitule_Poles, Description_Poles) VALUES 
     ("pspdsa", "Pole sud-Alsace"),
     ("pspdca", "Pole centre-Alsace"),
     ("pspdna", "Pole nord-Alsace")
 ;    
 
 CREATE TABLE Etablissements (
-    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(64) NOT NULL UNIQUE,
-    Adresse VARCHAR(256) UNIQUE,
-    Description TEXT, 
-    Id_Poles INTEGER NOT NULL,
+    Id_Etablissements INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Etablissemnts VARCHAR(64) NOT NULL UNIQUE,
+    Adresse_Etablissements VARCHAR(256) UNIQUE,
+    Description_Etablissements TEXT, 
 
-    FOREIGN KEY (Id_Poles) REFERENCES Poles(Id)
+    Cle_Poles INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Poles) REFERENCES Poles(Id_Poles)
 );
 
-INSERT INTO etablissements (Intitule, Adresse, Id_Poles) VALUES 
+INSERT INTO etablissements (Intitule_Etablissemnts, Adresse_Etablissements, Cle_Poles) VALUES 
 	("Clinique Diaconat Fonderie", "1 Rue Saint-Sauveur, 68100 Mulhouse", 1),
     ("Clinique Diaconat Roosewelt", "14 Bd du Président Roosevelt, 68200 Mulhouse", 1),
     ("Clinique Diaconat Colmar", "18 Rue Charles Sandherr, 68000 Colmar", 2)
 ;
 
 CREATE TABLE Services (
-    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(64) NOT NULL UNIQUE,
-    Id_Etablissements INTEGER NOT NULL,
+    Id_Services INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Services VARCHAR(64) NOT NULL UNIQUE,
 
-    FOREIGN KEY (Id_Etablissements) REFERENCES etablissements(Id)
+    Cle_Etablissements INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Etablissements) REFERENCES etablissements(Id_Etablissements)
 );
 
-INSERT INTO Services (Intitule, Id_Etablissements) VALUES
+INSERT INTO Services (Intitule_Services, Cle_Etablissements) VALUES
     ('Anesthésie-Réanimation', 1),
     ('Cardio', 1),
     ('Pédiatrie', 1),
@@ -145,12 +148,12 @@ INSERT INTO Services (Intitule, Id_Etablissements) VALUES
 ;
 
 CREATE TABLE Postes (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(64) NOT NULL UNIQUE,
-    Description TEXT
+	Id_Postes INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Postes VARCHAR(64) NOT NULL UNIQUE,
+    Description_Postes TEXT
 );
 
-INSERT INTO Postes (Intitule, Description) VALUES
+INSERT INTO Postes (Intitule_Postes, Description_Postes) VALUES
     ('Anesthésiste', 'Responsable de l’anesthésie pendant les opérations chirurgicales'),
     ('Cardiologue', 'Spécialiste des maladies du cœur et des vaisseaux sanguins'),
     ('Chirurgien orthopédique', 'Effectue des opérations sur le système musculo-squelettique'),
@@ -219,21 +222,22 @@ INSERT INTO Postes (Intitule, Description) VALUES
 ;
 
 CREATE TABLE Missions (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(64) NOT NULL UNIQUE,
-    Id_Services INTEGER NOT NULL,
-    Id_Postes INTEGER NOT NULL,
+	Id_Missions INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Missions VARCHAR(64) NOT NULL UNIQUE,
+
+    Cle_Services INTEGER NOT NULL,
+    Cle_Postes INTEGER NOT NULL,
     
-    FOREIGN KEY (Id_Services) REFERENCES services(Id),
-    FOREIGN KEY (Id_Postes) REFERENCES postes(Id)
+    FOREIGN KEY (Cle_Services) REFERENCES services(Id_Services),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes)
 );
 
 CREATE TABLE Sources (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule VARCHAR(64) NOT NULL UNIQUE
+	Id_Sources INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Sources VARCHAR(64) NOT NULL UNIQUE
 );
 
-INSERT INTO sources (Intitule) VALUES 
+INSERT INTO sources (Intitule_Sources) VALUES 
 	('Hellowork'), 
     ('Hublo'),
     ('Email'), 
@@ -241,18 +245,19 @@ INSERT INTO sources (Intitule) VALUES
 ;    
 
 CREATE TABLE Candidatures (
-	Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Status VARCHAR(15) NOT NULL,
-    Id_Candidats INTEGER NOT NULL, 
-    Id_Sources INTEGER NOT NULL, 
-    Id_Postes INTEGER NOT NULL, 
+	Id_Candidatures INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Status_Candidatures VARCHAR(15) NOT NULL,
+
+    Cle_Candidats INTEGER NOT NULL, 
+    Cle_Sources INTEGER NOT NULL, 
+    Cle_Postes INTEGER NOT NULL, 
     
-    FOREIGN KEY (Id_Candidats) REFERENCES candidats(Id),
-    FOREIGN KEY (Id_Sources) REFERENCES sources(Id),
-    FOREIGN KEY (Id_Postes) REFERENCES postes(Id)
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Sources) REFERENCES sources(Id_Sources),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes)
 );
 
-INSERT INTO Candidatures (Status, Id_Candidats, Id_Sources, Id_Postes) VALUES
+INSERT INTO Candidatures (Status_Candidatures, Cle_Candidats, Cle_Sources, Cle_Postes) VALUES
     ('non-traitee', 1, 1, 1),
     ('en attente', 2, 2, 2),
     ('traitee', 3, 3, 3),
@@ -289,5 +294,3 @@ INSERT INTO Candidatures (Status, Id_Candidats, Id_Sources, Id_Postes) VALUES
     ('non-traitee', 2, 4, 34),
     ('en attente', 3, 1, 35)
 ;
-
-

@@ -5,6 +5,7 @@ require_once('Controller.php');
 class HomeController extends Controller {
     public function __construct() {
         parent::__construct();
+        $this->loadModel('Home');
         $this->loadView('HomeView');
     }
 
@@ -279,6 +280,8 @@ class HomeController extends Controller {
                 'link_consult' => null
             ]
         ];
+
+        // $items = $this->Model->getNontraiteeCandidature();
         return $this->View->getContent("Candidatures", $items, $dashboard);
     }
 }
