@@ -11,7 +11,7 @@ calendrier.textContent = localDate.toString();
 
 // Ajout du menu déroulant
 const menu = document.getElementById('menu');
-const menuItem = menu.querySelectorAll('a');
+const menuItem = menu.querySelectorAll('.link-form');
 const menuIcon = document.getElementById('menu-icon');
 let isOpen = false;
 
@@ -47,26 +47,3 @@ for(let i = 0; i < onglets.length; i++) {
         onglets[i].classList.add('visible');
     }, (i + 1) * 50);
 }
-
-
-// Ajout de l'onglet de déconnexion
-const userInfo = document.querySelector('.barre-de-navigation .user-info');
-const logoutMenu = document.getElementById('menu-deconnexion');
-
-userInfo.addEventListener('mouseover', function() {
-    logoutMenu.style.transform = 'scaleY(1)';
-});
-userInfo.addEventListener('mouseout', function(event) {
-    if (!logoutMenu.contains(event.relatedTarget)) {
-        logoutMenu.style.transform = 'scaleY(0)';
-    }
-});
-
-logoutMenu.addEventListener('mouseover', function() {
-    logoutMenu.style.transform = 'scaleY(1)';
-});
-logoutMenu.addEventListener('mouseout', function(event) {
-    if (!userInfo.contains(event.relatedTarget)) {
-        logoutMenu.style.transform = 'scaleY(0)';
-    }
-});

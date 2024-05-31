@@ -279,6 +279,6 @@ class HomeController extends Controller {
                 'link_consult' => null
             ]
         ];
-        return $this->View->getContent("Candidatures", $items, $class=null, $dashboard);
+        return $this->View->getContent("Candidatures", $items, $dashboard);
     }
 }

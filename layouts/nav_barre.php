@@ -9,15 +9,18 @@
         <p class="user-info"><?php echo $_SESSION["user_identifiant"]; ?></p>
     </div>
 </nav>
-<form id="menu-deconnexion" method="POST" action="index.php?login=deconnexion">
-    <button type="submit" class="LignesHover">Se déconnecter</button>
-</form>
 <section id="menu">
-    <a href="#">Candidatures</a>
+    <form class="link-form" method="post" action =""><button type="submit">Candidatures</button></form>
+    <form class="link-form" method="post" action =""><button type="submit">Employés</button></form>
+    <form class="link-form" method="post" action =""><button type="submit">Besoins</button></form>
+    <form class="link-form" method="post" action =""><button type="submit">Statistiques</button></form>
+    <form class="link-form" method="post" action =""><button type="submit">Préférences</button></form>
+    <form class="link-form" method="post" action ="index.php?login=deconnexion"><button type="submit">Se déconnecter</button></form>
+    <!--<a href="#">Candidatures</a>
     <a href="#">Employés</a>
     <a href="#">Besoins</a>
     <a href="#">Statistiques</a>
-    <a href="#">Préférences</a>
+    <a href="#">Préférences</a>-->
 </section> 
 
 <script src="layouts\assets\scripts\objects\Date_Time.js"></script>

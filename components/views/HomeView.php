@@ -3,7 +3,7 @@
 require_once 'View.php';
 
 class HomeView extends View {
-    public function getContent($titre, $items = [], $nb_items_max=null, $dashboard = []) {
+    public function getContent($titre, $items = [], $dashboard = [], $nb_items_max=null) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat Web Site - Welcome', 
                 ["layouts\assets\stylesheet\index.css"]);
@@ -13,7 +13,7 @@ class HomeView extends View {
 
         // On ajoute le contenu de la page
         echo "<content>";
-        $this->getListesItems($titre, $items, $nb_items_max=null);
+        $this->getListesItems($titre, $items, $nb_items_max);
         echo "<aside>";
         $this->getDashboard($dashboard);
         echo "</aside>";
