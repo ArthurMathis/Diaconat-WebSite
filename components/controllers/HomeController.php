@@ -5,7 +5,7 @@ require_once('Controller.php');
 class HomeController extends Controller {
     public function __construct() {
         parent::__construct();
-        $this->loadModel('Home');
+        $this->loadModel('HomeModel');
         $this->loadView('HomeView');
     }
 
@@ -21,14 +21,18 @@ class HomeController extends Controller {
             ],
             [
                 'titre' => 'Offres en cours', 
-                'content' => [], 
+                'content' => [
+                    ["En développement" => "Fonctionnalité indisponible, pour le moment. Le site est encore en développement"]
+                ], 
                 'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null
             ],
             [
                 'titre' => 'Rendez-vous programmés', 
-                'content' => [], 
+                'content' => [
+                    ["En développement" => "Fonctionnalité indisponible, pour le moment. Le site est encore en développement"]
+                ], 
                 'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null

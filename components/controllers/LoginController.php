@@ -6,7 +6,7 @@ class LoginController extends Controller {
     /// Constructeur du controller
     public function __construct() {
         parent::__construct();
-        $this->loadModel('Login');
+        $this->loadModel('LoginModel');
         $this->loadView('LoginView');
     }
 

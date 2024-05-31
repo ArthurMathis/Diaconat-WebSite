@@ -3,6 +3,7 @@
 require_once('define.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
+require_once(CONTROLLERS.DS.'CandidaturesController.php');
 
 // On démarre la session de l'utilisateur
 session_start();
@@ -104,6 +105,18 @@ if(isset($_GET['login'])) {
 
         default : 
             $c->displayLogin();
+            break;
+    }
+
+} elseif(isset($_GET['candidatures'])) {
+    $candidatures = new CandidaturesController();
+    switch($_GET['candidatures']) {
+        case 'home' :
+            $candidatures->dispayCandidatures();
+            break;
+
+        default : 
+            $candidatures->dispayCandidatures();
             break;
     }
 

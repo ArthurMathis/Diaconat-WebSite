@@ -9,7 +9,7 @@ class HomeView extends View {
                 ["layouts\assets\stylesheet\index.css"]);
 
         // On ajoute la barre de navigation
-        include LAYOUTS.DS.'nav_barre.php';
+        include LAYOUTS.DS.'navbarre.php';
 
         // On ajoute le contenu de la page
         echo "<content>";

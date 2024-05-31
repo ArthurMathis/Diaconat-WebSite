@@ -10,7 +10,7 @@
     </div>
 </nav>
 <section id="menu">
-    <form class="link-form" method="post" action =""><button type="submit">Candidatures</button></form>
+    <form class="link-form" method="post" action ="index.php?candidatures=home"><button type="submit">Candidatures</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Employés</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Besoins</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Statistiques</button></form>

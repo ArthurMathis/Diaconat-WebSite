@@ -1,11 +1,11 @@
 <?php 
 
 require_once(MODELS.DS.'Model.php');
-require_once(MODELS.DS.'Utilisateurs.php');
-require_once(MODELS.DS.'Instants.php');
+require_once(CLASSE.DS.'Utilisateurs.php');
+require_once(CLASSE.DS.'Instants.php');
 require_once(VIEWS.DS.'ErrorView.php');
 
-class Login extends Model {
+class LoginModel extends Model {
     public function connectUser($identifiant, $motdepasse) {
         // On cherche l'utilisateur dans la base de données
         $user = $this->searchUser($identifiant, $motdepasse);

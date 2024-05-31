@@ -6,16 +6,17 @@ define('ROOT',dirname('.'));
 define('DS',DIRECTORY_SEPARATOR);
 
 // On définit les chemins vers les sous-répertoires 
-define ('COMPONENTS', ROOT.DS.'components');
-define ('MODELS', COMPONENTS.DS.'models');
-define ('VIEWS', COMPONENTS.DS.'views');
-define ('CONTROLLERS', COMPONENTS.DS.'controllers');
+define('COMPONENTS', ROOT.DS.'components');
+define('MODELS', COMPONENTS.DS.'models');
+define('VIEWS', COMPONENTS.DS.'views');
+define('CONTROLLERS', COMPONENTS.DS.'controllers');
+define('CLASSE', MODELS.DS.'classe');
 
 // On définit le chemin vers le sous-répertoire de page web
-define ('LAYOUTS', ROOT.DS.'layouts');
-define ('ASSETS', LAYOUTS.DS.'assets');
-define ('STYLESHEET', ASSETS.DS.'stylesheet');
-define ('IMG', ASSETS.DS.'img');
+define('LAYOUTS', ROOT.DS.'layouts');
+define('ASSETS', LAYOUTS.DS.'assets');
+define('STYLESHEET', ASSETS.DS.'stylesheet');
+define('IMG', ASSETS.DS.'img');
 
 // Utile ?
 define('LOG', 'log');

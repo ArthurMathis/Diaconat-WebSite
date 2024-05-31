@@ -1,0 +1,20 @@
+.options_barre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: var(--nav-barre-size);
+
+    padding: 0 var(--padding);
+}
+.options_barre article {
+    display: flex;
+    gap: var(--margin);
+
+    width: fit-content;
+    height: fit-content;
+}
+.options_barre article form button {
+    text-wrap: nowrap;
+}

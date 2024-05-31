@@ -2,7 +2,7 @@
 
 require_once(MODELS.DS.'Model.php');
 
-class Home extends Model {
+class HomeModel extends Model {
     public function getCandidatures(){
         // On initialise la requête
         $request = "SELECT intitule_postes AS Poste, 
@@ -150,4 +150,6 @@ class Home extends Model {
         // On retourne le rôle
         return $result;
     }
+
+    
 }
