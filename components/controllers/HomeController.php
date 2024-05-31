@@ -193,6 +193,92 @@ class HomeController extends Controller {
                 'Poste' => 'Radiologue'
             ]
         ];
-        return $this->View->getContent("Candidatures", $items, $class=null);
+        $dashboard = [
+            [
+                'titre' => 'Candidatures en attente',
+                'content' => [
+                    [
+                        'Nom' => 'Rousseau',
+                        'Prenom' => 'Chloe',
+                        'Poste' => 'Radiologue'
+                    ],
+                    [
+                        'Nom' => 'Petit',
+                        'Prenom' => 'Paul',
+                        'Poste' => 'Pédiatre'
+                    ],
+                    [
+                        'Nom' => 'Moreau',
+                        'Prenom' => 'Sophie',
+                        'Poste' => 'Pharmacien'
+                    ],
+                    [
+                        'Nom' => 'David',
+                        'Prenom' => 'Thomas',
+                        'Poste' => 'Oncologue'
+                    ]
+                ],
+                'nb_item_max' => 4,
+                'link_add' => null,
+                'link_consult' => null
+            ], 
+            [
+                'titre' => 'Candidatures en attente',
+                'content' => [
+                    [
+                        'Nom' => 'Rousseau',
+                        'Prenom' => 'Chloe',
+                        'Poste' => 'Radiologue'
+                    ],
+                    [
+                        'Nom' => 'Petit',
+                        'Prenom' => 'Paul',
+                        'Poste' => 'Pédiatre'
+                    ],
+                    [
+                        'Nom' => 'Moreau',
+                        'Prenom' => 'Sophie',
+                        'Poste' => 'Pharmacien'
+                    ],
+                    [
+                        'Nom' => 'David',
+                        'Prenom' => 'Thomas',
+                        'Poste' => 'Oncologue'
+                    ]
+                ],
+                'nb_item_max' => 2,
+                'link_add' => null,
+                'link_consult' => null
+            ],
+            [
+                'titre' => 'Candidatures en attente',
+                'content' => [
+                    [
+                        'Nom' => 'Rousseau',
+                        'Prenom' => 'Chloe',
+                        'Poste' => 'Radiologue'
+                    ],
+                    [
+                        'Nom' => 'Petit',
+                        'Prenom' => 'Paul',
+                        'Poste' => 'Pédiatre'
+                    ],
+                    [
+                        'Nom' => 'Moreau',
+                        'Prenom' => 'Sophie',
+                        'Poste' => 'Pharmacien'
+                    ],
+                    [
+                        'Nom' => 'David',
+                        'Prenom' => 'Thomas',
+                        'Poste' => 'Oncologue'
+                    ]
+                ],
+                'nb_item_max' => 2,
+                'link_add' => null,
+                'link_consult' => null
+            ]
+        ];
+        return $this->View->getContent("Candidatures", $items, $class=null, $dashboard);
     }
 }
