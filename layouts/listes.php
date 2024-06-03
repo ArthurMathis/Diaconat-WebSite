@@ -6,23 +6,27 @@
             echo $size;
         ?></h2>
     </div>
-    <?php $keys = !empty($items) ? array_keys($items[0]) : 0; ?>
+    <?php $keys = !empty($items) ? array_keys($items[0]) : ["Aucun élément"]; ?>
     <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
                     <?php foreach($keys as $key): ?>
                         <th><?= $key ?></th>
-                    <?php endforeach ?>
+                    <?php endforeach ?>   
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 0; while($i < $size && $i < $nb_items_max): ?>
-                    <tr><?php foreach($items[$i] as $cell): ?>
-                        <th><?= $cell ?></th>
-                    <?php endforeach ?></tr>
-                    <?php $i++; ?>
-                <?php endwhile ?>    
+                <?php if($size > 0): ?>
+                    <?php $i = 0; while($i < $size && $i < $nb_items_max): ?>
+                        <tr><?php foreach($items[$i] as $cell): ?>
+                            <th><?= $cell ?></th>
+                        <?php endforeach ?></tr>
+                        <?php $i++; ?>
+                    <?php endwhile ?>    
+                <?php else : ?>    
+                    <tr><th>Ce tableau est vide</th></tr>
+                <?php endif ?>    
             </tbody>
         </table>
     </div>
