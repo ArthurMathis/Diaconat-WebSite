@@ -1,0 +1,1 @@
+// Faire une fonction qui assigne une puce selon le status switch + ::before

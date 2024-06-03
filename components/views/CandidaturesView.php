@@ -13,7 +13,8 @@ class CandidaturesView extends View {
 
         $this->getListesItems($titre, $items, $nb_items_max);
 
-        include(LAYOUTS.DS.'AnimeItems.php');
+        include(LAYOUTS.DS.'import-AnimeItems.php');
+        include(LAYOUTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

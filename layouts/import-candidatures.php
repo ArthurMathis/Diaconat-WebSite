@@ -1,0 +1,1 @@
+<?php  echo    "<script src=\"layouts\assets\scripts\candidatures-controller.js\"></script>\n<script src=\"layouts\assets\scripts\candidatures-view.js\"></script>";

@@ -5,8 +5,8 @@
         <form class="link-form"method="post" action=""><button type="submit">Saisir des candidatures</button></form>
     </article>
     <article>
-        <p class="LignesHover">Rechercher</p>
-        <p class="LignesHover">Filtrer</p>
-        <p class="LignesHover">Trier</p>
+        <p id="rechercher-button" class="LignesHover">Rechercher</p>
+        <p id="filtrer-button" class="LignesHover">Filtrer</p>
+        <p id="trier-button" class="LignesHover">Trier</p>
     </article>
 </nav>
