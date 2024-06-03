@@ -1,0 +1,38 @@
+CREATE TABLE Sources (
+	Id_Sources INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Sources VARCHAR(64) NOT NULL UNIQUE
+);
+
+CREATE TABLE Postuler_a (
+    Cle_Candidats INTEGER NOT NULL, 
+    Cle_Instants INTEGER NOT NULL, 
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Instants) REFERENCES instants(Id_Instants), 
+
+    PRIMARY KEY(Cle_Candidats, Cle_Instants)
+);
+
+CREATE TABLE Candidatures (
+	Id_Candidatures INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Status_Candidatures VARCHAR(15) NOT NULL,
+
+    Cle_Candidats INTEGER NOT NULL, 
+    Cle_Instants INTEGER NOT NULL, 
+    Cle_Sources INTEGER NOT NULL, 
+    Cle_Postes INTEGER NOT NULL, 
+    
+    FOREIGN KEY (Cle_Candidats, Cle_Instants) REFERENCES Postuler_a(Cle_Candidats, Cle_Instants),
+    FOREIGN KEY (Cle_Sources) REFERENCES sources(Id_Sources),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes)
+);
+
+CREATE TABLE Appliquer_a (
+    Cle_Candidatures INTEGER NOT NULL, 
+    Cle_Services INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidatures) REFERENCES Candidatures(Id_Candidatures),
+    FOREIGN KEY (Cle_Services) REFERENCES Services(Id_Services), 
+
+    PRIMARY KEY(Cle_Candidatures, Cle_Services)
+);

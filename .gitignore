@@ -1,0 +1,8 @@
+# .gitignore
+
+# Ignore the .vscode document
+.vscode
+# Ignore the .ideas document
+.ideas
+# Ignore the .env document
+# .env

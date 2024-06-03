@@ -1,0 +1,43 @@
+CREATE TABLE Candidats (
+    Id_Candidats INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Nom_Candidats VARCHAR(64) NOT NULL,
+    Prenom_Candidats VARCHAR(64) NOT NULL,
+    Telephone_Candidats VARCHAR(10) UNIQUE NOT NULL,
+    Email_Candidats VARCHAR(64) UNIQUE NOT NULL, 
+    Adresse_Candidats VARCHAR(256),
+    CodePostale_Candidats VARCHAR(5), 
+    Disponibilite_Candidats DATE NOT NULL,
+    VisiteMedicale_Candidats BOOLEAN NOT NULL
+);
+
+CREATE TABLE Aides_au_recrutement (
+    Id_Aides_au_recrutement INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Aides_au_recrutement VARCHAR(64) NOT NULL UNIQUE,
+    Description_Aides_au_recrutement TEXT
+);
+
+CREATE TABLE Avoir_droit_a (
+    Cle_Candidats INTEGER NOT NULL,
+    Cle_Aides_au_recrutement INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Aides_au_recrutement) REFERENCES Aides_au_recrutement(Id_Aides_au_recrutement),
+
+    PRIMARY KEY(Cle_Candidats, Cle_Aides_au_recrutement)
+);
+
+CREATE TABLE Diplomes (
+    Id_Diplomes INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Diplomes VARCHAR(64) NOT NULL UNIQUE,
+    Description_Diplomes TEXT
+);
+
+CREATE TABLE Obtenir (
+    Cle_Candidats INTEGER NOT NULL,
+    Cle_Diplomes INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Diplomes) REFERENCES Diplomes(Id_Diplomes),
+
+    PRIMARY KEY(Cle_Candidats, Cle_Diplomes)
+);

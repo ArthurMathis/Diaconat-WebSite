@@ -1,0 +1,42 @@
+CREATE TABLE Poles (
+    Id_Poles INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Poles VARCHAR(8) NOT NULL UNIQUE,
+    Description_Poles TEXT
+);  
+
+CREATE TABLE Etablissements (
+    Id_Etablissements INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Etablissemnts VARCHAR(64) NOT NULL UNIQUE,
+    Adresse_Etablissements VARCHAR(256) UNIQUE,
+    Description_Etablissements TEXT, 
+
+    Cle_Poles INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Poles) REFERENCES Poles(Id_Poles)
+);
+
+CREATE TABLE Services (
+    Id_Services INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Services VARCHAR(64) NOT NULL UNIQUE,
+
+    Cle_Etablissements INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Etablissements) REFERENCES etablissements(Id_Etablissements)
+);
+
+CREATE TABLE Postes (
+	Id_Postes INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Postes VARCHAR(64) NOT NULL UNIQUE,
+    Description_Postes TEXT
+);
+
+CREATE TABLE Missions (
+	Id_Missions INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Missions VARCHAR(64) NOT NULL UNIQUE,
+
+    Cle_Services INTEGER NOT NULL,
+    Cle_Postes INTEGER NOT NULL,
+    
+    FOREIGN KEY (Cle_Services) REFERENCES services(Id_Services),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes)
+);

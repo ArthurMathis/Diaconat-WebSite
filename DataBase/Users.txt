@@ -1,0 +1,42 @@
+CREATE TABLE Roles (
+	Id_Role INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Role VARCHAR(32) NOT NULL UNIQUE
+);
+
+CREATE TABLE Utilisateurs (
+	Id_Utilisateurs INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Nom_Utilisateurs VARCHAR(64) NOT NULL,
+    MotDePasse_Utilisateurs VARCHAR(256) NOT NULL,
+    Email_Utilisateurs VARCHAR(64) UNIQUE,
+
+    Cle_Roles INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Roles) REFERENCES Roles(Id_Role)
+);
+
+CREATE TABLE Types (
+	Id_Types INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Types VARCHAR(32) NOT NULL UNIQUE
+);
+
+INSERT INTO types (Intitule_Types) VALUES 
+('Connexion'), 
+('Deconnexion');
+
+CREATE TABLE Instants (
+	Id_Instants INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Jour_Instants DATE NOT NULL,
+    Heure_Instants TIME NOT NULL
+);
+
+CREATE TABLE Actions (
+	Id_Actions INTEGER AUTO_INCREMENT PRIMARY KEY,
+
+    Cle_Utilisateurs INTEGER NOT NULL,
+    Cle_Types INTEGER NOT NULL,
+    CLe_Instants INTEGER NOT NULL,
+    
+    FOREIGN KEY (Cle_Utilisateurs) REFERENCES Utilisateurs(Id_Utilisateurs),
+    FOREIGN KEY (Cle_Types) REFERENCES Types(Id_Types),
+    FOREIGN KEY (CLe_Instants) REFERENCES Instants(Id_Instants)
+);
