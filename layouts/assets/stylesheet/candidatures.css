@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .options_barre {
     display: flex;
     justify-content: space-between;
@@ -17,4 +21,20 @@
 }
 .options_barre article form button {
     text-wrap: nowrap;
+}
+
+.liste_items {
+    width: 100%;
+    height: calc(100dvh - (2 * var(--nav-barre-size)));
+
+    padding: var(--padding);
+    padding-top: 0;
+}
+.liste_items h2:first-of-type {
+    width: 100%;
+    text-align: center;
+}
+/*
+.liste_items h2:not(:first-of-type) {
+    display: none;
 }

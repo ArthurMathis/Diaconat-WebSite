@@ -299,10 +299,10 @@ form .checkbox-liste .checkbox-item input:checked::after {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* gap: var(--margin); */
 
     height: var(--nav-barre-size);
     width: 100%;
+    z-index: 10;
 
     padding: 0 var(--padding);
 
@@ -313,7 +313,8 @@ form .checkbox-liste .checkbox-item input:checked::after {
     position: relative;
     height: 80%;
 }
-.barre-de-navigation > div {
+.barre-de-navigation > div, 
+.barre-de-navigation > nav {
     display: flex;
     justify-content: right;
     align-items: center;
@@ -327,6 +328,23 @@ form .checkbox-liste .checkbox-item input:checked::after {
 
     height: 100%;
     margin-left: var(--margin);
+}
+.barre-de-navigation .title {
+    position: absolute;
+    left: 50%;
+
+    gap: calc(var(--marin) / 2);
+
+    font-size: var(--font-size-medium);
+
+    transform: translateX(-50%);
+}
+.barre-de-navigation .title > p {
+    margin-left : 0;
+
+    color: var(--blue);
+    font-weight: 700;
+    font-style: italic;
 }
 
 #menu-icon {
@@ -390,6 +408,7 @@ form .checkbox-liste .checkbox-item input:checked::after {
     left: 0;
 
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     gap: var(--padding);
 
@@ -409,11 +428,12 @@ form .checkbox-liste .checkbox-item input:checked::after {
     transform: scaleY(1);
 }
 #menu > .link-form {
+    flex: 1 1;
     font-size: var(--font-size-big);
     letter-spacing: 0.1em;
     opacity: 0;
 
-    opacity: 0;
+    width: 100%;
     will-change: opacity;
     transition: opacity ease-in-out 650ms;
 }

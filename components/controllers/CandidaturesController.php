@@ -10,6 +10,7 @@ class CandidaturesController extends Controller {
     }
 
     public function dispayCandidatures() {
-        return $this->View->getContent();
+        $items = $this->Model->getCandidatures();
+        return $this->View->getContent("Candidatures", $items);
     }
 }

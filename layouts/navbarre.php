@@ -2,7 +2,10 @@
     <div id="menu-icon">
         <span></span>
     </div>
-    <img src="layouts\assets\img\ico_diaconat_mulhouse.webp" alt="Logo de l'application">
+    <nav class="title">
+        <img src="layouts\assets\img\ico_diaconat_mulhouse.webp" alt="Logo de l'application">
+        <p>Ypopsi</p>
+</nav>
     <div>
         <p id="calendrier"></p>
         <p id="horloge">00 : 00 : 00</p>
@@ -10,6 +13,7 @@
     </div>
 </nav>
 <section id="menu">
+    <form class="link-form" method="post" action ="index.php"><button type="submit">Home</button></form>
     <form class="link-form" method="post" action ="index.php?candidatures=home"><button type="submit">Candidatures</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Employés</button></form>
     <form class="link-form" method="post" action =""><button type="submit">Besoins</button></form>
@@ -19,4 +23,4 @@
 </section> 
 
 <script src="layouts\assets\scripts\objects\Date_Time.js"></script>
-<script src="layouts\assets\scripts\view.js"></script>
+<script src="layouts\assets\scripts\entete-view.js"></script>

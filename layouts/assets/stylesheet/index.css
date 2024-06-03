@@ -1,15 +1,18 @@
 body {
-    overflow: hidden;
+    height: min-content;
 }
 
 content {
     display: flex;
+
     width: 100%;
-    height: calc(100dvh - var(--nav-size-barre));
-    padding-top:  var(--nav-size-barre);
+    height: calc(100dvh - (2 * var(--nav-size-barre)));
+
+    margin-top:  var(--nav-size-barre);
 }
 content > section {
     width: 65%;
+    height: 100%;
     padding: var(--margin) var(--margin) 0 var(--padding);
 }
 
