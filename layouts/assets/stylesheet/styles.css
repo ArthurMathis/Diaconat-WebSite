@@ -5,6 +5,11 @@
     --white: #fff;
     --blue: #3264A9;    
 
+    --nontraitee: #ffbe0b;
+    --enattente: #3a86ff;
+    --acceptee: #55a630;
+    --refusee: #d00000;
+
     --font-size-big: 3.5em;
     --font-size-medium:2.1em;
     --font-size-standart: 1em;
@@ -414,7 +419,7 @@ form .checkbox-liste .checkbox-item input:checked::after {
 
     width: 100%;
     height: calc(100dvh - var(--nav-barre-size));
-    z-index: 1;
+    z-index: 2;
 
     padding: calc(2 * var(--padding));
 

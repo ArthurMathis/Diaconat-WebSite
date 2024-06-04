@@ -20,7 +20,7 @@ class HomeView extends View {
         // include LAYOUTS.DS.'dashboard.php';
         echo "</content>";
 
-        include(LAYOUTS.DS.'AnimeItems.php');
+        include(LAYOUTS.DS.'import-AnimeItems.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

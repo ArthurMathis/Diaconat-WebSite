@@ -23,6 +23,15 @@ body {
     text-wrap: nowrap;
 }
 
+
+.candidatures-menu {
+    display: none;
+}
+.candidatures-menu.active {
+    display: flex;
+}
+
+
 .liste_items {
     width: 100%;
     height: calc(100dvh - (2 * var(--nav-barre-size)));
@@ -34,7 +43,36 @@ body {
     width: 100%;
     text-align: center;
 }
-/*
-.liste_items h2:not(:first-of-type) {
-    display: none;
+.liste_items .table-wrapper table thead {
+    z-index: 1;
+}
+.liste_items .table-wrapper table tbody tr th:first-of-type {
+    position: relative;
+    padding-left: var(--margin);
+}
+.liste_items .table-wrapper table tbody tr th:first-of-type::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    display: block;
+    width: var(--font-size-small);
+    height: var(--font-size-small);
+    z-index: 0;
+
+    border-radius:  var(--font-size-small);
+    transform: translateY(-50%);
+}
+.liste_items .table-wrapper table tbody tr.en-attente th:first-of-type::before {
+    background-color: var(--enattente);
+}
+.liste_items .table-wrapper table tbody tr.non-traitee th:first-of-type::before {
+    background-color: var(--nontraitee);
+}
+.liste_items .table-wrapper table tbody tr.acceptee th:first-of-type::before {
+    background-color: var(--acceptee);
+}
+.liste_items .table-wrapper table tbody tr.refusee th:first-of-type::before {
+    background-color: var(--refusee);
 }
