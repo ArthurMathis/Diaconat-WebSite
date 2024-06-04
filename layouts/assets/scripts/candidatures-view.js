@@ -1,18 +1,19 @@
-// On ajoute le code couleur !!
-setColor(candidatures, 0);
-
 function resetLignes(items) {
-    if(items == null)
+    if(items === null)
         return ;
 
+    console.log('On affiche les éléments: ');
+    console.table(items);
     for(let i = 0; i < items.length; i++) {
         items[i].style.display = 'table-row';
     }
 }
 function retireLignes(items) {
-    if(items == null)
+    if(items === null)
         return ;
 
+    console.log('On retire les éléments: ');
+    console.table(items);
     for(let i = 0; i < items.length; i++) {
         items[i].style.display = 'none';
     }

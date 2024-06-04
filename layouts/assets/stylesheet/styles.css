@@ -186,6 +186,8 @@ form .checkbox-liste .checkbox-item input:checked::after {
     color: var(--black);
     font-weight: 300;
 
+    cursor: pointer;
+
     background-color: transparent
 }
 .link-form button::after{
@@ -266,6 +268,9 @@ form .checkbox-liste .checkbox-item input:checked::after {
     transform-origin: left;
     overflow-x: hidden;
     transition: transform 450ms ease-in-out;
+}
+.LignesHover {
+    cursor: pointer;
 }
 .LignesHover:hover::after {
     transform: scaleX(1);

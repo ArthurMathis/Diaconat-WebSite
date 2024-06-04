@@ -15,7 +15,7 @@ CREATE TABLE Postuler_a (
 
 CREATE TABLE Candidatures (
 	Id_Candidatures INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Status_Candidatures VARCHAR(15) NOT NULL,
+    Statut_Candidatures VARCHAR(15) NOT NULL,
 
     Cle_Candidats INTEGER NOT NULL, 
     Cle_Instants INTEGER NOT NULL, 

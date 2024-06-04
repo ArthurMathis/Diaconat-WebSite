@@ -60,12 +60,14 @@ function recupChamps(liste_champs=[], criteres=[]) {
     // On fait défiler les champs
     for(let i = 0; i < liste_champs.length; i++) {
         // On teste l'intégrité des données
-        if(liste_champs[i].value != null) {
+        if(liste_champs[i].value !== "") {
             // On ajoute le critère
             criteres.push({
                 'index': i,
-                'critere': liste_champs.value
+                'critere': liste_champs[i].value
             });
+            
+            // On réinitialise le champs
             liste_champs[i].value = null;
         }
     }
@@ -84,7 +86,6 @@ function recupChamps(liste_champs=[], criteres=[]) {
  */
 function filtrerPar(items, index, critere) {
     console.log('On lance la recherche de ' + critere + ', dans la colonne: ' + index + ' du tableau:');
-    console.log(items);
 
     // On déclare le items d'élément à retirer
     let res_recherche = {
@@ -111,9 +112,9 @@ function filtrerPar(items, index, critere) {
 
     console.log('Resultat de la recherche:');
     console.log('Selection valide:');
-    console.log(res_recherche.valideItems);
+    console.table(res_recherche.valideItems);
     console.log('Selection à retirer:');
-    console.log(res_recherche.retireItems);
+    console.table(res_recherche.retireItems);
 
     // On retourne les éléments à retirer de la vue
     return res_recherche;
@@ -135,9 +136,7 @@ function multiFiltre(items, criteres=[]) {
         
         // On applique la recherche
         const res_recherche = filtrerPar(rechercheDans, criteres[i].index, criteres[i].critere); 
-        // On met à jour la sélection de recherche
         rechercheDans = res_recherche.valideItems;
-        // On retire les lignes invalides
         retireLignes(res_recherche.retireItems);
     }
 }
