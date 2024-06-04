@@ -7,6 +7,11 @@ class View {
     public function generateCommonFooter() {
         include LAYOUTS.DS.'footer.php';
     }
+    public function generateMenu($liste_menu) {
+        // On ajoute la barre de navigation
+        include LAYOUTS.DS.'navbarre.php';
+    }
+
     public function getListesItems($titre=null, $items = [], $nb_items_max=null) {
         // Si le nombre d'items max n'est pas défini, on l'implémente au nombre d'items total
         if($nb_items_max == null)

@@ -433,12 +433,13 @@ form .checkbox-liste .checkbox-item input:checked::after {
     transform: scaleY(1);
 }
 #menu > .link-form {
-    flex: 1 1;
+    width: 100%;
+    height: fit-content;
+
     font-size: var(--font-size-big);
     letter-spacing: 0.1em;
     opacity: 0;
-
-    width: 100%;
+    
     will-change: opacity;
     transition: opacity ease-in-out 650ms;
 }

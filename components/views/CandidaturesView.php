@@ -7,8 +7,19 @@ class CandidaturesView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\candidatures.css"]);
 
-        // On ajoute la barre de navigation
-        include LAYOUTS.DS.'navbarre.php';
+        $liste_menu = [
+            [
+                "intitule" => "Home",
+                "action" => "index.php"
+            ],
+            [
+                "intitule" => "Se déconnecter",
+                "action" => "index.php?login=deconnexion"
+            ]
+        ];
+
+        // On ajoute les barres de navigation
+        $this->generateMenu($liste_menu);
         include LAYOUTS.DS.'candidatures_barre.php';
 
         $this->getListesItems($titre, $items, $nb_items_max);
