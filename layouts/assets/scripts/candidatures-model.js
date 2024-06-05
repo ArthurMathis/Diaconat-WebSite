@@ -1,5 +1,8 @@
 // On récupère le tableau de candidatures
 const candidatures = document.querySelector('.liste_items tbody').rows;
+// On récupère l'affichage du nombre de candidatures
+let nb_candidatures = document.querySelectorAll('.liste_items .entete h2');
+nb_candidatures = nb_candidatures[nb_candidatures.length - 1];
 
 // On récupère les boutons
 const rechercher = document.getElementById('rechercher-button');
@@ -109,19 +112,21 @@ function recupChapsDate(liste_date=[]) {
 
     let criteres_date = [];
     // On récupère les dates
-    if(liste_date[0].value)
+    if(liste_date[0].value) {
         criteres_date.push({
             'type': 'min', 
             'value': new Date(liste_date[0].value)
         });
-    if(liste_date[1].value)
+        liste_date[0].value = null;
+    }
+        
+    if(liste_date[1].value) {
         criteres_date.push({
             'type': 'max', 
             'value': new Date(liste_date[1].value)
         });
-
-    console.log("Critères date : ");
-    console.table(criteres_date);
+        liste_date[1].value = null;
+    }
 
     // On retourne la liste de critères 
     return {
@@ -182,7 +187,7 @@ function filterParStatut(item, index, criteres=[]) {
  */
 function filtrerParDate(item, index, critere_date=[]) {
     // On vérifie l'intégrité des données
-    if(index < 0)
+    if(index < 0 || critere_date === null)
         return; 
 
     // On déclare les variables tampons
@@ -242,7 +247,6 @@ function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=n
         i++;
     }
 
-    // On met à jour l'affichage
-    retireLignes(items);
-    resetLignes(search);
+    // On retourne la sélection après filtres
+    return search;
 }

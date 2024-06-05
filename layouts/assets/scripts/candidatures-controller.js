@@ -48,7 +48,12 @@ filtrer.addEventListener('click', () => {
 
             else {
                 // On applique les filtres
-                multiFiltre(candidatures, criteres, criteres_statut, criteres_date);
+                const res = multiFiltre(candidatures, criteres, criteres_statut, criteres_date);
+
+                // On met à jour l'affichage
+                retireLignes(candidatures);
+                resetLignes(res);
+                afficheNbItems(res !== null ? res.length : 0);
 
                 // On cache le menu
                 filtrerIsVisible = !filtrerIsVisible;
