@@ -53,17 +53,21 @@ function setColor(items=[], index) {
 /**
  * @brief Fonction permettant de récupérer les données saisies dans un formulaire et de les retourner dans un tableau de critères
  * @param {*} liste_champs Le formulaire
- * @param {*} criteres Le tableau de critères
- * @returns 
+ * @returns Le tableau de critères
  */
-function recupChamps(liste_champs=[], criteres=[]) {
+function recupChamps(liste_champs=[]) {
+    // On vérifie l'intégrité des données
+    if(liste_champs.length === 0)
+        return; 
+
+    let criteres = [];
     // On fait défiler les champs
     for(let i = 0; i < liste_champs.length; i++) {
         // On teste l'intégrité des données
         if(liste_champs[i].value !== "") {
             // On ajoute le critère
             criteres.push({
-                'index': i,
+                'index': i + 1,
                 'critere': liste_champs[i].value.trim()
             });
             
@@ -74,6 +78,26 @@ function recupChamps(liste_champs=[], criteres=[]) {
 
     // On retourne la liste de critères
     return criteres;
+}
+/**
+ * @brief Fonction permettant de récupérer les données saisies dans les checkbox du formulaire
+ * @param {*} liste_statut La liste des checkbox
+ * @returns Le tableau de critères (statut)
+ */
+function recupChampsStatut(liste_statut=[]) {
+    // On vérifie l'intégrité des données
+    if(liste_statut.length === 0)
+        return; 
+
+    let criteres_statut = [];
+    // On récupère les chexboxs
+    for(let i = 0; i < liste_statut.length; i++) {
+        if(liste_statut[i].checked)
+            criteres_statut.push(liste_statut[i].name);
+    }
+
+    // On retourne la liste de critères 
+    return criteres_statut;
 }
 
 
@@ -94,7 +118,29 @@ function filtrerPar(item, index, critere) {
     const obj = item.cells;
 
     // return obj[index].innerHTML == critere;
-    return obj[index].innerHTML.trim() == critere;
+    return obj[index].innerHTML.trim() === critere;
+}
+/**
+ * @brief Fonction permettant de filtrer les candidatures selon leur statut
+ * @param {*} item La candidature
+ * @param {*} index L'indice de la colone contenant le statut
+ * @param {*} criteres Le tableau de statuts acceptés dans la recherche
+ * @returns 
+ */
+function filterParStatut(item, index, criteres=[]) {
+    // On vérifie l'intégrité dess données
+    if(criteres.length === 0 || index < 0)
+        return;
+
+    // On fait défiler les criteres
+    let i = 0, find = false;
+    while(!find && i < criteres.length) {
+        if(item.cells[index].innerHTML.trim() === criteres[i])
+            find = true;
+        i++;
+    }
+
+    return find;
 }
 
 /**
@@ -103,26 +149,26 @@ function filtrerPar(item, index, critere) {
  * @param {*} criteres Le tableau contenant les index et critères des recherches
  * @returns 
  */
-function multiFiltre(items, criteres = []) {
-    if (items === null) {
+function multiFiltre(items, criteres = [], criteres_statut=[], index_statut) {
+    if (items === null || index_statut < 0) {
         return;
     }
 
+    // On déclare norte tableau de recherche
     let search = Array.from(items);
-    for (let i = 0; i < criteres.length; i++) {
-        console.log("On lance les recherches sur la sélection : ");
-        console.table(search);
 
-        // On vérifie qu'il reste un échantillon de recherche
-        if (search === null || search.length === 0) {
-            break;
-        }
+    // On filtre selon le statut
+    search = search.filter(item => filterParStatut(item, index_statut, criteres_statut));
 
-        console.log("Filtre: " + i + " ; " + criteres[i].critere);
-
+    // On applique les autres critères
+    let i = 0;
+    while(search !== null && i < criteres.length) {
         // On implémente l'échantillon
         search = search.filter(item => filtrerPar(item, criteres[i].index, criteres[i].critere));
+        i++;
     }
+
+    // On met à jour l'affichage
     retireLignes(items);
     resetLignes(search);
 }

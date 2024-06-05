@@ -11,7 +11,14 @@
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
-    <input type="text"  id="filtre-statut"      placeholder="Statut">
+    <div id="statut_input">
+        <input type="checkbox" name="non-traitee" checked><p>non-traitée</p><br>
+        <input type="checkbox" name="en attente" checked><p>en attente</p><br>
+        <input type="checkbox" name="accpetee" checked><p>acceptée</p><br>
+        <input type="checkbox" name="refusee" checked><p>refusée</p><br>
+    </div>
+    <!--<input type="text"  id="filtre-statut"      placeholder="Statut">-->
+    
     <input type="text"  id="filtre-nom"         placeholder="Nom">
     <input type="text"  id="filtre-prenom"      placeholder="Prenom">
     <input type="text"  id="filtre-poste"       placeholder="Poste">
