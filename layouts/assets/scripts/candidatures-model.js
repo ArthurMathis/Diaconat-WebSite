@@ -97,7 +97,37 @@ function recupChampsStatut(liste_statut=[]) {
     }
 
     // On retourne la liste de critères 
-    return criteres_statut;
+    return {
+        'index': 0, 
+        'criteres': criteres_statut
+    };
+}
+function recupChapsDate(liste_date=[]) {
+    // On vérifie l'intégrité des données
+    if(liste_date.length === 0 || 2 < liste_date.length)
+        return; 
+
+    let criteres_date = [];
+    // On récupère les dates
+    if(liste_date[0].value)
+        criteres_date.push({
+            'type': 'min', 
+            'value': new Date(liste_date[0].value)
+        });
+    if(liste_date[1].value)
+        criteres_date.push({
+            'type': 'max', 
+            'value': new Date(liste_date[1].value)
+        });
+
+    console.log("Critères date : ");
+    console.table(criteres_date);
+
+    // On retourne la liste de critères 
+    return {
+        'index': 7, 
+        'criteres': criteres_date
+    };
 }
 
 
@@ -142,6 +172,47 @@ function filterParStatut(item, index, criteres=[]) {
 
     return find;
 }
+/**
+ * @brief Fonction permettant de filtrer les candidatures selon leur date de disponibilité
+ * @param {*} item La candidature
+ * @param {*} index L'indice de la colonne contenant la disponibilité
+ * @param {*} date_min La date minimale à respecter
+ * @param {*} date_max La date maximale à respecter
+ * @returns 
+ */
+function filtrerParDate(item, index, critere_date=[]) {
+    // On vérifie l'intégrité des données
+    if(index < 0)
+        return; 
+
+    // On déclare les variables tampons
+    const date = new Date(item.cells[index].innerHTML.trim());
+    let i = 0, res = true;
+
+    // On teste
+    while(res && i < critere_date.length) {
+        // On teste le critère
+        switch(critere_date[i].type) {
+            case 'min': 
+                res = res && critere_date[i].value <= date;
+                break;
+
+            case 'max':
+                res = res && date <= critere_date[i].value;
+                break;   
+
+            default: 
+                console.log("Critère non reconnu");
+                console.log(critere_date[i]);
+                break;
+        } 
+        // On implémente
+        i++;
+    }
+    
+    // On retourne le résultat
+    return res;
+}
 
 /**
  * @brief Fonction permettant de réaliser une suite de recherches dans un tableau HTML
@@ -149,8 +220,8 @@ function filterParStatut(item, index, criteres=[]) {
  * @param {*} criteres Le tableau contenant les index et critères des recherches
  * @returns 
  */
-function multiFiltre(items, criteres = [], criteres_statut=[], index_statut) {
-    if (items === null || index_statut < 0) {
+function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=null) {
+    if (items === null || criteres_statut.index < 0) {
         return;
     }
 
@@ -158,7 +229,10 @@ function multiFiltre(items, criteres = [], criteres_statut=[], index_statut) {
     let search = Array.from(items);
 
     // On filtre selon le statut
-    search = search.filter(item => filterParStatut(item, index_statut, criteres_statut));
+    search = search.filter(item => filterParStatut(item, criteres_statut.index, criteres_statut.criteres));
+
+    // On filtre selon le statut
+    search = search.filter(item => filtrerParDate(item, criteres_date.index, criteres_date.criteres));
 
     // On applique les autres critères
     let i = 0;

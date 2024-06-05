@@ -98,7 +98,7 @@ form img {
 form h2 {
     text-align: center;
 }
-form input {
+input {
     width: 100%;
     height: 45px;
 
@@ -107,10 +107,10 @@ form input {
     border: 1px solid var(--black);
     border-radius: 5px;
 }
-form input::placeholder {
+input::placeholder {
     color: var(--grey)
 }
-form button {
+button {
     width: 100%;
     height: 45px;
     
@@ -130,7 +130,8 @@ form .checkbox-liste .checkbox-item {
     align-items: center;
     gap: 5px;
 }
-form .checkbox-liste .checkbox-item input {
+form .checkbox-liste .checkbox-item input,
+input[type="checkbox"] {
     position: relative;
 
     width: 0;
@@ -138,7 +139,8 @@ form .checkbox-liste .checkbox-item input {
 
     margin: 0 10px;
 }
-form .checkbox-liste .checkbox-item input::before {
+form .checkbox-liste .checkbox-item input::before,
+input[type="checkbox"]::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -151,10 +153,12 @@ form .checkbox-liste .checkbox-item input::before {
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
-form .checkbox-liste .checkbox-item input:checked::before {
+form .checkbox-liste .checkbox-item input:checked::before,
+input[type="checkbox"]:checked::before {
     opacity: 0;
 }
-form .checkbox-liste .checkbox-item input:checked::after {
+form .checkbox-liste .checkbox-item input:checked::after,
+input[type="checkbox"]:checked::after {
     content: '';
     position: absolute;
     top: 50%;

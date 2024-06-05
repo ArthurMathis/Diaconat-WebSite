@@ -5,20 +5,17 @@ setColor(candidatures, 0);
 let filtrerIsVisible = false;
 filtrer.addEventListener('click', () => {
     if(filtrerIsVisible) {
-        // On libère les champs 
-        const nom = null;
-        const prenom = null;
-        const poste = null;
-        const email = null;
-        const telephone = null;
-        const source = null;
+        champs = null;
+        champs_statut = null;
+        champs_date = null;
 
         // On cache le formulaire
         cacheMenu(filtrer_menu);
 
     } else {
         // On récupère les champs du formulaire
-        const champs = [
+        const champs_statut = document.getElementById('statut_input').querySelectorAll('input');
+        const champs_infos = [
             document.getElementById('filtre-nom'),
             document.getElementById('filtre-prenom'),
             document.getElementById('filtre-poste'),
@@ -26,7 +23,10 @@ filtrer.addEventListener('click', () => {
             document.getElementById('filtre-telephone'),
             document.getElementById('filtre-source'),
         ];
-        const champs_statut = document.getElementById('statut_input').querySelectorAll('input');
+        const champs_date = [
+            document.getElementById('filtre-date-max'),
+            document.getElementById('filtre-date-min')
+        ];
 
         // On recupère le bouton de recherche
         const bouton = document.getElementById('valider-filtre');
@@ -37,9 +37,9 @@ filtrer.addEventListener('click', () => {
 
         newBouton.addEventListener('click', () => {
             // On récupère la liste de critères
-            const criteres = recupChamps(champs);
-            // On récupère les statut acceptés dans la recherche
+            const criteres = recupChamps(champs_infos);
             const criteres_statut = recupChampsStatut(champs_statut);
+            const criteres_date = recupChapsDate(champs_date);
 
             // On vérifie la présence de critères
             if(criteres_statut.length === 0 && criteres.length === 0)
@@ -48,7 +48,7 @@ filtrer.addEventListener('click', () => {
 
             else {
                 // On applique les filtres
-                multiFiltre(candidatures, criteres, criteres_statut, 0);
+                multiFiltre(candidatures, criteres, criteres_statut, criteres_date);
 
                 // On cache le menu
                 filtrerIsVisible = !filtrerIsVisible;
@@ -61,8 +61,3 @@ filtrer.addEventListener('click', () => {
     }
     filtrerIsVisible = !filtrerIsVisible;
 });
-
-const tab1 = [1, 2, 3, 4];
-const tab2 = [4, 5, 6, 7];
-const tab = tab1.concat(tab2);
-console.table(tab);

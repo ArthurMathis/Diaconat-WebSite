@@ -12,24 +12,45 @@
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
     <div id="statut_input">
-        <input type="checkbox" name="non-traitee" checked><p>non-traitée</p><br>
-        <input type="checkbox" name="en attente" checked><p>en attente</p><br>
-        <input type="checkbox" name="accpetee" checked><p>acceptée</p><br>
-        <input type="checkbox" name="refusee" checked><p>refusée</p><br>
+        <h3>Statuts</h3>
+        <div class="container-statut">
+            <input type="checkbox" name="non-traitee" checked>
+            <p>non-traitée</p>
+        </div>
+        <div class="container-statut">
+            <input type="checkbox" name="en attente" checked>
+            <p>en attente</p>
+        </div>
+        <div class="container-statut">
+            <input type="checkbox" name="accpetee" checked>
+            <p>acceptée</p>
+        </div>
+        <div class="container-statut">
+            <input type="checkbox" name="refusee" checked>
+            <p>refusée</p>
+        </div>
     </div>
-    <!--<input type="text"  id="filtre-statut"      placeholder="Statut">-->
-    
-    <input type="text"  id="filtre-nom"         placeholder="Nom">
-    <input type="text"  id="filtre-prenom"      placeholder="Prenom">
-    <input type="text"  id="filtre-poste"       placeholder="Poste">
-    <input type="text"  id="filtre-email"       placeholder="Email">
-    <input type="text"  id="filtre-telephone"   placeholder="Telephone">
-    <input type="text"  id="filtre-source"      placeholder="Source">
+    <section>
+        <input type="text" id="filtre-nom"  placeholder="Nom">
+        <input type="text" id="filtre-prenom" placeholder="Prenom">
+    </section>
+    <section>
+        <input type="text" id="filtre-email" placeholder="Email">
+        <input type="text" id="filtre-telephone" placeholder="Telephone">
+    </section>
+    <section>
+        <input type="text" id="filtre-poste" placeholder="Poste">
+        <input type="text" id="filtre-source" placeholder="Source">
+    </section>
+    <div class="input-date">
+        <h3>Date minimale</h3>
+        <input type="date" id="filtre-date-max" name="filre-data-max">
+    </div>
+    <div class="input-date">
+        <h3>Date maximale</h3>
+        <input type="date" id="filtre-date-min" name="filre-data-min">
+    </div>
     <button id="valider-filtre">Appliquer</button>
 </div>
-<div class="candidatures-menu" id="Rechercher-menu">
-</div>
-<!--
-<div class="candidatures-menu" id="trier-menu">
-</div>
--->
+<div class="candidatures-menu" id="Rechercher-menu" style="display: none"></div>
+<div class="candidatures-menu" id="trier-menu"      style="display: none"></div>

@@ -25,10 +25,60 @@ body {
 
 
 .candidatures-menu {
+    position: fixed;
+    top: calc(2 * var(--nav-barre-size));
+
     display: none;
+    justify-content: left;
+    gap: var(--margin);
+
+    width: 100%;
+    z-index: 2;
+
+    padding: var(--padding);
+
+    background-color: var(--white);
+    border-bottom: 1px solid var(--black);
+    overflow-y: hidden;
 }
 .candidatures-menu.active {
     display: flex;
+}
+.candidatures-menu section {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 2);
+
+    width: clamp(240px, 30%, 320px);
+}
+.candidatures-menu #statut_input {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 2);
+
+    width: 120px;
+}
+.candidatures-menu #statut_input .container-statut {
+    display: flex;
+}
+.candidatures-menu #statut_input input {
+    height: var(--font-size-standart);
+}
+.candidatures-menu > button {
+    width: fit-content;
+    cursor: pointer;
+}
+.candidatures-menu #valider-filtre {
+    position: absolute;
+    bottom: var(--padding);
+    right: var(--padding);
+
+    padding: 0 var(--padding);
+}
+.candidatures-menu .input-date {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 4);
 }
 
 
