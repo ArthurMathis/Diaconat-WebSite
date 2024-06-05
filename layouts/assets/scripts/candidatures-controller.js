@@ -32,27 +32,28 @@ filtrer.addEventListener('click', () => {
         // On recupère le bouton de recherche
         const bouton = document.getElementById('valider-filtre');
 
-        bouton.addEventListener('click', () => {
-            // On réinitialise le tableau 
-            resetLignes(candidatures);
+        // Nettoyer les anciens gestionnaires d'événements pour éviter les ajouts multiples
+        const newBouton = bouton.cloneNode(true);
+        bouton.parentNode.replaceChild(newBouton, bouton);
 
-            setTimeout(() => {
-                // On déclare la liste de critères
-                const criteres = [];
-                // On recupère le contenu des champs
-                recupChamps(champs, criteres);
+        newBouton.addEventListener('click', () => {
+            // On déclare la liste de critères
+            const criteres = [];
+            // On recupère le contenu des champs
+            recupChamps(champs, criteres);
 
-                // On vérifie la présence des données
-                if(criteres === null) 
-                    console.log("Il n'y a pas de critères")
-                    // resetLignes(candidatures);
+            if(criteres.length === 0)
+                // On réinitialise le tableau 
+                resetLignes(candidatures);
 
-                // On recherche les éléments
+            else {
+                // On applique les filtres
                 multiFiltre(candidatures, criteres);
+
                 // On cache le menu
                 filtrerIsVisible = !filtrerIsVisible;
                 cacheMenu(filtrer_menu);
-            }, 100);
+            }
         });
 
         // On affiche le menu

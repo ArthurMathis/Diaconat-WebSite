@@ -64,7 +64,7 @@ function recupChamps(liste_champs=[], criteres=[]) {
             // On ajoute le critère
             criteres.push({
                 'index': i,
-                'critere': liste_champs[i].value
+                'critere': liste_champs[i].value.trim()
             });
             
             // On réinitialise le champs
@@ -79,65 +79,50 @@ function recupChamps(liste_champs=[], criteres=[]) {
 
 /**
  * @brief Fonction permettant d'effectuer une recherche dans un tableau HTML
- * @param {*} items Le tableau
+ * @param {*} item La ligne du tableau
  * @param {*} index La colonne dans laquelle on effectue la recherche
  * @param {*} critere La valeur recherchée
  * @returns 
  */
-function filtrerPar(items, index, critere) {
-    console.log('On lance la recherche de ' + critere + ', dans la colonne: ' + index + ' du tableau:');
-
-    // On déclare le items d'élément à retirer
-    let res_recherche = {
-        "retireItems": [],
-        "valideItems": []
-    };
-
+function filtrerPar(item, index, critere) {
     // On vérifie l'intégrité de l'index
-    if(index < 0)
-        return;
-
-    console.log("On démarre la lecture");
-    // On fait défiler la table
-    for(let i = 0; i < items.length; i++) {
-        // On récupère les différentes cellules de la ligne
-        const obj = items[i].cells;
-
-        // On teste les données
-        if(index < obj.length && obj[index].innerHTML != critere) 
-            res_recherche.retireItems.push(items[i]);
-
-        else res_recherche.valideItems.push(items[i]);
+    if (index < 0 || index >= item.cells.length) {
+        return false;
     }
 
-    console.log('Resultat de la recherche:');
-    console.log('Selection valide:');
-    console.table(res_recherche.valideItems);
-    console.log('Selection à retirer:');
-    console.table(res_recherche.retireItems);
+    // On récupère les différentes cellules de la ligne
+    const obj = item.cells;
 
-    // On retourne les éléments à retirer de la vue
-    return res_recherche;
+    // return obj[index].innerHTML == critere;
+    return obj[index].innerHTML.trim() == critere;
 }
+
 /**
  * @brief Fonction permettant de réaliser une suite de recherches dans un tableau HTML
- * @param {*} items Le tableau
+ * @param {*} items Le tableau de lignes
  * @param {*} criteres Le tableau contenant les index et critères des recherches
  * @returns 
  */
-function multiFiltre(items, criteres=[]) {
-    if(criteres == null)
+function multiFiltre(items, criteres = []) {
+    if (items === null) {
         return;
-
-    let rechercheDans = items;
-    for(let i = 0; i < criteres.length; i++) { 
-        if(rechercheDans.length == 0)
-            break;
-        
-        // On applique la recherche
-        const res_recherche = filtrerPar(rechercheDans, criteres[i].index, criteres[i].critere); 
-        rechercheDans = res_recherche.valideItems;
-        retireLignes(res_recherche.retireItems);
     }
+
+    let search = Array.from(items);
+    for (let i = 0; i < criteres.length; i++) {
+        console.log("On lance les recherches sur la sélection : ");
+        console.table(search);
+
+        // On vérifie qu'il reste un échantillon de recherche
+        if (search === null || search.length === 0) {
+            break;
+        }
+
+        console.log("Filtre: " + i + " ; " + criteres[i].critere);
+
+        // On implémente l'échantillon
+        search = search.filter(item => filtrerPar(item, criteres[i].index, criteres[i].critere));
+    }
+    retireLignes(items);
+    resetLignes(search);
 }
-    

@@ -4,9 +4,9 @@ function resetLignes(items) {
 
     console.log('On affiche les éléments: ');
     console.table(items);
-    for(let i = 0; i < items.length; i++) {
+    
+    for(let i = 0; i < items.length; i++) 
         items[i].style.display = 'table-row';
-    }
 }
 function retireLignes(items) {
     if(items === null)
@@ -14,9 +14,9 @@ function retireLignes(items) {
 
     console.log('On retire les éléments: ');
     console.table(items);
-    for(let i = 0; i < items.length; i++) {
+
+    for(let i = 0; i < items.length; i++) 
         items[i].style.display = 'none';
-    }
 }
 
 function montreMenu(item) { item.classList.add('active'); }
