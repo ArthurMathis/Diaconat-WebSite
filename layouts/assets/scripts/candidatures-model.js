@@ -20,7 +20,7 @@ const trier_menu = document.getElementById('trier-menu');
  * @param {*} index L'index de la colonne à partir de la quelle déterminer le code couleur
  * @returns 
  */
-function setColor(items=[], index) {
+function setColorStatut(items=[], index) {
     if(items == null)
         return;
 
@@ -51,7 +51,55 @@ function setColor(items=[], index) {
         }
     }
 }
+function setColorSource(items=[], index) {
+    if(items == null)
+        return;
 
+    if(index < 0 || items[0].length < index)
+        return; 
+
+    for(let i = 0; i < items.length; i++) {
+        switch(items[i].cells[index].textContent) {
+            case 'Email':
+                items[i].classList.add('email');
+                break;
+
+            case 'Hellowork':
+                items[i].classList.add('hellowork');
+                break;
+
+            case 'Hublo':
+                items[i].classList.add('hublo');
+                break;
+
+            case 'Telephone':
+                items[i].classList.add('telephone');
+                break;
+
+            default : 
+                console.log('Erreur: Type intruvable pour l\'objet :');
+                break;
+        }
+    }
+}
+/**
+ * @brief Fonction assignant un code couleur selon les diponibiltés
+ * @param {*} items Le tableau de candidatures
+ * @param {*} index La colonnes contenant les disponibilités
+ */
+function setColorDispo(items=[], index) {
+    // On génère la date actuelle
+    const current_date = new Date();
+
+    // On compare les disponibilités 
+    for(let i = 0; i < items.length; i++) {
+        const date = new Date(items[i].cells[index].innerHTML.trim());
+
+        // On assigne la couleur
+        if(date < current_date)
+            items[i].classList.add('date_depassee');
+    }
+}
 
 /**
  * @brief Fonction permettant de récupérer les données saisies dans un formulaire et de les retourner dans un tableau de critères

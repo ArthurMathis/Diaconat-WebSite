@@ -22,7 +22,7 @@
             <p>en attente</p>
         </div>
         <div class="container-statut">
-            <input type="checkbox" name="accpetee" checked>
+            <input type="checkbox" name="acceptee" checked>
             <p>acceptée</p>
         </div>
         <div class="container-statut">

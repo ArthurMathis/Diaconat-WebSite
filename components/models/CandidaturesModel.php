@@ -6,7 +6,7 @@ require_once(VIEWS.DS.'ErrorView.php');
 class CandidaturesModel extends Model {
     public function getCandidatures() {
         // On initialise la requête
-        $request = "SELECT  Status_Candidatures AS Status, 
+        $request = "SELECT  Status_Candidatures AS Statut, 
         nom_candidats AS Nom, 
         prenom_candidats AS Prénom, 
         intitule_postes AS Poste,

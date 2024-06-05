@@ -1,5 +1,7 @@
 // On ajoute le code couleur !!
-setColor(candidatures, 0);
+setColorStatut(candidatures, 0);
+setColorDispo(candidatures, 7);
+setColorSource(candidatures, 6);
 
 // On ajoute le menu de filtration
 let filtrerIsVisible = false;

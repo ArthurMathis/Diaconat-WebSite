@@ -96,11 +96,15 @@ body {
 .liste_items .table-wrapper table thead {
     z-index: 1;
 }
-.liste_items .table-wrapper table tbody tr th:first-of-type {
+.liste_items .table-wrapper table tbody tr th:first-of-type, 
+.liste_items .table-wrapper table tbody tr th:nth-of-type(7),
+.liste_items .table-wrapper table tbody tr th:nth-of-type(8) {
     position: relative;
     padding-left: var(--margin);
 }
-.liste_items .table-wrapper table tbody tr th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr th:first-of-type::before,
+.liste_items .table-wrapper table tbody tr th:nth-of-type(7)::before,
+.liste_items .table-wrapper table tbody tr th:nth-of-type(8)::before {
     content: '';
     position: absolute;
     left: 0;
@@ -114,15 +118,21 @@ body {
     border-radius:  var(--font-size-small);
     transform: translateY(-50%);
 }
-.liste_items .table-wrapper table tbody tr.en-attente th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.en-attente th:first-of-type::before,
+.liste_items .table-wrapper table tbody tr.hublo th:nth-of-type(7)::before {
     background-color: var(--enattente);
 }
-.liste_items .table-wrapper table tbody tr.non-traitee th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.non-traitee th:first-of-type::before,
+.liste_items .table-wrapper table tbody tr.hellowork th:nth-of-type(7)::before {
     background-color: var(--nontraitee);
 }
-.liste_items .table-wrapper table tbody tr.acceptee th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.acceptee th:first-of-type::before,
+.liste_items .table-wrapper table tbody tr.email th:nth-of-type(7)::before,
+.liste_items .table-wrapper table tbody tr th:nth-of-type(8)::before {
     background-color: var(--acceptee);
 }
-.liste_items .table-wrapper table tbody tr.refusee th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.refusee th:first-of-type::before,
+.liste_items .table-wrapper table tbody tr.telephone th:nth-of-type(7)::before,
+.liste_items .table-wrapper table tbody tr.date_depassee th:nth-of-type(8)::before {
     background-color: var(--refusee);
 }
