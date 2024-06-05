@@ -200,8 +200,7 @@ function filtrerPar(item, index, critere) {
     // On récupère les différentes cellules de la ligne
     const obj = item.cells;
 
-    // return obj[index].innerHTML == critere;
-    return obj[index].innerHTML.trim() === critere;
+    return obj[index].textContent.trim() === critere;
 }
 /**
  * @brief Fonction permettant de filtrer les candidatures selon leur statut
@@ -218,7 +217,7 @@ function filterParStatut(item, index, criteres=[]) {
     // On fait défiler les criteres
     let i = 0, find = false;
     while(!find && i < criteres.length) {
-        if(item.cells[index].innerHTML.trim() === criteres[i])
+        if(item.cells[index].textContent.trim() === criteres[i])
             find = true;
         i++;
     }
@@ -239,7 +238,7 @@ function filtrerParDate(item, index, critere_date=[]) {
         return; 
 
     // On déclare les variables tampons
-    const date = new Date(item.cells[index].innerHTML.trim());
+    const date = new Date(item.cells[index].textContent.trim());
     let i = 0, res = true;
 
     // On teste

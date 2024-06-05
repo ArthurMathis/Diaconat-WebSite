@@ -5,9 +5,9 @@
         <form class="link-form"method="post" action=""><button type="submit">Saisir des candidatures</button></form>
     </article>
     <article>
-        <p id="filtrer-button"      class="LignesHover">Filtrer</p>
-        <p id="rechercher-button"   class="LignesHover">Rechercher</p>
-        <!--<p id="trier-button"        class="LignesHover">Trier</p>-->
+        <!--<p id="trier-button" class="LignesHover">Trier</p>-->
+        <p id="filtrer-button" class="LignesHover">Filtrer</p>
+        <p id="rechercher-button" class="LignesHover">Rechercher</p>
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
@@ -52,5 +52,4 @@
     </div>
     <button id="valider-filtre">Appliquer</button>
 </div>
-<div class="candidatures-menu" id="Rechercher-menu" style="display: none"></div>
-<div class="candidatures-menu" id="trier-menu"      style="display: none"></div>
+<div class="candidatures-menu" id="trier-menu"  style="display: none"></div>
