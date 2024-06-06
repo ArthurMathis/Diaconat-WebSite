@@ -273,18 +273,21 @@ function filtrerParDate(item, index, critere_date=[]) {
  * @returns 
  */
 function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=null) {
-    if (items === null || criteres_statut.index < 0) {
+    if (items === null || (criteres_statut !== null && criteres_statut.index < 0) 
+        || (criteres_date !== null && criteres_date.index < 0)) {
         return;
     }
 
     // On déclare norte tableau de recherche
     let search = Array.from(items);
 
-    // On filtre selon le statut
-    search = search.filter(item => filterParStatut(item, criteres_statut.index, criteres_statut.criteres));
+    if(criteres_statut)
+        // On filtre selon le statut
+        search = search.filter(item => filterParStatut(item, criteres_statut.index, criteres_statut.criteres));
 
-    // On filtre selon le statut
-    search = search.filter(item => filtrerParDate(item, criteres_date.index, criteres_date.criteres));
+    if(criteres_date)    
+        // On filtre selon le statut
+        search = search.filter(item => filtrerParDate(item, criteres_date.index, criteres_date.criteres));
 
     // On applique les autres critères
     let i = 0;

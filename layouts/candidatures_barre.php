@@ -31,14 +31,6 @@
         </div>
     </div>
     <section>
-        <input type="text" id="filtre-nom"  placeholder="Nom">
-        <input type="text" id="filtre-prenom" placeholder="Prenom">
-    </section>
-    <section>
-        <input type="text" id="filtre-email" placeholder="Email">
-        <input type="text" id="filtre-telephone" placeholder="Telephone">
-    </section>
-    <section>
         <input type="text" id="filtre-poste" placeholder="Poste">
         <input type="text" id="filtre-source" placeholder="Source">
     </section>
@@ -52,4 +44,14 @@
     </div>
     <button id="valider-filtre">Appliquer</button>
 </div>
-<div class="candidatures-menu" id="trier-menu"  style="display: none"></div>
+<div class="candidatures-menu" id="rechercher-menu">
+    <section>
+        <input type="text" id="recherche-nom"  placeholder="Nom">
+        <input type="text" id="recherche-prenom" placeholder="Prenom">
+    </section>
+    <section>
+        <input type="text" id="recherche-email" placeholder="Email">
+        <input type="text" id="recherche-telephone" placeholder="Telephone">
+    </section>
+    <button id="lancer-recherche">Lancer</button>
+</div>

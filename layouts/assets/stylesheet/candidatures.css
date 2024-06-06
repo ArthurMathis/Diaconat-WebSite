@@ -68,7 +68,8 @@ body {
     width: fit-content;
     cursor: pointer;
 }
-.candidatures-menu #valider-filtre {
+.candidatures-menu #valider-filtre,
+.candidatures-menu #lancer-recherche {
     position: absolute;
     bottom: var(--padding);
     right: var(--padding);
