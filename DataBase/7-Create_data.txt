@@ -4,9 +4,8 @@ INSERT INTO Roles (Intitule_Role) VALUES
 ('Utilisateur'),
 ('Invité');
 
-INSERT INTO Utilisateurs (Nom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Postes) VALUES
+INSERT INTO Utilisateurs (Nom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles) VALUES
 ('mathis.a', '$2y$10$v4dqo33AIxgykeQssBlf2.keYBXoopgQO0xEcJlq6Q/ev.h09nOm6','arthur.mathis@diaconat-mulhouse.fr', 1);
-
 
 
 INSERT INTO Poles (Intitule_Poles, Description_Poles) VALUES 
@@ -278,9 +277,9 @@ CALL Insert_Postuler_a();
 
 
 -- Génération des candidatures pour chaque item de la table Postuler_a
-INSERT INTO Candidatures (Status_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes)
+INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes)
 SELECT 
-    'non-traitee' AS Status_Candidatures,
+    ELT(FLOOR(1 + RAND() * 4), 'acceptee', 'refusee', 'en attente', 'non-traitee') AS Statut_Candidatures,
     pa.Cle_Candidats,
     pa.Cle_Instants,
     FLOOR(RAND() * (SELECT COUNT(*) FROM sources)) + 1 AS Cle_Sources,

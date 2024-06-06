@@ -176,11 +176,14 @@ function recupChapsDate(liste_date=[]) {
         liste_date[1].value = null;
     }
 
-    // On retourne la liste de critères 
-    return {
-        'index': 7, 
-        'criteres': criteres_date
-    };
+    if(criteres_date)
+        // On retourne la liste de critères 
+        return {
+            'index': 7, 
+            'criteres': criteres_date
+        };
+
+    else return null;
 }
 
 

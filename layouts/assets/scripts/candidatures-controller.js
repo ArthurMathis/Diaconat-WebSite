@@ -3,9 +3,15 @@ setColorStatut(candidatures, 0);
 setColorDispo(candidatures, 7);
 setColorSource(candidatures, 6);
 
+// On duplique le tableau pour travailler plus simplement
+let candidatures_selection = Array.from(candidatures);
+
 // On ajoute le menu de filtration
 let filtrerIsVisible = false;
 filtrer.addEventListener('click', () => {
+    // On cache l'autre fomulaire
+    cacheMenu(rechercher_menu);
+
     if(filtrerIsVisible) {
         champs = null;
         champs_statut = null;
@@ -39,19 +45,26 @@ filtrer.addEventListener('click', () => {
             const criteres_statut = recupChampsStatut(champs_statut);
             const criteres_date = recupChapsDate(champs_date);
 
+
+            console.log(criteres.length);
+            console.log(criteres_statut);
+            console.log(criteres_date.Criteres);
+
             // On vérifie la présence de critères
-            if(criteres.length === 0  && criteres_statut.length === 0 && criteres_date.length === 0)
+            if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date === null) {
                 // On réinitialise le tableau 
                 resetLignes(candidatures);
+                candidatures_selection = Array.from(candidatures);
+                afficheNbItems(candidatures !== null ? candidatures.length : 0);
 
-            else {
+            } else {
                 // On applique les filtres
-                const res = multiFiltre(candidatures, criteres, criteres_statut, criteres_date);
+                candidatures_selection = multiFiltre(candidatures_selection, criteres, criteres_statut, criteres_date);
 
                 // On met à jour l'affichage
                 retireLignes(candidatures);
-                resetLignes(res);
-                afficheNbItems(res !== null ? res.length : 0);
+                resetLignes(candidatures_selection);
+                afficheNbItems(candidatures_selection !== null ? candidatures_selection.length : 0);
 
                 // On cache le menu
                 filtrerIsVisible = !filtrerIsVisible;
@@ -68,6 +81,9 @@ filtrer.addEventListener('click', () => {
 // On ajoute le menu de filtration
 let rechercherIsVisible = false;
 rechercher.addEventListener('click', () => {
+    // On cache l'autre fomulaire
+    cacheMenu(filtrer_menu);
+
     if(rechercherIsVisible) {
         champs = null;
         champs_statut = null;
@@ -97,23 +113,27 @@ rechercher.addEventListener('click', () => {
             const criteres = recupChamps(champs_infos);
 
             // On vérifie la présence de critères
-            if(criteres.length === 0)
+            if(criteres.length === 0) {
                 // On réinitialise le tableau 
                 resetLignes(candidatures);
+                candidatures_selection = Array.from(candidatures);
+                afficheNbItems(candidatures !== null ? candidatures.length : 0);
 
-            else {
+            } else {
                 // On applique les filtres
-                const res = multiFiltre(candidatures, criteres);
+                candidatures_selection = multiFiltre(candidatures_selection, criteres);
 
                 // On met à jour l'affichage
                 retireLignes(candidatures);
-                resetLignes(res);
-                afficheNbItems(res !== null ? res.length : 0);
+                resetLignes(candidatures_selection);
+                afficheNbItems(candidatures_selection !== null ? candidatures_selection.length : 0);
 
                 // On cache le menu
-                rechercherIsVisible = !rechercherIsVisible;
-                cacheMenu(rechercher_menu);
+                rechercherIsVisible = !rechercherIsVisible;  
             }
+            
+            // On cache le menu
+            cacheMenu(rechercher_menu);
         });
 
         // On affiche le menu

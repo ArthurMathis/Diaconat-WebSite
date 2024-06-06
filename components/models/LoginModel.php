@@ -72,14 +72,16 @@ class LoginModel extends Model {
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
             $params = [
                 "user_id" => $user_cle,
-                "type_id" => $action_type['Id'],
-                "instant_id" => $instant_id['Id']
+                "type_id" => $action_type['Id_Types'],
+                "instant_id" => $instant_id['Id_Instants']
             ];
-            $res = $this->post_request($request, $params);
+            
+            $this->post_request($request, $params);
 
         } catch (Exception $e) {
             $Error = new ErrorView();
             $Error->getErrorContent($e);
+            exit;
         }
     }
 
@@ -113,9 +115,9 @@ class LoginModel extends Model {
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
                     $Error = new ErrorView();
                     $Error->getErrorContent($e);
+                    exit;
                 }
 
                 // On retourne notre utilisateur, la connexion est validée

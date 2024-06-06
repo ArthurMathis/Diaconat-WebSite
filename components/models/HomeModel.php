@@ -51,7 +51,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'non-traitee'";
+        WHERE c.Statut_Candidatures = 'non-traitee'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -68,7 +68,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'non-traitee'";
+        WHERE c.Statut_Candidatures = 'non-traitee'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -88,7 +88,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'en attente'";
+        WHERE c.Statut_Candidatures = 'en attente'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -105,7 +105,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'en attente'";
+        WHERE c.Statut_Candidatures = 'en attente'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -125,7 +125,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'traitee'";
+        WHERE c.Statut_Candidatures = 'traitee'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -142,7 +142,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Status_Candidatures = 'traitee'";
+        WHERE c.Statut_Candidatures = 'traitee'";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -150,6 +150,4 @@ class HomeModel extends Model {
         // On retourne le rôle
         return $result;
     }
-
-    
 }

@@ -87,13 +87,13 @@ abstract class Model {
             return $result;
     
         } catch(Exception $e){
-            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
             $Error = new ErrorView();
             $Error->getErrorContent($e);
+            exit;
         } catch(PDOException $e){
-            // echo "<script>alerte(\"" . $e->getMessage() . "\");</script>";
             $Error = new ErrorView();
             $Error->getErrorContent($e);
+            exit;
         } 
 
         return null;
@@ -116,6 +116,7 @@ abstract class Model {
         } catch(PDOException $e){
             $Error = new ErrorView();
             $Error->getErrorContent($e);
+            exit;
         } 
     
         // On retourne le résultat
