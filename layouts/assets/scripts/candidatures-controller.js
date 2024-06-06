@@ -1,10 +1,14 @@
 // On ajoute le code couleur !!
 setColorStatut(candidatures, 0);
-setColorDispo(candidatures, 7);
 setColorSource(candidatures, 6);
+setColorDispo(candidatures, 7);
 
 // On duplique le tableau pour travailler plus simplement
 let candidatures_selection = Array.from(candidatures);
+
+let candidatures_triees = trierSelon(candidatures, 7);
+destroyTable(document.querySelector('.liste_items tbody'));
+createTable(document.querySelector('.liste_items .table-wrapper table'), candidatures_triees);
 
 // On ajoute le menu de filtration
 let filtrerIsVisible = false;

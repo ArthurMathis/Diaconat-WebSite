@@ -1,8 +1,8 @@
 <nav class="options_barre">
     <article>
-        <form class="link-form"method="post" action=""><button type="submit">Importer des candidatures</button></form>
-        <form class="link-form"method="post" action=""><button type="submit">Exporter des candidatures</button></form>
-        <form class="link-form"method="post" action=""><button type="submit">Saisir des candidatures</button></form>
+        <a href="" class="LignesHover">Importer des candidatures</a>
+        <a href="" class="LignesHover">Exporter des candidatures</a>
+        <a href="" class="LignesHover">Saisir des candidatures</a>
     </article>
     <article>
         <!--<p id="trier-button" class="LignesHover">Trier</p>-->

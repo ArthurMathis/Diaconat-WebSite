@@ -53,53 +53,23 @@ function montreMenu(item) { item.classList.add('active'); }
 function cacheMenu(item) { item.classList.remove('active'); }
 
 /**
- * 
- * @param {*} parent 
- * @param {*} content 
- */
-function createLine(parent=null, content=[]){
-    if(parent === null || content.length === 0)
-        return;
-
-    // On génère la ligne
-    const tr = document.createElement('tr');
-    // On la remplit
-    content.forEach(elmt => {
-        const th = document.createElement('th');
-        th.textContent = elmt.textContent;
-        tr.append(th);
-    });
-
-    // On ajoute la ligne à son parent
-    parent.appendChild(tr);
-}
-/**
- * @brief Fonction deconstruisant une ligne de tableau
- * @param {*} line La ligne
- * @returns 
- */
-function destroyLine(line=null) {
-    if(line === null)
-        return;
-
-    // On supprime l'élément
-    line.remove();
-}
-
-/**
  * @brief Fonction construisant un tablea selon une entete et un contenu
  * @param {*} entete L'entête
  * @param {*} items Le contenu
  * @returns 
  */
 function createTable(table=null, items=[]) {
-    if(table === null |entete.length <= 0 || items.length <= 0 || entete.length < items.length)
+    if(table === null || items.length <= 0)
         return;
 
     // On génère le corps du tableau
     const tbody = document.createElement('tbody');
+    console.log('On ajoute les lignes :');
     // On le remplit
-    items.forEach(line => { createLine(tbody, line); });
+    items.forEach(line => { 
+        console.log(line);
+        tbody.append(line); 
+    });
     // On l'ajoute au tableau
     table.appendChild(tbody);
 }
@@ -112,6 +82,5 @@ function destroyTable(table=null) {
     if(table === null)
         return;
 
-    // On retire les lignes du tableau
-    table.rows.forEach(line => { destroyLine(line) });
+    table.remove();
 }

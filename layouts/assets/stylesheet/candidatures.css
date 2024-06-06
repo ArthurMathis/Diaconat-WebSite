@@ -19,7 +19,7 @@ body {
     width: fit-content;
     height: fit-content;
 }
-.options_barre article form button {
+.options_barre article a {
     text-wrap: nowrap;
 }
 

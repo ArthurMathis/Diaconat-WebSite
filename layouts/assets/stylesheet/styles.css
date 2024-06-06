@@ -172,49 +172,6 @@ input[type="checkbox"]:checked::after {
     transform: translate(-50%, -50%);
 }
 
-.link-form {
-    width: 100%;
-    height: fit-content;
-
-    margin: 0;
-    padding: 0;
-}
-.link-form button {
-    position: relative;
-
-    height: fit-content;
-
-    text-align: left;
-    text-decoration: none;
-    text-transform: none;
-    color: var(--black);
-    font-weight: 300;
-
-    cursor: pointer;
-
-    background-color: transparent
-}
-.link-form button::after{
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 1px;
-    background-color: var(--black);
-
-    transform: scaleX(0);
-    will-change: transform;
-    transform-origin: left;
-    overflow-x: hidden;
-    transition: transform 550ms ease-in-out;
-}
-.link-form button:hover::after {
-    transform: scaleX(1);
-}
-
-
 /******** SCROLL BARRE ********/
 
 ::-webkit-scrollbar {
@@ -441,7 +398,7 @@ input[type="checkbox"]:checked::after {
 #menu.active {
     transform: scaleY(1);
 }
-#menu > .link-form {
+#menu > a {
     width: 100%;
     height: fit-content;
 
@@ -452,7 +409,7 @@ input[type="checkbox"]:checked::after {
     will-change: opacity;
     transition: opacity ease-in-out 650ms;
 }
-#menu > .link-form.active {
+#menu > a.active {
     opacity: 1;
 }
 

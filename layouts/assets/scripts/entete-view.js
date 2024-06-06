@@ -11,7 +11,7 @@ calendrier.textContent = localDate.toString();
 
 // Ajout du menu déroulant
 const menu = document.getElementById('menu');
-const menuItem = menu.querySelectorAll('.link-form');
+const menuItem = menu.querySelectorAll('a');
 const menuIcon = document.getElementById('menu-icon');
 let isOpen = false;
 

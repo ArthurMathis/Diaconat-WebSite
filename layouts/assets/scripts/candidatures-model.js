@@ -14,6 +14,9 @@ const rechercher_menu = document.getElementById('rechercher-menu');
 const filtrer_menu = document.getElementById('filtrer-menu');
 const trier_menu = document.getElementById('trier-menu');
 
+
+// FONCTION DE COULEURS
+
 /**
  * @brief Fonction déterminant le code couleur des éléments d'un tableau selon un critère
  * @param {*} items Le tableau
@@ -100,6 +103,9 @@ function setColorDispo(items=[], index) {
             items[i].classList.add('date_depassee');
     }
 }
+
+
+// FONCTIONS DE FILTRES
 
 /**
  * @brief Fonction permettant de récupérer les données saisies dans un formulaire et de les retourner dans un tableau de critères
@@ -301,5 +307,82 @@ function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=n
     }
 
     // On retourne la sélection après filtres
+    return search;
+}
+
+
+// FONCTION DE TRIS
+
+function trierSelonInteger(item1=[], item2=[], index) {
+    // On convertit le texte en nombres entiers
+    const x1 = parseInt(item1.cells[index].textContent.trim()) || 0;
+    const x2 = parseInt(item2.cells[index].textContent.trim()) || 0;
+
+    // On compare
+    return x1 - x2;
+}
+function trierSelonString(item1=[], item2=[], index) {
+    // On passe le texte en minuscle avant comparaison
+    const s1 = item1.cells[index].textContent.trim().toLowerCase();
+    const s2 = item2.cells[index].textContent.trim().toLowerCase();
+
+    // On compare
+    if(s1 < s2)
+        return -1;
+    if(s2 < s1)
+        return 1;
+    else 
+        return 0;
+}
+function trierSelonDate(item1=[], item2=[], index) {
+    // On convertit en date
+    const d1 = new Date(item1.cells[index].textContent.trim());
+    const d2 = new Date(item2.cells[index].textContent.trim());
+
+    // On compare
+    return d1 - d2;
+}
+/**
+ * @brief Fonction délclanchant le tri du tableau
+ * @param {*} items 
+ * @param {*} index 
+ * @param {*} croissant 
+ * @returns 
+ */
+function trierSelon(items, index, croissant = true) {
+    // On vérifie l'intégrité des données
+    if (!items || index === null || index < 0 || items.length === 0 || items[0].cells.length <= index) {
+        return;
+    }
+
+    // On vérifie le sens de tri
+    if (typeof croissant !== 'boolean') {
+        croissant = true;
+    }
+
+    // On déclare le tableau de résultat
+    let search = Array.from(items);
+
+    // On sélectionne la méthode de tri
+    const item = items[0].cells[index].textContent.trim();
+    if (!isNaN(Date.parse(item))) {
+        // Si c'est une date
+        console.log('On trit selon les dates');
+        search.sort((item1, item2) => trierSelonDate(item1, item2, index));
+
+    } else if (!isNaN(parseInt(item))) {
+        // Si c'est un nombre
+        search.sort((item1, item2) => trierSelonInteger(item1, item2, index));
+
+    } else {
+        // Sinon, on considère que c'est une chaîne de caractères
+        search.sort((item1, item2) => trierSelonString(item1, item2, index));
+    }
+
+    // Si le tri est décroissant
+    if (!croissant) {
+        search.reverse();
+    }
+
     return search;
 }

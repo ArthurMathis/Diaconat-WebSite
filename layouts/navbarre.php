@@ -14,19 +14,9 @@
 </nav>
 <section id="menu">
     <?php foreach($liste_menu as $item): ?>
-        <form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>
+        <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
+        <a class="LignesHover" href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
     <?php endforeach ?>
 </section>
-<!--
-<section id="menu">
-    <form class="link-form" method="post" action ="index.php"><button type="submit">Home</button></form>
-    <form class="link-form" method="post" action ="index.php?candidatures=home"><button type="submit">Candidatures</button></form>
-    <form class="link-form" method="post" action =""><button type="submit">Employés</button></form>
-    <form class="link-form" method="post" action =""><button type="submit">Besoins</button></form>
-    <form class="link-form" method="post" action =""><button type="submit">Statistiques</button></form>
-    <form class="link-form" method="post" action =""><button type="submit">Préférences</button></form>
-    <form class="link-form" method="post" action ="index.php?login=deconnexion"><button type="submit">Se déconnecter</button></form>
-</section> 
--->
 <script src="layouts\assets\scripts\objects\Date_Time.js"></script>
 <script src="layouts\assets\scripts\entete-view.js"></script>
