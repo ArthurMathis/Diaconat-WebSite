@@ -1,5 +1,6 @@
 // On récupère le tableau de candidatures
-const candidatures = document.querySelector('.liste_items tbody').rows;
+let candidatures = recupCandidatures();
+const entete = Array.from(document.querySelector('.liste_items .table-wrapper table thead tr').cells);
 // On récupère l'affichage du nombre de candidatures
 let nb_candidatures = document.querySelectorAll('.liste_items .entete h2');
 nb_candidatures = nb_candidatures[nb_candidatures.length - 1];
@@ -14,6 +15,13 @@ const rechercher_menu = document.getElementById('rechercher-menu');
 const filtrer_menu = document.getElementById('filtrer-menu');
 const trier_menu = document.getElementById('trier-menu');
 
+
+/**
+ * @brief Fonction téléchargeant le tableau de candidatures dans le script
+ */
+function recupCandidatures() {
+    return document.querySelector('.liste_items .table-wrapper table tbody').rows;
+}
 
 // FONCTION DE COULEURS
 
@@ -351,9 +359,32 @@ function trierSelonDate(item1=[], item2=[], index) {
  */
 function trierSelon(items, index, croissant = true) {
     // On vérifie l'intégrité des données
-    if (!items || index === null || index < 0 || items.length === 0 || items[0].cells.length <= index) {
+    // if (!items || index === null || index < 0 || items.length === 0 || items[0].cells.length <= index) {
+    //     console.log('Tri impossible, intégrité des données compromise');
+    //     return;
+    // }
+
+    if (!items) {
+        console.log('Tri impossible, items nul');
         return;
     }
+    if (index === null) {
+        console.log('Tri impossible, index introuvable');
+        return;
+    }
+    if (index < 0) {
+        console.log('Tri impossible, index négatif');
+        return;
+    }
+    if (items.length === 0) {
+        console.log('Tri impossible, items vide');
+        return;
+    }
+    if (items[0].cells.length <= index) {
+        console.log('Tri impossible, index supérieur à dimension items');
+        return;
+    }
+
 
     // On vérifie le sens de tri
     if (typeof croissant !== 'boolean') {

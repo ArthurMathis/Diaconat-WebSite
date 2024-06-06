@@ -64,10 +64,8 @@ function createTable(table=null, items=[]) {
 
     // On génère le corps du tableau
     const tbody = document.createElement('tbody');
-    console.log('On ajoute les lignes :');
     // On le remplit
     items.forEach(line => { 
-        console.log(line);
         tbody.append(line); 
     });
     // On l'ajoute au tableau
