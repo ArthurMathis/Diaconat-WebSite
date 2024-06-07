@@ -144,10 +144,14 @@ rechercher.addEventListener('click', () => {
 
 console.log(entete);
 
+let item_clicked = null;
+let method_tri = true;
 entete.forEach((item, index) => {
     item.addEventListener('click', () => {
+        method_tri = !method_tri;
         // On effectue le tri
-        const candidatures_triees = trierSelon(candidatures, index);
+        const candidatures_triees = trierSelon(candidatures, index, item_clicked === index ? method_tri : true);
+        item_clicked = index;
 
         // On cherche les éventuelles erreurs
         if(candidatures_triees == null || candidatures_triees.length === 0)
