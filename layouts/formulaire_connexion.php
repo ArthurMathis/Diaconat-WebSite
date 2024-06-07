@@ -1,4 +1,7 @@
-<img src="layouts/assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
+<div class="connexion-illustration">
+    <img src="layouts/assets/img/coeur.png" alt="Illustration de coeur">
+    <img src="layouts/assets/img/main.png" alt="Illustration de main">
+</div>
 <form method="post" action="index.php?login=connexion">
     <img src="layouts/assets/img/ico_diaconat_mulhouse.webp">
     <h2>Entrez votre identifiant et mot de passe pour accéder au site web</h2>

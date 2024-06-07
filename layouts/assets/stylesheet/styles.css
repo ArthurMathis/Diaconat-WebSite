@@ -1,11 +1,24 @@
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url('../typo/Roboto/Roboto-Regular.ttf');
+}
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url('../typo/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('../typo/Roboto_Mono/RobotoMono-VariableFont_wght.ttf');
+}
+
 :root {
     --black: #000;
     --grey: rgba(0, 0, 0, 0.5);
     --light-grey: #D9D9D9;
     --white: #fff;
-    /*--blue: #273BE2;    */
-    /*--blue: #0070FF;*/
-    --blue: #2454FF;
+    --blue: #273BE2;
+    /*--blue: #2454FF;*/
 
     --nontraitee: #ffbe0b;
     --enattente: #3a86ff;
@@ -13,7 +26,7 @@
     --refusee: #d00000;
 
     --font-size-big: 3.5em;
-    --font-size-medium: 1.8em;
+    --font-size-medium: 1.55em;
     --font-size-standart: 1em;
     --font-size-small: 0.625em;
 
@@ -28,7 +41,7 @@
     padding: 0;
 
     font-size: var(--font-size-standart);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto Regular', Arial, Helvetica, sans-serif;
 
     box-sizing: border-box;
 }
@@ -69,6 +82,18 @@ a {
 @keyframes fade-in {
     from { opacity: 0; } 
     to { opacity: 1; }
+}
+
+@keyframes infinite-vertical-move {
+    0% {
+        transform: translateY(-10%);
+    }
+    50% {
+        transform: translateY(10%);
+    }
+    100% {
+        transform: translateY(-10%);
+    }
 }
 
 .action_button {
@@ -459,6 +484,9 @@ input[type="checkbox"]:checked::after {
 
     background-color: #fff;
 }
+.liste_items .table-wrapper table thead th {
+    font-family: Roboto Bold;
+}
 
 /* On ajout les fonds de lignes */
 .liste_items .table-wrapper table tr {
@@ -483,7 +511,7 @@ input[type="checkbox"]:checked::after {
 } 
 .liste_items .table-wrapper table tbody tr::before {
     width: calc(100% - 4px);
-    height: 73px;
+    height: 63px;
     border: 2px solid var(--light-grey);
     box-shadow: none;
 
@@ -500,7 +528,7 @@ input[type="checkbox"]:checked::after {
     text-align: left;
 }   
 .liste_items .table-wrapper table tbody th {
-    height: 75px;
+    height: 65px;
     font-weight: 400;
 }
 

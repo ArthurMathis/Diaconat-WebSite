@@ -19,6 +19,7 @@ content > .liste_items {
     padding-top: var(--padding);
 }
 content > .liste_items .table-wrapper {
+    height: calc(100dvh - 6em - 90px);
     padding-left: 3em;
 }
 aside {
@@ -29,7 +30,8 @@ aside {
     width: 35%;
     height: calc(100dvh - 6em);
 
-    padding: var(--margin);
+    padding-left: var(--margin);
+    padding-right: 3em;
 
     overflow-y: scroll;
 }

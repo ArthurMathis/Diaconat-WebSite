@@ -10,11 +10,29 @@ body {
 
     overflow: hidden;
 }
-body > img {
+body .connexion-illustration {
     width: 50%;
     height: 100%;
 
-    object-fit: cover;
+    background-color: var(--blue);
+}
+body .connexion-illustration img:first-of-type {
+    position: fixed;
+    top: 20%;
+    left: 12.5%;
+
+    display: block;
+    width: 25%;
+
+    animation: infinite-vertical-move 4s infinite ease-in-out;
+}
+body .connexion-illustration img:last-of-type {
+    position: fixed;
+    bottom: 0;
+    left: -5%;
+
+    display: block;
+    width: 45%;
 }
 
 form {
