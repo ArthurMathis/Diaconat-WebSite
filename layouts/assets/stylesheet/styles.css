@@ -66,6 +66,11 @@ a {
     text-decoration: none;
 }
 
+@keyframes fade-in {
+    from { opacity: 0; } 
+    to { opacity: 1; }
+}
+
 .action_button {
     padding: calc(var(--margin) / 2) calc(var(--margin) * 2 /3);
 
@@ -332,7 +337,7 @@ input[type="checkbox"]:checked::after {
     padding: 1em 2em;
 
     border-radius: var(--radius);
-    border: 2px solid var(--white)
+    border: 2px solid var(--white);
 }
 #menu main div {
     position: absolute;
@@ -352,6 +357,7 @@ input[type="checkbox"]:checked::after {
 } 
 #menu main div h2 {
     position: relative;
+    z-index: 20;
     font-weight: 300;
 }
 #menu main div h2::after {
