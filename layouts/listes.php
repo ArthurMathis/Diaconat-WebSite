@@ -1,5 +1,5 @@
-<section class="liste_items <?= $class; ?>">
-    <div class="entete lignes">
+<section class="liste_items<?php if(isset($classe) && !empty($classe)) echo $classe ?>">
+    <div class="entete">
         <h2><?= $titre; ?></h2>
         <h2><?php 
             $size = count($items); 

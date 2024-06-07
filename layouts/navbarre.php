@@ -1,22 +1,20 @@
-<nav class="barre-de-navigation">
-    <div id="menu-icon">
-        <span></span>
-    </div>
-    <nav class="title">
-        <img src="layouts\assets\img\ico_diaconat_mulhouse.webp" alt="Logo de l'application">
-        <p>Ypopsi</p>
-</nav>
-    <div>
-        <p id="calendrier"></p>
-        <p id="horloge">00 : 00 : 00</p>
-        <p class="user-info"><?php echo $_SESSION["user_identifiant"]; ?></p>
-    </div>
+<nav id="barre-de-navigation">
+    <h1>Ypopsi</h1>
+    <h2>Menu</h2>
 </nav>
 <section id="menu">
-    <?php foreach($liste_menu as $item): ?>
-        <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
-        <a class="LignesHover" href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
-    <?php endforeach ?>
+    <main>
+        <div>
+        <h1>Ypopsi</h1>
+        <h2>Close</h2>
+    </div>
+    <content>
+        <?php foreach($liste_menu as $item): ?>
+            <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
+            <a href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
+        <?php endforeach ?>
+    </content>
+    </main>
 </section>
-<script src="layouts\assets\scripts\objects\Date_Time.js"></script>
+
 <script src="layouts\assets\scripts\entete-view.js"></script>

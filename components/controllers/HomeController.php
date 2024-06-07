@@ -15,7 +15,7 @@ class HomeController extends Controller {
             [
                 'titre' => 'Candidatures en Attente', 
                 'content' => $this->Model->getReductEnattenteCandidatures(), 
-                'nb_item_max' => 4,
+                'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null
             ],

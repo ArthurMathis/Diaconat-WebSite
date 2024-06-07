@@ -3,7 +3,9 @@
     --grey: rgba(0, 0, 0, 0.5);
     --light-grey: #D9D9D9;
     --white: #fff;
-    --blue: #3264A9;    
+    /*--blue: #273BE2;    */
+    /*--blue: #0070FF;*/
+    --blue: #2454FF;
 
     --nontraitee: #ffbe0b;
     --enattente: #3a86ff;
@@ -11,13 +13,14 @@
     --refusee: #d00000;
 
     --font-size-big: 3.5em;
-    --font-size-medium:2.1em;
+    --font-size-medium: 1.8em;
     --font-size-standart: 1em;
     --font-size-small: 0.625em;
 
     --margin: 20px;
     --padding: 40px;
-    --nav-barre-size: 70px;
+    --radius: 15px;
+    --nav-barre-size: 6em;
 }
 
 * {
@@ -35,23 +38,22 @@ body {
     min-height: 100dvh;
 
     overflow-x: hidden;
-
-    margin-top: var(--nav-barre-size);
 }
 
 
 /******** STYLE PAR DEFAULT ********/
 
 h1 {
+    color: var(--blue);
     text-transform: uppercase;
     font-size: var(--font-size-big);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
 }
 
 h2 {
     font-size: var(--font-size-medium);
     font-weight: 400;
-    font-style: italic;
+    /*font-style: italic;*/
 }
 
 p {
@@ -262,8 +264,8 @@ input[type="checkbox"]:checked::after {
 
 /******** BARRE DE NAVIGATION ********/
 
-.barre-de-navigation {
-    position: fixed;
+#barre-de-navigation {
+    position: sticky;
     top: 0;
     left: 0;
 
@@ -275,150 +277,151 @@ input[type="checkbox"]:checked::after {
     width: 100%;
     z-index: 10;
 
-    padding: 0 var(--padding);
+    padding: 2em 3em 0;
 
-    border-bottom: 1px solid var(--black);
     background-color: var(--white);
 }
-.barre-de-navigation img {
+#barre-de-navigation > h2 {
     position: relative;
-    height: 80%;
 }
-.barre-de-navigation > div, 
-.barre-de-navigation > nav {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    gap: calc(1.5 * var(--margin));
-
-    height: 100%;
-}
-.barre-de-navigation > div p:last-of-type {
-    display: flex;
-    align-items: center;
-
-    height: 100%;
-    margin-left: var(--margin);
-}
-.barre-de-navigation .title {
-    position: absolute;
-    left: 50%;
-
-    gap: calc(var(--marin) / 2);
-
-    font-size: var(--font-size-medium);
-
-    transform: translateX(-50%);
-}
-.barre-de-navigation .title > p {
-    margin-left : 0;
-
-    color: var(--blue);
-    font-weight: 700;
-    font-style: italic;
-}
-
-#menu-icon {
-    position: relative;
-
-    width: calc(2 * var(--font-size-standart));
-    height: calc(2 * var(--font-size-standart));
-}
-#menu-icon span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    display: block;
-    width: calc(1.5 * var(--font-size-standart));
-    height: 2px;
-
-    background-color: var(--black);
-}
-#menu-icon span::before, 
-#menu-icon span::after{
-    position: absolute;
-    top: 0; 
-    left: 0;
-
+#barre-de-navigation > h2::after {
     content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-    display: block;
-    width: calc(1.5 * var(--font-size-standart));
-    height: 2px;
+    width: 100%;
+    height: 1px;
 
     background-color: var(--black);
-    transition: transform ease 250ms;
+
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: right;
+    transition: transform 300ms ease;
 }
-#menu-icon span::before{
-    transform: translateY(-7px);
-}
-#menu-icon span::after{
-    transform: translateY(7px);
-}
-#menu-icon:hover span::before{
-    transform: translateY(-9px);
-}
-#menu-icon:hover span::after{
-    transform: translateY(9px);
-}
-#menu-icon.is-opened span{
-    background: transparent;
-}
-#menu-icon.is-opened span::before{
-    transform: translateY(0) rotate(45deg);
-}
-#menu-icon.is-opened span::after{
-    transform: translateY(0) rotate(-45deg);
+#barre-de-navigation > h2:hover::after {
+    transform: scaleX(1);
+
 }
 
 #menu {
     position: fixed;
-    top: var(--nav-barre-size);
+    top: 0;
     left: 0;
 
+    display: none;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: 15;
+
+    padding: 1em;
+
+    background-color: rgba(0, 70, 255, 0.75);
+    backdrop-filter: blur(2px);
+    color: var(--white);
+}
+#menu.active {
+    display: block;
+}
+#menu main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    padding: 1em 2em;
+
+    border-radius: var(--radius);
+    border: 2px solid var(--white)
+}
+#menu main div {
+    position: absolute;
+    top: 1em;
+    left: 2em;
+
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: var(--padding);
+    justify-content: space-between;
+    align-items: center;
+
+    width: calc(100% - 4em);
+    height: fit-content;
+}
+#menu main div h1, 
+#menu main div h2 {
+    color: var(--white);
+} 
+#menu main div h2 {
+    position: relative;
+    font-weight: 300;
+}
+#menu main div h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
     width: 100%;
-    height: calc(100dvh - var(--nav-barre-size));
-    z-index: 2;
-
-    padding: calc(2 * var(--padding));
+    height: 1px;
 
     background-color: var(--white);
 
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform ease 500ms;
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: right;
+    transition: transform 300ms ease;
 }
-#menu.active {
-    transform: scaleY(1);
+#menu main div h2:hover::after {
+    transform: scaleX(1);
 }
-#menu > a {
-    width: 100%;
-    height: fit-content;
+#menu main content {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    gap: var(--margin);
 
-    font-size: var(--font-size-big);
-    letter-spacing: 0.1em;
-    opacity: 0;
-    
-    will-change: opacity;
-    transition: opacity ease-in-out 650ms;
+    width: 100%;
+    height: 100%;
+
+    padding: 12em 8em;
 }
-#menu > a.active {
+#menu main content a {
+    position: relative;
+    color: var(--white);
+    font-size: var(--font-size-big);
+}
+#menu main content a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(-2 * var(--padding));;
+
+    display: block;
+    width: var(--font-size-small);
+    height: var(--font-size-small);
+
+    border-radius: 50%;
+    background-color: var(--white);
+
+    transform: translateY(-50%);
+
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 150ms ease;
+}
+#menu main content a:hover::after {
     opacity: 1;
 }
 
 /******** STYLE DES LISTES D'OBJETS ********/
+/* On espace le titre de la liste de son tableau */
 .liste_items {
     display: flex;
     flex-direction: column;
     gap: var(--margin);
 }
+
+/* On stylise l'entete */
 .liste_items .entete {
     display: flex;
     justify-content: space-between;
@@ -427,76 +430,199 @@ input[type="checkbox"]:checked::after {
     width: 100%;
     height: fit-content;
 
-    padding: var(--margin) 0;
+    padding-left: 3em;
 }
+
+/* On redimensionne le container du tableau ainsi que le tableau */
 .liste_items .table-wrapper {
     overflow-y: auto;
-    max-height: calc(100dvh - 230px);
+    width: 100%;
+    max-height: calc(100dvh - 6em - 90px);
 }
 .liste_items .table-wrapper table {
-    width: 100%;
+    width: 99%;
+    border-collapse: separate;
+    border-spacing: 0 20px; 
 }
+
+/* On colle l'entete de tableau en haut du container */
 .liste_items .table-wrapper table thead {
     position: sticky;
     top: 0;
+    z-index: 2;
 
-    background-color: var(--white);
+    background-color: #fff;
 }
+
+/* On ajout les fonds de lignes */
+.liste_items .table-wrapper table tr {
+    position: relative;
+    border-spacing: var(--margin) 0;
+}
+.liste_items .table-wrapper table tr::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    width: 100%;
+    z-index: -1;
+
+    border-radius: var(--radius);
+}
+.liste_items .table-wrapper table thead tr::before {
+    height: 50px;
+    background-color: #f7f7f7;
+} 
+.liste_items .table-wrapper table tbody tr::before {
+    width: calc(100% - 4px);
+    height: 73px;
+    border: 2px solid var(--light-grey);
+    box-shadow: none;
+
+    transition: color 250ms ease, 
+                border-color 250ms ease,
+                background-color 250ms ease, 
+                box-shadow 250ms ease;
+}
+
+/* On redimensionne et stylise les lignes */
 .liste_items .table-wrapper table th {
+    height: 50px;
+    padding-left: var(--margin);
     text-align: left;
-}    
-.liste_items table tbody th {
+}   
+.liste_items .table-wrapper table tbody th {
+    height: 75px;
     font-weight: 400;
 }
-.liste_items table th, td {
-    padding: calc(var(--margin) / 2) 0; 
-    text-align: left;
-}
 
-.liste_items tbody > tr:hover {
-    background-color: #f7f7f7;
+/* On stylise le survole d'une ligne */
+.liste_items .table-wrapper table tbody tr:hover {
+    color: var(--white);
+}
+.liste_items .table-wrapper table tbody tr:hover::before {
+    border-color: var(--blue);
+    background-color: var(--blue);
+    box-shadow: -9px 4px 34.4px 7px #0000003B;
+
 }
 
 /******** BULLES ********/
+/* On stylise les bulles */
+.bulles {
+    position: relative;
 
-.bulles > .liste_items {
-    margin-bottom: 5px;
+    padding: calc(var(--margin) * 3 / 2);
+    padding-bottom: calc(var(--margin));
+    
+    border: 2px solid var(--blue);
+    border-radius: var(--radius);
 }
+.bulles:nth-child(odd) {
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+.bulles:nth-child(even) {
+    color: var(--blue);
+    background-color: var(--white);
+}
+
+/* On ajoute la ligne de la bulle */
+.bulles::after {
+    content: '';
+    position: absolute;
+    top: 100;
+    left: -2;
+
+    display: block;
+    width: calc(100% + 4px);
+    height: 2px;
+}
+.bulles:nth-child(odd)::after {
+    background-color: var(--white);
+}
+
+.bulles:nth-child(even)::after {
+    background-color: var(--blue);
+}
+
+/* On styles les listes des bulles */
+.bulles .liste_items  {
+    gap: var(--margin);
+}
+.bulles .liste_items .entete > h2:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: var(--font-size-medium);
+    width: var(--font-size-medium);
+
+    border-radius: 50%;
+}
+.bulles:nth-child(odd) .liste_items .entete > h2:last-child {
+    color: var(--blue);
+    background-color: var(--white);
+}
+.bulles:nth-child(even) .liste_items .entete > h2:last-child {
+    color: var(--white);
+    background-color: var(--blue);
+}
+.bulles .liste_items .table-wrapper {
+    overflow-y: visible;
+}
+.bulles .liste_items .table-wrapper table {
+    border-spacing: 0;
+}
+.bulles:nth-child(odd) .liste_items .table-wrapper table th {
+    color: var(--white);
+}
+.bulles:nth-child(even) .liste_items .table-wrapper table th {
+    color: var(--blue);
+}
+.bulles .liste_items .table-wrapper table thead {
+    background-color: transparent;
+}
+.bulles .liste_items .table-wrapper table thead tr::before{
+    background-color: transparent;
+}
+.bulles .liste_items .table-wrapper table tbody tr{
+    height: min-content;
+}
+.bulles .liste_items .table-wrapper table tbody th{
+    height: 50px;
+}
+
+/* On stylise les boutons */
 .bulles .boutons {
     display: flex;
     justify-content: right;
-    gap: calc(var(--margin) / 2);
+    gap: var(--margin);
 }
-.bulles .boutons .link-form {
-    width: fit-content;
-    padding: 0;
-}
-.bulles .boutons .link-form button{
-    position: relative;
-    width: fit-content;
-    height: fit-content;
+.bulles .boutons a {
+    padding: calc(var(--margin) * 2 / 3) var(--margin);
+    border-radius: calc(var(--radius) * 2);
 
+    text-transform: uppercase;
+    transition: color 150ms ease, 
+                background-color 150ms ease;
+}
+.bulles:nth-child(odd) .boutons a {
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+.bulles:nth-child(even) .boutons a {
     color: var(--blue);
-    background-color: transparent;
-    border: none;
-    text-transform: capitalize;
+    border: 2px solid var(--blue);
 }
-.bulles .boutons .link-form button::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 1px;
-
+.bulles:nth-child(odd) .boutons a:hover {
+    color: var(--blue);
+    background-color: var(--white);
+}
+.bulles:nth-child(even) .boutons a:hover {
+    color: var(--white);
     background-color: var(--blue);
-    transform: scaleX(0);
-    will-change: transform;
-    transform-origin: left;
-    overflow-x: hidden;
-    transition: transform 450ms ease-in-out;
-}
-.bulles .boutons .link-form button:hover::after {
-    transform: scaleX(1);
 }

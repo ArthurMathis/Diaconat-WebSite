@@ -1,5 +1,7 @@
 body {
-    height: min-content;
+    height: 100dvh;
+    overflow: hidden;
+    padding: 0;
 }
 
 content {
@@ -10,20 +12,26 @@ content {
 
     margin-top:  var(--nav-size-barre);
 }
-content > section {
+content > .liste_items {
     width: 65%;
     height: 100%;
-    padding: var(--margin) var(--margin) 0 var(--padding);
-}
 
+    padding-top: var(--padding);
+}
+content > .liste_items .table-wrapper {
+    padding-left: 3em;
+}
 aside {
     display: flex;
     flex-direction: column;
     gap: calc(var(--margin) * 1 / 2);
     
     width: 35%;
+    height: calc(100dvh - 6em);
 
     padding: var(--margin);
+
+    overflow-y: scroll;
 }
 aside article {
     padding: var(--margin);
@@ -32,6 +40,5 @@ aside article .liste_items {
     gap: 10px;
 }
 aside article .liste_items .entete {
-    /*padding: 0 0 calc(var(--margin) / 4) 0;*/
     padding: 0 0 15px 0;
 }
