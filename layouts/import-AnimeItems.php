@@ -1,1 +1,0 @@
-<?php echo "<script src=\"layouts\assets\scripts\objects\InView.min.js\"></script>\n<script src=\"layouts\assets\scripts\objects\AnimateItems.js\"></script>\n<script> const lignes = new AnimateItems('.lignes'); </script>";

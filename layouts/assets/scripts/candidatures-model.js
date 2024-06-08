@@ -5,17 +5,6 @@ const entete = Array.from(document.querySelector('.liste_items .table-wrapper ta
 let nb_candidatures = document.querySelectorAll('.liste_items .entete h2');
 nb_candidatures = nb_candidatures[nb_candidatures.length - 1];
 
-// On récupère les boutons
-const rechercher = document.getElementById('rechercher-button');
-const filtrer = document.getElementById('filtrer-button');
-const trier = document.getElementById('rechercher-button');
-
-// On recupère les formulaires
-const rechercher_menu = document.getElementById('rechercher-menu');
-const filtrer_menu = document.getElementById('filtrer-menu');
-const trier_menu = document.getElementById('trier-menu');
-
-
 /**
  * @brief Fonction téléchargeant le tableau de candidatures dans le script
  */

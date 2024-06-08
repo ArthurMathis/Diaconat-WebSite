@@ -25,7 +25,7 @@ content > .liste_items .table-wrapper {
 aside {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--margin) * 1 / 2);
+    gap: var(--margin);
     
     width: 35%;
     height: calc(100dvh - 6em);

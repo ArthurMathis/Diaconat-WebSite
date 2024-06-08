@@ -86,13 +86,17 @@ body {
 .liste_items {
     width: 100%;
     height: calc(100dvh - (2 * var(--nav-barre-size)));
-
-    padding: var(--padding);
-    padding-top: 0;
 }
 .liste_items h2:first-of-type {
     width: 100%;
     text-align: center;
+}
+.liste_items .table-wrapper, 
+.liste_items .entete {
+    padding: 0 3em 2em 3em;
+}
+.liste_items .table-wrapper table {
+    width: 99%;
 }
 .liste_items .table-wrapper table thead {
     z-index: 1;
@@ -100,15 +104,6 @@ body {
 .liste_items .table-wrapper table th {
     position: relative;
     padding-left: calc(var(--margin) / 2);
-}
-.liste_items .table-wrapper table thead tr th.active {
-    background-color: var(--blue);
-    color: var(--white);
-    border-radius: 6px;
-}
-.liste_items .table-wrapper table thead tr th.active::after {
-    content: '';
-    position: absolute;
 }
 .liste_items .table-wrapper table tbody tr th:first-of-type, 
 .liste_items .table-wrapper table tbody tr th:nth-of-type(7),

@@ -41,7 +41,7 @@
     padding: 0;
 
     font-size: var(--font-size-standart);
-    font-family: 'Roboto Regular', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto Regular', sans-serif;
 
     box-sizing: border-box;
 }
@@ -86,13 +86,13 @@ a {
 
 @keyframes infinite-vertical-move {
     0% {
-        transform: translateY(-10%);
+        transform: translateY(-7%);
     }
     50% {
-        transform: translateY(10%);
+        transform: translateY(7%);
     }
     100% {
-        transform: translateY(-10%);
+        transform: translateY(-7%);
     }
 }
 
@@ -363,6 +363,8 @@ input[type="checkbox"]:checked::after {
 
     border-radius: var(--radius);
     border: 2px solid var(--white);
+
+    overflow: hidden;
 }
 #menu main div {
     position: absolute;
@@ -444,6 +446,26 @@ input[type="checkbox"]:checked::after {
     opacity: 1;
 }
 
+/* On ajoute les illustrations */
+#menu main img:first-of-type {
+    position: fixed;
+    top: 20%;
+    left: 17.5%;
+
+    display: block;
+    width: 25%;
+
+    animation: infinite-vertical-move 4s infinite ease-in-out;
+}
+#menu main img:last-of-type {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+    width: 45%;
+}
+
 /******** STYLE DES LISTES D'OBJETS ********/
 /* On espace le titre de la liste de son tableau */
 .liste_items {
@@ -485,6 +507,7 @@ input[type="checkbox"]:checked::after {
     background-color: #fff;
 }
 .liste_items .table-wrapper table thead th {
+    position: relative;
     font-family: Roboto Bold;
 }
 
@@ -524,9 +547,9 @@ input[type="checkbox"]:checked::after {
 /* On redimensionne et stylise les lignes */
 .liste_items .table-wrapper table th {
     height: 50px;
-    padding-left: var(--margin);
+    padding: 0 var(--margin);
     text-align: left;
-}   
+}    
 .liste_items .table-wrapper table tbody th {
     height: 65px;
     font-weight: 400;
@@ -541,6 +564,27 @@ input[type="checkbox"]:checked::after {
     background-color: var(--blue);
     box-shadow: -9px 4px 34.4px 7px #0000003B;
 
+}
+
+/* On ajoute le style de tri */
+.liste_items .table-wrapper table thead tr th:hover::after, 
+.liste_items .table-wrapper table thead tr th.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 5px; 
+
+    display: block;
+    width: 10px;
+    height: 10px;
+
+    border-radius: var(--radius);
+    transform: translateY(-50%);
+    background-image: url('../img/fleche.png');
+    background-size: contain;
+}
+.liste_items .table-wrapper table thead tr th.reverse-tri::after {
+    transform: translateY(-50%) rotate(180deg);
 }
 
 /******** BULLES ********/
@@ -628,6 +672,10 @@ input[type="checkbox"]:checked::after {
 }
 .bulles .liste_items .table-wrapper table tbody th{
     height: 50px;
+}
+
+.bulles .liste_items .table-wrapper table thead th::after {
+    display: none;
 }
 
 /* On stylise les boutons */

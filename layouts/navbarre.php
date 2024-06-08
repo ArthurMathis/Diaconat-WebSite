@@ -5,15 +5,17 @@
 <section id="menu">
     <main>
         <div>
-        <h1>Ypopsi</h1>
-        <h2>Close</h2>
-    </div>
-    <content>
-        <?php foreach($liste_menu as $item): ?>
-            <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
-            <a href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
-        <?php endforeach ?>
-    </content>
+            <h1>Ypopsi</h1>
+            <h2>Close</h2>
+        </div>
+        <content>
+            <?php foreach($liste_menu as $item): ?>
+                <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
+                <a href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
+            <?php endforeach ?>
+        </content>
+        <img src="layouts/assets/img/coeur.png" alt="Illustration de coeur">
+        <img src="layouts/assets/img/main.png" alt="Illustration de main">
     </main>
 </section>
 

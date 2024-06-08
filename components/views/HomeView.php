@@ -21,17 +21,15 @@ class HomeView extends View {
 
         // On ajoute la barre de navigation
         $this->generateMenu($liste_menu);
-
         // On ajoute le contenu de la page
         echo "<content>";
         $this->getListesItems($titre, $items, $nb_items_max);
         echo "<aside>";
         $this->getDashboard($dashboard);
         echo "</aside>";
-        // include LAYOUTS.DS.'dashboard.php';
         echo "</content>";
-
-        include(LAYOUTS.DS.'import-AnimeItems.php');
+        
+        include(LAYOUTS.DS.'import-scripts-listes.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
