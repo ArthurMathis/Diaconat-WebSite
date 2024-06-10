@@ -15,6 +15,7 @@ define('CLASSE', MODELS.DS.'classe');
 // On définit le chemin vers le sous-répertoire de page web
 define('LAYOUTS', ROOT.DS.'layouts');
 define('ASSETS', LAYOUTS.DS.'assets');
+define('FORMULAIRES', LAYOUTS.DS.'formulaires');
 define('STYLESHEET', ASSETS.DS.'stylesheet');
 define('IMG', ASSETS.DS.'img');
 

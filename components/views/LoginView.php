@@ -9,7 +9,8 @@ class LoginView extends View {
                 ["layouts\assets\stylesheet\connexion.css"]);
 
         // On ajoute le formulaire de connexion
-        include LAYOUTS.DS.'formulaire_connexion.php';
+        include FORMULAIRES.DS.'formulaires.php';
+        include FORMULAIRES.DS.'formulaire_connexion.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
@@ -21,7 +22,8 @@ class LoginView extends View {
                 ["layouts\assets\stylesheet\connexion.css"]);
 
         // On ajoute le formulaire de'inscription
-        include LAYOUTS.DS.'formulaire_inscription.php';
+        include FORMULAIRES.DS.'formulaires.php';
+        include FORMULAIRES.DS.'formulaire_inscription.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();

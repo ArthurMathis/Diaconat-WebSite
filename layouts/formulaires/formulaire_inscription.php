@@ -1,4 +1,3 @@
-<img src="layouts/assets\img\photo_log-in.jpg" alt="Illustration de l'hopithal">
 <form method="post" action="index.php?login=inscription">
     <img src="layouts/assets/img/ico_diaconat_mulhouse.webp">
     <h2>Saisissez vos infrmations pour vous inscrire</h2>

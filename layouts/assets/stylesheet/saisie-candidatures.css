@@ -1,19 +1,26 @@
 body {
     display: flex;
-    align-items: center;
+    align-items: top;
+    justify-content: right;
 
     width: 100dvw;
     height: 100dvh;
 
     margin: 0;
     padding: 0;
-
-    overflow: hidden;
 }
-
 form {
     width: 50%;
-    height: 100%;
+    height: fit-content;
+    min-height: 100vh;
+
+    background-color: var(--white);
+}
+
+.formulaire-illustration {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .double-items {
@@ -25,6 +32,12 @@ form {
 }
 .double-items input:last-child {
     width: 25%;
+}
+
+.user-link {
+    position: fixed;
+    left: 51%;
+    width: 50%;
 }
 
 @media screen and (max-width: 1120px) {

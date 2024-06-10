@@ -24,6 +24,7 @@ abstract class Controller {
 
     /// Méthode publique affaichant une page d'erreur
     public function displayErreur($e) {
-        return $this->Error->getErrorContent($e);
+        echo "<script>alerte(\"" .  $e->getMessage() . "\");</script>";
+        // return $this->Error->getErrorContent($e);
     }
 }

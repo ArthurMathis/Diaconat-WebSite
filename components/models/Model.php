@@ -122,4 +122,26 @@ abstract class Model {
         // On retourne le résultat
         return $res;
     }
+
+
+    // Geston des instants
+    protected function inscriptInstants($jour=null, $heure=null) {
+        if(empty($jour) && empty($heure))
+            // On génère l'instant actuel (date et heure actuelles)
+            $instant = Instants::currentInstants();
+            
+        // On génère un instant    
+        else $instant = new Instants($jour, $heure);
+
+        // J'enregistre mon instant dans la base de données
+        $request = "INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES (:jour, :heure)";
+        $params = $instant->exportToSQL();
+        $this->post_request($request, $params);
+
+        // On récupère l'id de mon instant 
+        $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
+        $instant_id = $this->get_request($request, $params, true, true);
+
+        return $instant_id;
+    }
 }

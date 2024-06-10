@@ -86,13 +86,13 @@ a {
 
 @keyframes infinite-vertical-move {
     0% {
-        transform: translateY(-7%);
+        transform: translateY(-2dvh);
     }
     50% {
-        transform: translateY(7%);
+        transform: translateY(2dvh);
     }
     100% {
-        transform: translateY(-7%);
+        transform: translateY(-2dvh);
     }
 }
 
@@ -202,6 +202,96 @@ input[type="checkbox"]:checked::after {
     background-color: var(--blue);
     border-radius: 50%;
     transform: translate(-50%, -50%);
+}
+
+.formulaire-illustration {
+    position: relative;
+    width: 50%;
+    height: 100dvh;
+    
+    background-image: url("../img/photo_log-in.jpg");
+    object-fit: cover;
+    background-position: center;
+}
+.formulaire-illustration::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+
+    background-color: var(--blue);
+    opacity: 0.7;
+}
+.formulaire-illustration img:first-of-type {
+    position: fixed;
+    bottom: 35.5%;
+    left: 14.5%;
+
+    display: block;
+    width: 17.5%;
+    min-width: 240px;
+
+    animation: infinite-vertical-move 4s infinite ease-in-out;
+}
+.formulaire-illustration img:last-of-type {
+    position: fixed;
+    bottom: -7.5%;
+    left: 0;
+
+    display: block;
+    width: 35.5%;
+    min-width: 420px;
+}
+
+
+.user-link{
+    position: absolute;
+    bottom: var(--margin);
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+
+    width: 100%;
+    height: 65px;
+
+    color: var(--grey);
+    background-color: var(--white);
+    text-align: center;
+}
+.user-link  > a{
+    position: relative;
+    width: fit-content;
+  
+    color: var(--blue);
+    background-color: transparent;
+    border: none;
+}
+.user-link a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--blue);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 450ms ease-in-out;
+}
+.user-link a:hover::after {
+    transform: scaleX(1);
 }
 
 /******** SCROLL BARRE ********/
@@ -449,7 +539,7 @@ input[type="checkbox"]:checked::after {
 /* On ajoute les illustrations */
 #menu main img:first-of-type {
     position: fixed;
-    top: 20%;
+    bottom: 32.5%;
     left: 17.5%;
 
     display: block;
@@ -459,7 +549,7 @@ input[type="checkbox"]:checked::after {
 }
 #menu main img:last-of-type {
     position: fixed;
-    bottom: 0;
+    bottom: -12.5%;
     left: 0;
 
     display: block;
