@@ -1,5 +1,6 @@
 body {
     display: flex;
+    justify-content: right;
     align-items: center;
 
     width: 100dvw;
@@ -10,10 +11,18 @@ body {
 
     overflow: hidden;
 }
-
 form {
     width: 50%;
-    height: 100%;
+    height: fit-content;
+    height: 100vh;
+
+    background-color: var(--white);
+}
+
+.formulaire-illustration {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .double-items {

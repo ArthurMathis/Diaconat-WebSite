@@ -79,12 +79,16 @@ abstract class Model {
                 $result = $query->fetch(PDO::FETCH_ASSOC);
             else 
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    
-            if($present && empty($result)) 
-                throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
-            
-            // On retourne le résultat de la requête 
-            return $result;
+
+            if(empty($result) || !is_array($result)) {
+                if($present) 
+                    throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
+                
+                else return null;
+                    
+            } else
+                // On retourne le résultat de la requête 
+                return $result;
     
         } catch(Exception $e){
             $Error = new ErrorView();
@@ -98,6 +102,45 @@ abstract class Model {
 
         return null;
     }
+    // protected function get_request($request, $params = [], $unique=false, $present=false): ?array {
+    //     // On vérifie le paramètre uniquue
+    //     if(empty($unique) || !is_bool($unique)) 
+    //         $unique = false;
+    //     // On vérifie le paramètre uniquue
+    //     if(empty($present) || !is_bool($present)) 
+    //         $present = false;
+    // 
+    //     // On vérifie l'intégrité des paramètres
+    //     if($this->test_data_request($request, $params)) try {
+    //         // On prépare la requête
+    //         $query = $this->getConnection()->prepare($request);
+    //         $query->execute($params);
+    // 
+    //         // On récupère le résultat de la requête
+    //         if($unique) 
+    //             $result = $query->fetch(PDO::FETCH_ASSOC);
+    //         else 
+    //             $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    // 
+    //         if($present && empty($result) || !is_array($result)) 
+    //             throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
+    //          
+    //         else
+    //             // On retourne le résultat de la requête 
+    //             return $result;
+    // 
+    //     } catch(Exception $e){
+    //         $Error = new ErrorView();
+    //         $Error->getErrorContent($e);
+    //         exit;
+    //     } catch(PDOException $e){
+    //         $Error = new ErrorView();
+    //         $Error->getErrorContent($e);
+    //         exit;
+    //     } 
+    // 
+    //     return null;
+    // }
     /// Méthode privée exécutant une requête POST à la base de données
     protected function post_request($request, $params): bool {
         // On déclare une variable tampon

@@ -10,7 +10,6 @@
         </div>
         <content>
             <?php foreach($liste_menu as $item): ?>
-                <!--<form class="link-form" method="post" action ="<?=$item["action"] ?>"><button type="submit"><?=$item["intitule"] ?></button></form>-->
                 <a href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
             <?php endforeach ?>
         </content>

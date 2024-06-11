@@ -107,7 +107,7 @@ a {
     will-change: color, background-color;
     transition: 150ms ease color, 150ms ease background-color;
 }
-.action_button:hover {
+.action_button:is(:hover, :focus) {
     color: var(--white);
     background-color: var(--blue);
 }
@@ -290,7 +290,7 @@ input[type="checkbox"]:checked::after {
     overflow-x: hidden;
     transition: transform 450ms ease-in-out;
 }
-.user-link a:hover::after {
+.user-link a:is(:hover, :focus)::after {
     transform: scaleX(1);
 }
 
@@ -420,7 +420,7 @@ input[type="checkbox"]:checked::after {
     transform-origin: right;
     transition: transform 300ms ease;
 }
-#barre-de-navigation > h2:hover::after {
+#barre-de-navigation > h2:is(:hover, :focus)::after {
     transform: scaleX(1);
 
 }
@@ -493,7 +493,7 @@ input[type="checkbox"]:checked::after {
     transform-origin: right;
     transition: transform 300ms ease;
 }
-#menu main div h2:hover::after {
+#menu main div h2:is(:hover, :focus)::after {
     transform: scaleX(1);
 }
 #menu main content {
@@ -512,29 +512,14 @@ input[type="checkbox"]:checked::after {
     position: relative;
     color: var(--white);
     font-size: var(--font-size-big);
-}
-#menu main content a::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: calc(-2 * var(--padding));;
 
-    display: block;
-    width: var(--font-size-small);
-    height: var(--font-size-small);
-
-    border-radius: 50%;
-    background-color: var(--white);
-
-    transform: translateY(-50%);
-
-    opacity: 0;
     will-change: opacity;
-    transition: opacity 150ms ease;
+    transition: 250ms ease opacity;
 }
-#menu main content a:hover::after {
-    opacity: 1;
+#menu main content a.not-hover {
+    opacity: 0.4;
 }
+
 
 /* On ajoute les illustrations */
 #menu main img:first-of-type {
@@ -646,10 +631,10 @@ input[type="checkbox"]:checked::after {
 }
 
 /* On stylise le survole d'une ligne */
-.liste_items .table-wrapper table tbody tr:hover {
+.liste_items .table-wrapper table tbody tr:is(:hover, :focus) {
     color: var(--white);
 }
-.liste_items .table-wrapper table tbody tr:hover::before {
+.liste_items .table-wrapper table tbody tr:is(:hover, :focus)::before {
     border-color: var(--blue);
     background-color: var(--blue);
     box-shadow: -9px 4px 34.4px 7px #0000003B;
@@ -657,7 +642,7 @@ input[type="checkbox"]:checked::after {
 }
 
 /* On ajoute le style de tri */
-.liste_items .table-wrapper table thead tr th:hover::after, 
+.liste_items .table-wrapper table thead tr th:is(:hover, :focus)::after, 
 .liste_items .table-wrapper table thead tr th.active::after {
     content: '';
     position: absolute;
@@ -790,11 +775,11 @@ input[type="checkbox"]:checked::after {
     color: var(--blue);
     border: 2px solid var(--blue);
 }
-.bulles:nth-child(odd) .boutons a:hover {
+.bulles:nth-child(odd) .boutons a:is(:hover, :focus) {
     color: var(--blue);
     background-color: var(--white);
 }
-.bulles:nth-child(even) .boutons a:hover {
+.bulles:nth-child(even) .boutons a:is(:hover, :focus) {
     color: var(--white);
     background-color: var(--blue);
 }

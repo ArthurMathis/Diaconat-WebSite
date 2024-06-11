@@ -131,48 +131,46 @@ if(isset($_GET['login'])) {
             $telephone      = $_POST["telephone"];
             $adresse        = $_POST["adresse"];
             $ville          = $_POST["ville"];
-            $code_postal = $_POST['code-postal'];
-            // $aides      = $_POST["identifiant"];
+            $code_postal    = $_POST['code-postal'];
             $diplomes = [
                 $_POST["diplome-1"], 
                 $_POST["diplome-2"], 
                 $_POST["diplome-3"]
             ];
+            // $aide               = $_POST["aide"];
+            $visite_medicale    = $_POST["visite_medicale"];
             
             try {
                 if(empty($nom)) {
-                    throw new Exception("Le champs nom doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs nom doit être rempli par une chaine de caractères");
                 } elseif(empty($prenom)) {
-                    throw new Exception("Le champs prenom doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs prenom doit être rempli par une chaine de caractères");
                 } elseif(empty($email)) {
-                    throw new Exception("Le champs email doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs email doit être rempli par une chaine de caractères");
                 } elseif(empty($adresse)) {
-                    throw new Exception("Le champs adresse doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs adresse doit être rempli par une chaine de caractères");
                 } elseif(empty($ville)) {
-                    throw new Exception("Le champs ville doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs ville doit être rempli par une chaine de caractères");
                 } elseif(empty($code_postal)) {
-                    throw new Exception("Le champs code postal doit être remplis par une chaine de caractères");
+                    throw new Exception("Le champs code postal doit être rempli par une chaine de caractères");
                 } 
-
+            
             } catch(Exception $e) {
                 $candidatures->displayErreur($e);
                 exit;
             }
 
-            // On sauvegarde les données dans la session
-            $_SESSION['candidat'] = [
+            $candidat = [
                 'nom' => $nom, 
-                'prenom' =>$prenon, 
+                'prenom' => $prenom, 
                 'email' => $email, 
-                'telephone' => $telphone, 
+                'telephone' => $telephone, 
                 'adresse' => $adresse,
-                'ville' => $ville,
-                'code postale' => $code_postale, 
-                'diplomes' => $diplomes
+                'ville' => $ville, 
+                'code_postal' => $code_postal
             ];
 
-            // On redirige vers le prochain formulaire
-            header('Location: index.php?candidatures=saisie-candidature');
+            $candidatures->checkCandidat($candidat, $diplomes, $aide=null, $visite_medicale == 'true' ? true : false);
             break;
 
             case 'inscription-candidature' :
@@ -184,11 +182,11 @@ if(isset($_GET['login'])) {
                 
                 try {
                     if(empty($poste)) {
-                        throw new Exception("Le champs poste doit être remplis par une chaine de caractères");
-                    } elseif(empty($prdisponibiliteenom)) {
-                        throw new Exception("Le champs date doit être remplis par une chaine de caractères");
+                        throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
+                    } elseif(empty($disponibilite)) {
+                        throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
                     } elseif(empty($source)) {
-                        throw new Exception("Le champs source doit être remplis par une chaine de caractères");
+                        throw new Exception("Le champs source doit être rempli par une chaine de caractères");
                     }
     
                 } catch(Exception $e) {
@@ -202,15 +200,20 @@ if(isset($_GET['login'])) {
                     'disponibilite' => $disponibilite, 
                     'source' => $source
                 ];
+
                 // On récupère le candidat
-                $infos_candidats = $_SESSION['candidat'];
+                $candidat = $_SESSION['candidat'];
+                $diplomes = $_SESSION['diplomes'];
+                $aide = $_SESSION['aide'];
+
+                // On libère 
                 unset($_SESSION['candidat']);
+                unset($_SESSION['diplomes']);
+                unset($_SESSION['aide']);
 
-                $candidatures->createcandidat($infos_candidats, $infos_candidatures);
-
+                $candidatures->createcandidature($candidat, $diplomes, $aide, $candidature);
                 break;
     
-
         default : 
             $candidatures->dispayCandidatures();
             break;
