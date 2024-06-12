@@ -6,7 +6,6 @@ const trier = document.getElementById('rechercher-button');
 // On recupère les formulaires
 const rechercher_menu = document.getElementById('rechercher-menu');
 const filtrer_menu = document.getElementById('filtrer-menu');
-const trier_menu = document.getElementById('trier-menu');
 
 // On ajoute le code couleur !!
 setColorStatut(candidatures, 0);
@@ -18,6 +17,7 @@ let candidatures_selection = Array.from(candidatures);
 
 // On ajoute le menu de filtration
 let filtrerIsVisible = false;
+let lastAction = "";
 filtrer.addEventListener('click', () => {
     // On cache l'autre fomulaire
     cacheMenu(rechercher_menu);
@@ -51,23 +51,22 @@ filtrer.addEventListener('click', () => {
 
         newBouton.addEventListener('click', () => {
             // On récupère la liste de critères
-            const criteres = recupChamps(champs_infos);
+            const criteres = recupFiltreChamps(champs_infos);
             const criteres_statut = recupChampsStatut(champs_statut);
             const criteres_date = recupChapsDate(champs_date);
 
-
-            console.log(criteres.length);
-            console.log(criteres_statut);
-            console.log(criteres_date.Criteres);
-
             // On vérifie la présence de critères
-            if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date === null) {
+            if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
                 // On réinitialise le tableau 
                 resetLignes(candidatures);
                 candidatures_selection = Array.from(candidatures);
                 afficheNbItems(candidatures !== null ? candidatures.length : 0);
 
             } else {
+                // On réinitialise la sélection
+                if(lastAction === "filtre") 
+                    candidatures_selection = Array.from(candidatures);
+
                 // On applique les filtres
                 candidatures_selection = multiFiltre(candidatures_selection, criteres, criteres_statut, criteres_date);
 
@@ -78,8 +77,10 @@ filtrer.addEventListener('click', () => {
 
                 // On cache le menu
                 filtrerIsVisible = !filtrerIsVisible;
-                cacheMenu(filtrer_menu);
             }
+            lastAction = "filtre";
+            // On cache le menu
+            cacheMenu(filtrer_menu);
         });
 
         // On affiche le menu
@@ -120,7 +121,7 @@ rechercher.addEventListener('click', () => {
 
         newBouton.addEventListener('click', () => {
             // On récupère la liste de critères
-            const criteres = recupChamps(champs_infos);
+            const criteres = recupRechercheChamps(champs_infos);
 
             // On vérifie la présence de critères
             if(criteres.length === 0) {
@@ -141,6 +142,8 @@ rechercher.addEventListener('click', () => {
                 // On cache le menu
                 rechercherIsVisible = !rechercherIsVisible;  
             }
+
+            lastAction = "recherche";
             
             // On cache le menu
             cacheMenu(rechercher_menu);

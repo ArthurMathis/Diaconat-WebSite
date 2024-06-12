@@ -51,6 +51,12 @@ function setColorStatut(items=[], index) {
         }
     }
 }
+/**
+ * @brief Fonction déterminant le code couleur des éléments d'un tableau se lon un critère
+ * @param {*} items Le tableau
+ * @param {*} index L'index de la colonne à partir de laquelle déterminer le code couleur
+ * @returns 
+ */
 function setColorSource(items=[], index) {
     if(items == null)
         return;
@@ -103,13 +109,12 @@ function setColorDispo(items=[], index) {
 
 
 // FONCTIONS DE FILTRES
-
 /**
  * @brief Fonction permettant de récupérer les données saisies dans un formulaire et de les retourner dans un tableau de critères
  * @param {*} liste_champs Le formulaire
  * @returns Le tableau de critères
  */
-function recupChamps(liste_champs=[]) {
+function recupFiltreChamps(liste_champs=[]) {
     // On vérifie l'intégrité des données
     if(liste_champs.length === 0)
         return; 
@@ -121,7 +126,31 @@ function recupChamps(liste_champs=[]) {
         if(liste_champs[i].value !== "") {
             // On ajoute le critère
             criteres.push({
-                'index': i + 1,
+                'index':  i < 1 ? i + 3 : i + 5,
+                'critere': liste_champs[i].value.trim()
+            });
+            
+            // On réinitialise le champs
+            liste_champs[i].value = null;
+        }
+    }
+
+    // On retourne la liste de critères
+    return criteres;
+}
+function recupRechercheChamps(liste_champs=[]) {
+    // On vérifie l'intégrité des données
+    if(liste_champs.length === 0)
+        return; 
+
+    let criteres = [];
+    // On fait défiler les champs
+    for(let i = 0; i < liste_champs.length; i++) {
+        // On teste l'intégrité des données
+        if(liste_champs[i].value !== "") {
+            // On ajoute le critère
+            criteres.push({
+                'index':  i + 1,
                 'critere': liste_champs[i].value.trim()
             });
             
@@ -156,6 +185,11 @@ function recupChampsStatut(liste_statut=[]) {
         'criteres': criteres_statut
     };
 }
+/**
+ * @brief Fonction permettant de récupérer les données saisies dans les sélections de dates du formulaire
+ * @param {*} liste_date la liste des dates
+ * @returns 
+ */
 function recupChapsDate(liste_date=[]) {
     // On vérifie l'intégrité des données
     if(liste_date.length === 0 || 2 < liste_date.length)
@@ -205,6 +239,8 @@ function filtrerPar(item, index, critere) {
 
     // On récupère les différentes cellules de la ligne
     const obj = item.cells;
+
+    console.log("Item : " + obj[index].textContent.trim());
 
     return obj[index].textContent.trim() === critere;
 }
@@ -298,6 +334,7 @@ function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=n
     // On applique les autres critères
     let i = 0;
     while(search !== null && i < criteres.length) {
+        console.log("On filtre selon le critère : " + criteres[i].critere + " dans la colonne : " + criteres[i].index);
         // On implémente l'échantillon
         search = search.filter(item => filtrerPar(item, criteres[i].index, criteres[i].critere));
         i++;
@@ -310,6 +347,13 @@ function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=n
 
 // FONCTION DE TRIS
 
+/**
+ * @brief Fonction permettant de réaliser le tri entre des entiers
+ * @param {*} item1 La Ligne 1
+ * @param {*} item2 La ligne 2
+ * @param {*} index La colonne contenant les entiers à comparer
+ * @returns 
+ */
 function trierSelonInteger(item1=[], item2=[], index) {
     // On convertit le texte en nombres entiers
     const x1 = parseInt(item1.cells[index].textContent.trim()) || 0;
@@ -318,6 +362,13 @@ function trierSelonInteger(item1=[], item2=[], index) {
     // On compare
     return x1 - x2;
 }
+/**
+ * @brief Fonction permettant de réaliser le tri entre des chaines de caractères
+ * @param {*} item1 La Ligne 1
+ * @param {*} item2 La ligne 2
+ * @param {*} index La colonne contenant les chaines de caractères à comparer
+ * @returns 
+ */
 function trierSelonString(item1=[], item2=[], index) {
     // On passe le texte en minuscle avant comparaison
     const s1 = item1.cells[index].textContent.trim().toLowerCase();
@@ -331,6 +382,13 @@ function trierSelonString(item1=[], item2=[], index) {
     else 
         return 0;
 }
+/**
+ * @brief Fonction permettant de réaliser le tri entre des dates
+ * @param {*} item1 La Ligne 1
+ * @param {*} item2 La ligne 2
+ * @param {*} index La colonne contenant les dates à comparer
+ * @returns 
+ */
 function trierSelonDate(item1=[], item2=[], index) {
     // On convertit en date
     const d1 = new Date(item1.cells[index].textContent.trim());
@@ -339,6 +397,7 @@ function trierSelonDate(item1=[], item2=[], index) {
     // On compare
     return d1 - d2;
 }
+
 /**
  * @brief Fonction délclanchant le tri du tableau
  * @param {*} items 
