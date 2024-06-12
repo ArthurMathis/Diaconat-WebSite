@@ -5,7 +5,6 @@ require_once(CLASSE.DS.'Candidats.php');
 
 class CandidaturesController extends Controller {
     public function __construct() {
-        parent::__construct();
         $this->loadModel('CandidaturesModel');
         $this->loadView('CandidaturesView');
     }
@@ -48,9 +47,7 @@ class CandidaturesController extends Controller {
             $candidat->setCle($search['Id_Candidats']);
             
         } catch(InvalideCandidatExceptions $e) {
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
         }
 
         $_SESSION['candidat'] = $candidat;

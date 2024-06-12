@@ -5,7 +5,6 @@ require_once 'Controller.php';
 class LoginController extends Controller {
     /// Constructeur du controller
     public function __construct() {
-        parent::__construct();
         $this->loadModel('LoginModel');
         $this->loadView('LoginView');
     }

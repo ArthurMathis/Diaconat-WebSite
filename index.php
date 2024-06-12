@@ -4,6 +4,7 @@ require_once('define.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');
+require_once(COMPONENTS.DS.'forms_manip.php');
 
 // On démarre la session de l'utilisateur
 session_start();
@@ -30,8 +31,7 @@ if(isset($_GET['login'])) {
     
             // On récupère et retourne les éventuelles erreurs    
             } catch(Exception $e){
-                $login->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
 
             try {
@@ -40,8 +40,7 @@ if(isset($_GET['login'])) {
 
             // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
-                $login->displayErreur($e);
-                return ;
+                forms_manip::error_alert($e->getMessage());
             }
 
             // On sort de la boucle swicth
@@ -71,8 +70,7 @@ if(isset($_GET['login'])) {
 
             // On récupère les éventuelles erreurs    
             } catch(Exception $e){
-                $login->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
 
             try {
@@ -81,8 +79,7 @@ if(isset($_GET['login'])) {
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
-                $login->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
 
             // On sort de la boucle swicth
@@ -129,12 +126,12 @@ if(isset($_GET['login'])) {
 
         case 'inscription-candidat' :
             // On récupère le contenu des champs
-            $nom            = $_POST["nom"];
-            $prenom         = $_POST["prenom"];
+            $nom            = forms_manip::nameFormat($_POST["nom"]);
+            $prenom         = forms_manip::nameFormat($_POST["prenom"]);
             $email          = $_POST["email"];
             $telephone      = $_POST["telephone"];
             $adresse        = $_POST["adresse"];
-            $ville          = $_POST["ville"];
+            $ville          = forms_manip::nameFormat($_POST["ville"]);
             $code_postal    = $_POST['code-postal'];
             $diplomes = [
                 $_POST["diplome-1"], 
@@ -146,28 +143,26 @@ if(isset($_GET['login'])) {
             
             try {
                 if(empty($nom)) {
-                    throw new Exception("Le champs nom doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs nom doit être rempli par une chaine de caractères !");
                 } elseif(empty($prenom)) {
-                    throw new Exception("Le champs prenom doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs prenom doit être rempli par une chaine de caractères !");
                 } elseif(empty($email)) {
-                    throw new Exception("Le champs email doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs email doit être rempli par une chaine de caractères !");
                 } elseif(empty($adresse)) {
-                    throw new Exception("Le champs adresse doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs adresse doit être rempli par une chaine de caractères !");
                 } elseif(empty($ville)) {
-                    throw new Exception("Le champs ville doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs ville doit être rempli par une chaine de caractères !");
                 } elseif(empty($code_postal)) {
-                    throw new Exception("Le champs code postal doit être rempli par une chaine de caractères");
+                    throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
                 } 
             
             } catch(Exception $e) {
-                $candidatures->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
 
             foreach($diplomes as $d) {
                 if(strlen($d) > 128) {
-                    echo "<script>alerte(\"Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.\");</script>";
-                    exit;
+                    forms_manip::error_alert("Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
                 }
             }
 
@@ -186,8 +181,8 @@ if(isset($_GET['login'])) {
 
         case 'recherche-candidat' : 
             // On récupère le contenu des champs
-            $nom            = $_POST["nom"];
-            $prenom         = $_POST["prenom"];
+            $nom            = forms_manip::nameFormat($_POST["nom"]);
+            $prenom         = forms_manip::nameFormat($_POST["prenom"]);
             $email          = $_POST["email"];
             $telephone      = $_POST["telephone"];
 
@@ -202,8 +197,7 @@ if(isset($_GET['login'])) {
                     throw new Exception("Le champs telephone doit être rempli !");
                     
             } catch(Exception $e) {
-                $candidatures->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
 
             $candidatures->findCandidat($nom, $prenom, $email, $telephone);
@@ -212,10 +206,10 @@ if(isset($_GET['login'])) {
 
         case 'inscription-candidature' :
             // On récupère le contenu des champs
-            $poste          = $_POST["poste"];
+            $poste          = forms_manip::nameFormat($_POST["poste"]);
             $service        = $_POST["service"];
             $disponibilite  = $_POST["disponibilite"];
-            $source         = $_POST["source"];
+            $source         = forms_manip::nameFormat($_POST["source"]);
             
             try {
                 if(empty($poste)) {
@@ -227,9 +221,9 @@ if(isset($_GET['login'])) {
                 }
 
             } catch(Exception $e) {
-                $candidatures->displayErreur($e);
-                exit;
+                forms_manip::error_alert($e->getMessage());
             }
+            
             $candidature = [
                 'poste' => $poste, 
                 'service' =>$service, 

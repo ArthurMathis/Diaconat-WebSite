@@ -79,9 +79,10 @@ class LoginModel extends Model {
             $this->post_request($request, $params);
 
         } catch (Exception $e) {
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         }
     }
 
@@ -115,9 +116,10 @@ class LoginModel extends Model {
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    $Error = new ErrorView();
-                    $Error->getErrorContent($e);
-                    exit;
+                    forms_manip::error_alert($e->getMessage());
+                    // $Error = new ErrorView();
+                    // $Error->getErrorContent($e);
+                    // exit;
                 }
 
                 // On retourne notre utilisateur, la connexion est validée

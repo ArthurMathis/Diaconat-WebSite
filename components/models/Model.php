@@ -29,10 +29,10 @@ abstract class Model {
 
             echo "<script>console.log(\"Connexion à " . $db_fetch . " réussie !\");</script>";
             
-        } catch(PDOException $Exception) {
-            // echo $Exception->getMessage();
-            $Error = new ErrorView();
-            $Error->getErrorContent($Exception);
+        } catch(PDOException $e) {
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
         }
         return $this->connection;
     }
@@ -91,13 +91,15 @@ abstract class Model {
                 return $result;
     
         } catch(Exception $e){
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         } catch(PDOException $e){
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         } 
 
         return null;
@@ -118,9 +120,10 @@ abstract class Model {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         } 
     
         // On retourne le résultat

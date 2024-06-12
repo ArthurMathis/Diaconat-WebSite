@@ -42,9 +42,10 @@ class CandidaturesModel extends Model {
             );
         
         } catch(InvalideCandidatExceptions $e) {
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         }
 
 
@@ -162,9 +163,10 @@ class CandidaturesModel extends Model {
             $this->post_request($request, $params);
 
         } catch (Exception $e) {
-            $Error = new ErrorView();
-            $Error->getErrorContent($e);
-            exit;
+            forms_manip::error_alert($e->getMessage());
+            // $Error = new ErrorView();
+            // $Error->getErrorContent($e);
+            // exit;
         }
     }
     public function inscriptCandidat($candidat) {
