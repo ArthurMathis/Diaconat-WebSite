@@ -5,6 +5,7 @@ CREATE TABLE Candidats (
     Telephone_Candidats VARCHAR(10) UNIQUE NOT NULL,
     Email_Candidats VARCHAR(64) UNIQUE NOT NULL, 
     Adresse_Candidats VARCHAR(256),
+    Ville_Candidats VARCHAR(64), 
     CodePostale_Candidats VARCHAR(5), 
     Disponibilite_Candidats DATE NOT NULL,
     VisiteMedicale_Candidats BOOLEAN NOT NULL

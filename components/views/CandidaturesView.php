@@ -42,6 +42,17 @@ class CandidaturesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
+    public function getRechercheCandidatContent() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\saisie-candidatures.css"]);
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'formulaires.php';
+        include FORMULAIRES.DS.'formulaire_recherche_candidats.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
     public function getSaisieCandidatureContent() {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\saisie-candidatures.css"]);

@@ -40,7 +40,7 @@ class CandidaturesModel extends Model {
                 $candidat['ville'],
                 $candidat['code_postal']
             );
-
+        
         } catch(InvalideCandidatExceptions $e) {
             $Error = new ErrorView();
             $Error->getErrorContent($e);
@@ -128,35 +128,21 @@ class CandidaturesModel extends Model {
 
     public function inscriptCandidature($candidat, $candidatures=[]) {
         try {
-            echo "On génère un instant<br>";
-
             // On inscrit l'instant 
             $instant = $this->inscriptInstants()['Id_Instants'];
 
-            echo "Id de l'instant: " . $instant ."<br>";
-            echo "Id du candidat: " . $candidat->getCle() . "<br>";
-
             // Si la clé n'est pas présente
             if($candidat->getCle() == null) {
-                echo "On récupère la clé<br>";
-
                 // On récupère la clé du candidat 
                 $search = $this->searchCandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail())['Id_Candidats'];
-                $candidat->setCle($search);
-
-
-                echo "Clé: " . $candidat->getCle() . "<br>";               
+                $candidat->setCle($search);           
             }
             
             // On récupère la source
             $source = $this->searchSource($candidatures["source"])['Id_Sources'];
 
-            echo "Id du source: " . $source . "<br>";
-
             // On récupère le poste
             $poste = $this->searchPoste($candidatures["poste"])['Id_Postes'];
-
-            echo "Id du poste: " . $poste . "<br>";
 
             // On inscrit la demande de poste
             $this->inscriptPostuler_a($candidat, $instant);
@@ -184,8 +170,8 @@ class CandidaturesModel extends Model {
     public function inscriptCandidat($candidat) {
         // On initialise la requête
         $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
-                    Adresse_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
-                    VALUES (:nom, :prenom, :telephone, :email, :adresse, :code_postal, :disponibilite, :visite)";
+                    Adresse_Candidats, Ville_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
+                    VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
         
         // On lance  requête
         $this->post_request($request, $candidat->exportToSQL());
@@ -226,15 +212,32 @@ class CandidaturesModel extends Model {
     }
     
 
-    public function searchCandidat($nom, $prenom, $email) {
-        // On récupère le candidats
-        $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :nom AND Prenom_Candidats = :prenom AND Email_Candidats = :email";
-        $params = [
-            ":nom" => $nom,
-            ":prenom" => $prenom, 
-            ":email" => $email
-        ];
-        $candidats = $this->get_request($request, $params, true);
+    public function searchCandidat($nom, $prenom, $email=null, $telephone=null) {
+        if($email != null) {
+            // On récupère le candidats
+            $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :nom AND Prenom_Candidats = :prenom AND Email_Candidats = :email";
+            $params = [
+                ":nom" => $nom,
+                ":prenom" => $prenom, 
+                ":email" => $email
+            ];
+            $candidats = $this->get_request($request, $params, true);
+
+        } elseif($telephone != null) {
+            // On récupère le candidats
+            $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :nom AND Prenom_Candidats = :prenom AND Telephone_Candidats = :telephone";
+            $params = [
+                ":nom" => $nom,
+                ":prenom" => $prenom, 
+                ":telephone" => $telephone
+            ];
+            $candidats = $this->get_request($request, $params, true);
+
+        } else {
+            throw new Exception("Imposssible d'effectuer la requête sans email ou numéro de téléphone !");
+            exit;
+        }
+        
 
         // On retourne sa clé
         return $candidats;

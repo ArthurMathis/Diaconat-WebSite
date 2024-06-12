@@ -16,19 +16,19 @@
     <input type="text" id="diplome-3" name="diplome-3" placeholder="Diplome 3">
     <h2>Aides au recrutement</h2>
     <input type="text" id="aide" name="aide" placeholder="Aide"> 
-    <h2>Visite médciale</h2>
+    <h2>Visite médicale</h2>
     <section class="checkbox-liste">
         <div class="checkbox-item">
             <label for="visite_medicale_true">Visite en règle</label>
-            <input type="radio" id="visite_medicale_true" name="visite_medicale" value="true" checked/>
+            <input type="radio" id="visite_medicale_true" name="visite_medicale" value="true"/>
         </div>
         <div class="checkbox-item">
             <label for="visite_medicale_false">Visible obselète</label>
-            <input type="radio" id="visite_medicale_false" name="visite_medicale" value="false"/>
+            <input type="radio" id="visite_medicale_false" name="visite_medicale" value="false" checked/>
         </div>
     </section>   
     <section class="buttons_actions">
-        <button type="submit" class="submit_button" value="new_user">Valider</button>
+        <button type="submit" class="submit_button" value="new_user">Inscrire</button>
     </section> 
-    <p class="user-link">Candidat déjà inscrit ? <a href="">Le rechercher</a><p>
+    <p class="user-link">Candidat déjà inscrit ? <a href="index.php?candidatures=saisie-candidat">Le rechercher</a><p>
 </form>

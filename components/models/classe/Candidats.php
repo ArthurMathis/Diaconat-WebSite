@@ -170,7 +170,8 @@ class Candidat {
             "prenom" => $this->getPrenom(),
             "email" => $this->getEmail(), 
             "telephone" => $this->getTelephone(),
-            "adresse" => $this->getAdresse() . ", " . $this->getVille(),
+            "adresse" => $this->getAdresse(),
+            "ville" => $this->getVille(),
             "code_postal" => $this->getCodePostal(),
             "disponibilite" => $this->getDisponibilite(),
             "visite" => $this->getVisite_medicale()
@@ -188,7 +189,8 @@ class Candidat {
             "prenom" => $this->getPrenom(),
             "email" => $this->getEmail(), 
             "telephone" => $this->getTelephone(),
-            "adresse" => $this->getAdresse() . ", " . $this->getVille(),
+            "adresse" => $this->getAdresse() ,
+            "ville" => $this->getVille(),
             "code_postal" => $this->getCodePostal(),
             "disponibilite" => $this->getDisponibilite(),
             "visite" => $this->getVisite_medicale()

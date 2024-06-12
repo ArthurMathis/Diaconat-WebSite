@@ -2,7 +2,7 @@
     <article>
         <a href="" class="LignesHover">Importer des candidatures</a>
         <a href="" class="LignesHover">Exporter des candidatures</a>
-        <a href="index.php?candidatures=saisie-candidat" class="LignesHover">Saisir des candidatures</a>
+        <a href="index.php?candidatures=saisie-nouveau-candidat" class="LignesHover">Saisir des candidatures</a>
     </article>
     <article>
         <!--<p id="trier-button" class="LignesHover">Trier</p>-->

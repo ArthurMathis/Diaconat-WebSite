@@ -8,5 +8,4 @@
     <section class="buttons_actions">
         <button type="submit" class="submit_button" value="new_user">Valider</button>
     </section> 
-    <p class="user-link">Candidat déjà inscrit ? <a href="">Le rechercher</a><p>
 </form>

@@ -115,9 +115,13 @@ if(isset($_GET['login'])) {
             $candidatures->dispayCandidatures();
             break;
 
-        case 'saisie-candidat' : 
+        case 'saisie-nouveau-candidat' : 
             $candidatures->displaySaisieCandidat();
             break;
+
+        case 'saisie-candidat' :   
+            $candidatures->displayRechercheCandidat();
+            break; 
             
         case 'saisie-candidature' : 
             $candidatures->displaySaisieCandidature();
@@ -180,46 +184,71 @@ if(isset($_GET['login'])) {
             $candidatures->checkCandidat($candidat, $diplomes, $aide=null, $visite_medicale == 'true' ? true : false);
             break;
 
-            case 'inscription-candidature' :
-                // On récupère le contenu des champs
-                $poste          = $_POST["poste"];
-                $service        = $_POST["service"];
-                $disponibilite  = $_POST["disponibilite"];
-                $source         = $_POST["source"];
-                
-                try {
-                    if(empty($poste)) {
-                        throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
-                    } elseif(empty($disponibilite)) {
-                        throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
-                    } elseif(empty($source)) {
-                        throw new Exception("Le champs source doit être rempli par une chaine de caractères");
-                    }
-    
-                } catch(Exception $e) {
-                    $candidatures->displayErreur($e);
-                    exit;
+        case 'recherche-candidat' : 
+            // On récupère le contenu des champs
+            $nom            = $_POST["nom"];
+            $prenom         = $_POST["prenom"];
+            $email          = $_POST["email"];
+            $telephone      = $_POST["telephone"];
+
+            try {
+                if(empty($nom))
+                    throw new Exception("Le champs nom doit être rempli !");
+                elseif(empty($prenom))
+                    throw new Exception("Le champs prenom doit être rempli !");
+                elseif(empty($email))
+                    throw new Exception("Le champs email doit être rempli !");
+                elseif(empty($telephone))
+                    throw new Exception("Le champs telephone doit être rempli !");
+                    
+            } catch(Exception $e) {
+                $candidatures->displayErreur($e);
+                exit;
+            }
+
+            $candidatures->findCandidat($nom, $prenom, $email, $telephone);
+
+            break;
+
+        case 'inscription-candidature' :
+            // On récupère le contenu des champs
+            $poste          = $_POST["poste"];
+            $service        = $_POST["service"];
+            $disponibilite  = $_POST["disponibilite"];
+            $source         = $_POST["source"];
+            
+            try {
+                if(empty($poste)) {
+                    throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
+                } elseif(empty($disponibilite)) {
+                    throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
+                } elseif(empty($source)) {
+                    throw new Exception("Le champs source doit être rempli par une chaine de caractères");
                 }
 
-                $candidature = [
-                    'poste' => $poste, 
-                    'service' =>$service, 
-                    'disponibilite' => $disponibilite, 
-                    'source' => $source
-                ];
+            } catch(Exception $e) {
+                $candidatures->displayErreur($e);
+                exit;
+            }
+            $candidature = [
+                'poste' => $poste, 
+                'service' =>$service, 
+                'disponibilite' => $disponibilite, 
+                'source' => $source
+            ];
 
-                // On récupère le candidat
-                $candidat = $_SESSION['candidat'];
-                $diplomes = $_SESSION['diplomes'];
-                $aide = $_SESSION['aide'];
+            // On récupère le candidat
+            $candidat = $_SESSION['candidat'];
+            $diplomes = $_SESSION['diplomes'];
+            $aide = $_SESSION['aide'];
 
-                // // On libère 
-                // unset($_SESSION['candidat']);
-                // unset($_SESSION['diplomes']);
-                // unset($_SESSION['aide']);
+            // // On libère 
+            // unset($_SESSION['candidat']);
+            // unset($_SESSION['diplomes']);
+            // unset($_SESSION['aide']);
 
-                $candidatures->createcandidature($candidat, $candidature, $diplomes, $aide);
-                break;
+            $candidatures->createcandidature($candidat, $candidature, $diplomes, $aide);
+            break;
     
         default : 
             $candidatures->dispayCandidatures();
