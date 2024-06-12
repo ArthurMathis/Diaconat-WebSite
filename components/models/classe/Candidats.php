@@ -32,7 +32,7 @@ class Candidat {
     public function getDisponibilite() { return $this->disponibilite; }
     public function getVisite_medicale() { return $this->visite_medicale; }
 
-    protected function setCle($cle) { 
+    public function setCle($cle) { 
         // On vérifie la présence d'une clé
         if($cle == null)
             return;
@@ -165,12 +165,25 @@ class Candidat {
 
 
     public function exportToSQL() {
+        return [
+            "nom" => $this->getNom(),
+            "prenom" => $this->getPrenom(),
+            "email" => $this->getEmail(), 
+            "telephone" => $this->getTelephone(),
+            "adresse" => $this->getAdresse() . ", " . $this->getVille(),
+            "code_postal" => $this->getCodePostal(),
+            "disponibilite" => $this->getDisponibilite(),
+            "visite" => $this->getVisite_medicale()
+        ];
+    }
+    public function exportToSQL_cle() {
         if($this->getCle() == null) {
             throw new InvalideCandidatExceptions("La clé du candidat doit être implémentée avec une exporttation SQL !");
             exit;
         }
 
         return [
+            "id" => $this->getCle(),
             "nom" => $this->getNom(),
             "prenom" => $this->getPrenom(),
             "email" => $this->getEmail(), 

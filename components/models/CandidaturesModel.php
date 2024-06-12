@@ -48,22 +48,29 @@ class CandidaturesModel extends Model {
         }
 
 
-        // On traite les diplomes
-        forEach($diplomes as $c) {
-            // On recherche le diplome
-            $temp = $this->searchDiplome($c);
+        // On récupère la liste des diplomes
+        $temp = [];
+        foreach($diplomes as $obj) {
+            echo "On recherche " . $obj . "<br>";
+            // Si un diplome est saisi
+            if(!empty($obj) && strlen($obj) > 0) {
+                // On recherche dans la base de données
+                $search = $this->searchDiplome($obj);
 
-            // S'il n'existe pas encore
-            if($temp == null) {
-                // On insert le diplome
-                $this->createDiplome($c);
-                // On le récupère
-                $temp = $this->searchDiplome($c);
+                if(empty($search)) {
+                    // On ajoute le nouveau diplome à la base de données
+                    $this->createDiplome($obj);
+
+                    // On récupère le diplome
+                    $search = $this->searchDiplome($obj);
+                }
+
+                $temp[] = $search;
             }
-            
-            // On implémente
-            $c = $temp;
         }
+        unset($diplomes);
+        $diplomes = $temp;
+        unset($temp);
 
     
         // On traite l'aide
@@ -88,10 +95,6 @@ class CandidaturesModel extends Model {
         $_SESSION['candidat'] = $candidat;
         $_SESSION['diplomes'] = $diplomes;
         $_SESSION['aide'] = $aide;
-
-        echo "Candidat" . $_SESSION['candidat'];
-        echo $_SESSION['diplomes'];
-        echo $_SESSION['aide'];
     }
 
     public function createCandidat($candidat, $diplomes=[], $aide=null) {
@@ -125,31 +128,48 @@ class CandidaturesModel extends Model {
 
     public function inscriptCandidature($candidat, $candidatures=[]) {
         try {
+            echo "On génère un instant<br>";
+
             // On inscrit l'instant 
             $instant = $this->inscriptInstants()['Id_Instants'];
 
+            echo "Id de l'instant: " . $instant ."<br>";
+            echo "Id du candidat: " . $candidat->getCle() . "<br>";
+
             // Si la clé n'est pas présente
             if($candidat->getCle() == null) {
+                echo "On récupère la clé<br>";
+
                 // On récupère la clé du candidat 
                 $search = $this->searchCandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail())['Id_Candidats'];
                 $candidat->setCle($search);
+
+
+                echo "Clé: " . $candidat->getCle() . "<br>";               
             }
             
             // On récupère la source
             $source = $this->searchSource($candidatures["source"])['Id_Sources'];
 
+            echo "Id du source: " . $source . "<br>";
+
             // On récupère le poste
             $poste = $this->searchPoste($candidatures["poste"])['Id_Postes'];
+
+            echo "Id du poste: " . $poste . "<br>";
+
+            // On inscrit la demande de poste
+            $this->inscriptPostuler_a($candidat, $instant);
 
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes) 
                         VALUES (:statut, :candidat, :instant, :source, :poste)";
             $params = [
-                ":statut" => 'non-traitee', 
-                ":candidat" => $candidat->getCle(), 
-                ":instant" => $instant, 
-                ":source" => $source, 
-                ":poste" => $poste
+                "statut" => 'non-traitee', 
+                "candidat" => $candidat->getCle(), 
+                "instant" => $instant, 
+                "source" => $source, 
+                "poste" => $poste
             ];
         
             // On ajoute la base de données
@@ -164,7 +184,7 @@ class CandidaturesModel extends Model {
     public function inscriptCandidat($candidat) {
         // On initialise la requête
         $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
-                    Adresse_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats
+                    Adresse_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
                     VALUES (:nom, :prenom, :telephone, :email, :adresse, :code_postal, :disponibilite, :visite)";
         
         // On lance  requête
@@ -193,9 +213,20 @@ class CandidaturesModel extends Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
+    public function inscriptPostuler_a($candidat, $instant) {
+        // On initialise la requête 
+        $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
+        $params = [
+            "candidat" => $candidat->getCle(), 
+            "instant" => $instant
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
     
 
-    protected function searchCandidat($nom, $prenom, $email) {
+    public function searchCandidat($nom, $prenom, $email) {
         // On récupère le candidats
         $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :nom AND Prenom_Candidats = :prenom AND Email_Candidats = :email";
         $params = [
@@ -215,7 +246,7 @@ class CandidaturesModel extends Model {
             $params = ["Id" => $source];
 
         } elseif(is_string($source)) {
-            $request = "SELECT * FROM roles WHERE Intitule_Sources = :Intitule";
+            $request = "SELECT * FROM sources WHERE Intitule_Sources = :Intitule";
             $params = ["Intitule" => $source];
         } else 
             throw new Exception("La saisie de la source est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
@@ -233,7 +264,7 @@ class CandidaturesModel extends Model {
             $params = ["Id" => $poste];
 
         } elseif(is_string($poste)) {
-            $request = "SELECT * FROM roles WHERE Intitule_Postes = :Intitule";
+            $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
             $params = ["Intitule" => $poste];
         } else 
             throw new Exception("La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");
@@ -245,11 +276,11 @@ class CandidaturesModel extends Model {
         return $result;
     }
     protected function searchDiplome($diplome) {
-
-        echo $diplome; 
-
         // Si diplome est un ID
         if(is_numeric($diplome)) {
+            
+            echo "Le type fournit est un entier. On recherche un Id.<br>";
+
             // On initialise la requête
             $request = "SELECT * FROM diplomes WHERE Id_Diplomes = :id";
             $params = ["id" => $diplome];
@@ -259,6 +290,9 @@ class CandidaturesModel extends Model {
 
         // SI diplome est un intitule    
         } elseif(is_string($diplome)) {
+
+            echo "Le type fournit est un string. On recherche un intitule.<br>";
+
             // On initialise la requête 
             $request = "SELECT * FROM diplomes WHERE Intitule_Diplomes = :intitule";
             $params = ["intitule" => $diplome];

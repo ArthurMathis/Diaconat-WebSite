@@ -28,7 +28,7 @@ CREATE TABLE Avoir_droit_a (
 
 CREATE TABLE Diplomes (
     Id_Diplomes INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule_Diplomes VARCHAR(64) NOT NULL UNIQUE,
+    Intitule_Diplomes VARCHAR(128) NOT NULL UNIQUE,
     Description_Diplomes TEXT
 );
 

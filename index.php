@@ -160,6 +160,13 @@ if(isset($_GET['login'])) {
                 exit;
             }
 
+            foreach($diplomes as $d) {
+                if(strlen($d) > 128) {
+                    echo "<script>alerte(\"Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.\");</script>";
+                    exit;
+                }
+            }
+
             $candidat = [
                 'nom' => $nom, 
                 'prenom' => $prenom, 
@@ -194,7 +201,7 @@ if(isset($_GET['login'])) {
                     exit;
                 }
 
-                $infos_candidatures = [
+                $candidature = [
                     'poste' => $poste, 
                     'service' =>$service, 
                     'disponibilite' => $disponibilite, 
@@ -206,12 +213,12 @@ if(isset($_GET['login'])) {
                 $diplomes = $_SESSION['diplomes'];
                 $aide = $_SESSION['aide'];
 
-                // On libère 
-                unset($_SESSION['candidat']);
-                unset($_SESSION['diplomes']);
-                unset($_SESSION['aide']);
+                // // On libère 
+                // unset($_SESSION['candidat']);
+                // unset($_SESSION['diplomes']);
+                // unset($_SESSION['aide']);
 
-                $candidatures->createcandidature($candidat, $diplomes, $aide, $candidature);
+                $candidatures->createcandidature($candidat, $candidature, $diplomes, $aide);
                 break;
     
         default : 
@@ -222,6 +229,7 @@ if(isset($_GET['login'])) {
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();
     $home->displayHome();
+    echo "<script>console.log(\"Connecté en tant que " . $_SESSION['user_identifiant'] . "\");</script>";
 
 } else {
     $c = new LoginController();

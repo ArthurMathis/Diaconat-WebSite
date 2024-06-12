@@ -1,6 +1,7 @@
 <?php
 
 require_once('Controller.php');
+require_once(CLASSE.DS.'Candidats.php');
 
 class CandidaturesController extends Controller {
     public function __construct() {
@@ -27,7 +28,7 @@ class CandidaturesController extends Controller {
 
     public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide=null) {
         // On ajoute la disponibilité
-        $candidat->setDisponibilie($candidature['disponibilite']);
+        $candidat->setDisponibilite($candidature['disponibilite']);
 
         // On test la présence du candidat dans la base de données
         $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
@@ -45,25 +46,6 @@ class CandidaturesController extends Controller {
         }
 
         $this->Model->inscriptCandidature($candidat, $candidature);
+        header("Location: index.php");
     }
-
-    // public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide=null) {
-    //     // Si le canidat ne fait pas partie de la base de données
-    //     if($candidat->getCle() == null) {
-    //         // On ajoute la disponibilité
-    //         $candidat->setDisponibilie($candidature['disponibilite']);
-    // 
-    //         // On inscrit le candidat
-    //         $this->Model->inscriptCandidat($candidat);
-    // 
-    //         // On enregistre les diplomes
-    //         foreach($diplomes as $item) 
-    //             $this->Model->inscriptDiplome($candidat, $item);
-    // 
-    //         // On enregistre l'aide
-    //         $this->Model->inscriptAide($candidat, $aide);
-    //     } 
-    //     
-    //     // Mettre à jour la disponibilité   
-    // }
 }
