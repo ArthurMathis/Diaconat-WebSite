@@ -3,7 +3,6 @@
 require_once(MODELS.DS.'Model.php');
 require_once(CLASSE.DS.'Utilisateurs.php');
 require_once(CLASSE.DS.'Instants.php');
-require_once(VIEWS.DS.'ErrorView.php');
 
 class LoginModel extends Model {
     public function connectUser($identifiant, $motdepasse) {

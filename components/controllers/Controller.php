@@ -1,7 +1,5 @@
 <?php
 
-require_once(VIEWS.DS.'ErrorView.php');
-
 abstract class Controller {
     /// Attributs protégés de la classe contenant le chemin d'accès au model et à la view concernés
     protected $Model, $View;
