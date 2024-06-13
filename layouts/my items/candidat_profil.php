@@ -1,11 +1,11 @@
 <aside>
     <header>
-        <h1><?= $item['candidat']['nom']; ?></h1>
-        <h1><?= $item['candidat']['prenom']; ?></h1>
-        <h2><?= $item['candidatures'][0]['type_de_contrat']; ?></h2>
+        <h2><?= $item['candidat']['nom']; ?></h2>
+        <h2><?= $item['candidat']['prenom']; ?></h2>
+        <h3><?= $item['candidatures'][0]['type_de_contrat']; ?></h3>
         <div>
             <p><?= $item['candidatures'][0]['statut']; ?></p>
-            <?php if(empty($note)) : ?>
+            <?php if(empty($item['candidat']['notation'])) : ?>
                 <p>Aucun notation renseignée</p>
             <?php else: ?>    
                 <li class="notation">
