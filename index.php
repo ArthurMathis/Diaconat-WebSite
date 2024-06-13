@@ -4,12 +4,13 @@ require_once('define.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');
+require_once(CONTROLLERS.DS.'CandidatsController.php');
 require_once(COMPONENTS.DS.'forms_manip.php');
 
 // On démarre la session de l'utilisateur
 session_start();
 
-// On lance la connexion à la base de données
+// On récupère les infos de connexion à la base de données
 env_start();
 
 if(isset($_GET['login'])) {
@@ -248,6 +249,10 @@ if(isset($_GET['login'])) {
             $candidatures->dispayCandidatures();
             break;
     }
+
+} elseif(isset($_GET['candidats']) && is_numeric($_GET['candidat'])) {
+    $candidats = new CandidatController();
+    $candidats->displayCandidat($_GET['candidat']);
 
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();

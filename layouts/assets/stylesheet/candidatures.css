@@ -86,14 +86,12 @@ body {
 .liste_items {
     width: 100%;
     height: calc(100dvh - (2 * var(--nav-barre-size)));
-}
-.liste_items h2:first-of-type {
-    width: 100%;
-    text-align: center;
+
+    padding-top: calc(var(--margin) / 2);
 }
 .liste_items .table-wrapper, 
 .liste_items .entete {
-    padding: 0 3em 2em 3em;
+    padding: 0 3em;
 }
 .liste_items .table-wrapper table {
     width: 99%;
@@ -103,19 +101,19 @@ body {
 }
 .liste_items .table-wrapper table th {
     position: relative;
-    padding-left: calc(var(--margin) / 2);
+    padding-left: var(--margin);
 }
 .liste_items .table-wrapper table tbody tr th:first-of-type, 
 .liste_items .table-wrapper table tbody tr th:nth-of-type(7),
 .liste_items .table-wrapper table tbody tr th:nth-of-type(8) {
-    padding-left: var(--margin);
+    padding-left: var(--padding);
 }
 .liste_items .table-wrapper table tbody tr th:first-of-type::before,
 .liste_items .table-wrapper table tbody tr th:nth-of-type(7)::before,
 .liste_items .table-wrapper table tbody tr th:nth-of-type(8)::before {
     content: '';
     position: absolute;
-    left: 0;
+    left: var(--margin);
     top: 50%;
 
     display: block;

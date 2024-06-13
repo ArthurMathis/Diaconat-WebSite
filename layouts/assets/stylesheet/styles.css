@@ -20,10 +20,10 @@
     --blue: #273BE2;
     /*--blue: #2454FF;*/
 
-    --nontraitee: #ffbe0b;
-    --enattente: #3a86ff;
-    --acceptee: #55a630;
-    --refusee: #d00000;
+    --nontraitee: #F9B61F;
+    --enattente: #3BF3FF;
+    --acceptee: #11CE00;
+    --refusee: #ff0000;
 
     --font-size-big: 3.5em;
     --font-size-medium: 1.55em;
@@ -97,10 +97,10 @@ a {
 }
 
 .action_button {
-    padding: calc(var(--margin) / 2) calc(var(--margin) * 2 /3);
+    padding: calc(var(--margin) / 2) var(--margin);
 
     color: var(--blue);
-    border: none;
+    border: 2px solid var(--blue);
     border-radius: var(--margin);
     background-color: transparent;
 

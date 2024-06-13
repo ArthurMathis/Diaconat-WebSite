@@ -1,13 +1,12 @@
 <nav class="options_barre">
     <article>
-        <a href="" class="LignesHover">Importer des candidatures</a>
-        <a href="" class="LignesHover">Exporter des candidatures</a>
-        <a href="index.php?candidatures=saisie-nouveau-candidat" class="LignesHover">Saisir des candidatures</a>
+        <a class="action_button" href="">Importer des candidatures</a>
+        <a class="action_button" href="">Exporter des candidatures</a>
+        <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Saisir des candidatures</a>
     </article>
     <article>
-        <!--<p id="trier-button" class="LignesHover">Trier</p>-->
-        <p id="filtrer-button" class="LignesHover">Filtrer</p>
-        <p id="rechercher-button" class="LignesHover">Rechercher</p>
+        <p class="action_button" id="filtrer-button">Filtrer</p>
+        <p class="action_button" id="rechercher-button">Rechercher</p>
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
