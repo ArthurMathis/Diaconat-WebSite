@@ -2,6 +2,6 @@
 
 require_once('Model.php');
 
-class CandidatModel extends Model {
+class CandidatsModel extends Model {
 
 }

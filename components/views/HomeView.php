@@ -6,7 +6,7 @@ class HomeView extends View {
     public function getContent($titre, $items = [], $dashboard = [], $nb_items_max=null) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat Web Site - Welcome', 
-                ["layouts\assets\stylesheet\index.css"]);
+                [PAGES_STYLES.DS.'index.css']);
 
         $liste_menu = [
             [

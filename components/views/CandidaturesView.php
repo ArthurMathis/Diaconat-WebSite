@@ -5,7 +5,7 @@ require_once 'View.php';
 class CandidaturesView extends View {
     public function getContent($titre, $items = [], $nb_items_max=null) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\candidatures.css"]);
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
 
         $liste_menu = [
             [
@@ -20,12 +20,12 @@ class CandidaturesView extends View {
 
         // On ajoute les barres de navigation
         $this->generateMenu($liste_menu);
-        include LAYOUTS.DS.'candidatures_barre.php';
+        include BARRES.DS.'candidatures_barre.php';
 
         $this->getListesItems($titre, $items, $nb_items_max);
 
-        include(LAYOUTS.DS.'import-AnimeItems.php');
-        include(LAYOUTS.DS.'import-candidatures.php');
+        include(SCRIPTS.DS.'import-AnimeItems.php');
+        include(SCRIPTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -33,7 +33,7 @@ class CandidaturesView extends View {
 
     public function getSaisieCandidatContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\saisie-candidatures.css"]);
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'formulaires.php';
@@ -44,7 +44,7 @@ class CandidaturesView extends View {
     }
     public function getRechercheCandidatContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\saisie-candidatures.css"]);
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'formulaires.php';
@@ -55,7 +55,7 @@ class CandidaturesView extends View {
     }
     public function getSaisieCandidatureContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', ["layouts\assets\stylesheet\saisie-candidatures.css"]);
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'formulaires.php';

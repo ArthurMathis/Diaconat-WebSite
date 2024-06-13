@@ -2,14 +2,14 @@
 
 class View {
     public function generateCommonHeader($name=null, $cssFiles = []) {
-        include LAYOUTS.DS.'entete.php';
+        include COMMON.DS.'entete.php';
     }
     public function generateCommonFooter() {
-        include LAYOUTS.DS.'footer.php';
+        include COMMON.DS.'footer.php';
     }
     public function generateMenu($liste_menu) {
         // On ajoute la barre de navigation
-        include LAYOUTS.DS.'navbarre.php';
+        include BARRES.DS.'navbarre.php';
     }
 
     public function getListesItems($titre=null, $items = [], $nb_items_max=null) {
@@ -17,10 +17,10 @@ class View {
         if($nb_items_max == null)
             $nb_items_max = count($items);
 
-        include LAYOUTS.DS.'listes.php';
+        include MY_ITEMS.DS.'listes.php';
     }
     public function getBulles($titre, $items, $nb_items_max, $link_add, $link_consult) {
-        include(LAYOUTS.DS.'bulles.php');
+        include(MY_ITEMS.DS.'bulles.php');
     }
     public function getDashboard($dashboard = []) {
         foreach($dashboard as $item) {

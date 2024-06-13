@@ -250,9 +250,9 @@ if(isset($_GET['login'])) {
             break;
     }
 
-} elseif(isset($_GET['candidats']) && is_numeric($_GET['candidat'])) {
+} elseif(isset($_GET['candidats'])) {
     $candidats = new CandidatController();
-    $candidats->displayCandidat($_GET['candidat']);
+    $candidats->displayCandidat($_GET['candidats']);
 
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();

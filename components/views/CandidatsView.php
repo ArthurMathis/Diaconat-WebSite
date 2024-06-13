@@ -2,12 +2,12 @@
 
 require_once('View.php');
 
-class CandidatView extends View {
+class CandidatsView extends View {
     public function getContent($title, $item) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, ["layouts\assets\stylesheet\candidats.css"]);
+        $this->generateCommonHeader($title, [PAGES_STYLES.DS.'candidats.css']);
 
-        include(LAYOUTS.DS.'Candidat_barre.php');
+        include(BARRES.DS.'Candidat_barre.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
