@@ -30,13 +30,13 @@ CREATE TABLE Instants (
 );
 
 CREATE TABLE Actions (
-	Id_Actions INTEGER AUTO_INCREMENT PRIMARY KEY,
-
-    Cle_Utilisateurs INTEGER NOT NULL,
+	Cle_Utilisateurs INTEGER NOT NULL,
     Cle_Types INTEGER NOT NULL,
     CLe_Instants INTEGER NOT NULL,
     
     FOREIGN KEY (Cle_Utilisateurs) REFERENCES Utilisateurs(Id_Utilisateurs),
     FOREIGN KEY (Cle_Types) REFERENCES Types(Id_Types),
-    FOREIGN KEY (CLe_Instants) REFERENCES Instants(Id_Instants)
+    FOREIGN KEY (CLe_Instants) REFERENCES Instants(Id_Instants),
+
+    PRIMARY KEY(Cle_Utilisateurs, Cle_Types, Cle_Instants)
 );

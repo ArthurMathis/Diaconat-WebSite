@@ -248,6 +248,17 @@ INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES
     ('2024-08-08', '18:00:00')
 ;
 
+INSERT INTO Types_de_contrats (Intitule_Types_de_contrats, Description_Types_de_contrats) 
+VALUES 
+('CDI', 'Contrat à durée indéterminée'), 
+('CDD', 'Contrat à durée déterminée'), 
+('Stage', 'Stage en entreprise'),
+('Alternance', 'Formation réalisée en alternance'), 
+('Interim', 'Mission réalisé par un prestatère')
+;
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE Insert_Postuler_a()
@@ -285,3 +296,41 @@ SELECT
     FLOOR(RAND() * (SELECT COUNT(*) FROM postes)) + 1 AS Cle_Postes
 FROM 
     Postuler_a pa;
+
+DELIMITER $$
+
+CREATE PROCEDURE Insert_Demande()
+BEGIN
+    DECLARE i INT DEFAULT 0;
+    DECLARE candidature_id INT;
+    DECLARE type_contrat_id INT;
+    
+    -- Insertion de données dans la table Candidatures
+    INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes)
+    SELECT 
+        ELT(FLOOR(1 + RAND() * 4), 'acceptee', 'refusee', 'en attente', 'non-traitee') AS Statut_Candidatures,
+        pa.Cle_Candidats,
+        pa.Cle_Instants,
+        FLOOR(RAND() * (SELECT COUNT(*) FROM sources)) + 1 AS Cle_Sources,
+        FLOOR(RAND() * (SELECT COUNT(*) FROM postes)) + 1 AS Cle_Postes
+    FROM 
+        Postuler_a pa;
+
+    -- Boucle pour insérer des données dans la table DEMANDE
+    WHILE i < 50 DO
+        -- Sélection aléatoire d'une candidature et d'un type de contrat existant
+        SELECT Id_Candidatures INTO candidature_id FROM Candidatures ORDER BY RAND() LIMIT 1;
+        SELECT Id_Types_de_contrats INTO type_contrat_id FROM Types_de_contrats ORDER BY RAND() LIMIT 1;
+        
+        -- Insertion dans la table DEMANDE
+        -- Utilisation de INSERT IGNORE pour éviter les doublons
+        INSERT IGNORE INTO DEMANDE (Cle_Candidatures, Cle_Types_de_contrats) VALUES (candidature_id, type_contrat_id);
+        
+        SET i = i + 1;
+    END WHILE;
+END $$
+
+DELIMITER ;
+
+-- Appel de la procédure pour insérer les données
+CALL Insert_Demande();

@@ -11,10 +11,13 @@ CREATE TABLE Proposer_a (
 CREATE TABLE Contrats (
     Id_Contrats INTEGER AUTO_INCREMENT PRIMARY KEY,
     Date_debut_Contrats DATE NOT NULL,
-    Date_fin_Contrats DATE NOT NULL, 
+    Date_fin_Contrats DATE, 
     Salaires_Contrats DECIMAL(10, 2), 
     Demissione_Contrats BOOLEAN DEFAULT FALSE, 
     Date_demission_Contrats DATE, 
+    Travail_de_nuit_Contrats BOOLEAN DEFAULT FALSE, 
+    Travail_week_end_Contrats BOOLEAN DEFAULT FALSE, 
+    Nombre_heures_hebdomadaire_Contrats INTEGER,
 
     Cle_Candidats INTEGER NOT NULL,
     Cle_Instants INTEGER NOT NULL,
@@ -25,17 +28,7 @@ CREATE TABLE Contrats (
     FOREIGN KEY (Cle_Candidats, Cle_Instants) REFERENCES Proposer_a(Cle_Candidats, Cle_Instants), 
     FOREIGN KEY (Cle_Missions) REFERENCES Missions(Id_Missions),
     FOREIGN KEY (Cle_Type_de_contrats) REFERENCES Types_de_contrats(Id_Types_de_contrats), 
-    FOREIGN KEY (Cle_Signature) REFERENCES Instants(Id_Instants)
-);
+    FOREIGN KEY (Cle_Signature) REFERENCES Instants(Id_Instants),
 
-CREATE TABLE Horaires (
-    Id_Horaires INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Date_debut_Horaires DATE NOT NULL,
-    Date_fin_Horaires DATE NOT NULL,
-    Heure_debut_Horaires TIME NOT NULL,
-    Heure_fin_Horaires TIME NOT NULL, 
-
-    Cle_contrats INTEGER NOT NULL, 
-
-    FOREIGN KEY (Cle_contrats) REFERENCES Contrats(Id_Contrats)
+    CONSTRAINT heure_travail CHECK (Nombre_heures_hebdomadaire_Contrats BETWEEN 0 AND 55)
 );

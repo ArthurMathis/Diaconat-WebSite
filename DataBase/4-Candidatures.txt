@@ -48,7 +48,19 @@ CREATE TABLE DEMANDE (
     Cle_Types_de_contrats INTEGER UNIQUE NOT NULL, 
 
     FOREIGN KEY (Cle_Candidatures) REFERENCES Candidatures(Id_Candidatures), 
-    FOREIGN KEY (Cle_Types_de_contrat) REFERENCES Types_de_contrats(Id_Types_de_contrats), 
+    FOREIGN KEY (Cle_Types_de_contrats) REFERENCES Types_de_contrats(Id_Types_de_contrats), 
 
-    PRIMARY KEY (Cle_Candidatures, Cle_Types_de_contrat)
+    PRIMARY KEY (Cle_Candidatures, Cle_Types_de_contrats)
+);
+
+CREATE TABLE Avoir_rendez_vous_avec (
+    Cle_Candidats INTEGER NOT NULL,
+    Cle_Utilisateurs INTEGER NOT NULL,
+    Cle_Instants INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Utilisateurs) REFERENCES utilisateurs(Id_Utilisateurs),
+    FOREIGN KEY (Cle_Instants) REFERENCES instants(Id_Instants),
+
+    PRIMARY KEY (Cle_Candidats, Cle_Utilisateurs, Cle_Instants)
 );
