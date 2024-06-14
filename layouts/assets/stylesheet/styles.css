@@ -638,7 +638,6 @@ input[type="checkbox"]:checked::after {
     border-color: var(--blue);
     background-color: var(--blue);
     box-shadow: -9px 4px 34.4px 7px #0000003B;
-
 }
 
 /* On ajoute le style de tri */

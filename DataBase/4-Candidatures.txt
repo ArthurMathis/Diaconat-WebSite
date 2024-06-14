@@ -54,6 +54,8 @@ CREATE TABLE DEMANDE (
 );
 
 CREATE TABLE Avoir_rendez_vous_avec (
+    Compte_rendu_Avoir_rendez_vous_avec TEXT,
+    
     Cle_Candidats INTEGER NOT NULL,
     Cle_Utilisateurs INTEGER NOT NULL,
     Cle_Instants INTEGER NOT NULL,

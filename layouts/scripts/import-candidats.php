@@ -1,0 +1,1 @@
+<?php echo '<script src="layouts\assets\scripts\candidats-view.js"></script>';

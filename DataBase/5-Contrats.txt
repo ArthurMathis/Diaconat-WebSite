@@ -18,6 +18,7 @@ CREATE TABLE Contrats (
     Travail_de_nuit_Contrats BOOLEAN DEFAULT FALSE, 
     Travail_week_end_Contrats BOOLEAN DEFAULT FALSE, 
     Nombre_heures_hebdomadaire_Contrats INTEGER,
+    Statut_Porposition BOOLEAN DEFAULT FALSE, 
 
     Cle_Candidats INTEGER NOT NULL,
     Cle_Instants INTEGER NOT NULL,
