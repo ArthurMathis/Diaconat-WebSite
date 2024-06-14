@@ -1,9 +1,3 @@
-CREATE TABLE Types_de_contrats (
-    Id_Types_de_contrats INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule_Types_de_contrats VARCHAR(64) NOT NULL UNIQUE,
-    Description_Types_de_contrats TEXT
-);
-
 CREATE TABLE Proposer_a (
     Cle_Candidats INTEGER NOT NULL, 
     Cle_Instants INTEGER NOT NULL, 

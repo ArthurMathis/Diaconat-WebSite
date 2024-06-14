@@ -36,3 +36,19 @@ CREATE TABLE Appliquer_a (
 
     PRIMARY KEY(Cle_Candidatures, Cle_Services)
 );
+
+CREATE TABLE Types_de_contrats (
+    Id_Types_de_contrats INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Types_de_contrats VARCHAR(64) NOT NULL UNIQUE,
+    Description_Types_de_contrats TEXT
+);
+
+CREATE TABLE DEMANDE (
+    Cle_Candidatures INTEGER UNIQUE NOT NULL, 
+    Cle_Types_de_contrats INTEGER UNIQUE NOT NULL, 
+
+    FOREIGN KEY (Cle_Candidatures) REFERENCES Candidatures(Id_Candidatures), 
+    FOREIGN KEY (Cle_Types_de_contrat) REFERENCES Types_de_contrats(Id_Types_de_contrats), 
+
+    PRIMARY KEY (Cle_Candidatures, Cle_Types_de_contrat)
+);
