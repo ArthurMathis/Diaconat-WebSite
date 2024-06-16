@@ -14,11 +14,14 @@ body > content {
     display: flex;
      
     width: 100dvw;
-    height: 100%;
+    height: calc(100% - 8em);
 }
 
 /* On met en forme le bandeau latéral */
 aside {
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 30%;
     min-width: 520px;
     height: calc(100dvh - 10em);
@@ -37,7 +40,6 @@ aside p {
 aside header, 
 aside section {
     width: 100%;
-    height: 30%;
 }
 aside footer {
     display: flex;
@@ -46,7 +48,6 @@ aside footer {
     gap: var(--margin);
 
     width: 100%;
-    height: 10%;
 }
 aside footer .action_button {
     color: var(--white);
@@ -110,13 +111,19 @@ aside section > div > div {
 
 /* Mise en forme de la barre de navigation intra page */
 .navbarre {
+    position: sticky;
+    top: 0;
+
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--margin);
 
     height: fit-content;
+    z-index: 1;
     padding-right: 3em;
+
+    background-color: var(--white);
 }
 .navbarre p {
     cursor: pointer;
@@ -126,19 +133,24 @@ aside section > div > div {
 body > content > main {
     width: 70%;
     max-width: calc(100% - 520px - 6em);
-    height: calc(100% - 8em);
+    height: calc(100% - 2em);
     padding-right: 3em;
+
+    overflow-y: scroll;
 }
 main > section {
     display: flex;
     justify-content: left;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: var(--padding);
+    gap: var(--margin);
 
-    height: 100%;
+    height: fit-content;
 
     padding-top : var(--padding);
+
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 main section .contrats_bulle,
 main section .propositions_bulle,
@@ -149,7 +161,7 @@ main section .rendez_vous_bulle {
     gap: calc(var(--margin) / 2);
 
     width: 360px;
-    height: 320px;
+    height: 360px;
 
     padding: var(--margin);
 
@@ -243,6 +255,12 @@ main section .rendez_vous_bulle * {
     margin-bottom: 3px;
 }
 
+main section .bulles {
+    flex: 1 1 calc(50% - (var(--margin) / 2));
+
+    min-width: 520px;
+    height: 380px;
+}
 /* Gestion de la navigation intra onglets */
 .action_button.active {
     color: var(--white);

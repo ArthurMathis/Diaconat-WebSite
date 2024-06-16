@@ -736,6 +736,7 @@ input[type="checkbox"]:checked::after {
     color: var(--blue);
 }
 .bulles .liste_items .table-wrapper table thead {
+    position: relative;
     background-color: transparent;
 }
 .bulles .liste_items .table-wrapper table thead tr::before{

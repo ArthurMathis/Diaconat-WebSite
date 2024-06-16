@@ -26,8 +26,6 @@ abstract class Model {
 
             $this->connection = new PDO($db_fetch, $db_user, $db_password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            echo "<script>console.log(\"Connexion à " . $db_fetch . " réussie !\");</script>";
             
         } catch(PDOException $e) {
             forms_manip::error_alert($e->getMessage());

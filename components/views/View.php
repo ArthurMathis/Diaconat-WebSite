@@ -12,14 +12,14 @@ class View {
         include BARRES.DS.'navbarre.php';
     }
 
-    public function getListesItems($titre=null, $items = [], $nb_items_max=null) {
+    public function getListesItems($titre=null, $items=[], $nb_items_max=null) {
         // Si le nombre d'items max n'est pas défini, on l'implémente au nombre d'items total
         if($nb_items_max == null)
             $nb_items_max = count($items);
 
         include MY_ITEMS.DS.'listes.php';
     }
-    public function getBulles($titre, $items, $nb_items_max, $link_add, $link_consult) {
+    public function getBulles($titre, $items=[], $nb_items_max, $link_add, $link_consult) {
         include(MY_ITEMS.DS.'bulles.php');
     }
     public function getDashboard($dashboard = []) {
