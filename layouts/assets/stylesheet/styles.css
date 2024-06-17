@@ -664,8 +664,6 @@ input[type="checkbox"]:checked::after {
 /******** BULLES ********/
 /* On stylise les bulles */
 .bulles {
-    position: relative;
-
     padding: calc(var(--margin) * 3 / 2);
     padding-bottom: calc(var(--margin));
     
@@ -683,21 +681,26 @@ input[type="checkbox"]:checked::after {
 }
 
 /* On ajoute la ligne de la bulle */
-.bulles::after {
+.bulles .liste_items .entete {
+    position: relative;
+}
+.bulles .liste_items .entete::after {
     content: '';
     position: absolute;
-    top: 100;
-    left: -2;
+    bottom: 0;
+    left: 0;
 
     display: block;
-    width: calc(100% + 4px);
+    width: 100%;
     height: 2px;
+
+    transform: scaleX(1.119);
 }
-.bulles:nth-child(odd)::after {
+.bulles:nth-child(odd) .liste_items .entete::after {
     background-color: var(--white);
 }
 
-.bulles:nth-child(even)::after {
+.bulles:nth-child(even) .liste_items .entete::after {
     background-color: var(--blue);
 }
 
@@ -714,6 +717,12 @@ input[type="checkbox"]:checked::after {
     width: var(--font-size-medium);
 
     border-radius: 50%;
+}
+.bulles:nth-child(odd) .liste_items .entete > h2 {
+    color: var(--white);
+}
+.bulles:nth-child(even) .liste_items .entete > h2 {
+    color: var(--blue);
 }
 .bulles:nth-child(odd) .liste_items .entete > h2:last-child {
     color: var(--blue);
@@ -747,6 +756,9 @@ input[type="checkbox"]:checked::after {
 }
 .bulles .liste_items .table-wrapper table tbody th{
     height: 50px;
+}
+.bulles .liste_items .table-wrapper table th {
+    padding: 0;
 }
 
 .bulles .liste_items .table-wrapper table thead th::after {

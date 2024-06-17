@@ -77,23 +77,9 @@ class CandidatsView extends View {
     public function getDashboard($item=[]) {
         // On génère un nouvel onglet
         echo '<section class="onglet">';
-
-        echo '<script>console.log("On lance la génération du dashBoard");</script>';
-
-        echo '<script>console.log("On la liste de contrats");</script>';
-
         $this->makeContratsListe($item['contrats'], 4);
-
-        echo '<script>console.log("On la liste de propositions");</script>';
-
         $this->makePropositionsListe($item['contrats'], 4);
-
-        echo '<script>console.log("On la liste de candidatures");</script>';
-
         $this->makeCandidaturesListe($item['candidatures'], 4);
-
-        echo '<script>console.log("On la liste de rendez-vous");</script>';
-
         $this->makeRendezVousListe($item['rendez-vous'], 4);
         echo "</section>";
     }
@@ -108,7 +94,6 @@ class CandidatsView extends View {
         foreach($item['contrats'] as $obj)
             $this->getContratsBulles($obj);
         echo "</section>";
-
     }
 
     /// Méthode publique générant une PorpositionsBulles selon les informations d'une proposition

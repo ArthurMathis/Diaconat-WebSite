@@ -12,18 +12,20 @@
     <div class="table-wrapper">
         <table>
             <thead>
-                <tr>
-                    <?php foreach($keys as $key): ?>
-                        <th><?= $key ?></th>
-                    <?php endforeach ?>   
-                </tr>
+            <tr>
+                <?php foreach($keys as $key): if($key != 'Cle') :?>
+                    <th><?= $key ?></th>
+                    <?php endif ?>
+                <?php endforeach ?>   
+            </tr>
             </thead>
             <tbody>
                 <?php if($size > 0): ?>
                     <?php $i = 0; while($i < $size && $i < $nb_items_max): ?>
                         <tr>
-                            <?php foreach($items[$i] as $cell): ?>
-                                <th><?= $cell ?></th>
+                            <?php foreach($items[$i] as $key => $cell): if($key != 'Cle') :?>
+                                <th><?= $cell ?></th>  
+                                <?php endif ?>
                             <?php endforeach ?>
                         </tr>
                         <?php $i++; ?>
@@ -35,3 +37,19 @@
         </table>
     </div>
 </section>
+<?php if(isset($items[0]['Cle'])): ?>
+    <?php 
+        $links = [];
+        foreach($items as $row) array_push($links, $row['Cle']);   
+    ?>
+    <script>
+        const rows = document.querySelectorAll('.liste_items .table-wrapper table tbody tr');
+        const links = <?= json_encode($links); ?>;
+
+        rows.forEach((obj, index) => {
+            obj.addEventListener('click', () => {
+                window.location.href = 'index.php?candidats=' + links[index];
+            });
+        });
+    </script>
+<?php endif ?>

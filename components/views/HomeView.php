@@ -29,7 +29,7 @@ class HomeView extends View {
         echo "</aside>";
         echo "</content>";
         
-        include(LAYOUTS.DS.'import-scripts-listes.php');
+        include(SCRIPTS.DS.'import-scripts-listes.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
