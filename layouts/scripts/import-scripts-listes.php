@@ -8,7 +8,9 @@ entete.forEach((item, index) => {
     item.addEventListener('click', () => {
         method_tri = !method_tri;
         // On effectue le tri
-        const candidatures_triees = trierSelon(candidatures, index, item_clicked === index ? method_tri : true);
+        if(item_clicked != index)
+            method_tri = true;
+        const candidatures_triees = trierSelon(candidatures, index, method_tri);
         item_clicked = index;
 
         // On cherche les éventuelles erreurs

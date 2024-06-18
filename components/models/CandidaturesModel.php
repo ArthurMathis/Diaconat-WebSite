@@ -171,7 +171,7 @@ class CandidaturesModel extends Model {
     public function inscriptCandidat($candidat) {
         // On initialise la requête
         $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
-                    Adresse_Candidats, Ville_Candidats, CodePostale_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
+                    Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
                     VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
         
         // On lance  requête

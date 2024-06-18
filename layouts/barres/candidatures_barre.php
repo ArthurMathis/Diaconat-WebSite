@@ -13,7 +13,7 @@
     <div id="statut_input">
         <h3>Statuts</h3>
         <div class="container-statut">
-            <input type="checkbox" name="non-traitee" checked>
+            <input type="checkbox" name="non traitee" checked>
             <p>non-traitée</p>
         </div>
         <div class="container-statut">

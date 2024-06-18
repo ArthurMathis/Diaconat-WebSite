@@ -29,7 +29,7 @@ function setColorStatut(items=[], index) {
 
     for(let i = 0; i < items.length; i++) {
         switch(items[i].cells[index].textContent) {
-            case 'non-traitee':
+            case 'non traitee':
                 items[i].classList.add('non-traitee');
                 break;
 
@@ -406,12 +406,6 @@ function trierSelonDate(item1=[], item2=[], index) {
  * @returns 
  */
 function trierSelon(items, index, croissant = true) {
-    // On vérifie l'intégrité des données
-    // if (!items || index === null || index < 0 || items.length === 0 || items[0].cells.length <= index) {
-    //     console.log('Tri impossible, intégrité des données compromise');
-    //     return;
-    // }
-
     if (!items) {
         console.log('Tri impossible, items nul');
         return;

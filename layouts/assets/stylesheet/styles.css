@@ -60,13 +60,11 @@ h1 {
     color: var(--blue);
     text-transform: uppercase;
     font-size: var(--font-size-big);
-    letter-spacing: 0.02em;
 }
 
 h2 {
     font-size: var(--font-size-medium);
     font-weight: 400;
-    /*font-style: italic;*/
 }
 
 p {
