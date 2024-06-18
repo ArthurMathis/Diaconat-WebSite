@@ -239,12 +239,7 @@ if(isset($_GET['login'])) {
             $diplomes = $_SESSION['diplomes'];
             $aide = $_SESSION['aide'];
 
-            // // On libère 
-            // unset($_SESSION['candidat']);
-            // unset($_SESSION['diplomes']);
-            // unset($_SESSION['aide']);
-
-            $candidatures->createcandidature($candidat, $candidature, $diplomes, $aide);
+            $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide);
             break;
     
         default : 

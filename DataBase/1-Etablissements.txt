@@ -8,7 +8,7 @@ CREATE TABLE Poles (
 -- On génère la table Etablissements contenant les différents établissements des pôles de la Fondation --
 CREATE TABLE Etablissements (
     Id_Etablissements INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule_Etablissemnts VARCHAR(64) NOT NULL UNIQUE,
+    Intitule_Etablissements VARCHAR(64) NOT NULL UNIQUE,
     Adresse_Etablissements VARCHAR(256) UNIQUE,
     Description_Etablissements TEXT, 
 

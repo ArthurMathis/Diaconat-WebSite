@@ -1,20 +1,20 @@
 <div class="contrats_bulle">
     <header>
-        <h2><?= $item['mission']['intitule']; ?></h2>
-        <p><?= $item['mission']['service']; ?></p>
-        <p><?= $item['mission']['etablissement']; ?></p>
+        <h2><?= $item['intitule']; ?></h2>
+        <p><?= $item['service']; ?></p>
+        <p><?= $item['etablissement']; ?></p>
     </header>
     <article>
-        <h3><?= $item['type contrat']; ?></h3>
+        <h3><?= $item['type_de_contrat']; ?></h3>
         <?php 
             // On récupère la date actuelle
             require_once(CLASSE.DS.'Instants.php');
             $date = instants::currentInstants();
             
-            if($date->getDate() < $item['date debut']): 
+            if($date->getDate() < $item['date_debut']): 
         ?>
             <p class="a_venir">A venir</p>
-        <?php elseif($item['date fin'] < ($date->getDate() || $item['demission'])): ?>  
+        <?php elseif($item['date_fin'] < ($date->getDate() || $item['demission'])): ?>  
             <p class="termine">Terminé</p> 
         <?php else : ?> 
             <p class="en_cours">En cours</p> 
@@ -27,19 +27,19 @@
         </div>
         <div>
             <p>Début du contrat</p>
-            <p><?= $item['date debut']; ?></p>
+            <p><?= $item['date_debut']; ?></p>
         </div>
         <div>
             <p>Fin du contrat</p>
-            <p><?= $item['date fin']; ?></p>
+            <p><?= $item['date_fin']; ?></p>
         </div>
         <div>
             <p>Horaire</p>
-            <p><?= $item['horaires']['heures']; ?> heures</p>
-            <?php if($item['horaires']['nuit'] == 'true'): ?>
+            <p><?= $item['heures']; ?> heures</p>
+            <?php if($item['nuit'] == 'true'): ?>
                 <p>Emploi de nuit</p>
             <?php endif ?>    
-            <?php if($item['horaires']['week-end'] == 'true'): ?>
+            <?php if($item['week_end'] == 'true'): ?>
                 <p>Emploi de week-end</p>
             <?php endif ?>  
         </div>

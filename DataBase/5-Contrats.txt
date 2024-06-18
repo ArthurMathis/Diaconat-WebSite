@@ -15,24 +15,23 @@ CREATE TABLE Contrats (
     Date_debut_Contrats DATE NOT NULL,
     Date_fin_Contrats DATE, 
     Salaires_Contrats DECIMAL(10, 2), 
-    Demissione_Contrats BOOLEAN DEFAULT FALSE, 
+    Demissionne_Contrats BOOLEAN DEFAULT FALSE, 
     Date_demission_Contrats DATE, 
     Travail_de_nuit_Contrats BOOLEAN DEFAULT FALSE, 
     Travail_week_end_Contrats BOOLEAN DEFAULT FALSE, 
     Nombre_heures_hebdomadaire_Contrats INTEGER,
-    Statut_Porposition BOOLEAN DEFAULT FALSE, 
+    Statut_Proposition BOOLEAN DEFAULT FALSE, 
+    Date_signature_Contrats DATE,
 
     Cle_Candidats INTEGER NOT NULL,
     Cle_Instants INTEGER NOT NULL,
     Cle_Services INTEGER NOT NULL, 
     Cle_Postes INTEGER NOT NULL,
-    Cle_Type_de_contrats INTEGER NOT NULL,
-    Cle_Signature INTEGER, 
+    Cle_Types_de_contrats INTEGER NOT NULL,
 
     FOREIGN KEY (Cle_Candidats, Cle_Instants) REFERENCES proposer_a(Cle_Candidats, Cle_Instants), 
     FOREIGN KEY (Cle_Services, Cle_Postes) REFERENCES missions(Cle_Services, Cle_Postes),
     FOREIGN KEY (Cle_Type_de_contrats) REFERENCES types_de_contrats(Id_Types_de_contrats), 
-    FOREIGN KEY (Cle_Signature) REFERENCES instants(Id_Instants),
 
     CONSTRAINT heure_travail CHECK (Nombre_heures_hebdomadaire_Contrats BETWEEN 0 AND 55)
 );

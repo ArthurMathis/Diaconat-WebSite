@@ -20,7 +20,7 @@
                     echo '<p class="en-attente">En attente</p>';
                     break;
 
-                case 'non-traitee':
+                case 'non traitee':
                     echo '<p class="non-traitee">Non traitée</p>';
                     break;
             }

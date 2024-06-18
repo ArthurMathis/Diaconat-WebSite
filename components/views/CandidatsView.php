@@ -12,8 +12,8 @@ class CandidatsView extends View {
         foreach($contrats as $c) if(!empty($c['signature'])){
             $new_c = [
                 'Statut' => $c['statut'],
-                'Poste' => $c['mission']['intitule'],
-                'Type de contrat' => $c['type contrat']
+                'Poste' => $c['intitule'],
+                'Type de contrat' => $c['type_de_contrat']
             ];
             
             array_push($contrats_bulles, $new_c);
@@ -31,8 +31,8 @@ class CandidatsView extends View {
         foreach($propositions as $p) if(empty($p['signature'])) {
             $new_p = [
                 'Statut' => empty($p['statut']) ? 'en attente' : 'refusée',
-                'Poste' => $p['mission']['intitule'],
-                'Type de contrat' => $p['type contrat']
+                'Poste' => $p['intitule'],
+                'Type de contrat' => $p['type_de_contrat']
             ];
             array_push($propositions_bulles, $new_p);
         }

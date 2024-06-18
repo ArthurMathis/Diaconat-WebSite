@@ -5,7 +5,7 @@ INSERT INTO Poles (Intitule_Poles, Description_Poles) VALUES
     ("pspdna", "Pole nord-Alsace")
 ;  
 -- On insère les Etablissemnts de la Fondation
-INSERT INTO etablissements (Intitule_Etablissemnts, Adresse_Etablissements, Cle_Poles) VALUES 
+INSERT INTO etablissements (Intitule_Etablissements, Adresse_Etablissements, Cle_Poles) VALUES 
 	("Clinique Diaconat Fonderie", "1 Rue Saint-Sauveur, 68100 Mulhouse", 1),
     ("Clinique Diaconat Roosewelt", "14 Bd du Président Roosevelt, 68200 Mulhouse", 1),
     ("Clinique Diaconat Colmar", "18 Rue Charles Sandherr, 68000 Colmar", 2)
@@ -188,11 +188,11 @@ INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_
     ('en attente',  1,  1,  1,  23,  1),
     ('acceptee',    1,  2,  1,  56,  1),
     ('non traitee', 1,  3,  2,  14,  1),
-    ('en attente',  2,  4,  3,  38,  3),
-    ('en attente',  3,  5,  2,  58,  3),
+    ('non traitee',  2,  4,  3,  38,  3),
+    ('refusee',  3,  5,  2,  58,  3),
     ('en attente',  3,  6,  3,  25,  2),
-    ('en attente',  4,  7,  1,  4,   1),
+    ('acceptee',  4,  7,  1,  4,   1),
     ('en attente',  5,  8,  2,  47,  5),
-    ('en attente',  6,  9,  1,  65,  4),
-    ('en attente',  6,  10, 4,  26,  4)
+    ('non traitee',  6,  9,  1,  65,  4),
+    ('non traitee',  6,  10, 4,  26,  4)
 ;    

@@ -42,7 +42,7 @@ class CandidaturesController extends Controller {
                 $search['Telephone_Candidats'],
                 $search['Adresse_Candidats'],
                 $search['Ville_Candidats'],
-                $search['CodePostale_Candidats']
+                $search['CodePostal_Candidats']
             );
             $candidat->setCle($search['Id_Candidats']);
             
@@ -60,24 +60,32 @@ class CandidaturesController extends Controller {
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
+        echo "On vérifie la présence de la clé Candidats<br>";
+
         // On test la présence du candidat dans la base de données
         $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
-        if($search == null) {
+
+        // Encodage de l'objet PHP en JSON
+        $jsonItem = json_encode($search);
+        echo '<script>console.log("Item");</script>';
+        echo '<script>console.log(' . $jsonItem . ');</script>';
+
+        if(empty($search)) {
+            echo "On enregistre un nouvel utilisateur<br>";
+        
             // On ajoute le candidat à la base de données
             $this->Model->createCandidat($candidat, $diplomes, $aide);
 
-            // On récupère l'Id du candidat
-            $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
-            $candidat->setCle($search['Id_Candidats']);
-
         // On met à jour sa disponibilité
-        } else {
-
-        }
-
+        } else 
+            // On ajoute la clé de Candidats
+            $candidat->setCle($search['Id_Candidats']);
+        
+        echo $candidat->getCle();
+        
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
-
+        
         // On redirige la page
         header("Location: index.php");
     }

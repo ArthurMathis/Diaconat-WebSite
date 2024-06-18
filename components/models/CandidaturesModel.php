@@ -42,36 +42,37 @@ class CandidaturesModel extends Model {
         
         } catch(InvalideCandidatExceptions $e) {
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
-            // exit;
         }
 
 
-        // On récupère la liste des diplomes
-        $temp = [];
-        foreach($diplomes as $obj) {
-            echo "On recherche " . $obj . "<br>";
-            // Si un diplome est saisi
-            if(!empty($obj) && strlen($obj) > 0) {
-                // On recherche dans la base de données
-                $search = $this->searchDiplome($obj);
+        if($diplomes != null) {
+            // On récupère la liste des diplomes
+            $temp = [];
 
-                if(empty($search)) {
-                    // On ajoute le nouveau diplome à la base de données
-                    $this->createDiplome($obj);
-
-                    // On récupère le diplome
+            foreach($diplomes as $obj) {
+                echo "On recherche " . $obj . "<br>";
+                // Si un diplome est saisi
+                if(!empty($obj) && strlen($obj) > 0) {
+                    // On recherche dans la base de données
                     $search = $this->searchDiplome($obj);
+
+                    if(empty($search)) {
+                        // On ajoute le nouveau diplome à la base de données
+                        $this->createDiplome($obj);
+
+                        // On récupère le diplome
+                        $search = $this->searchDiplome($obj);
+                    }
+
+                    $temp[] = $search;
                 }
-
-                $temp[] = $search;
             }
-        }
-        unset($diplomes);
-        $diplomes = $temp;
-        unset($temp);
 
+            // On gère la mémoire allouée
+            unset($diplomes);
+            $diplomes = $temp;
+            unset($temp);
+        }
     
         // On traite l'aide
         if($aide != null) {
@@ -100,13 +101,20 @@ class CandidaturesModel extends Model {
     public function createCandidat($candidat, $diplomes=[], $aide=null) {
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
+
+        // On récupère l'Id du candidat
+        $search = $this->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
         
+        // On ajoute la clé de Candidats
+        $candidat->setCle($search['Id_Candidats']);
+
         // On enregistre les diplomes
         foreach($diplomes as $item) 
             $this->inscriptDiplome($candidat, $item);
 
-        // On enregistre l'aide
-        $this->inscriptAide($candidat, $aide);
+        if($aide != null && !empty($aide))
+            // On enregistre l'aide
+            $this->inscriptAide($candidat, $aide);
     }
     public function createDiplome($diplome) {
         // On initialise la requête
@@ -130,6 +138,9 @@ class CandidaturesModel extends Model {
         try {
             // On inscrit l'instant 
             $instant = $this->inscriptInstants()['Id_Instants'];
+
+            echo "On génère la nouvelle candidature<br>";
+            echo "Clé de l'utilisateur : " . $candidat->getCle();
 
             // Si la clé n'est pas présente
             if($candidat->getCle() == null) {
@@ -179,7 +190,7 @@ class CandidaturesModel extends Model {
         $this->post_request($request, $candidat->exportToSQL());
 
     }
-    public function inscriptAide($candidat, $aide) {
+    public function inscriptAide($candidat, $aide) {      
         // On initialise la requête
         $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
         $params = [
