@@ -9,7 +9,7 @@ class CandidaturesView extends View {
 
         $liste_menu = [
             [
-                "intitule" => "Home",
+                "intitule" => "Accueil",
                 "action" => "index.php"
             ],
             [

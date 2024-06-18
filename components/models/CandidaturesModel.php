@@ -137,6 +137,9 @@ class CandidaturesModel extends Model {
                 $search = $this->searchCandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail())['Id_Candidats'];
                 $candidat->setCle($search);           
             }
+
+            // On récupère le type de contrat
+            $contrat = $this->searchTypeContrat($candidatures['type de contrat'])['Id_Types_de_contrats'];
             
             // On récupère la source
             $source = $this->searchSource($candidatures["source"])['Id_Sources'];
@@ -148,14 +151,15 @@ class CandidaturesModel extends Model {
             $this->inscriptPostuler_a($candidat, $instant);
 
             // On ajoute l'action à la base de données
-            $request = "INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes) 
-                        VALUES (:statut, :candidat, :instant, :source, :poste)";
+            $request = "INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) 
+                        VALUES (:statut, :candidat, :instant, :source, :poste, :contrat)";
             $params = [
-                "statut" => 'non-traitee', 
+                "statut" => 'non traitee', 
                 "candidat" => $candidat->getCle(), 
                 "instant" => $instant, 
                 "source" => $source, 
-                "poste" => $poste
+                "poste" => $poste,
+                "contrat" => $contrat
             ];
         
             // On ajoute la base de données
@@ -163,9 +167,6 @@ class CandidaturesModel extends Model {
 
         } catch (Exception $e) {
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
-            // exit;
         }
     }
     public function inscriptCandidat($candidat) {
@@ -326,7 +327,7 @@ class CandidaturesModel extends Model {
         // Si aide est un intitule    
         } elseif(is_string($aide)) {
             // On intitialise la requête
-            $request = "SELECT * FROM Aides_au_recrutement WHERE Intitule_Aide_au_recrutement= :intitule";
+            $request = "SELECT * FROM Aides_au_recrutement WHERE Intitule_Aide_au_recrutement = :intitule";
             $params = ["intitule" => $aide];
 
             // On lance la requête
@@ -336,6 +337,30 @@ class CandidaturesModel extends Model {
             throw new Exception("La saisie de l'aide est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
             exit;
         }
+
+        // On retourne le résultat
+        return $result;
+    }
+    public function searchTypeContrat($contrat) {
+        // Si contrat est un ID
+        if(is_numeric($contrat)) {
+            // On initialise la requête
+            $request = "SELECT * FROM Types_de_contrats WHERE Id_Types_de_contrats = :id";
+            $params = ['id' => $contrat];
+
+        // Si contrat est un intitulé    
+        } elseif(is_string($contrat)) {
+            // On initialise la requête
+            $request =  "SELECT * FROM Types_de_contrats WHERE Intitule_Types_de_contrats = :intitule";
+            $params = ['intitule' => $contrat];
+
+        } else {
+            throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
 
         // On retourne le résultat
         return $result;

@@ -10,6 +10,10 @@ class HomeView extends View {
 
         $liste_menu = [
             [
+                "intitule" => "Accueil",
+                "action" => "index.php"
+            ],
+            [
                 "intitule" => "Candidatures",
                 "action" => "index.php?candidatures=home"
             ],

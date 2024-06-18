@@ -209,6 +209,7 @@ if(isset($_GET['login'])) {
             // On récupère le contenu des champs
             $poste          = forms_manip::nameFormat($_POST["poste"]);
             $service        = $_POST["service"];
+            $type_contrat   = $_POST["type_de_contrat"];
             $disponibilite  = $_POST["disponibilite"];
             $source         = forms_manip::nameFormat($_POST["source"]);
             
@@ -227,7 +228,8 @@ if(isset($_GET['login'])) {
             
             $candidature = [
                 'poste' => $poste, 
-                'service' =>$service, 
+                'service' => $service, 
+                'type de contrat' => $type_contrat,
                 'disponibilite' => $disponibilite, 
                 'source' => $source
             ];
