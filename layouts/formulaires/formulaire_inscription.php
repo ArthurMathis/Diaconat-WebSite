@@ -14,5 +14,5 @@
     <section class="buttons_actions">
         <button type="submit" class="submit_button" value="new_user">Valider</button>
     </section>
-    <p class="user-link">Vous avez déjà un compte <a href="index.php?login=get_connexion">Connectez-vous</a><p>
+    <p class="user-link">Vous avez déjà un compte <a class="LignesHover" href="index.php?login=get_connexion">Connectez-vous</a><p>
 </form>

@@ -18,7 +18,6 @@
     --light-grey: #D9D9D9;
     --white: #fff;
     --blue: #273BE2;
-    --blue-opacity: rgba(0, 70, 255, 0.75);
 
     --nontraitee: #F9B61F;
     --enattente: #3BF3FF;
@@ -42,7 +41,6 @@
 
     font-size: var(--font-size-standart);
     font-family: 'Roboto Regular', sans-serif;
-    text-decoration: none;
 
     box-sizing: border-box;
 }
@@ -53,6 +51,7 @@ body {
 
     overflow-x: hidden;
 }
+
 
 /******** STYLE PAR DEFAULT ********/
 
@@ -65,6 +64,49 @@ h1 {
 h2 {
     font-size: var(--font-size-medium);
     font-weight: 400;
+}
+
+p {
+    font-size: var(--font-size-standart);
+    font-weight: 300;
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; } 
+    to { opacity: 1; }
+}
+
+@keyframes infinite-vertical-move {
+    0% {
+        transform: translateY(-2dvh);
+    }
+    50% {
+        transform: translateY(2dvh);
+    }
+    100% {
+        transform: translateY(-2dvh);
+    }
+}
+
+.action_button {
+    padding: calc(var(--margin) / 2) var(--margin);
+
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    border-radius: var(--margin);
+    background-color: transparent;
+
+    will-change: color, background-color;
+    transition: 150ms ease color, 150ms ease background-color;
+}
+.action_button:is(:hover, :focus) {
+    color: var(--white);
+    background-color: var(--blue);
 }
 
 form {
@@ -158,6 +200,7 @@ input[type="checkbox"]:checked::after {
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
+
 .formulaire-illustration {
     position: relative;
     width: 50%;
@@ -203,11 +246,55 @@ input[type="checkbox"]:checked::after {
     min-width: 420px;
 }
 
+
+.user-link{
+    position: absolute;
+    bottom: var(--margin);
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+
+    width: 100%;
+    height: 65px;
+
+    color: var(--grey);
+    background-color: var(--white);
+    text-align: center;
+}
+.user-link  > a{
+    position: relative;
+    width: fit-content;
+  
+    color: var(--blue);
+    background-color: transparent;
+    border: none;
+}
+.user-link a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--blue);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 450ms ease-in-out;
+}
+.user-link a:is(:hover, :focus)::after {
+    transform: scaleX(1);
+}
+
 /******** SCROLL BARRE ********/
 
 ::-webkit-scrollbar {
-    height: 0;
-    width: 0;
+    width: 3px;
 }
 ::-webkit-scrollbar-track {
     background: transparent;
@@ -219,6 +306,26 @@ input[type="checkbox"]:checked::after {
 
 
 /******** ANIMATION DES LIGNES ********/
+
+.lignes {
+    position: relative;
+}
+.lignes::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: left;
+    overflow-x: hidden;
+    transition: transform 850ms ease-in-out;
+}
+.lignes.active::after {
+    transform: scaleX(1);
+}
 
 .LignesHover {
     position: relative;
@@ -240,7 +347,7 @@ input[type="checkbox"]:checked::after {
     will-change: transform;
     transform-origin: left;
     overflow-x: hidden;
-    transition: transform 450ms ease-in-out;
+    transition: transform 250ms ease-in-out;
 }
 .LignesHover {
     cursor: pointer;
@@ -249,50 +356,28 @@ input[type="checkbox"]:checked::after {
     transform: scaleX(1);
 }
 
+/******** ANIMATION DE TEXTE ********/
 
-/******** STYLE DES LIENS ET BOUTONS ********/
-
-.action_button {
-    padding: calc(var(--margin) / 2) var(--margin);
-
-    color: var(--blue);
-    border: 2px solid var(--blue);
-    border-radius: var(--margin);
-    background-color: transparent;
-
-    will-change: color, background-color;
-    transition: 150ms ease color, 150ms ease background-color;
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity transform;
+    transition: opacity 750ms ease, transform 750ms ease;
 }
-.action_button:is(:hover, :focus) {
-    color: var(--white);
-    background-color: var(--blue);
-
-} 
-
-.user-link{
-    position: absolute;
-    bottom: var(--margin);
-    left: 0;
-    bottom: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-
-    width: 100%;
-    height: 65px;
-
-    color: var(--grey);
-    background-color: var(--white);
-    text-align: center;
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
 }
-.user-link  > a {
-    color: var(--blue);
+  
+.opacity {
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 750ms ease;
 }
-.user-link a::after {
-    background-color: var(--blue);
+.opacity.active {
+    opacity: 1;
 }
+
 
 /******** BARRE DE NAVIGATION ********/
 
@@ -307,20 +392,35 @@ input[type="checkbox"]:checked::after {
 
     height: var(--nav-barre-size);
     width: 100%;
-    z-index: 1;
+    z-index: 10;
 
     padding: 2em 3em 0;
 
     background-color: var(--white);
 }
-#barre-de-navigation h2{
-    color: var(--blue);
+#barre-de-navigation > h2 {
+    position: relative;
 }
-#barre-de-navigation h2::after {
-    background-color: var(--blue);
-}
+#barre-de-navigation > h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-/******** STYLE DU MENU ********/
+    width: 100%;
+    height: 1px;
+
+    background-color: var(--black);
+
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: right;
+    transition: transform 300ms ease;
+}
+#barre-de-navigation > h2:is(:hover, :focus)::after {
+    transform: scaleX(1);
+
+}
 
 #menu {
     position: fixed;
@@ -330,11 +430,11 @@ input[type="checkbox"]:checked::after {
     display: none;
     width: 100dvw;
     height: 100dvh;
-    z-index: 2;
+    z-index: 15;
 
     padding: 1em;
 
-    background-color: var(--blue-opacity);
+    background-color: rgba(0, 70, 255, 0.75);
     backdrop-filter: blur(2px);
     color: var(--white);
 }
@@ -371,13 +471,28 @@ input[type="checkbox"]:checked::after {
 } 
 #menu main div h2 {
     position: relative;
-    z-index: 3;
+    z-index: 20;
     font-weight: 300;
 }
 #menu main div h2::after {
-    background-color: var(--white);
-}
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
+    width: 100%;
+    height: 1px;
+
+    background-color: var(--white);
+
+    transform: scaleX(0);
+    will-change: transform;
+    transform-origin: right;
+    transition: transform 300ms ease;
+}
+#menu main div h2:is(:hover, :focus)::after {
+    transform: scaleX(1);
+}
 #menu main content {
     display: flex;
     flex-direction: column;
@@ -406,60 +521,32 @@ input[type="checkbox"]:checked::after {
 /* On ajoute les illustrations */
 #menu main img:first-of-type {
     position: fixed;
-    bottom: 42.5%;
+    bottom: 32.5%;
     left: 17.5%;
 
     display: block;
-    width: 17.5%;
+    width: 25%;
 
     animation: infinite-vertical-move 4s infinite ease-in-out;
 }
 #menu main img:last-of-type {
     position: fixed;
-    bottom: 0;
+    bottom: -12.5%;
     left: 0;
 
     display: block;
-    width: 40%;
-}
-
-@media screen AND (max-aspect-ratio : 1/1) {
-    #menu main img:first-of-type {
-        width: 22.5%;
-        bottom: 25%;
-    }
-
-    #menu main img:last-of-type {
-        width: 47.5%;
-    }
-}
-
-@media screen AND (min-aspect-ratio : 1/1) AND (max-aspect-ratio : 3/2) {
-    #menu main img:first-of-type {
-        bottom: 35%;
-    }
-}
-
-@media screen AND (min-aspect-ratio : 4/3) {
-    #menu main img:last-of-type {
-        bottom: -5%;
-    }
-}
-
-@media screen AND (min-aspect-ratio : 15/9) {
-    #menu main img:last-of-type {
-        bottom: -10%;
-    }
+    width: 45%;
 }
 
 /******** STYLE DES LISTES D'OBJETS ********/
-
+/* On espace le titre de la liste de son tableau */
 .liste_items {
     display: flex;
     flex-direction: column;
     gap: var(--margin);
 }
 
+/* On stylise l'entete */
 .liste_items .entete {
     display: flex;
     justify-content: space-between;
@@ -467,39 +554,36 @@ input[type="checkbox"]:checked::after {
 
     width: 100%;
     height: fit-content;
+
+    padding-left: 3em;
 }
 
+/* On redimensionne le container du tableau ainsi que le tableau */
 .liste_items .table-wrapper {
     overflow-y: auto;
     width: 100%;
+    max-height: calc(100dvh - 6em - 90px);
 }
 .liste_items .table-wrapper table {
-    width: 100%;
+    width: 99%;
     border-collapse: separate;
-    border-spacing: 0 var(--margin); 
+    border-spacing: 0 20px; 
 }
 
+/* On colle l'entete de tableau en haut du container */
 .liste_items .table-wrapper table thead {
     position: sticky;
-    top: 20px;
-    z-index: 1;
-    /*z-index : 2*/
+    top: 0;
+    z-index: 2;
+
+    background-color: #fff;
 }
 .liste_items .table-wrapper table thead th {
     position: relative;
     font-family: Roboto Bold;
 }
 
-.liste_items .table-wrapper table th {
-    height: 50px;
-    padding: 0 var(--margin);
-    text-align: left;
-}    
-.liste_items .table-wrapper table tbody th {
-    height: 65px;
-    font-weight: 400;
-}
-
+/* On ajout les fonds de lignes */
 .liste_items .table-wrapper table tr {
     position: relative;
     border-spacing: var(--margin) 0;
@@ -532,6 +616,18 @@ input[type="checkbox"]:checked::after {
                 box-shadow 250ms ease;
 }
 
+/* On redimensionne et stylise les lignes */
+.liste_items .table-wrapper table th {
+    height: 50px;
+    padding: 0 var(--margin);
+    text-align: left;
+}    
+.liste_items .table-wrapper table tbody th {
+    height: 65px;
+    font-weight: 400;
+}
+
+/* On stylise le survole d'une ligne */
 .liste_items .table-wrapper table tbody tr:is(:hover, :focus) {
     color: var(--white);
 }
@@ -541,6 +637,7 @@ input[type="checkbox"]:checked::after {
     box-shadow: -9px 4px 34.4px 7px #0000003B;
 }
 
+/* On ajoute le style de tri */
 .liste_items .table-wrapper table thead tr th:is(:hover, :focus)::after, 
 .liste_items .table-wrapper table thead tr th.active::after {
     content: '';
@@ -562,74 +659,135 @@ input[type="checkbox"]:checked::after {
 }
 
 /******** BULLES ********/
-
-.bulles {  
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    height: fit-content;
-    min-height: 360px;
-
+/* On stylise les bulles */
+.bulles {
+    padding: calc(var(--margin) * 3 / 2);
+    padding-bottom: calc(var(--margin));
+    
+    border: 2px solid var(--blue);
     border-radius: var(--radius);
+}
+.bulles:nth-child(odd) {
     color: var(--white);
     background-color: var(--blue);
 }
-
-.bulles .liste_items .entete {
-    position: relative;
-    padding: var(--margin) var(--margin) 0;
-}
-.bulles .liste_items .entete::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: calc(-1 * var(--margin));
-
-    width: calc(100% + 4px);
-    height: 2px;
-
+.bulles:nth-child(even) {
+    color: var(--blue);
     background-color: var(--white);
 }
-.bulles .liste_items .entete > h2:last-child {
+
+/* On ajoute la ligne de la bulle */
+.bulles .liste_items .entete {
     position: relative;
+}
+.bulles .liste_items .entete::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+    width: 100%;
+    height: 2px;
+
+    transform: scaleX(1.119);
+}
+.bulles:nth-child(odd) .liste_items .entete::after {
+    background-color: var(--white);
+}
+
+.bulles:nth-child(even) .liste_items .entete::after {
+    background-color: var(--blue);
+}
+
+/* On styles les listes des bulles */
+.bulles .liste_items  {
+    gap: var(--margin);
+}
+.bulles .liste_items .entete > h2:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: var(--font-size-medium);
+    
     height: var(--font-size-medium);
+    width: var(--font-size-medium);
 
-    color: var(--blue);
     border-radius: 50%;
+}
+.bulles:nth-child(odd) .liste_items .entete > h2 {
+    color: var(--white);
+}
+.bulles:nth-child(even) .liste_items .entete > h2 {
+    color: var(--blue);
+}
+.bulles:nth-child(odd) .liste_items .entete > h2:last-child {
+    color: var(--blue);
     background-color: var(--white);
 }
+.bulles:nth-child(even) .liste_items .entete > h2:last-child {
+    color: var(--white);
+    background-color: var(--blue);
+}
+.bulles .liste_items .table-wrapper {
+    overflow-y: visible;
+}
 .bulles .liste_items .table-wrapper table {
-    margin: calc(var(--margin) / 2) 0;
-    border-spacing: 0 calc(var(--margin) / 2);
+    border-spacing: 0;
 }
-.bulles .liste_items .table-wrapper table thead th,
-.bulles .liste_items .table-wrapper table tbody th {
-    height: 30px;
+.bulles:nth-child(odd) .liste_items .table-wrapper table th {
+    color: var(--white);
 }
-.bulles .liste_items .table-wrapper table tr::before {
-    display: none;
+.bulles:nth-child(even) .liste_items .table-wrapper table th {
+    color: var(--blue);
 }
-.bulles .liste_items .table-wrapper table thead tr th:is(:hover, :focus)::after, 
-.bulles .liste_items .table-wrapper table thead tr th.active::after {
+.bulles .liste_items .table-wrapper table thead {
+    position: relative;
+    background-color: transparent;
+}
+.bulles .liste_items .table-wrapper table thead tr::before{
+    background-color: transparent;
+}
+.bulles .liste_items .table-wrapper table tbody tr{
+    height: min-content;
+}
+.bulles .liste_items .table-wrapper table tbody th{
+    height: 50px;
+}
+.bulles .liste_items .table-wrapper table th {
+    padding: 0;
+}
+
+.bulles .liste_items .table-wrapper table thead th::after {
     display: none;
 }
 
+/* On stylise les boutons */
 .bulles .boutons {
     display: flex;
     justify-content: right;
-    
-    padding: 0 var(--margin) var(--margin);
+    gap: var(--margin);
 }
-.bulles .boutons > a {
+.bulles .boutons a {
+    padding: calc(var(--margin) * 2 / 3) var(--margin);
+    border-radius: calc(var(--radius) * 2);
+
+    text-transform: uppercase;
+    transition: color 150ms ease, 
+                background-color 150ms ease;
+}
+.bulles:nth-child(odd) .boutons a {
     color: var(--white);
+    border: 2px solid var(--white);
 }
-.bulles .boutons > a:hover {
+.bulles:nth-child(even) .boutons a {
+    color: var(--blue);
+    border: 2px solid var(--blue);
+}
+.bulles:nth-child(odd) .boutons a:is(:hover, :focus) {
     color: var(--blue);
     background-color: var(--white);
+}
+.bulles:nth-child(even) .boutons a:is(:hover, :focus) {
+    color: var(--white);
+    background-color: var(--blue);
 }

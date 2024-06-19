@@ -13,5 +13,5 @@
     <section class="buttons_actions">
         <button type="submit" class="submit_button" value="new_user">Se connecter</button>
     </section>
-    <p class="user-link">Vous n'avez pas de compte <a href="index.php?login=get_inscription">Inscrivez-vous</a><p>
+    <p class="user-link">Vous n'avez pas de compte <a class="LignesHover" href="index.php?login=get_inscription">Inscrivez-vous</a><p>
 </form>

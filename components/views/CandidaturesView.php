@@ -13,18 +13,24 @@ class CandidaturesView extends View {
                 "action" => "index.php"
             ],
             [
+                "intitule" => "Candidatures",
+                "action" => "index.php?candidatures=home"
+            ],
+            [
                 "intitule" => "Se déconnecter",
                 "action" => "index.php?login=deconnexion"
             ]
         ];
 
+        $id = 'main-liste';
+
         // On ajoute les barres de navigation
         $this->generateMenu($liste_menu);
         include BARRES.DS.'candidatures_barre.php';
 
-        $this->getListesItems($titre, $items, $nb_items_max);
+        $this->getListesItems($titre, $items, $nb_items_max, $id);
 
-        include(SCRIPTS.DS.'import-AnimeItems.php');
+        include(SCRIPTS.DS.'import-listes.php');
         include(SCRIPTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  

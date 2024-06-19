@@ -40,7 +40,7 @@
         <div>
             <p>Diplômes:</p>
             <div>
-                <?php if(0 < count($item['candidat']['diplomes'])): ?>
+                <?php if(isset($item['candidat']['diplomes']) && 0 < count($item['candidat']['diplomes'])): ?>
                     <?php foreach($item['candidat']['diplomes'] as $obj): ?>
                         <p><?= $obj; ?></p>
                     <?php endforeach ?>   
@@ -55,23 +55,19 @@
         </div>
         <div>
             <p>Service demandé:</p>
-            <p>
-                <?php if(empty($item['candidatures'][0]['service'])): ?>
-                    <p>Aucun service renseigné</p>
-                <?php else: ?>
-                    <?= $item['candidatures'][0]['service']; ?>
-                <?php endif ?>        
-            </p>
+            <?php if(empty($item['candidatures'][0]['service'])): ?>
+                <p>Aucun service renseigné</p>
+            <?php else: ?>
+                <p><?= $item['candidatures'][0]['service']; ?></p>
+            <?php endif ?>
         </div>
         <div>
             <p>Etablissement demandé</p>
-            <p>
-                <?php if(empty($item['candidatures'][0]['etablissement'])): ?>
-                    <p>Aucun établissement renseigné</p>
-                <?php else: ?>
-                    <?= $item['candidatures'][0]['etablissement']; ?>
-                <?php endif ?>
-            </p>
+            <?php if(empty($item['candidatures'][0]['etablissement'])): ?>
+                <p>Aucun établissement renseigné</p>
+            <?php else: ?>
+                <p><?= $item['candidatures'][0]['etablissement']; ?><p>
+            <?php endif ?>
         </div>
     </section>
     <footer>

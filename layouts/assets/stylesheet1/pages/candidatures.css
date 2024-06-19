@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .options_barre {
     display: flex;
     justify-content: space-between;
@@ -87,9 +91,11 @@
 .liste_items .entete {
     padding: 0 3em;
 }
-.liste_items .table-wrapper {
-    overflow-y: auto;
-    height: calc(100dvh - 8em - 150px);
+.liste_items .table-wrapper table {
+    width: 99%;
+}
+.liste_items .table-wrapper table thead {
+    z-index: 1;
 }
 .liste_items .table-wrapper table th {
     position: relative;
@@ -133,12 +139,4 @@
 .liste_items .table-wrapper table tbody tr.telephone th:nth-of-type(7)::before,
 .liste_items .table-wrapper table tbody tr.date_depassee th:nth-of-type(8)::before {
     background-color: var(--refusee);
-}
-
-#main-liste .table-wrapper table tbody tr {
-    opacity: 0;
-    transition: opacity ease 150ms;
-}
-#main-liste .table-wrapper table tbody tr.visible {
-    opacity: 1;
 }

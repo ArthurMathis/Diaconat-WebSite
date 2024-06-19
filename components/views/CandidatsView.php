@@ -5,10 +5,14 @@ require_once('View.php');
 class CandidatsView extends View {
     /// Méthode privée générant une liste de contrats
     private function makeContratsListe($contrats=[], $nb_items_max) {
+        // On teste la présence de données
+        if(empty($contrats)) 
+            return;
+
         // Le nouveau tableaux de contrats
         $contrats_bulles = [];
 
-        // On construit le tableaux de contrats simplifiés
+        // On construit le tableaux de contrats simplifiés 
         foreach($contrats as $c) if(!empty($c['signature'])){
             $new_c = [
                 'Statut' => $c['statut'],
@@ -19,11 +23,19 @@ class CandidatsView extends View {
             array_push($contrats_bulles, $new_c);
         }
 
+        // On vérifie la présence d'items dans la liste
+        if(empty($contrats_bulles))
+            return;
+
         // On génère la bulle
         $this->getBulles('Contrats', $contrats_bulles, $nb_items_max, null, null);
     }
     /// Méthode privée générant une liste de contrats
     private function makePropositionsListe($propositions=[], $nb_items_max) {
+        // On teste la présence de données
+        if(empty($propositions)) 
+            return;
+
         // Le nouveau tableaux de propositions
         $propositions_bulles = [];
 
@@ -36,15 +48,24 @@ class CandidatsView extends View {
             ];
             array_push($propositions_bulles, $new_p);
         }
+
+        // On vérifie la présence d'items dans la liste
+        if(empty($propositions_bulles))
+            return;
         
         // On génère la bulle
         $this->getBulles("Propositions d'embauche", $propositions_bulles, $nb_items_max, null, null);
     }
     /// Méthode privée généranr une liste de candidatures
     private function makeCandidaturesListe($candidatures=[], $nb_items_max) {
+        // On teste la présence de données
+        if(empty($candidatures)) 
+            return;
+
         // Le nouveau tableaux de candidatures
         $candidatures_bulles = [];
 
+        // On construit le tableaux de candidatures simplifiées
         foreach($candidatures as $c) {
             $new_c = [
                 'Statut' => $c['statut'],
@@ -54,13 +75,22 @@ class CandidatsView extends View {
             array_push($candidatures_bulles, $new_c);
         }
 
+        // On vérifie la présence d'items dans la liste
+        if(empty($candidatures_bulles))
+            return;
+
         // On génère la bulle
         $this->getBulles("Candidatures", $candidatures_bulles, $nb_items_max, null, null);
     }
     private function makeRendezVousListe($rendezvous=[], $nb_items_max) {
+        // On teste la présence de données
+        if(empty($rendezvous)) 
+            return;
+
         // Le nouveau tableau de rendez-vous
         $rendezvous_bulles = [];
 
+        // On construit le tableaux de rendez-vous simplifiés
         foreach($rendezvous as $r) {
             $new_r = [
                 'Recruteur' => $r['utilisateur'],
@@ -68,6 +98,10 @@ class CandidatsView extends View {
             ];
             array_push($rendezvous_bulles, $new_r);
         }
+
+        // On vérifie la présence d'items dans la liste
+        if(empty($rendezvous_bulles))
+            return;
 
         // On génère la bulle
         $this->getBulles("Rendez-vous", $rendezvous_bulles, $nb_items_max, null, null);
@@ -81,6 +115,10 @@ class CandidatsView extends View {
         $this->makePropositionsListe($item['contrats'], 4);
         $this->makeCandidaturesListe($item['candidatures'], 4);
         $this->makeRendezVousListe($item['rendez-vous'], 4);
+
+        if(empty($item['contrats']) && empty($item['candidatures']) && empty($item['rendez-vous']))
+            echo "<h2>Aucun élément enregistré sur le profil du candidat.</h2>";
+
         echo "</section>";
     }
 
@@ -91,8 +129,9 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet conrtat d'un candidat
     public function getContratsBoard($item=[]) {
         echo '<section class="onglet">';
-        foreach($item['contrats'] as $obj)
+        if(!empty($item['contrat'])) foreach($item['contrats'] as $obj)
             $this->getContratsBulles($obj);
+        else echo "<h2>Aucun contrat enregistré </h2>";    
         echo "</section>";
     }
 
@@ -103,8 +142,9 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet Porpositions d'un candidat selon les informations de son profil
     public function getPropositionsBoard($item) {
         echo '<section class="onglet">';
-        foreach($item['contrats'] as $obj)
+        if(!empty($item['contrats'])) foreach($item['contrats'] as $obj)
             $this->getPropositionsBulles($obj);
+        else echo "<h2>Aucune proposition enregistrée </h2>"; 
         echo "</section>";
     }
 
@@ -115,8 +155,9 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet Candidatures d'un candidat selon les informations de son profil
     public function getCandidaturesBoard($item) {
         echo '<section class="onglet">';
-        foreach($item['candidatures'] as $obj)
+        if(!empty($item['candidatures'])) foreach($item['candidatures'] as $obj)
             $this->getCandidaturesBulles($obj);
+        else echo "<h2>Aucune candidature enregistrée </h2>"; 
         echo "</section>";
     }
 
@@ -127,8 +168,9 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet rendez-vous d'un candidat selon les informations de son profil
     public function getRendezVousBoard($item=[]) {
         echo '<section class="onglet">';
-        foreach($item['rendez-vous'] as $obj)
+        if(!empty($item['rendez-vous'])) foreach($item['rendez-vous'] as $obj)
             $this->getRendezVousBulles($obj);
+        else echo "<h2>Aucun rendez-vous enregistré </h2>"; 
         echo "</section>";
     }
 

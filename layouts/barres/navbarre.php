@@ -1,12 +1,12 @@
 <nav id="barre-de-navigation">
     <h1>Ypopsi</h1>
-    <h2>Menu</h2>
+    <h2 class="LignesHover">Menu</h2>
 </nav>
 <section id="menu">
     <main>
         <div>
             <h1>Ypopsi</h1>
-            <h2>Close</h2>
+            <h2 class="LignesHover">Close</h2>
         </div>
         <content>
             <?php foreach($liste_menu as $item): ?>

@@ -26,7 +26,7 @@ aside {
     min-width: 520px;
     height: calc(100dvh - 10em);
 
-    margin-left: 3em;
+    margin: 0 3em;
     padding: var(--padding);
 
     color: var(--white);
@@ -121,7 +121,7 @@ aside section > div > div {
 
     height: fit-content;
     z-index: 1;
-    padding: 0 3em;
+    padding-right: 3em;
 
     background-color: var(--white);
 }
@@ -148,8 +148,6 @@ main > section {
     height: fit-content;
 
     padding-top : var(--padding);
-    padding-left: 3em;
-    padding-bottom: 3em;
 
     overflow-x: hidden;
     overflow-y: scroll;

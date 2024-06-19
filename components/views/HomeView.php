@@ -23,17 +23,20 @@ class HomeView extends View {
             ]
         ];
 
+        $id = 'main-liste';
+
         // On ajoute la barre de navigation
         $this->generateMenu($liste_menu);
         // On ajoute le contenu de la page
         echo "<content>";
-        $this->getListesItems($titre, $items, $nb_items_max);
+        $this->getListesItems($titre, $items, $nb_items_max, $id);
         echo "<aside>";
         $this->getDashboard($dashboard);
         echo "</aside>";
         echo "</content>";
         
         include(SCRIPTS.DS.'import-scripts-listes.php');
+        include(SCRIPTS.DS.'import-listes.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

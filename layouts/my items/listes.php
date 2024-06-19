@@ -1,4 +1,4 @@
-<section class="liste_items<?php if(isset($classe) && !empty($classe)) echo $classe ?>">
+<section class="liste_items<?php if(isset($classe) && !empty($classe)) echo $classe ?>" <?php if(isset($id) && !empty($id)): ?>id="<?= $id; ?>"<?php endif ?>>
     <div class="entete">
         <h2><?= $titre; ?></h2>
         <h2>

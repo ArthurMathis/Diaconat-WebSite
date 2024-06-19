@@ -7,7 +7,9 @@ require_once(CLASSE.DS.'Candidats.php');
 class CandidaturesModel extends Model {
     public function getCandidatures() {
         // On initialise la requête
-        $request = "SELECT  Statut_Candidatures AS Statut, 
+        $request = "SELECT 
+        id_Candidats AS Cle,
+        Statut_Candidatures AS Statut, 
         nom_candidats AS Nom, 
         prenom_candidats AS Prénom, 
         intitule_postes AS Poste,

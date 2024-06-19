@@ -1,0 +1,46 @@
+body {
+    height: 100dvh;
+    overflow: hidden;
+    padding: 0;
+}
+
+content {
+    display: flex;
+
+    width: 100%;
+    height: calc(100dvh - (2 * var(--nav-size-barre)));
+
+    margin-top:  var(--nav-size-barre);
+}
+content > .liste_items {
+    width: 65%;
+    height: 100%;
+
+    padding-top: var(--padding);
+}
+content > .liste_items .table-wrapper {
+    height: calc(100dvh - 6em - 90px);
+    padding-left: 3em;
+}
+aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin);
+    
+    width: 35%;
+    height: calc(100dvh - 6em);
+
+    padding-left: var(--margin);
+    padding-right: 3em;
+
+    overflow-y: scroll;
+}
+aside article {
+    padding: var(--margin);
+}
+aside article .liste_items {
+    gap: 10px;
+}
+aside article .liste_items .entete {
+    padding: 0 0 15px 0;
+}

@@ -159,7 +159,10 @@ INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES
     ('2024-06-07', '15:30:00'),
     ('2024-06-08', '16:45:00'),
     ('2024-06-09', '18:00:00'),
-    ('2024-06-10', '19:15:00')
+    ('2024-06-10', '19:15:00'),
+    ('2024-07-16', '12-48-00'),
+    ('2025-01-13', '17-45-32'),
+    ('2024-12-02', '13-45-00')
 ;
 
 -- On insère les types de contrats --
@@ -196,3 +199,20 @@ INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_
     ('non traitee',  6,  9,  1,  65,  4),
     ('non traitee',  6,  10, 4,  26,  4)
 ;    
+
+-- On insère les contrats --
+INSERT INTO Proposer_a (Cle_Candidats, Cle_Instants) VALUES 
+    (7, 11),
+    (3, 12),
+    (1, 13)
+;
+INSERT INTO missions (Intitule_Missions, Cle_Services, Cle_Postes) VALUES 
+    ('Intitule 1', 11, 1),
+    ('Intitule 2', 24, 11),
+    ('Intitule 3', 25, 21)
+;
+INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Nombre_heures_hebdomadaire_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats) VALUES 
+	('2024-06-07',' 2025-07-13', 2500, 39, 7, 11, 11, 1, 2),
+    ('2024-07-06', '2027-07-10', 2500, 39, 3, 12, 24, 11, 5),
+    ('2024-06-08', '2025-07-13', 2500, 39, 1, 13, 25, 21, 4)
+;
