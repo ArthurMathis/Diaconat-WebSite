@@ -1,6 +1,6 @@
 <nav id="barre-de-navigation">
     <h1>Ypopsi</h1>
-    <h2 class="LignesHover">Menu</h2>
+    <h3 class="LignesHover">Menu</h3>
 </nav>
 <section id="menu">
     <main>

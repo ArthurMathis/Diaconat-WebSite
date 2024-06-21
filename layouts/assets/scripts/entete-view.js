@@ -1,4 +1,4 @@
-const button_menu = document.querySelector('#barre-de-navigation h2');
+const button_menu = document.querySelector('#barre-de-navigation h3');
 const menu = document.getElementById('menu');
 const button_fermer = menu.querySelector('main div h2');
 const link = menu.querySelectorAll('main content a');

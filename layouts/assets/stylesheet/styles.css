@@ -1,12 +1,11 @@
 @font-face {
-    font-family: 'Roboto Regular';
+    font-family: 'Roboto';
     src: url('../typo/Roboto/Roboto-Regular.ttf');
 }
 @font-face {
-    font-family: 'Roboto Bold';
-    src: url('../typo/Roboto/Roboto-Bold.ttf');
+    font-family: 'Roboto Medium';
+    src: url('../typo/Roboto/Roboto-Medium.ttf');
 }
-
 @font-face {
     font-family: 'Roboto Mono';
     src: url('../typo/Roboto_Mono/RobotoMono-VariableFont_wght.ttf');
@@ -14,11 +13,11 @@
 
 :root {
     --black: #000;
-    --grey: rgba(0, 0, 0, 0.5);
-    --light-grey: #D9D9D9;
+    --grey: #d5d5d5;
+    --light-grey: #f5f5f5;
     --white: #fff;
-    --blue: #273BE2;
-    --blue-opacity: rgba(0, 70, 255, 0.75);
+    --blue: #0046FE;
+    --blue-opacity: rgba(0, 70, 254, 0.8);
 
     --nontraitee: #F9B61F;
     --enattente: #3BF3FF;
@@ -30,10 +29,18 @@
     --font-size-standart: 1em;
     --font-size-small: 0.625em;
 
-    --margin: 20px;
-    --padding: 40px;
-    --radius: 15px;
+    --margin: 1em;
+    --gap: 2em;
+    --padding: 3em;
+
+    --small-radius: 15px;
+    --radius: 30px;
+    --big-radius: 85px;
     --nav-barre-size: 6em;
+
+    --liste-shadow: -9px 4px 34.4px 7px #0000003B;
+    --bulle-shadow: -1px 8px 15px 7px rgba(0, 0, 0, 0.05);
+    --small-bulle-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -41,8 +48,9 @@
     padding: 0;
 
     font-size: var(--font-size-standart);
-    font-family: 'Roboto Regular', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
+    font-weight: 400;
 
     box-sizing: border-box;
 }
@@ -58,149 +66,34 @@ body {
 
 h1 {
     color: var(--blue);
-    text-transform: uppercase;
     font-size: var(--font-size-big);
+    font-family: 'Roboto Medium';
 }
-
 h2 {
     font-size: var(--font-size-medium);
-    font-weight: 400;
+    font-family: 'Roboto Medium';
 }
-
-form {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--margin);
-
-    padding: 5% 5% 10% 5%;
+h3 {
+    font-size: var(--font-size-medium);
 }
-form img {
-    width: 8em;
-    align-items: center;
-    margin: 0 auto; 
-}
-form h2 {
-    text-align: center;
-}
-input {
-    width: 100%;
-    height: 45px;
-
-    padding: 0 1em;
-
-    border: 1px solid var(--black);
-    border-radius: 5px;
-}
-input::placeholder {
-    color: var(--grey)
-}
-button {
-    width: 100%;
-    height: 45px;
-    
-    color: var(--white);
-    background-color: var(--black);
-    border: none;
-    border-radius: 5px;
-    text-transform: uppercase;
-}
-form .checkbox-liste {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-form .checkbox-liste .checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-form .checkbox-liste .checkbox-item input,
-input[type="checkbox"] {
-    position: relative;
-
-    width: 0;
-    height: 0;
-
-    margin: 0 10px;
-}
-form .checkbox-liste .checkbox-item input::before,
-input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    width: calc(var(--font-size-standart) * 2 / 3);
-    height: calc(var(--font-size-standart) * 2 / 3);
-
-    background-color: var(--light-grey);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
-form .checkbox-liste .checkbox-item input:checked::before,
-input[type="checkbox"]:checked::before {
-    opacity: 0;
-}
-form .checkbox-liste .checkbox-item input:checked::after,
-input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    width: calc(var(--font-size-standart) * 2 / 3);
-    height: calc(var(--font-size-standart) * 2 / 3);
-
-    background-color: var(--blue);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
-.formulaire-illustration {
-    position: relative;
-    width: 50%;
-    height: 100dvh;
-    
-    background-image: url("../img/photo_log-in.jpg");
-    object-fit: cover;
-    background-position: center;
-}
-.formulaire-illustration::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-
+a {
     display: block;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    width: fit-content;
+    height: fit-content;
 
-
-    background-color: var(--blue);
-    opacity: 0.7;
+    color: var(--blue);
+    font-weight: 600;
 }
-.formulaire-illustration img:first-of-type {
-    position: fixed;
-    bottom: 35.5%;
-    left: 14.5%;
 
-    display: block;
-    width: 17.5%;
-    min-width: 240px;
+/******** Animation ********/
 
-    animation: infinite-vertical-move 4s infinite ease-in-out;
-}
-.formulaire-illustration img:last-of-type {
-    position: fixed;
-    bottom: -7.5%;
-    left: 0;
-
-    display: block;
-    width: 35.5%;
-    min-width: 420px;
+@keyframes slide-in-right {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(120%);
+    }
 }
 
 /******** SCROLL BARRE ********/
@@ -233,14 +126,17 @@ input[type="checkbox"]:checked::after {
     position: absolute;
     left: 0;
     bottom: 0;
+
     width: 100%;
     height: 1px;
+
     background-color: var(--black);
     transform: scaleX(0);
+
     will-change: transform;
     transform-origin: left;
     overflow-x: hidden;
-    transition: transform 450ms ease-in-out;
+    transition: transform 250ms ease-in-out;
 }
 .LignesHover {
     cursor: pointer;
@@ -253,15 +149,20 @@ input[type="checkbox"]:checked::after {
 /******** STYLE DES LIENS ET BOUTONS ********/
 
 .action_button {
-    padding: calc(var(--margin) / 2) var(--margin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 var(--gap);
+    height: var(--padding);
 
     color: var(--blue);
     border: 2px solid var(--blue);
-    border-radius: var(--margin);
+    border-radius: var(--gap);
     background-color: transparent;
 
     will-change: color, background-color;
-    transition: 150ms ease color, 150ms ease background-color;
+    transition: 150ms ease background-color;
 }
 .action_button:is(:hover, :focus) {
     color: var(--white);
@@ -313,10 +214,10 @@ input[type="checkbox"]:checked::after {
 
     background-color: var(--white);
 }
-#barre-de-navigation h2{
+#barre-de-navigation h3 {
     color: var(--blue);
 }
-#barre-de-navigation h2::after {
+#barre-de-navigation h3::after {
     background-color: var(--blue);
 }
 
@@ -332,7 +233,7 @@ input[type="checkbox"]:checked::after {
     height: 100dvh;
     z-index: 2;
 
-    padding: 1em;
+    padding: var(--margin);
 
     background-color: var(--blue-opacity);
     backdrop-filter: blur(2px);
@@ -346,7 +247,7 @@ input[type="checkbox"]:checked::after {
     height: 100%;
     width: 100%;
 
-    padding: 1em 2em;
+    padding: var(--margin) var(--gap);
 
     border-radius: var(--radius);
     border: 2px solid var(--white);
@@ -355,14 +256,14 @@ input[type="checkbox"]:checked::after {
 }
 #menu main div {
     position: absolute;
-    top: 1em;
-    left: 2em;
+    top: var(--margin);
+    left: var(--gap);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    width: calc(100% - 4em);
+    width: calc(100% - calc(2 * var(--gap)));
     height: fit-content;
 }
 #menu main div h1, 
@@ -372,7 +273,6 @@ input[type="checkbox"]:checked::after {
 #menu main div h2 {
     position: relative;
     z-index: 3;
-    font-weight: 300;
 }
 #menu main div h2::after {
     background-color: var(--white);
@@ -388,11 +288,13 @@ input[type="checkbox"]:checked::after {
     width: 100%;
     height: 100%;
 
-    padding: 12em 8em;
+    padding: calc(3 * var(--padding)) calc(4 * var(--gap));
 }
 #menu main content a {
     position: relative;
     color: var(--white);
+    font-family: 'Roboto Mono';
+    font-weight: 400;
     font-size: var(--font-size-big);
 
     will-change: opacity;
@@ -404,6 +306,7 @@ input[type="checkbox"]:checked::after {
 
 
 /* On ajoute les illustrations */
+
 #menu main img:first-of-type {
     position: fixed;
     bottom: 42.5%;
@@ -423,14 +326,15 @@ input[type="checkbox"]:checked::after {
     width: 40%;
 }
 
-@media screen AND (max-aspect-ratio : 1/1) {
-    #menu main img:first-of-type {
-        width: 22.5%;
-        bottom: 25%;
+@keyframes infinite-vertical-move {
+    0% {
+        transform: translateY(-2dvh);
     }
-
-    #menu main img:last-of-type {
-        width: 47.5%;
+    50% {
+        transform: translateY(2dvh);
+    }
+    100% {
+        transform: translateY(-2dvh);
     }
 }
 
@@ -469,42 +373,40 @@ input[type="checkbox"]:checked::after {
     height: fit-content;
 }
 
-.liste_items .table-wrapper {
+.table-wrapper {
     overflow-y: auto;
     width: 100%;
 }
-.liste_items .table-wrapper table {
+.table-wrapper table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 var(--margin); 
+    border-spacing: 0 calc(var(--margin) * 3 / 2); 
 }
 
-.liste_items .table-wrapper table thead {
+.table-wrapper table thead {
     position: sticky;
-    top: 20px;
+    top: calc(var(--margin) * 3 / 2);
     z-index: 1;
-    /*z-index : 2*/
 }
-.liste_items .table-wrapper table thead th {
+.table-wrapper table thead th {
     position: relative;
-    font-family: Roboto Bold;
+    font-weight: 600;
 }
 
-.liste_items .table-wrapper table th {
+.table-wrapper table th {
     height: 50px;
-    padding: 0 var(--margin);
+    padding: 0 var(--gap);
     text-align: left;
 }    
-.liste_items .table-wrapper table tbody th {
+.table-wrapper table tbody th {
     height: 65px;
-    font-weight: 400;
 }
 
-.liste_items .table-wrapper table tr {
+.table-wrapper table tr {
     position: relative;
     border-spacing: var(--margin) 0;
 }
-.liste_items .table-wrapper table tr::before {
+.table-wrapper table tr::before {
     content: '';
     position: absolute;
     top: 0;
@@ -514,13 +416,13 @@ input[type="checkbox"]:checked::after {
     width: 100%;
     z-index: -1;
 
-    border-radius: var(--radius);
+    border-radius: var(--small-radius);
 }
-.liste_items .table-wrapper table thead tr::before {
+.table-wrapper table thead tr::before {
     height: 50px;
     background-color: #f7f7f7;
 } 
-.liste_items .table-wrapper table tbody tr::before {
+.table-wrapper table tbody tr::before {
     width: calc(100% - 4px);
     height: 63px;
     border: 2px solid var(--light-grey);
@@ -532,17 +434,17 @@ input[type="checkbox"]:checked::after {
                 box-shadow 250ms ease;
 }
 
-.liste_items .table-wrapper table tbody tr:is(:hover, :focus) {
+.table-wrapper table tbody tr:is(:hover, :focus) {
     color: var(--white);
 }
-.liste_items .table-wrapper table tbody tr:is(:hover, :focus)::before {
+.table-wrapper table tbody tr:is(:hover, :focus)::before {
     border-color: var(--blue);
     background-color: var(--blue);
-    box-shadow: -9px 4px 34.4px 7px #0000003B;
+    box-shadow: var(--liste-shadow);
 }
 
-.liste_items .table-wrapper table thead tr th:is(:hover, :focus)::after, 
-.liste_items .table-wrapper table thead tr th.active::after {
+.table-wrapper table thead tr th:is(:hover, :focus)::after, 
+.table-wrapper table thead tr th.active::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -557,7 +459,7 @@ input[type="checkbox"]:checked::after {
     background-image: url('../img/fleche.png');
     background-size: contain;
 }
-.liste_items .table-wrapper table thead tr th.reverse-tri::after {
+.table-wrapper table thead tr th.reverse-tri::after {
     transform: translateY(-50%) rotate(180deg);
 }
 
@@ -569,67 +471,94 @@ input[type="checkbox"]:checked::after {
     justify-content: space-between;
 
     height: fit-content;
-    min-height: 360px;
+}
+.bulles > h2 {
+    margin-bottom: calc(var(--margin) * 1 / 4);
+}
+.bulles > p {
+    margin-bottom: var(--gap);
+}
+.bulles .bulle-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 5px;
 
     border-radius: var(--radius);
-    color: var(--white);
+
     background-color: var(--blue);
 }
-
-.bulles .liste_items .entete {
-    position: relative;
-    padding: var(--margin) var(--margin) 0;
+.bulles .table-wrapper table {
+    padding: var(--margin) 0;
+    border-spacing: 0 calc(var(--margin)* 2 / 3);
 }
-.bulles .liste_items .entete::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: calc(-1 * var(--margin));
-
-    width: calc(100% + 4px);
-    height: 2px;
-
-    background-color: var(--white);
-}
-.bulles .liste_items .entete > h2:last-child {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: var(--font-size-medium);
-    height: var(--font-size-medium);
-
-    color: var(--blue);
-    border-radius: 50%;
-    background-color: var(--white);
-}
-.bulles .liste_items .table-wrapper table {
-    margin: calc(var(--margin) / 2) 0;
-    border-spacing: 0 calc(var(--margin) / 2);
-}
-.bulles .liste_items .table-wrapper table thead th,
-.bulles .liste_items .table-wrapper table tbody th {
+.bulles .table-wrapper table thead th,
+.bulles .table-wrapper table tbody th {
     height: 30px;
+    color: var(--white);
 }
-.bulles .liste_items .table-wrapper table tr::before {
+.bulles .table-wrapper table thead th {
+    padding-bottom: calc(var(--margin)* 1 / 2);
+}
+.bulles .table-wrapper table tr::before {
     display: none;
 }
-.bulles .liste_items .table-wrapper table thead tr th:is(:hover, :focus)::after, 
-.bulles .liste_items .table-wrapper table thead tr th.active::after {
+.bulles .table-wrapper table thead tr th:is(:hover, :focus)::after, 
+.bulles .table-wrapper table thead tr th.active::after {
     display: none;
 }
-
 .bulles .boutons {
     display: flex;
     justify-content: right;
+    align-items: center;
+    gap: var(--margin);
     
-    padding: 0 var(--margin) var(--margin);
+    height: var(--padding);
+
+    margin: 0 var(--gap) var(--margin) 0;
 }
-.bulles .boutons > a {
+.bulles .boutons a {
     color: var(--white);
 }
-.bulles .boutons > a:hover {
-    color: var(--blue);
+.bulles .boutons .fleche {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: var(--font-size-standart);
+    height: var(--font-size-standart);
+
+    overflow: hidden;
+}
+.bulles .boutons .fleche span {
+    position: relative;
+
+    display: block;
+    width: var(--font-size-standart);
+    height: 3px;
+
+    border-radius: 1.5px;
+
     background-color: var(--white);
+}
+.bulles .boutons .fleche span::before,
+.bulles .boutons .fleche span::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1px;
+
+    width: calc(var(--font-size-standart) * 2 / 3);
+    height: 3px;
+
+    border-radius: 1.5px;
+    background-color: var(--white);
+
+    transform-origin: right;
+}
+.bulles .boutons .fleche span::before {
+    transform: translateY(-50%) rotate(45deg);
+}
+.bulles .boutons .fleche span::after {
+    transform: translateY(calc(-50% + 1px)) rotate(-45deg);
 }

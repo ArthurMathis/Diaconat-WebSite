@@ -7,8 +7,25 @@ class LoginView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'connexion.css']);
 
+        $liste_menu = [
+            [
+                "intitule" => "Accueil",
+                "action" => "index.php"
+            ],
+            [
+                "intitule" => "Candidatures",
+                "action" => "index.php?candidatures=home"
+            ],
+            [
+                "intitule" => "Se déconnecter",
+                "action" => "index.php?login=deconnexion"
+            ]
+        ];
+
+        // On ajoute la barre de navigation
+        $this->generateMenu($liste_menu);
+
         // On ajoute le formulaire de connexion
-        include FORMULAIRES.DS.'formulaires.php';
         include FORMULAIRES.DS.'formulaire_connexion.php';
 
         // On ajoute le pied de page
@@ -20,7 +37,6 @@ class LoginView extends View {
         $this->generateCommonHeader('Diaconat - Cennexion', [FORMS_STYLES.DS.'connexion.css']);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'formulaires.php';
         include FORMULAIRES.DS.'formulaire_inscription.php';
 
         // On ajoute le pied de page

@@ -1,16 +1,15 @@
 body {
+    width: 100dvw;
     height: 100dvh;
+
     overflow: hidden;
-    overflow-y: scroll;
 }
 
 content {
     display: flex;
 
     width: 100%;
-    height: calc(100dvh - (2 * var(--nav-size-barre)));
-
-    margin-top:  var(--nav-size-barre);
+    height: calc(100dvh -  var(--nav-barre-size));
 }
 
 content > .liste_items {
@@ -21,24 +20,22 @@ content > .liste_items {
 }
 content > .liste_items .entete,
 content > .liste_items .table-wrapper {
-    padding-left: 3em;
-    padding-right: 2em;
+    padding-left: var(--padding);
+    padding-right: var(--gap);
 }
 content > .liste_items .table-wrapper {
     overflow-y: auto;
-    height: calc(100dvh - 6em - 90px);
+    height: calc(100dvh - (var(--nav-barre-size) + var(--gap)));
 }
 
 aside {
     display: flex;
     flex-direction: column;
-    gap: var(--margin);
+    gap: calc(var(--gap) * 2);
 
     width: 35%;
-    height: calc(100dvh - 6em);
 
-    padding-right: 3em;
-    padding-bottom: 2em;
+    padding: var(--padding) var(--padding) var(--gap) var(--margin);
 
     overflow-y: scroll;
 }
@@ -51,30 +48,15 @@ aside {
     opacity: 1;
 }
 
-@media screen AND (max-width : 1460px){
+@media screen AND (max-width : 1560px){
     content {
         flex-direction: column-reverse;
     }
-    content > .liste_items,
-    aside {
+    content > .liste_items {
         width: 100%;
+        padding-right: var(--gap);
     }
-
     aside {
-        flex-direction: row;
-
-        height: fit-content;
-
-        padding: var(--margin) 3em 0 3em;
-
-        overflow-x: scroll;
-        overflow-y: hidden;
-    }
-    aside .bulles {
-        width: 60%;
-        min-width: 520px;
-    }
-    content > .liste_items .table-wrapper {
-        height: calc(100dvh - (8em + 450px));
+        display: none;
     }
 }
