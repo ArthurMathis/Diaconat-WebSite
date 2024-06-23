@@ -42,8 +42,7 @@ class CandidaturesView extends View {
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'formulaires.php';
-        include FORMULAIRES.DS.'formulaire_inscription_candidats.php';
+        include FORMULAIRES.DS.'inscription_candidats.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
@@ -53,8 +52,7 @@ class CandidaturesView extends View {
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'formulaires.php';
-        include FORMULAIRES.DS.'formulaire_recherche_candidats.php';
+        include FORMULAIRES.DS.'recherche_candidats.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
@@ -64,8 +62,7 @@ class CandidaturesView extends View {
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'formulaires.php';
-        include FORMULAIRES.DS.'formulaire_inscription_candidatures.php';
+        include FORMULAIRES.DS.'inscription_candidatures.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
