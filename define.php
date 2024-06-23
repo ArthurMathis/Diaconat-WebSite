@@ -15,23 +15,24 @@ define('CLASSE', MODELS.DS.'classe');
 // On définit le chemin vers les ressources
 define('LAYOUTS', ROOT.DS.'layouts');
 define('ASSETS', LAYOUTS.DS.'assets');
+define('PAGES', LAYOUTS.DS.'pages');
 
 // Les composants HTML
-define('BARRES', LAYOUTS.DS.'barres');
-define('COMMON', LAYOUTS.DS.'common');
-define('FORMULAIRES', LAYOUTS.DS.'formulaires');
-define('MY_ITEMS', LAYOUTS.DS.'my items');
-define('SCRIPTS', LAYOUTS.DS.'scripts');
+define('BARRES', PAGES.DS.'barres');
+define('COMMON', PAGES.DS.'common');
+define('FORMULAIRES', PAGES.DS.'formulaires');
+define('MY_ITEMS', PAGES.DS.'my items');
+define('SCRIPTS', PAGES.DS.'import scripts');
 
-// Les feuilles de styles
+// Les sources
 define('STYLESHEET', ASSETS.DS.'stylesheet');
-define('FORMS_STYLES', STYLESHEET.DS.'formulaires');
-define('PAGES_STYLES', STYLESHEET.DS.'pages');
-
-// Les images
 define('IMG', ASSETS.DS.'img');
 
+// Les feuilles de styles
+define('FORMS_STYLES', STYLESHEET.DS.'formulaires');
+define('PAGES_STYLES', STYLESHEET.DS.'pages');
 // Les scripts
+
 define('JAVASCRIPT', ASSETS.DS.'scripts');
 define('JAVASCRIPT_OBJ', JAVASCRIPT.DS.'objects');
 

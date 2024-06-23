@@ -1,41 +1,28 @@
 body {
-    width: 100dvw;
-    height: 100dvh;
-
-    overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
 }
+
 form {
-    width: 50%;
-    height: fit-content;
-    height: 100vh;
-
-    background-color: var(--white);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 860px;
+  transform: translate(-50%, -50%);
+}
+form img {
+  position: absolute;
+  top: -120px;
+}
+form > section {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+}
+form button {
+  margin-top: var(--gap);
 }
 
-.formulaire-illustration {
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.double-items {
-    display: flex;
-    gap: var(--margin)
-}
-.double-items input:first-child {
-    width: 75%;
-}
-.double-items input:last-child {
-    width: 25%;
-}
-
-@media screen and (max-width: 1120px) {
-    body > .formulaire-illustration {
-        display: none;
-    }
-
-    form {
-        width: 100%;
-    }
-}
-  
+/*# sourceMappingURL=connexion.css.map */
