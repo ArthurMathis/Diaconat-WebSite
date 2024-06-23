@@ -173,7 +173,7 @@ form button:is(:hover, :focus) {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--light-grey);
+  background: var(--grey);
   border-radius: 4px;
 }
 
@@ -217,6 +217,7 @@ button,
   border-radius: var(--gap);
   background-color: transparent;
   box-shadow: none;
+  font-family: "Roboto Bold";
   will-change: color, background-color, box-shadow;
   transition: 150ms ease background-color, 150ms ease box-shadow;
 }
@@ -373,6 +374,7 @@ button:is(:hover, :focus),
   flex-direction: column;
   gap: var(--margin);
 }
+
 .liste_items .entete {
   display: flex;
   justify-content: space-between;
@@ -385,20 +387,39 @@ button:is(:hover, :focus),
   overflow-y: auto;
   width: 100%;
 }
+
 .table-wrapper table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 calc(var(--margin) * 3 / 2);
 }
+
+.table-wrapper table thead {
+  position: sticky;
+  top: calc(var(--margin) * 3 / 2);
+  z-index: 1;
+}
+
+.table-wrapper table thead th {
+  position: relative;
+  font-family: "Roboto Bold";
+}
+
 .table-wrapper table th {
   height: 50px;
   padding: 0 var(--gap);
   text-align: left;
 }
+
+.table-wrapper table tbody th {
+  height: 65px;
+}
+
 .table-wrapper table tr {
   position: relative;
   border-spacing: var(--margin) 0;
 }
+
 .table-wrapper table tr::before {
   content: "";
   position: absolute;
@@ -409,16 +430,32 @@ button:is(:hover, :focus),
   z-index: -1;
   border-radius: var(--small-radius);
 }
-.table-wrapper table thead {
-  position: sticky;
-  top: calc(var(--margin) * 3 / 2);
-  z-index: 1;
+
+.table-wrapper table thead tr::before {
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.03);
 }
-.table-wrapper table thead th {
-  position: relative;
-  font-family: "Roboto Bold";
+
+.table-wrapper table tbody tr::before {
+  width: calc(100% - 4px);
+  height: 63px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  box-shadow: none;
+  transition: color 250ms ease, border-color 250ms ease, background-color 250ms ease, box-shadow 250ms ease;
 }
-.table-wrapper table thead th:is(:hover, :focus)::after, .table-wrapper table thead th.active::after {
+
+.table-wrapper table tbody tr:is(:hover, :focus) {
+  color: var(--white);
+}
+
+.table-wrapper table tbody tr:is(:hover, :focus)::before {
+  border-color: var(--blue);
+  background-color: var(--blue);
+  box-shadow: var(--liste-shadow);
+}
+
+.table-wrapper table thead tr th:is(:hover, :focus)::after,
+.table-wrapper table thead tr th.active::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -431,30 +468,9 @@ button:is(:hover, :focus),
   background-image: url("../img/fleche.png");
   background-size: contain;
 }
-.table-wrapper table thead th.reverse-tri::after {
+
+.table-wrapper table thead tr th.reverse-tri::after {
   transform: translateY(-50%) rotate(180deg);
-}
-.table-wrapper table thead tr::before {
-  height: 50px;
-  background-color: var(--light-grey);
-}
-.table-wrapper table tbody th {
-  height: 65px;
-}
-.table-wrapper table tbody tr::before {
-  width: calc(100% - 4px);
-  height: 63px;
-  border: 2px solid var(--light-grey);
-  box-shadow: none;
-  transition: color 250ms ease, border-color 250ms ease, background-color 250ms ease, box-shadow 250ms ease;
-}
-.table-wrapper table tbody tr:is(:hover, :focus) {
-  color: var(--white);
-}
-.table-wrapper table tbody tr:is(:hover, :focus)::before {
-  border-color: var(--blue);
-  background-color: var(--blue);
-  box-shadow: var(--liste-shadow);
 }
 
 /******** BULLES ********/
@@ -464,12 +480,15 @@ button:is(:hover, :focus),
   justify-content: space-between;
   height: fit-content;
 }
+
 .bulles > h2 {
   margin-bottom: calc(var(--margin) * 1 / 4);
 }
+
 .bulles > p {
   margin-bottom: var(--gap);
 }
+
 .bulles .bulle-container {
   display: flex;
   flex-direction: column;
@@ -477,23 +496,31 @@ button:is(:hover, :focus),
   border-radius: var(--radius);
   background-color: var(--blue);
 }
+
 .bulles .table-wrapper table {
   padding: var(--margin) 0;
   border-spacing: 0 calc(var(--margin) * 2 / 3);
 }
-.bulles .table-wrapper table thead th, .bulles .table-wrapper table tbody th {
+
+.bulles .table-wrapper table thead th,
+.bulles .table-wrapper table tbody th {
   height: 30px;
   color: var(--white);
 }
+
 .bulles .table-wrapper table thead th {
   padding-bottom: calc(var(--margin) * 1 / 2);
 }
-.bulles .table-wrapper table thead th:is(:hover, :focus)::after, .bulles .table-wrapper table thead th.active::after {
-  display: none;
-}
+
 .bulles .table-wrapper table tr::before {
   display: none;
 }
+
+.bulles .table-wrapper table thead tr th:is(:hover, :focus)::after,
+.bulles .table-wrapper table thead tr th.active::after {
+  display: none;
+}
+
 .bulles .boutons {
   display: flex;
   justify-content: right;
@@ -502,9 +529,11 @@ button:is(:hover, :focus),
   height: var(--padding);
   margin: 0 var(--gap) var(--margin) 0;
 }
+
 .bulles .boutons a {
   color: var(--white);
 }
+
 .bulles .boutons .fleche {
   display: flex;
   justify-content: center;
@@ -513,6 +542,7 @@ button:is(:hover, :focus),
   height: var(--font-size-standart);
   overflow: hidden;
 }
+
 .bulles .boutons .fleche span {
   position: relative;
   display: block;
@@ -521,7 +551,9 @@ button:is(:hover, :focus),
   border-radius: 1.5px;
   background-color: var(--white);
 }
-.bulles .boutons .fleche span::before, .bulles .boutons .fleche span::after {
+
+.bulles .boutons .fleche span::before,
+.bulles .boutons .fleche span::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -532,9 +564,11 @@ button:is(:hover, :focus),
   background-color: var(--white);
   transform-origin: right;
 }
+
 .bulles .boutons .fleche span::before {
   transform: translateY(-50%) rotate(45deg);
 }
+
 .bulles .boutons .fleche span::after {
   transform: translateY(calc(-50% + 1px)) rotate(-45deg);
 }
