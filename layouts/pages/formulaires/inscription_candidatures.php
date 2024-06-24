@@ -6,7 +6,5 @@
     <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrats">
     <input type="Date" id="disponibilite" name="disponibilite" placeholder="Disponibilité">
     <input type="text" id="source" name="source" placeholder="Sources">
-    <section class="buttons_actions">
-        <button type="submit" class="submit_button" value="new_user">Valider</button>
-    </section> 
+    <button type="submit" class="submit_button" value="new_user">Valider</button>
 </form>

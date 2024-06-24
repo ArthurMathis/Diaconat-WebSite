@@ -7,9 +7,30 @@ class View {
     public function generateCommonFooter() {
         include COMMON.DS.'footer.php';
     }
-    public function generateMenu($liste_menu) {
+    public function generateMenu() {
+        $liste_menu = [
+            [
+                "intitule" => "Accueil",
+                "action" => "index.php"
+            ],
+            [
+                "intitule" => "Candidatures",
+                "action" => "index.php?candidatures=home"
+            ],
+            [
+                "intitule" => "Préférences",
+                "action" => ""
+            ],
+            [
+                "intitule" => "Se déconnecter",
+                "action" => "index.php?login=deconnexion"
+            ]
+        ];
         // On ajoute la barre de navigation
         include BARRES.DS.'navbarre.php';
+    }
+    public function generateFormMenu() {
+        include BARRES.DS.'form_barre.php';
     }
 
     public function getListesItems($titre=null, $items=[], $nb_items_max=null, $id=null, $class=null) {

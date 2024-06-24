@@ -131,7 +131,11 @@ class CandidatsView extends View {
         echo '<section class="onglet">';
         if(!empty($item['contrat'])) foreach($item['contrats'] as $obj)
             $this->getContratsBulles($obj);
-        else echo "<h2>Aucun contrat enregistré </h2>";    
+        else echo "<h2>Aucun contrat enregistré </h2>";   
+
+        // On ajoute le bouton d'ajout
+        $link = '';
+        include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
 
@@ -145,6 +149,10 @@ class CandidatsView extends View {
         if(!empty($item['contrats'])) foreach($item['contrats'] as $obj)
             $this->getPropositionsBulles($obj);
         else echo "<h2>Aucune proposition enregistrée </h2>"; 
+        
+        // On ajoute le bouton d'ajout
+        $link = '';
+        include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
 
@@ -157,7 +165,11 @@ class CandidatsView extends View {
         echo '<section class="onglet">';
         if(!empty($item['candidatures'])) foreach($item['candidatures'] as $obj)
             $this->getCandidaturesBulles($obj);
-        else echo "<h2>Aucune candidature enregistrée </h2>"; 
+        else echo "<h2>Aucune candidature enregistrée </h2>";
+        
+        // On ajoute le bouton d'ajout
+        $link = 'index.php?candidats=saisie-candidatures';
+        include(MY_ITEMS.DS.'add_button.php');  
         echo "</section>";
     }
 
@@ -171,6 +183,10 @@ class CandidatsView extends View {
         if(!empty($item['rendez-vous'])) foreach($item['rendez-vous'] as $obj)
             $this->getRendezVousBulles($obj);
         else echo "<h2>Aucun rendez-vous enregistré </h2>"; 
+        
+        // On ajoute le bouton d'ajout
+        $link = '';
+        include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
 
@@ -179,20 +195,6 @@ class CandidatsView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [PAGES_STYLES.DS.'candidats.css']);
 
-        $liste_menu = [
-            [
-                "intitule" => "Accueil",
-                "action" => "index.php"
-            ],
-            [
-                "intitule" => "Candidatures",
-                "action" => "index.php?candidatures=home"
-            ],
-            [
-                "intitule" => "Se déconnecter",
-                "action" => "index.php?login=deconnexion"
-            ]
-        ];
         $buttons = [
             'Tableau de bord',
             'Contrats',
@@ -203,7 +205,7 @@ class CandidatsView extends View {
         ] ;
 
         // On ajoute la barre de navigation
-        $this->generateMenu($liste_menu);
+        $this->generateMenu();
 
         echo "<content>";
         include(MY_ITEMS.DS.'Candidat_profil.php');

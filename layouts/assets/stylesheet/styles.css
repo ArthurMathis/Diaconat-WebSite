@@ -39,7 +39,7 @@
   --liste-shadow: -9px 4px 34.4px 7px #0000003B;
   --bulle-shadow: -1px 8px 15px 7px rgba(0, 0, 0, 0.05);
   --small-bulle-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.05);
-  --button-shadow: 0 0 0 5px var(--blue-opacity);
+  --button-shadow: 0 0 0 5px var(--light-blue);
 }
 
 * {
@@ -90,8 +90,8 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--margin);
-  padding: calc(2 * var(--padding)) var(--padding) var(--padding);
+  gap: calc(var(--gap) * 2 / 3) var(--margin);
+  padding: var(--padding);
   color: var(--white);
   border-radius: var(--big-radius);
   background-color: var(--blue-opacity);
@@ -105,7 +105,7 @@ form h3 {
 form input {
   width: 100%;
   height: 65px;
-  padding-left: var(--margin);
+  padding: 0 var(--margin);
   border: none;
   border-radius: var(--small-radius);
   background-color: var(--white);
@@ -224,16 +224,14 @@ button,
   background-color: transparent;
   box-shadow: none;
   font-family: "Roboto Bold";
-  will-change: color, background-color, box-shadow;
-  transition: 150ms ease background-color, 150ms ease box-shadow;
+  will-change: box-shadow;
+  transition: 150ms ease box-shadow;
 }
 .action_button::selection {
     background-color: transparent;
 }
 button:is(:hover, :focus),
 .action_button:is(:hover, :focus) {
-  color: var(--white);
-  background-color: var(--blue);
   box-shadow: var(--button-shadow);
 }
 
@@ -258,6 +256,43 @@ button:is(:hover, :focus),
   background-color: var(--blue);
 }
 
+.add_button {
+    position: relative;
+    display: block;
+    width: var(--padding);
+    height: var(--padding);
+
+    border-radius: 50%;
+    background-color: var(--blue);
+
+    will-change: box-shadow;
+    transition: box-shadow 150ms ease;
+}
+.add_button::before, 
+.add_button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: block;
+    width: 50%;
+    height: 4px;
+
+    background-color: var(--white);
+
+    transform: translate(-50%, -50%);
+}
+.add_button::before {
+    transform: translate(-50%, -50%);
+}
+.add_button::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+.add_button:is(:hover, :focus) {
+    box-shadow: var(--button-shadow);
+}
+
 /******** BARRE DE NAVIGATION ********/
 #barre-de-navigation {
   position: sticky;
@@ -270,7 +305,6 @@ button:is(:hover, :focus),
   width: 100%;
   z-index: 1;
   padding: 2em 3em 0;
-  /*background-color: var(--white);*/
 }
 #barre-de-navigation h3 {
   color: var(--blue);
@@ -280,6 +314,33 @@ button:is(:hover, :focus),
 }
 #barre-de-navigation h3::after {
   background-color: var(--blue);
+}
+
+#form-barre {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--nav-barre-size);
+    width: 100%;
+    z-index: 1;
+    padding: 2em 3em 0;
+}
+#form-barre h1 {
+    color: var(--white);
+}
+#form-barre img {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+}
+#form-barre h3 {
+    color: var(--blue);
+    text-align: right;
 }
 
 /******** STYLE DU MENU ********/

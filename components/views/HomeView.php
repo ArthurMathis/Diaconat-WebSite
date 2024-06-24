@@ -8,25 +8,10 @@ class HomeView extends View {
         $this->generateCommonHeader('Diaconat Web Site - Welcome', 
                 [PAGES_STYLES.DS.'index.css']);
 
-        $liste_menu = [
-            [
-                "intitule" => "Accueil",
-                "action" => "index.php"
-            ],
-            [
-                "intitule" => "Candidatures",
-                "action" => "index.php?candidatures=home"
-            ],
-            [
-                "intitule" => "Se déconnecter",
-                "action" => "index.php?login=deconnexion"
-            ]
-        ];
-
         $id = 'main-liste';
 
         // On ajoute la barre de navigation
-        $this->generateMenu($liste_menu);
+        $this->generateMenu();
         // On ajoute le contenu de la page
         echo "<content>";
         $this->getListesItems($titre, $items, $nb_items_max, $id);

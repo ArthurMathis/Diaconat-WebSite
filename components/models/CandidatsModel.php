@@ -1,6 +1,7 @@
 <?php 
 
 require_once('Model.php');
+require_once(CLASSE.DS.'Candidats.php');
 
 class CandidatsModel extends Model {
     private function getCandidats($index) {
@@ -22,7 +23,6 @@ class CandidatsModel extends Model {
         // On lance la requête
         $result = $this->get_request($request);
     
-        // On retourne le rôle
         return $result[0];
     }
     private function getDiplomes($index) {
@@ -133,5 +133,40 @@ class CandidatsModel extends Model {
                 'rendez-vous' => $this->getRendezVous($index)
             ];
 
+    }
+
+    public function makeCandidat($index) {
+        // On initialise la requête
+        $request = "SELECT 
+        Id_Candidats AS id,
+        Nom_Candidats AS nom,
+        Prenom_Candidats AS prenom,
+        Telephone_Candidats AS telephone,
+        Email_Candidats AS email, 
+        Adresse_Candidats AS adresse,
+        Ville_Candidats AS ville,
+        CodePostal_Candidats AS code_postal,
+        Disponibilite_Candidats AS disponibilite,
+        Notations_Candidats AS notation
+
+        FROM candidats AS c
+        WHERE c.Id_Candidats = " . $index;
+
+        // On lance la requête
+        $result = $this->get_request($request)[0];
+
+        // On construit la candidat selon la recherche
+        $candidat = new Candidat(
+            $result['nom'], 
+            $result['prenom'], 
+            $result['email'], 
+            $result['telephone'],
+            $result['adresse'], 
+            $result['ville'], 
+            $result['code_postal']
+        );
+        $candidat->setCle($result['id']);
+
+        return $candidat;
     }
 }

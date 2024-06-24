@@ -7,25 +7,10 @@ class CandidaturesView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat Web Site - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
 
-        $liste_menu = [
-            [
-                "intitule" => "Accueil",
-                "action" => "index.php"
-            ],
-            [
-                "intitule" => "Candidatures",
-                "action" => "index.php?candidatures=home"
-            ],
-            [
-                "intitule" => "Se déconnecter",
-                "action" => "index.php?login=deconnexion"
-            ]
-        ];
-
         $id = 'main-liste';
 
         // On ajoute les barres de navigation
-        $this->generateMenu($liste_menu);
+        $this->generateMenu();
         include BARRES.DS.'candidatures_barre.php';
 
         $this->getListesItems($titre, $items, $nb_items_max, $id);
@@ -59,10 +44,14 @@ class CandidaturesView extends View {
     }
     public function getSaisieCandidatureContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
+        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'connexion.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateMenu();
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription_candidatures.php';
+        include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();

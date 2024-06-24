@@ -236,8 +236,8 @@ if(isset($_GET['login'])) {
 
             // On récupère le candidat
             $candidat = $_SESSION['candidat'];
-            $diplomes = $_SESSION['diplomes'];
-            $aide = $_SESSION['aide'];
+            $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
+            $aide = isset($_SESSION['aide']) && !empty($_SESSION['aide']) ? $_SESSION['aide'] : null;
 
             $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide);
             break;
@@ -247,9 +247,34 @@ if(isset($_GET['login'])) {
             break;
     }
 
-} elseif(isset($_GET['candidats']) && is_numeric($_GET['candidats'])) {
+} elseif(isset($_GET['candidats'])) {
     $candidats = new CandidatController();
-    $candidats->displayCandidat($_GET['candidats']);
+
+    if(is_numeric($_GET['candidats'])) 
+        $candidats->displayCandidat($_GET['candidats']);
+
+    else try { 
+        switch($_GET['candidats']) {
+            case 'saisie-candidatures': 
+                $candidats->getSaisieCandidature();
+                break;
+            
+            case 'saisie-contrats' :
+                break;
+            
+            case 'saisie-propositions' :
+                break;
+            
+            case 'saisie-contrats' :
+                break;
+            
+            default: 
+                throw new Exception ('Action inidentifiable');
+        } 
+    } catch(Exception $e) {
+        forms_manip::error_alert($e);
+    }
+
 
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();

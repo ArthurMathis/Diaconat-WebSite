@@ -345,6 +345,16 @@ main section .candidatures_bulle article p.en-attente::before {
 main section .candidatures_bulle article p.non-traitee::before {
     background-color: var(--nontraitee);
 }
+
+.add_button {
+    position: fixed;
+    bottom: 2em;
+    right: 3em;
+}
+.add_button:is(:hover, :focus) {
+    box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.85);
+}
+
 /* Gestion de la navigation intra onglets */
 .onglet {
     display: none;

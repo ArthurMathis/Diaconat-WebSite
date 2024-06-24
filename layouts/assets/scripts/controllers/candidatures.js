@@ -154,3 +154,10 @@ rechercher.addEventListener('click', () => {
     }
     rechercherIsVisible = !rechercherIsVisible;
 });
+
+// On corrige le bug de double affichage
+const menu_button = document.getElementById('barre-de-navigation').querySelector('h3');
+menu_button.addEventListener('click', () => {
+    cacheMenu(filtrer_menu);
+    cacheMenu(rechercher_menu);
+});
