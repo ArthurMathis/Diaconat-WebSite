@@ -1,44 +1,26 @@
 <aside>
     <header>
-        <h2><?= $item['candidat']['nom']; ?></h2>
-        <h2><?= $item['candidat']['prenom']; ?></h2>
-        <h3><?= $item['candidatures'][0]['type_de_contrat']; ?></h3>
         <div>
-            <p><?= $item['candidatures'][0]['statut']; ?></p>
+            <h2><?= $item['candidat']['nom']; ?></h2>
             <?php if(empty($item['candidat']['notation'])) : ?>
                 <p>Aucun notation renseignée</p>
             <?php else: ?>    
                 <li class="notation">
-                    <ul class="bille_notation <?php if(0 < $item['candidat']['notation']) echo "active"; ?>"></ul>
-                    <ul class="bille_notation <?php if(1 < $item['candidat']['notation']) echo "active"; ?>"></ul>
-                    <ul class="bille_notation <?php if(2 < $item['candidat']['notation']) echo "active"; ?>"></ul>
-                    <ul class="bille_notation <?php if(3 < $item['candidat']['notation']) echo "active"; ?>"></ul>
-                    <ul class="bille_notation <?php if(4 < $item['candidat']['notation']) echo "active"; ?>"></ul>
+                    <ul class="bille_notation <?php if(0 < $item['candidat']['notation']) echo "active"; ?>"><img src="layouts/assets/img/etoile.svg"></ul>
+                    <ul class="bille_notation <?php if(1 < $item['candidat']['notation']) echo "active"; ?>"><img src="layouts/assets/img/etoile.svg"></ul>
+                    <ul class="bille_notation <?php if(2 < $item['candidat']['notation']) echo "active"; ?>"><img src="layouts/assets/img/etoile.svg"></ul>
+                    <ul class="bille_notation <?php if(3 < $item['candidat']['notation']) echo "active"; ?>"><img src="layouts/assets/img/etoile.svg"></ul>
+                    <ul class="bille_notation <?php if(4 < $item['candidat']['notation']) echo "active"; ?>"><img src="layouts/assets/img/etoile.svg"></ul>
                 </li>
-            <?php endif ?>    
+            <?php endif ?>  
         </div>
+        <h2><?= $item['candidat']['prenom']; ?></h2>
+        <h3><?= $item['candidatures'][0]['type_de_contrat']; ?></h3>
+        <p><?= $item['candidatures'][0]['statut']; ?></p>  
     </header>
     <section>
         <div>
-            <p>Numéro de téléphone:</p>
-            <p><?= $item['candidat']['telephone']; ?></p>
-        </div>
-        <div>
-            <p>Adresse email:</p>
-            <p><?= $item['candidat']['email']; ?></p>
-        </div>
-        <div>
-            <p>Adresse:</p>
-            <div>
-                <p><?= $item['candidat']['adresse']; ?></p>
-                <p><?= $item['candidat']['ville']; ?></p>
-                <p><?= $item['candidat']['code_postal']; ?></p>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div>
-            <p>Diplômes:</p>
+            <p>Diplômes</p>
             <div>
                 <?php if(isset($item['candidat']['diplomes']) && 0 < count($item['candidat']['diplomes'])): ?>
                     <?php foreach($item['candidat']['diplomes'] as $obj): ?>
@@ -50,11 +32,11 @@
             </div>
         </div>
         <div>
-            <p>Disponibilité:</p>
+            <p>Disponibilité</p>
             <p><?= $item['candidat']['disponibilite']; ?></p>
         </div>
         <div>
-            <p>Service demandé:</p>
+            <p>Service demandé</p>
             <?php if(empty($item['candidatures'][0]['service'])): ?>
                 <p>Aucun service renseigné</p>
             <?php else: ?>
@@ -68,6 +50,24 @@
             <?php else: ?>
                 <p><?= $item['candidatures'][0]['etablissement']; ?><p>
             <?php endif ?>
+        </div>
+    </section>
+    <section>
+        <div>
+            <p>Numéro de téléphone</p>
+            <p><?= $item['candidat']['telephone']; ?></p>
+        </div>
+        <div>
+            <p>Adresse email</p>
+            <p><?= $item['candidat']['email']; ?></p>
+        </div>
+        <div>
+            <p>Adresse</p>
+            <div>
+                <p><?= $item['candidat']['adresse']; ?></p>
+                <p><?= $item['candidat']['ville']; ?></p>
+                <p><?= $item['candidat']['code_postal']; ?></p>
+            </div>
         </div>
     </section>
     <footer>

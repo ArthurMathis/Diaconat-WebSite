@@ -47,6 +47,7 @@
   padding: 0;
   font-size: var(--font-size-standart);
   font-family: "Roboto", sans-serif;
+  font-weight: 200;
   text-decoration: none;
   box-sizing: border-box;
 }
@@ -79,6 +80,9 @@ a {
   height: fit-content;
   color: var(--blue);
   font-family: "Roboto Bold";
+}
+a::selection {
+    background-color: transparent;
 }
 
 form {
@@ -186,6 +190,9 @@ form button:is(:hover, :focus) {
   border: none;
   cursor: pointer;
 }
+.LignesHover::selection {
+    background-color: transparent;
+}
 .LignesHover::after {
   content: "";
   position: absolute;
@@ -196,9 +203,8 @@ form button:is(:hover, :focus) {
   background-color: var(--black);
   transform: scaleX(0);
   will-change: transform;
-  transform-origin: left;
   overflow-x: hidden;
-  transition: transform 250ms ease-in-out;
+  transition: transform 150ms ease-in-out;
 }
 .LignesHover:hover::after {
   transform: scaleX(1);
@@ -220,6 +226,9 @@ button,
   font-family: "Roboto Bold";
   will-change: color, background-color, box-shadow;
   transition: 150ms ease background-color, 150ms ease box-shadow;
+}
+.action_button::selection {
+    background-color: transparent;
 }
 button:is(:hover, :focus),
 .action_button:is(:hover, :focus) {
@@ -261,10 +270,13 @@ button:is(:hover, :focus),
   width: 100%;
   z-index: 1;
   padding: 2em 3em 0;
-  background-color: var(--white);
+  /*background-color: var(--white);*/
 }
 #barre-de-navigation h3 {
   color: var(--blue);
+}
+#barre-de-navigation h3::selection {
+    background-color: transparent;
 }
 #barre-de-navigation h3::after {
   background-color: var(--blue);
@@ -306,7 +318,8 @@ button:is(:hover, :focus),
   width: calc(100% - 2 * var(--gap));
   height: fit-content;
 }
-#menu main div h1, #menu main div h2 {
+#menu main div h1, 
+#menu main div h2 {
   color: var(--white);
 }
 #menu main div h2 {
@@ -331,6 +344,7 @@ button:is(:hover, :focus),
   color: var(--white);
   font-family: "Roboto Mono";
   font-size: var(--font-size-big);
+  font-weight: 440;
   will-change: opacity;
   transition: 250ms ease opacity;
 }
@@ -398,6 +412,9 @@ button:is(:hover, :focus),
   position: sticky;
   top: calc(var(--margin) * 3 / 2);
   z-index: 1;
+}
+.table-wrapper table thead *::selection {
+    background-color: transparent;
 }
 
 .table-wrapper table thead th {
@@ -487,6 +504,11 @@ button:is(:hover, :focus),
 
 .bulles > p {
   margin-bottom: var(--gap);
+}
+
+.bulles > h2::selection, 
+.bulles > p::selection {
+    background-color: transparent;
 }
 
 .bulles .bulle-container {

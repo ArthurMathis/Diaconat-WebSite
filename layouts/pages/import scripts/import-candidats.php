@@ -1,1 +1,1 @@
-<script src="layouts\assets\scripts\views\candidats.js"></script>;
+<script src="layouts\assets\scripts\views\candidats.js"></script>

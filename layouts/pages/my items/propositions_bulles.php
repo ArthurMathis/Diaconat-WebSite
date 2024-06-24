@@ -38,4 +38,10 @@
             <?php endif ?>  
         </div>
     </content>
+    <?php if($item['statut'] != 'acceptee' && $item['statut'] != 'refusee'): ?>
+        <footer>
+            <a class="action_button reject-button" href=""></a>
+            <a class="action_button accept-button" href=""></a>
+        </footer>
+    <?php endif ?>  
 </div>

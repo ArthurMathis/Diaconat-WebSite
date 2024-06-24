@@ -1,8 +1,16 @@
 <div class="candidatures_bulle">
     <header>
         <h2><?= $item['poste']; ?></h2>
-        <p><?= $item['service']; ?></p>
-        <p><?= $item['etablissement']; ?></p>
+        <?php if(empty($item['service'])): ?>
+            <p>Aucun service spécifié</p>
+        <?php else : ?>
+            <p><?= $item['service']; ?></p>
+        <?php endif ?>    
+        <?php if(empty($item['etablissement'])): ?>
+            <p>Aucun étalissement spécifié</p>
+        <?php else : ?>
+            <p><?= $item['etablissement']; ?></p>
+        <?php endif ?>
     </header>
     <article>
         <h3><?= $item['type_de_contrat']; ?></h3>
@@ -36,4 +44,10 @@
             <p><?= $item['source']; ?></p>
         </div>
     </content>
+    <?php if($item['statut'] != 'acceptee' && $item['statut'] != 'refusee'): ?>
+        <footer>
+            <a class="action_button reject-button" href=""></a>
+            <a class="action_button accept-button" href=""></a>
+        </footer>
+    <?php endif ?>    
 </div>

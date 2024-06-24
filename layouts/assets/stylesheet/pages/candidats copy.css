@@ -3,21 +3,18 @@ body{
     height: 100dvh;
 
     overflow: hidden;
-
-    background: linear-gradient(175deg, var(--white), 75%, var(--light-blue));
 }
 
 /* Réglages de base */
-#menu-de-navigation {
-    background-color: transparent;
+#barre-de-navigation {
+    height: 8em;
+    padding: 2em 3em;
 }
 body > content {
     display: flex;
      
     width: 100dvw;
     height: calc(100% - 8em);
-
-    padding-top: var(--gap);
 }
 
 /* On met en forme le bandeau latéral */
@@ -27,20 +24,22 @@ aside {
     justify-content: space-between;
     width: 30%;
     min-width: 520px;
-    height: calc(100dvh - 8em);
+    height: calc(100dvh - 10em);
 
+    margin-left: 3em;
     padding: var(--padding);
 
     color: var(--white);
-    border-radius: 0 var(--big-radius) 0 0;
+    border: 2px solid var(--white);
+    border-radius: var(--padding);
     background-color: var(--blue);
+}
+aside p {
+    line-height: 1.4em;
 }
 aside header, 
 aside section {
     width: 100%;
-}
-aside p {
-    line-height: 1.4em;
 }
 aside footer {
     display: flex;
@@ -53,24 +52,15 @@ aside footer {
 aside footer .action_button {
     color: var(--white);
     border-color: var(--white);
-
-    box-shadow: none;
-    transition:  box-shadow 250ms ease;
 }
 aside footer .action_button:hover {
-    box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.25);
+    color: var(--blue);
+    border-color: var(--blue);
+    background-color: var(--white);
 }
 aside header {
     display: flex;
     flex-direction: column;
-}
-aside header div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 100%;
-    height: fit-content;
 }
 aside section {
     display: flex;
@@ -83,6 +73,13 @@ aside header h2 {
 aside header h3 {
     font-size: var(--font-size-medium);
 }
+aside header div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: calc(var(--margin) / 2);
+}
 aside header .notation {
     display: flex;
     justify-content: right;
@@ -93,20 +90,19 @@ aside header .notation .bille_notation {
     display: block;
     width: var(--font-size-standart);
     height: var(--font-size-standart);
+
+    background-color: transparent;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    list-style: none;
 }
-aside header .notation .bille_notation img {
-    height: 100%;
-    opacity: 0.25;
+aside header .notation .bille_notation.active {
+    background-color: var(--white);
 }
-aside header .notation .bille_notation.active img {
-    opacity: 1;
-}
+
 aside section > div {
     display: flex;
     justify-content: space-between;
-}
-aside section > div > p:first-of-type {
-    font-family: 'Roboto Bold';
 }
 aside section > div > div {
     max-width: 75%;
@@ -127,57 +123,16 @@ aside section > div > div {
     z-index: 1;
     padding: 0 3em;
 
-    background: linear-gradient(175deg, var(--white), 75%, var(--light-blue));
-    background-attachment: fixed;
+    background-color: var(--white);
 }
 .navbarre p {
-    position: relative;
-
-    height: var(--gap);
-    padding: 0;
-
-    border: none;
-    color: var(--grey);
-    background-color: transparent;
-
     cursor: pointer;
-
-    will-change: color;
-    transition: color ease 150ms;
-}
-.navbarre p::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    display: block;
-    width: 100%;
-    height: 2px;
-
-    background-color: var(--blue);
-
-    transform: scaleX(0);
-
-    will-change: transform;
-    transition: transform ease 150ms;
-}
-.navbarre p:hover {
-    color: var(--grey);
-    background-color: transparent;
-    box-shadow: none;
-}
-.navbarre p:hover::before,
-.navbarre p.active::before {
-    transform: scaleX(1);
-}
-.navbarre p.active {
-    color: var(--black);
 }
 
 /* Mise en page des onglets */
 body > content > main {
     width: 70%;
+    max-width: calc(100% - 520px - 6em);
     height: calc(100% - 2em);
     padding-right: 3em;
 
@@ -188,7 +143,7 @@ main > section {
     justify-content: left;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: var(--gap);
+    gap: var(--margin);
 
     height: fit-content;
 
@@ -199,30 +154,36 @@ main > section {
     overflow-x: hidden;
     overflow-y: scroll;
 }
-main section * {
-    line-height: 1.2em;
-}
-main > section .bulles .bulle-container {
-    background-color: var(--blue-opacity);
-}
 main section .contrats_bulle,
 main section .propositions_bulle,
 main section .candidatures_bulle,
 main section .rendez_vous_bulle {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--gap) * 2 / 3);
+    gap: calc(var(--margin) / 2);
 
-    width: clamp(480px, calc(50% - var(--margin)), 720px);
+    width: 360px;
     height: 360px;
 
-    padding: calc(var(--gap) * 2 / 3);
+    padding: var(--margin);
 
     border-radius: var(--margin);
     border: 2px solid var(--light-grey);
-    background-color: var(--white);
-    box-shadow: var(--small-bulle-shadow);
 
+    transition: color 250ms ease, 
+                border-color 250ms ease,
+                background-color 250ms ease, 
+                box-shadow 250ms ease;
+}
+main section .contrats_bulle:is(:hover, :focus), 
+main section .propositions_bulle:is(:hover, :focus), 
+main section .candidatures_bulle:is(:hover, :focus), 
+main section .rendez_vous_bulle:is(:hover, :focus) {
+    cursor: pointer;
+    color: var(--white);
+    border-color: var(--blue);
+    background-color: var(--blue);
+    box-shadow: -9px 4px 34.4px 7px #0000003B;
 }
 main section .contrats_bulle article p,  
 main section .propositions_bulle article p,  
@@ -248,73 +209,6 @@ main section .rendez_vous_bulle .date p::before {
 
     transform: translateY(-50%);
 }
-main section content div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 100%;
-    height: fit-content;
-}
-main section content div > p:first-of-type {
-    font-family: 'Roboto Bold';
-}
-/* On met en page les boutons de candidatures */
-main section .propositions_bulle footer,
-main section .candidatures_bulle footer {
-    display: flex;
-    justify-content: right;
-    align-items: flex-end;
-    gap: 15px;
-
-    margin-top: auto;
-}
-.reject-button, .accept-button {
-    position: relative;
-    width: var(--padding);
-    height: var(--padding);
-
-    padding: 0;
-
-    background-color: var(--blue);
-}
-.reject-button::before, 
-.reject-button::after, 
-.accept-button::before, 
-.accept-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    display: block;
-    width: 65%;
-    height: 4px;
-
-    background-color: var(--white);
-
-    transform: translate(-50%, -50%);
-}
-.reject-button::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-.reject-button::after {
-    transform: translate(-50%, -50%) rotate(135deg);
-}
-.accept-button::before {
-    top: 60%;
-    left: 12.5%;
-
-    width: 30%;
-
-    transform: rotate(45deg);
-}
-.accept-button::after {
-    left: 25%;
-    transform: translateY(-30%) rotate(135deg);
-}
-
-/* On ajoute les codes couleurs */
 main section .contrats_bulle article p.a_venir::before {
     background-color: var(--nontraitee);
 }
@@ -345,7 +239,35 @@ main section .candidatures_bulle article p.en-attente::before {
 main section .candidatures_bulle article p.non-traitee::before {
     background-color: var(--nontraitee);
 }
+main section .contrats_bulle content > div, 
+main section .propositions_bulle content > div, 
+main section .candidatures_bulle content > div, 
+main section .rendez_vous_bulle > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width: 100%;
+    height: fit-content;
+}
+main section .contrats_bulle *,
+main section .propositions_bulle *,
+main section .candidatures_bulle *,
+main section .rendez_vous_bulle * {
+    margin-bottom: 3px;
+}
+
+main section .bulles {
+    flex: 1 1 calc(50% - (var(--margin) / 2));
+
+    min-width: 520px;
+    height: 380px;
+}
 /* Gestion de la navigation intra onglets */
+.action_button.active {
+    color: var(--white);
+    background-color: var(--blue);
+}
 .onglet {
     display: none;
 }

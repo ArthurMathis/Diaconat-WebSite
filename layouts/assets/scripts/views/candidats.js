@@ -1,12 +1,11 @@
 const liste_onglets = document.querySelectorAll('.navbarre p');
 const onglet = document.querySelectorAll('.onglet');
 
-console.table(liste_onglets);
-console.table(onglet);
-
+// On rend visible le premier onglet
 liste_onglets[0].classList.add('active');
 onglet[0].classList.add('active');
 
+// On ajoute la sélection d'onglets
 liste_onglets.forEach((elmt, index) => {
     elmt.addEventListener('click', () => {
         console.log('Item ' + index + " cliqué.");
@@ -29,3 +28,5 @@ liste_onglets.forEach((elmt, index) => {
         }     
     });
 });
+
+// On ajoute la disparition des bulles sortant de l'écran
