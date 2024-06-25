@@ -125,6 +125,10 @@ if(isset($_GET['login'])) {
             $candidatures->displaySaisieCandidature();
             break;
 
+        case 'saisie-proposition':
+            $candidatures->displaySaisieProposition();    
+            break;
+
         case 'inscription-candidat' :
             // On récupère le contenu des champs
             $nom            = forms_manip::nameFormat($_POST["nom"]);
@@ -263,6 +267,7 @@ if(isset($_GET['login'])) {
                 break;
             
             case 'saisie-propositions' :
+                $candidats->getSaisieProposition();
                 break;
             
             case 'saisie-contrats' :

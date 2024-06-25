@@ -112,12 +112,4 @@
   background-color: var(--refusee);
 }
 
-#main-liste .table-wrapper table tbody tr {
-  opacity: 0;
-  transition: opacity ease 150ms;
-}
-#main-liste .table-wrapper table tbody tr.visible {
-  opacity: 1;
-}
-
 /*# sourceMappingURL=candidatures.css.map */

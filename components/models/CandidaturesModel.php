@@ -137,6 +137,7 @@ class CandidaturesModel extends Model {
 
 
     public function inscriptCandidature($candidat, $candidatures=[]) {
+        // On iscrit la candidature 
         try {
             // On inscrit l'instant 
             $instant = $this->inscriptInstants()['Id_Instants'];
@@ -181,8 +182,26 @@ class CandidaturesModel extends Model {
         } catch (Exception $e) {
             forms_manip::error_alert($e->getMessage());
         }
+
+        // On inscript la demande de service
+        if(!empty($candidatures['service'])) {
+            // On récupère la candidature
+            $cle_candidatures = $this->searchCandiature($candidat->getCle(), $instant)['Id_Candidatures'];
+
+            // On récupère la clé service
+            $service = $this->searchService($candidatures['service'])['Id_Services'];
+
+            // On vérifie l'intégrité des données
+            if(empty($service)) {
+                throw new Exception('Service introuvable');
+                exit;
+            }
+
+            // On inscrit la demande
+            $this->inscriptAppliquer_a($cle_candidatures, $service);
+        }
     }
-    public function inscriptCandidat($candidat) {
+    protected function inscriptCandidat($candidat) {
         // On initialise la requête
         $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
                     Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
@@ -192,7 +211,7 @@ class CandidaturesModel extends Model {
         $this->post_request($request, $candidat->exportToSQL());
 
     }
-    public function inscriptAide($candidat, $aide) {      
+    protected function inscriptAide($candidat, $aide) {      
         // On initialise la requête
         $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
         $params = [
@@ -203,7 +222,7 @@ class CandidaturesModel extends Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    public function inscriptDiplome($candidat, $diplome) {
+    protected function inscriptDiplome($candidat, $diplome) {
         // On initialise la requête
         $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
         $params = [
@@ -214,7 +233,7 @@ class CandidaturesModel extends Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    public function inscriptPostuler_a($candidat, $instant) {
+    protected function inscriptPostuler_a($candidat, $instant) {
         // On initialise la requête 
         $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
         $params = [
@@ -223,6 +242,23 @@ class CandidaturesModel extends Model {
         ];
 
         // On lance la requête
+        $this->post_request($request, $params);
+    }
+    protected function inscriptAppliquer_a($candidature, $service) {
+        // On vérifie l'intégrité des données
+        if(empty($candidature) || empty($service)) {
+            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
+            exit;
+        }
+
+        // On inititalise la requête
+        $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
+        $params = [
+            "candidature" => $candidature,
+            "service" => $service
+        ];
+
+        // On exécute la requête
         $this->post_request($request, $params);
     }
     
@@ -254,8 +290,25 @@ class CandidaturesModel extends Model {
         }
         
 
-        // On retourne sa clé
+        // On retourne le résultat
         return $candidats;
+    }
+    protected function searchCandiature($cle_candidat, $cle_instant) {
+        // On vérifie l'intégrité des données
+        if(empty($cle_candidat) || empty($cle_instant)) {
+            throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');
+            exit;
+        }
+        
+        // On initialise la requête
+        $request = "SELECT * FROM candidatures WHERE Cle_Candidats = :candidat AND Cle_Instants = :instant";    
+        $params = [
+            "candidat" => $cle_candidat,
+            "instant" => $cle_instant
+        ];
+
+        // On retourne le résultat
+        return $this->get_request($request, $params, true, true);
     }
     protected function searchSource($source) {
         // On initialise la requête
@@ -327,7 +380,7 @@ class CandidaturesModel extends Model {
         // On retourne le résultat
         return $result;
     }
-    public function searchAide($aide) {
+    protected function searchAide($aide) {
         // Si aide est un ID
         if(is_numeric($aide)) {
             // On initialise la requête
@@ -354,7 +407,7 @@ class CandidaturesModel extends Model {
         // On retourne le résultat
         return $result;
     }
-    public function searchTypeContrat($contrat) {
+    protected function searchTypeContrat($contrat) {
         // Si contrat est un ID
         if(is_numeric($contrat)) {
             // On initialise la requête
@@ -366,6 +419,30 @@ class CandidaturesModel extends Model {
             // On initialise la requête
             $request =  "SELECT * FROM Types_de_contrats WHERE Intitule_Types_de_contrats = :intitule";
             $params = ['intitule' => $contrat];
+
+        } else {
+            throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le résultat
+        return $result;
+    }
+    protected function searchService($service) {
+        // Si contrat est un ID
+        if(is_numeric($service)) {
+            // On initialise la requête
+            $request = "SELECT * FROM Services WHERE Id_Services = :id";
+            $params = ['id' => $service];
+
+        // Si contrat est un intitulé    
+        } elseif(is_string($service)) {
+            // On initialise la requête
+            $request =  "SELECT * FROM Services WHERE Intitule_Services = :intitule";
+            $params = ['intitule' => $service];
 
         } else {
             throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");

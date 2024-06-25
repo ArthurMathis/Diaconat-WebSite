@@ -656,4 +656,12 @@ button:is(:hover, :focus),
   transform: translateY(calc(-50% + 1px)) rotate(-45deg);
 }
 
+
+#main-liste .table-wrapper table tbody tr {
+  opacity: 0;
+}
+#main-liste .table-wrapper table tbody tr.visible {
+  opacity: 1;
+}
+
 /*# sourceMappingURL=styles.css.map */

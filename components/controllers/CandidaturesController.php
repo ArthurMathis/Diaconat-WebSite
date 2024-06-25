@@ -14,13 +14,16 @@ class CandidaturesController extends Controller {
         return $this->View->getContent("Candidatures", $items);
     }
     public function displaySaisieCandidat() {
-        return $this->View->getSaisieCandidatContent("Inscription d'un candidat");
+        return $this->View->getSaisieCandidatContent('Ypopsi - Nouveau candidat');
     }
     public function displayRechercheCandidat() {
-        return $this->View->getRechercheCandidatContent("Recherche d'un candidat");
+        return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
     }
     public function displaySaisieCandidature() {
-        return $this->View->getSaisieCandidatureContent("Ajout d'une candidature");
+        return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat");
+    }
+    public function displaySaisieProposition() {
+        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
     }
 
     public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {

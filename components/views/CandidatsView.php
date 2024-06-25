@@ -151,7 +151,7 @@ class CandidatsView extends View {
         else echo "<h2>Aucune proposition enregistrée </h2>"; 
         
         // On ajoute le bouton d'ajout
-        $link = '';
+        $link = 'index.php?candidats=saisie-propositions';
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }

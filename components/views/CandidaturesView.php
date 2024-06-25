@@ -3,9 +3,10 @@
 require_once 'View.php';
 
 class CandidaturesView extends View {
+    /// Méthode publique retournant la page de candidatures (liste)
     public function getContent($titre, $items = [], $nb_items_max=null) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
 
         $id = 'main-liste';
 
@@ -22,9 +23,10 @@ class CandidaturesView extends View {
         $this->generateCommonFooter();
     }
 
-    public function getSaisieCandidatContent() {
+    /// Méthode publique retournant le formulaire de saisie d'un candidat
+    public function getSaisieCandidatContent($title) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription_candidats.php';
@@ -32,9 +34,10 @@ class CandidaturesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
-    public function getRechercheCandidatContent() {
+    /// Méthode publique retournant le formulaire de recherche d'un candidat
+    public function getRechercheCandidatContent($title) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'saisie-candidatures.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'saisie-candidatures.css']);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'recherche_candidats.php';
@@ -42,15 +45,32 @@ class CandidaturesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
-    public function getSaisieCandidatureContent() {
+    /// Méthode publique retournant le formulaire de saisie d'une candidature
+    public function getSaisieCandidatureContent($title) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Candidatures', [FORMS_STYLES.DS.'connexion.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'connexion.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu();
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription_candidatures.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+
+    /// Méthode publique retournant la formulaire d'ajout d'une proposition
+    public function getSaisieProposition($title) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'connexion.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'proposition.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
