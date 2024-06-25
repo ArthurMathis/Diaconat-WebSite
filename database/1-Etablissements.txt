@@ -1,0 +1,48 @@
+-- On génère la table Poles contenant les différents Poles de la Fondation --
+CREATE TABLE Poles (
+    Id_Poles INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Poles VARCHAR(8) NOT NULL UNIQUE,
+    Description_Poles TEXT
+);  
+
+-- On génère la table Etablissements contenant les différents établissements des pôles de la Fondation --
+CREATE TABLE Etablissements (
+    Id_Etablissements INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Etablissements VARCHAR(64) NOT NULL UNIQUE,
+    Adresse_Etablissements VARCHAR(256) UNIQUE,
+    Description_Etablissements TEXT, 
+
+    Cle_Poles INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Poles) REFERENCES Poles(Id_Poles)
+);
+
+-- On génère la table Services contenant les différents services des Etablissemnts de la Fondation --
+CREATE TABLE Services (
+    Id_Services INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Services VARCHAR(64) NOT NULL UNIQUE,
+
+    Cle_Etablissements INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Etablissements) REFERENCES etablissements(Id_Etablissements)
+);
+
+-- On génère la table Postes contenant les différents postes de la Fondation --
+CREATE TABLE Postes (
+	Id_Postes INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Postes VARCHAR(64) NOT NULL UNIQUE,
+    Description_Postes TEXT
+);
+
+-- On génère la table Missions contenant les différentes missions (postes + services) de la Fondation --
+CREATE TABLE Missions (
+    Intitule_Missions VARCHAR(64) NOT NULL UNIQUE,
+
+    Cle_Services INTEGER NOT NULL,
+    Cle_Postes INTEGER NOT NULL,
+    
+    FOREIGN KEY (Cle_Services) REFERENCES services(Id_Services),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes), 
+    
+    PRIMARY KEY (Cle_Services, Cle_Postes)
+);

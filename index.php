@@ -143,7 +143,7 @@ if(isset($_GET['login'])) {
                 $_POST["diplome-2"], 
                 $_POST["diplome-3"]
             ];
-            // $aide               = $_POST["aide"];
+            $aide               = $_POST["aide"];
             $visite_medicale    = $_POST["visite_medicale"];
             
             try {
@@ -181,7 +181,7 @@ if(isset($_GET['login'])) {
                 'code_postal' => $code_postal
             ];
 
-            $candidatures->checkCandidat($candidat, $diplomes, $aide=null, $visite_medicale == 'true' ? true : false);
+            $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale == 'true' ? true : false);
             break;
 
         case 'recherche-candidat' : 

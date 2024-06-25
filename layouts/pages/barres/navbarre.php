@@ -1,4 +1,4 @@
-<nav id="barre-de-navigation">
+<nav class="nav-barre" id="barre-de-navigation">
     <h1>Ypopsi</h1>
     <h3 class="LignesHover">Menu</h3>
 </nav>

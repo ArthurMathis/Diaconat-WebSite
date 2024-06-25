@@ -25,6 +25,20 @@ class CandidatsModel extends Model {
     
         return $result[0];
     }
+    private function getAides($index) {
+        // On initialise la requête
+        $request = "SELECT 
+        Intitule_Aides_au_recrutement AS intitule 
+
+        FROM Aides_au_recrutement AS aide
+        INNER JOIN Avoir_droit_a AS avoir ON aide.Id_Aides_au_recrutement = avoir.Cle_Aides_au_recrutement
+        WHERE avoir.Cle_candidats = " . $index;
+
+        // On lance la requête
+        $result = $this->get_request($request);
+    
+        return empty($result) ? null : $result[0];
+    }
     private function getDiplomes($index) {
         // On initialise la requête
         $request = "SELECT Intitule_Diplomes
@@ -123,16 +137,16 @@ class CandidatsModel extends Model {
         if(!is_numeric($index))
             throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
 
-            $candidats = $this->getCandidats($index);
-            array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+        $candidats = $this->getCandidats($index);
+        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
 
-            return [
-                'candidat' => $candidats,
-                'candidatures' => $this->getCandidatures($index),
-                'contrats' => $this->getContrats($index),
-                'rendez-vous' => $this->getRendezVous($index)
-            ];
-
+        return [
+            'candidat' => $candidats,
+            'aide' => $this->getAides($index),
+            'candidatures' => $this->getCandidatures($index),
+            'contrats' => $this->getContrats($index),
+            'rendez-vous' => $this->getRendezVous($index)
+        ];
     }
 
     public function makeCandidat($index) {

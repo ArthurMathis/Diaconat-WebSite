@@ -1,0 +1,66 @@
+-- On génère la table Sources stockant les différentes provenances des candidatures --
+CREATE TABLE Sources (
+	Id_Sources INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Sources VARCHAR(64) NOT NULL UNIQUE
+);
+
+-- On génère la table Postuler_a permettant aux candidats de réaliser plusieurs candidatures (usage de la date) --
+CREATE TABLE Postuler_a (
+    Cle_Candidats INTEGER NOT NULL, 
+    Cle_Instants INTEGER NOT NULL, 
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Instants) REFERENCES instants(Id_Instants), 
+
+    PRIMARY KEY(Cle_Candidats, Cle_Instants)
+);
+
+-- On génère la table Types_de_contrats stockant les différents status de contrats de travail --
+CREATE TABLE Types_de_contrats (
+    Id_Types_de_contrats INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Intitule_Types_de_contrats VARCHAR(64) NOT NULL UNIQUE,
+    Description_Types_de_contrats TEXT
+);
+
+-- On génère la table Candidatures stockant les différentes Candidatures effectuées par les candidats --
+CREATE TABLE Candidatures (
+    Id_Candidatures INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Statut_Candidatures VARCHAR(15) NOT NULL,
+
+    Cle_Candidats INTEGER NOT NULL, 
+    Cle_Instants INTEGER NOT NULL, 
+    Cle_Sources INTEGER NOT NULL, 
+    Cle_Postes INTEGER,
+    Cle_Types_de_contrats INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidats, Cle_Instants) REFERENCES Postuler_a(Cle_Candidats, Cle_Instants),
+    FOREIGN KEY (Cle_Sources) REFERENCES sources(Id_Sources),
+    FOREIGN KEY (Cle_Postes) REFERENCES postes(Id_Postes),
+    FOREIGN KEY (Cle_Types_de_contrats) REFERENCES Types_de_contrats(Id_Types_de_contrats)
+);
+
+-- On génère la table appliquer_a permettant de stocker le services  --
+CREATE TABLE Appliquer_a (
+    Cle_Candidatures INTEGER NOT NULL, 
+    Cle_Services INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidatures) REFERENCES Candidatures(Id_Candidatures),
+    FOREIGN KEY (Cle_Services) REFERENCES Services(Id_Services), 
+
+    PRIMARY KEY(Cle_Candidatures, Cle_Services)
+);
+
+-- On génère la table Avoir_rendez_vous_avec stockant les rendez-vous entre les candidats et les recruteurs (Utilisateurs) --
+CREATE TABLE Avoir_rendez_vous_avec (
+    Compte_rendu_Avoir_rendez_vous_avec TEXT,
+    
+    Cle_Candidats INTEGER NOT NULL,
+    Cle_Utilisateurs INTEGER NOT NULL,
+    Cle_Instants INTEGER NOT NULL,
+
+    FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
+    FOREIGN KEY (Cle_Utilisateurs) REFERENCES utilisateurs(Id_Utilisateurs),
+    FOREIGN KEY (Cle_Instants) REFERENCES instants(Id_Instants),
+
+    PRIMARY KEY (Cle_Candidats, Cle_Utilisateurs, Cle_Instants)
+);

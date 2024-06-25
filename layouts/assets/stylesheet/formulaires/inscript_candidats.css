@@ -1,0 +1,82 @@
+body {
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+form {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+
+    width: 860px;
+
+    padding: var(--padding) 0;
+
+    border-radius: var(--big-radius) var(--big-radius) 0 0;
+
+    transform: translateX(-50%);
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding);
+
+    width: 100%;
+    height: 77.5dvh;
+
+    padding-bottom: var(--gap);
+
+    overflow-y: scroll;
+}
+.form-container > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--gap) * 2 / 3);
+
+    width: 100%;
+    height: fit-content;
+
+    padding: 0 var(--padding);
+}
+.double-items {
+    display: flex;
+    gap:  var(--margin);
+
+    width: 100%;
+    height: fit-content;
+}
+
+.checkbox-liste {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: fit-content;
+}
+.checkbox-liste .checkbox-item {
+    display: flex;
+    gap: 10px;
+}
+.checkbox-liste .checkbox-item label {
+    width: fit-content;
+    height: fit-content;
+    
+    text-wrap: nowrap;
+}
+
+.user-link {
+    background-attachment: fixed;
+}
+.user-link, 
+.user-link > a {
+    color: var(--white);
+}
+.user-link > a {
+    font-family: 'Roboto Bold';
+}
+.user-link > a::after {
+    background-color: var(--white);
+}

@@ -1,14 +1,16 @@
 <?php
 
 class View {
-    public function generateCommonHeader($name=null, $cssFiles = []) {
-        include COMMON.DS.'entete.php';
+    /// Liste des onglets disponible pour l'utilisateur
+    private $menu;
+
+    /// Constructeur de la classe
+    public function __construct() {
+        $this->menu =  $this->makeMenuListe(null);
     }
-    public function generateCommonFooter() {
-        include COMMON.DS.'footer.php';
-    }
-    public function generateMenu() {
-        $liste_menu = [
+    /// Méthode privée générant la liste d'onglet duu menu selon le rôle de l'utilisateur
+    private function makeMenuListe($role) {
+        return [
             [
                 "intitule" => "Accueil",
                 "action" => "index.php"
@@ -25,11 +27,27 @@ class View {
                 "intitule" => "Se déconnecter",
                 "action" => "index.php?login=deconnexion"
             ]
-        ];
+            ];
+    }
+
+
+    public function generateCommonHeader($name=null, $cssFiles = []) {
+        include COMMON.DS.'entete.php';
+    }
+    public function generateCommonFooter() {
+        include COMMON.DS.'footer.php';
+    }
+    public function generateMenu() {
+        $liste_menu = $this->menu;
         // On ajoute la barre de navigation
         include BARRES.DS.'navbarre.php';
     }
-    public function generateFormMenu() {
+    public function generateFormMenu($menu=false) {
+        $liste_menu = [];
+
+        if($menu) 
+            $liste_menu = $this->menu;
+        
         include BARRES.DS.'form_barre.php';
     }
 

@@ -48,8 +48,16 @@
             <?php if(empty($item['candidatures'][0]['etablissement'])): ?>
                 <p>Aucun établissement renseigné</p>
             <?php else: ?>
-                <p><?= $item['candidatures'][0]['etablissement']; ?><p>
+                <p><?= $item['candidatures'][0]['etablissement']; ?></p>
             <?php endif ?>
+        </div>
+        <div>
+            <p>Aide au recrutement</p>
+            <?php if($item['aide'] == null): ?>
+                <p>Aucune aide au recrutement</p>
+            <?php else: ?>
+                <p><?= $item['aide']['intitule']?></p>    
+            <?php endif ?>    
         </div>
     </section>
     <section>

@@ -23,10 +23,14 @@ class CandidaturesModel extends Model {
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources";
     
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request);
+    }
+    public function getAides() {
+        // On inititalise la requête
+        $request = "SELECT Id_Aides_au_recrutement, Intitule_Aides_au_recrutement FROM aides_au_recrutement";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
     }
 
     public function verify_candidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {
@@ -75,21 +79,6 @@ class CandidaturesModel extends Model {
             $diplomes = $temp;
             unset($temp);
         }
-    
-        // On traite l'aide
-        if($aide != null) {
-            // On cherche l'aide
-            $temp = $this->searchAide($aide);
-
-            if($temp == null) {
-                // On crée l'aide
-                $this->createAide($aide);
-                // On la récupère
-                $temp = $this->searchAide($aide);
-            }
-
-            $aide = $temp;
-        }
 
         // On ajoute la visite médical
         $candidat->setVisite($visite_medicale);
@@ -97,10 +86,10 @@ class CandidaturesModel extends Model {
         // On enregistre les données dans la session
         $_SESSION['candidat'] = $candidat;
         $_SESSION['diplomes'] = $diplomes;
-        $_SESSION['aide'] = $aide;
+        $_SESSION['aide']     = $aide;
     }
 
-    public function createCandidat($candidat, $diplomes=[], $aide=null) {
+    public function createCandidat($candidat, $diplomes=[], $aide) {
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
 
@@ -114,9 +103,8 @@ class CandidaturesModel extends Model {
         foreach($diplomes as $item) 
             $this->inscriptDiplome($candidat, $item);
 
-        if($aide != null && !empty($aide))
-            // On enregistre l'aide
-            $this->inscriptAide($candidat, $aide);
+        if($aide != null) 
+            $this->inscriptAvoir_droit_a($candidat, $aide);
     }
     public function createDiplome($diplome) {
         // On initialise la requête
@@ -209,7 +197,6 @@ class CandidaturesModel extends Model {
         
         // On lance  requête
         $this->post_request($request, $candidat->exportToSQL());
-
     }
     protected function inscriptAide($candidat, $aide) {      
         // On initialise la requête
@@ -259,6 +246,23 @@ class CandidaturesModel extends Model {
         ];
 
         // On exécute la requête
+        $this->post_request($request, $params);
+    }
+    protected function inscriptAvoir_droit_a($candidat, $aide) {
+        // On vérifie l'intégrité des données
+        if(empty($candidat) || empty($aide) || !is_numeric($aide)) {
+            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
+            exit;
+        }
+
+        // On initialise la requête
+        $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+        $params = [
+            'candidat' => $candidat->getCle(),
+            'aide' => $aide
+        ];
+
+        // On lance la requête
         $this->post_request($request, $params);
     }
     

@@ -14,7 +14,8 @@ class CandidaturesController extends Controller {
         return $this->View->getContent("Candidatures", $items);
     }
     public function displaySaisieCandidat() {
-        return $this->View->getSaisieCandidatContent('Ypopsi - Nouveau candidat');
+        $aide = $this->Model->getAides();
+        return $this->View->getSaisieCandidatContent('Ypopsi - Nouveau candidat', $aide);
     }
     public function displayRechercheCandidat() {
         return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
@@ -59,7 +60,7 @@ class CandidaturesController extends Controller {
         header('Location: index.php?candidatures=saisie-candidature');
     }
 
-    public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide=null) {
+    public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide) {
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
@@ -97,38 +98,4 @@ class CandidaturesController extends Controller {
         // On redirige la page
         header("Location: index.php");
     }
-
-    // public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide=null) {
-    //     // On ajoute la disponibilité
-    //     $candidat->setDisponibilite($candidature['disponibilite']);
-    // 
-    //     echo "On vérifie la présence de la clé Candidats<br>";
-    //     
-    //     // On test la présence du candidat dans la base de données
-    //     $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
-    // 
-    //     // Encodage de l'objet PHP en JSON
-    //     $jsonItem = json_encode($search);
-    //     echo '<script>console.log("Item");</script>';
-    //     echo '<script>console.log(' . $jsonItem . ');</script>';
-    // 
-    //     if(empty($search)) {
-    //         echo "On enregistre un nouvel utilisateur<br>";
-    //     
-    //         // On ajoute le candidat à la base de données
-    //         $this->Model->createCandidat($candidat, $diplomes, $aide);
-    // 
-    //     // On met à jour sa disponibilité
-    //     } else 
-    //         // On ajoute la clé de Candidats
-    //         $candidat->setCle($search['Id_Candidats']);
-    //     
-    //     echo $candidat->getCle();
-    //     
-    //     // On inscrit la candidature
-    //     $this->Model->inscriptCandidature($candidat, $candidature);
-    //     
-    //     // On redirige la page
-    //     header("Location: index.php");
-    // }
 }

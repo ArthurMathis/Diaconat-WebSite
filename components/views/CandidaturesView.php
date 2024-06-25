@@ -24,12 +24,16 @@ class CandidaturesView extends View {
     }
 
     /// Méthode publique retournant le formulaire de saisie d'un candidat
-    public function getSaisieCandidatContent($title) {
+    public function getSaisieCandidatContent($title, $aide=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'saisie-candidatures.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript_candidats.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription_candidats.php';
+        include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
