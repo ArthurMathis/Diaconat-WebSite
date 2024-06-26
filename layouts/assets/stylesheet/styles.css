@@ -124,7 +124,61 @@ form select:is(:hover, :focus) {
   border: none;
   box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.2);
 }
+/*
+form input[type="radio"],
+form input[type="checkbox"] {
+  width: var(--font-size-standart);
+  height: var(--font-size-standart);
 
+  border: none;
+  background-color: var(--blue-opacity);
+}
+form input[type="radio"]:checked,
+form input[type="checkbox"]:checked {
+  
+  background-color: var(--blue);
+}
+*/
+input[type="radio"],
+input[type="checkbox"] {
+  position: relative;
+
+  display: block;
+  width: var(--font-size-standart);
+  height: var(--font-size-standart);
+
+  padding: 0;
+  background-color: transparent;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+} 
+input[type="radio"]::after {
+  border-radius: 50%; 
+}
+input[type="checkbox"]::after {
+  border-radius: 3px; 
+}
+input[type="radio"]::after,
+input[type="checkbox"]::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--light-blue);
+  transition: background-color 150ms;
+}
+input[type="radio"]:checked::after,
+input[type="checkbox"]:checked::after {
+  background-color: var(--blue);
+}
 
 form .LignesHover, form a {
   font-family: "Roboto";

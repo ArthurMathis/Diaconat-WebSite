@@ -25,7 +25,7 @@ class CandidatController extends Controller {
         unset($_SESSION['cle candidat']);
     }
 
-    public function getSaisieCandidature() {
+    public function getSaisieCandidature() { 
         // On vérifie l'intégrité du candidat
         try {
             $this->getCandidat();
@@ -39,23 +39,31 @@ class CandidatController extends Controller {
     }
     public function getSaisieProposition() {
         // On vérifie l'intégrité du candidat
+        // try {
+        //     $this->getCandidat();
+        // 
+        // } catch(Exception $e) {
+        //     forms_manip::error_alert($e);
+        // }
+
+        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
+    }
+    public function getSaisiePropositionFromCandidature($cle) {
+        
+    }
+
+    public function acceptCandidature($cle) {
         try {
-            $this->getCandidat();
+            $this->Model->setCandidatureStatut('en attente', $cle);
 
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
-
-        // On redirige la page
-        header('Location: index.php?candidatures=saisie-proposition');
-    }
-
-    public function acceptCandidature($cle) {
-
     }
     public function rejectCandidature($cle) {
         try {
             $this->Model->setCandidatureStatut('refusee', $cle);
+
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }

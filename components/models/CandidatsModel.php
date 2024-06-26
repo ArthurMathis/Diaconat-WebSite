@@ -202,4 +202,23 @@ class CandidatsModel extends Model {
             $this->post_request($request, $params);
         }
     }
+    public function setPropositionStatut($statut, $cle) {
+        // à compléter
+    }
+
+    private function searchcandidatFromCandidature($cle) {
+        // On initialise la requête
+        $request = "SELECT * 
+        FROM Candidatures 
+        INNER JOIN Candidats ON Candidatures.Cle_Candidats = Candidats.Id_Candidats
+        WHERE Candidatures.Id_Candidatures = " . $cle;
+
+        // On lance la requête
+        return $this->get_request($request);
+    }
+
 }
+// étape 1 : créer l'instant de proposition
+// étape 2 : enregistrer la proposition (instant + candidat)
+// étape 3 : générer le contrat (classe)
+// étape 4 : enregistrer le contrat dans la base de données

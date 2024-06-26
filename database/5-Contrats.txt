@@ -35,4 +35,3 @@ CREATE TABLE Contrats (
 
     CONSTRAINT heure_travail CHECK (Nombre_heures_hebdomadaire_Contrats BETWEEN 0 AND 55)
 );
-²

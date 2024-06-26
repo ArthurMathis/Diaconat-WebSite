@@ -125,9 +125,9 @@ if(isset($_GET['login'])) {
             $candidatures->displaySaisieCandidature();
             break;
 
-        case 'saisie-proposition':
-            $candidatures->displaySaisieProposition();    
-            break;
+        // case 'saisie-proposition':
+        //     $candidatures->displaySaisieProposition();    
+        //     break;
 
         case 'inscription-candidat' :
             // On récupère le contenu des champs
@@ -216,7 +216,7 @@ if(isset($_GET['login'])) {
             $type_contrat   = $_POST["type_de_contrat"];
             $disponibilite  = $_POST["disponibilite"];
             $source         = forms_manip::nameFormat($_POST["source"]);
-            
+
             try {
                 if(empty($poste)) {
                     throw new Exception("Le champs poste doit être rempli par une chaine de caractères");

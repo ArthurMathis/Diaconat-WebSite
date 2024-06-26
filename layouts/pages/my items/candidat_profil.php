@@ -16,7 +16,7 @@
         </div>
         <h2><?= $item['candidat']['prenom']; ?></h2>
         <h3><?= $item['candidatures'][0]['type_de_contrat']; ?></h3>
-        <p><?= $item['candidatures'][0]['statut']; ?></p>  
+        <p><?= forms_manip::nameFormat($item['candidatures'][0]['statut']); ?></p>  
     </header>
     <section>
         <div>

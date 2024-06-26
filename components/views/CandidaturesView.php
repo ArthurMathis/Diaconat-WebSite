@@ -26,7 +26,7 @@ class CandidaturesView extends View {
     /// Méthode publique retournant le formulaire de saisie d'un candidat
     public function getSaisieCandidatContent($title, $aide=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript_candidats.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript-candidats.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu(true);
@@ -66,18 +66,18 @@ class CandidaturesView extends View {
     }
 
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
-    public function getSaisieProposition($title) {
-        // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'connexion.css']);
-
-        // On ajoute la barre de navigation
-        $this->generateMenu();
-
-        // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'proposition.php';
-        include FORMULAIRES.DS.'waves.php';
-
-        // On ajoute le pied de page
-        $this->generateCommonFooter();
-    }
+    // public function getSaisieProposition($title) {
+    //     // On ajoute l'entete de page
+    //     $this->generateCommonHeader($title, [FORMS_STYLES.DS.'connexion.css']);
+    // 
+    //     // On ajoute la barre de navigation
+    //     $this->generateMenu();
+    // 
+    //     // On ajoute le formulaire de'inscription
+    //     include FORMULAIRES.DS.'proposition.php';
+    //     include FORMULAIRES.DS.'waves.php';
+    // 
+    //     // On ajoute le pied de page
+    //     $this->generateCommonFooter();
+    // }
 }

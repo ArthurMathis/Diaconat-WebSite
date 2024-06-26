@@ -83,7 +83,7 @@ class Utilisateurs {
     }
     public function setCle($cle) {
         // On vérifie que l'id est un nombre positif ou nul
-        if(!is_numeric($cle)) 
+        if($cle == null || !is_int($cle)) 
             throw new InvalideUtilisateurExceptions("La clé primaire doit être un entier !");
         // On vérifie que l'id est un nombre positif ou nul
         elseif($cle < 0) 
@@ -94,7 +94,7 @@ class Utilisateurs {
     }
     public function setRole_id($role_id) {
         // On vérifie que l'id est un nombre positif ou nul
-        if(!is_numeric($role_id)) 
+        if($role_id == null || !is_int($role_id)) 
             throw new InvalideUtilisateurExceptions("La clé extrene de rôle doit être un entier !");
         // On vérifie que l'id est un nombre positif ou nul
         elseif($role_id < 0) 

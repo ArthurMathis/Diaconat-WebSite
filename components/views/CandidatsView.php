@@ -224,4 +224,22 @@ class CandidatsView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+
+
+
+    /// Méthode publique retournant la formulaire d'ajout d'une proposition
+    public function getSaisieProposition($title) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'proposition.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'proposition.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
 }

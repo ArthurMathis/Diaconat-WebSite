@@ -23,9 +23,9 @@ class CandidaturesController extends Controller {
     public function displaySaisieCandidature() {
         return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat");
     }
-    public function displaySaisieProposition() {
-        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
-    }
+    // public function displaySaisieProposition() {
+    //     return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
+    // }
 
     public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {
         // On contruit le nouveau candidat
@@ -64,23 +64,11 @@ class CandidaturesController extends Controller {
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
-        echo "On vérifie la présence de la clé Candidats<br>";
-
         if($candidat->getCle() === null) {
-
-            echo "On vérifie la présence de la clé dans la base de données<br>";
-
             // On test la présence du candidat dans la base de données
             $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
 
-            // Encodage de l'objet PHP en JSON
-            $jsonItem = json_encode($search);
-            echo '<script>console.log("Item");</script>';
-            echo '<script>console.log(' . $jsonItem . ');</script>';
-
             if(empty($search)) {
-                echo "On enregistre un nouvel utilisateur<br>";
-            
                 // On ajoute le candidat à la base de données
                 $this->Model->createCandidat($candidat, $diplomes, $aide);
 

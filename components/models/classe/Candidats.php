@@ -38,7 +38,7 @@ class Candidat {
             return;
 
         // On vérifie l'intégrité des données
-        elseif(!is_numeric($cle)) 
+        elseif(!is_int($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être strictement positive !");

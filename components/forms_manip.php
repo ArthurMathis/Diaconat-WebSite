@@ -18,21 +18,14 @@ class forms_manip {
 
         // On met la première lettre en majuscule
         $str[0] = strtoupper($str[0]);
-        echo "1 : " . $str[0] . '<br>';
 
         // On met les lettres suivant en minuscule
         $size = count($str);
-        for($i = 1; $i < $size; $i++) {
+        for($i = 1; $i < $size; $i++) 
             $str[$i] = strtolower($str[$i]);
-            echo $i + 1 . " : " . $str[$i] . '<br>';
-        } 
-            
 
         // On retourne la chaine concaténée
-        $str = implode('', $str);
-        echo "Résultat du formatage : " . $str . '<br>';
-
-        return $str;
+        return implode('', $str);
     }
     public static function numberFormat($number): ?string {
         // On test la présence de données
@@ -40,7 +33,7 @@ class forms_manip {
             return null;
 
         // On convertit en chaine de caractère si nécessaire 
-        if(is_numeric($number))
+        if(is_int($number))
             $number = strval($number);
 
         // On vérifie l'intégrité des données 
