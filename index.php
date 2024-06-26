@@ -272,6 +272,11 @@ if(isset($_GET['login'])) {
             
             case 'saisie-contrats' :
                 break;
+
+            case 'reject-candidatures':
+                echo "Méthode sélectionnée";
+                $candidats->rejectCandidature($_GET['cle']);
+                break;    
             
             default: 
                 throw new Exception ('Action inidentifiable');

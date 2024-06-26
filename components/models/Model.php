@@ -29,8 +29,6 @@ abstract class Model {
             
         } catch(PDOException $e) {
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
         }
         return $this->connection;
     }
@@ -90,14 +88,8 @@ abstract class Model {
     
         } catch(Exception $e){
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
-            // exit;
         } catch(PDOException $e){
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
-            // exit;
         } 
 
         return null;
@@ -119,9 +111,6 @@ abstract class Model {
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
             forms_manip::error_alert($e->getMessage());
-            // $Error = new ErrorView();
-            // $Error->getErrorContent($e);
-            // exit;
         } 
     
         // On retourne le résultat

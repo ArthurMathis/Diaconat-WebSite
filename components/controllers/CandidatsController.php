@@ -17,7 +17,7 @@ class CandidatController extends Controller {
         return $this->View->getContent("Candidat " . $item['candidat']['nom'] . ' ' . $item['candidat']['prenom'], $item);
     }
 
-    public function getCandidat() {
+    private function getCandidat() {
         if(!isset($_SESSION['cle candidat']) && !empty($_SESSION['cle candidat']))
             throw new Exception("Aucun candidat n'est assigné à la demande !");
 
@@ -48,5 +48,18 @@ class CandidatController extends Controller {
 
         // On redirige la page
         header('Location: index.php?candidatures=saisie-proposition');
+    }
+
+    public function acceptCandidature($cle) {
+
+    }
+    public function rejectCandidature($cle) {
+        try {
+            $this->Model->setCandidatureStatut('refusee', $cle);
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+        
+        header('Location: index.php?candidats='.$_SESSION['cle candidat']);
     }
 }

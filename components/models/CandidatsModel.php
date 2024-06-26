@@ -56,7 +56,8 @@ class CandidatsModel extends Model {
     private function getCandidatures($index) {
         // On initialise la requête
         $request = "SELECT 
-        Statut_candidatures AS statut, 
+        Id_Candidatures AS cle,
+        Statut_Candidatures AS statut, 
         Intitule_Sources AS source, 
         Intitule_Types_de_contrats AS type_de_contrat,
         Jour_Instants AS date,
@@ -72,6 +73,7 @@ class CandidatsModel extends Model {
         LEFT JOIN appliquer_a AS app ON c.Id_candidatures = app.Cle_Candidatures
         LEFT JOIN services as serv ON app.Cle_Services = serv.Id_Services
         LEFT JOIN etablissements AS e ON serv.Cle_Etablissements = e.id_Etablissements
+
         WHERE c.Cle_Candidats = " . $index;
 
         // On lance la requête
@@ -182,5 +184,22 @@ class CandidatsModel extends Model {
         $candidat->setCle($result['id']);
 
         return $candidat;
+    }
+
+    public function setCandidatureStatut($statut, $cle) {
+        if(empty($statut) || !is_string($statut))
+            throw new Exception('Statut invalide !');   
+        
+        else {
+            // On initialise la requête
+            $request = "UPDATE Candidatures SET Statut_Candidatures = :statut WHERE Id_Candidatures = :cle";
+            $params = [
+                'statut' => $statut,
+                'cle' => $cle
+            ];
+
+            // On exécute la requête
+            $this->post_request($request, $params);
+        }
     }
 }
