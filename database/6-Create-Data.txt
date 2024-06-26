@@ -128,16 +128,16 @@ INSERT INTO Utilisateurs (Nom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utili
 
 -- On insère les candidats --
 INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats) VALUES
-    ('Dupont', 'Jean', '0123456789', 'jean.dupont@example.com', '123 Rue de la République', 'Paris', '75001', '2024-06-01', TRUE),
-    ('Martin', 'Lucie', '0987654321', 'lucie.martin@example.com', '456 Avenue des Champs-Élysées', 'Paris', '75008', '2024-06-02', FALSE),
-    ('Bernard', 'Marie', '0765432189', 'marie.bernard@example.com', '789 Boulevard Saint-Germain', 'Paris', '75006', '2024-06-03', TRUE),
-    ('Petit', 'Paul', '0654321987', 'paul.petit@example.com', '321 Rue de Rivoli', 'Paris', '75004', '2024-06-04', FALSE),
-    ('Simon', 'Nathan', '0123456800', 'nathan.simon@example.com', '1010 Rue Royale', 'Montpellier', '34000', '2024-06-19', FALSE),
-    ('Leclerc', 'Sophie', '0123456801', 'sophie.leclerc@example.com', '111 Rue de la Liberté', 'Lyon', '69002', '2024-06-20', TRUE),
-    ('Thomas', 'Pierre', '0123456802', 'pierre.thomas@example.com', '222 Avenue de la Gare', 'Marseille', '13002', '2024-06-21', FALSE),
-    ('Adam', 'Louise', '0123456813', 'louise.adam@example.com', '333 Avenue de la Rivière', 'Marseille', '13003', '2024-07-02', TRUE),
-    ('Martin', 'Eva', '0123456815', 'eva.martin@example.com', '555 Rue de la Plage', 'Lille', '59002', '2024-07-04', TRUE),
-    ('Andre', 'Tom', '0123456830', 'tom.andre@example.com', '1010 Boulevard de la Pluie', 'Toulouse', '31003', '2024-07-19', FALSE)
+    ('Dupont', 'Jean', '01.23.45.67.89', 'jean.dupont@example.com', '123 Rue de la République', 'Paris', '75001', '2024-06-01', TRUE),
+    ('Martin', 'Lucie', '09.87.65.43.21', 'lucie.martin@example.com', '456 Avenue des Champs-Élysées', 'Paris', '75008', '2024-06-02', FALSE),
+    ('Bernard', 'Marie', '07.65.43.21.89', 'marie.bernard@example.com', '789 Boulevard Saint-Germain', 'Paris', '75006', '2024-06-03', TRUE),
+    ('Petit', 'Paul', '06.54.32.19.87', 'paul.petit@example.com', '321 Rue de Rivoli', 'Paris', '75004', '2024-06-04', FALSE),
+    ('Simon', 'Nathan', '01.23.45.68.00', 'nathan.simon@example.com', '1010 Rue Royale', 'Montpellier', '34000', '2024-06-19', FALSE),
+    ('Leclerc', 'Sophie', '01.23.45.68.01', 'sophie.leclerc@example.com', '111 Rue de la Liberté', 'Lyon', '69002', '2024-06-20', TRUE),
+    ('Thomas', 'Pierre', '01.23.45.68.02', 'pierre.thomas@example.com', '222 Avenue de la Gare', 'Marseille', '13002', '2024-06-21', FALSE),
+    ('Adam', 'Louise', '01.23.45.68.13', 'louise.adam@example.com', '333 Avenue de la Rivière', 'Marseille', '13003', '2024-07-02', TRUE),
+    ('Martin', 'Eva', '01.23.45.68.15', 'eva.martin@example.com', '555 Rue de la Plage', 'Lille', '59002', '2024-07-04', TRUE),
+    ('Andre', 'Tom', '01.23.45.68.30', 'tom.andre@example.com', '1010 Boulevard de la Pluie', 'Toulouse', '31003', '2024-07-19', FALSE)
 ;
 
 INSERT INTO Aides_au_recrutement (Intitule_Aides_au_recrutement) VALUES 

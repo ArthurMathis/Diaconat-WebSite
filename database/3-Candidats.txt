@@ -3,7 +3,7 @@ CREATE TABLE Candidats (
     Id_Candidats INTEGER AUTO_INCREMENT PRIMARY KEY,
     Nom_Candidats VARCHAR(64) NOT NULL,
     Prenom_Candidats VARCHAR(64) NOT NULL,
-    Telephone_Candidats VARCHAR(10) UNIQUE NOT NULL,
+    Telephone_Candidats VARCHAR(14) UNIQUE NOT NULL,
     Email_Candidats VARCHAR(64) UNIQUE NOT NULL, 
     Adresse_Candidats VARCHAR(256),
     Ville_Candidats VARCHAR(64), 

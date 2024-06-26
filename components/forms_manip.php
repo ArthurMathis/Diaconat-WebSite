@@ -33,5 +33,37 @@ class forms_manip {
         echo "Résultat du formatage : " . $str . '<br>';
 
         return $str;
-}
+    }
+    public static function numberFormat($number): ?string {
+        // On test la présence de données
+        if(empty($number))
+            return null;
+
+        // On convertit en chaine de caractère si nécessaire 
+        if(is_numeric($number))
+            $number = strval($number);
+
+        // On vérifie l'intégrité des données 
+        if(!is_string($number))
+            return null;
+
+        // On prépare la chaine de caractères aux traitements
+        $number = str_split(trim($number));
+
+        // On déclare les variables temporaires    
+        $temp = [$number[0]];
+        $size = count($number);
+        // On construit le nouveau tableau
+        for($i = 1; $i < $size; $i++) {
+            // On ajoute un point de séparation entre les numéros
+            if($i % 2 == 0)
+                array_push($temp, '.');
+
+            // On ajoute le numéro    
+            array_push($temp, $number[$i]);
+        }
+           
+        // On retourne le résultat en chaine de caractères
+        return implode('', $temp);
+    }
 }

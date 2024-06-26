@@ -56,10 +56,9 @@ class Candidat {
             throw new InvalideCandidatExceptions("Le nom d'un candidat ne peut pas contenir de nombres !");
         elseif(preg_match('/[^\w\s]/', $nom))
             throw new InvalideCandidatExceptions("Le nom d'un candidat ne peut pas contenir de carcatères spéciaux !");
-        
-        // On implémente
-        else $this->nom = $this->name_integrity($nom);
 
+        // On implémente    
+        else $this->nom = $nom;
     }
     private function setPrenom($prenom) { 
         // On vérifie l'intégrité des données
@@ -71,9 +70,9 @@ class Candidat {
             throw new InvalideCandidatExceptions("Le prenom d'un candidat ne peut pas contenir de nombres !");
         elseif(preg_match('/[^\w\s]/', $prenom))
             throw new InvalideCandidatExceptions("Le prenom d'un candidat ne peut pas contenir de carcatères spéciaux !");
-        
-        // On implémente
-        else $this->prenom = $this->name_integrity($prenom);
+
+        // On implémente    
+        else $this->prenom = $prenom;
     }
     private function setEmail($email) { 
         // On vérifie l'intégrité des données
@@ -91,8 +90,8 @@ class Candidat {
         // On vérifie l'intégrité des données
         if(empty($telephone)) 
             throw new InvalideCandidatExceptions("Le téléphone d'un utilisateur ne peut pas être vide !");
-        elseif(!is_numeric($telephone))
-            throw new InvalideCandidatExceptions("Un numero de téléphone doit être un nombre !");
+        elseif(!is_string($telephone))
+            throw new InvalideCandidatExceptions("Un numero de téléphone doit être une chaine de carcatères composées de nombres et de points !");
 
         // On implémente    
         else $this->telephone = $telephone;
@@ -119,7 +118,7 @@ class Candidat {
             throw new InvalideCandidatExceptions("La ville d'un candidat ne peut pas contenir de carcatères spéciaux !");
         
         // On implémente
-        else $this->ville = $this->name_integrity($ville);
+        else $this->ville = $ville;
     }
     private function setCodePostal($code_postal) { 
         // On vérifie l'intégrité des données
@@ -146,23 +145,6 @@ class Candidat {
 
         else $this->visite_medicale = $visite;
     }
-
-    private function name_integrity($name) {
-        // On sépare les noms composés en noms
-        $str_string = str_split($name);
-
-        // On met en majuscule la première lettre
-        $str_string[0] = strtoupper($str_string[0]);
-
-        // On met en minuscule les autres
-        $size = count($str_string);
-        for($i = 0; $i < $size; $i++) 
-            $str_string[$i] = strtolower($str_string[$i]);
-
-        // On regroupe les autres
-        return implode($str_string);
-    }
-
 
     public function exportToSQL() {
         return [
