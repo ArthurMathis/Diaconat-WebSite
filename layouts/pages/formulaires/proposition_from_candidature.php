@@ -1,5 +1,4 @@
 <form method="post" action="">
-    <!-- à compléter -->
     <h2>Durée du contrat</h2>
     <div>
         <label for="date debut">Date de début</label>

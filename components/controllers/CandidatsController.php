@@ -49,7 +49,10 @@ class CandidatController extends Controller {
         return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
     }
     public function getSaisiePropositionFromCandidature($cle) {
-        
+        // On récupère la candidature (requête MySQL via le Model)
+        // ...
+        // On affiche le formulaire prérempli
+        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
     }
 
     public function acceptCandidature($cle) {

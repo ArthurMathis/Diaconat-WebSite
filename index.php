@@ -269,6 +269,11 @@ if(isset($_GET['login'])) {
             case 'saisie-propositions' :
                 $candidats->getSaisieProposition();
                 break;
+
+            case 'saisie-proposition-from-candidature':
+                if(isset($_GET['cle']) && is_int($_GET['cle']))
+                    $candidats->getSaisiePropositionFromCandidature($_GET['cle']);
+                break;
             
             case 'saisie-contrats' :
                 break;
