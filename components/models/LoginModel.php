@@ -52,33 +52,13 @@ class LoginModel extends Model {
     private function writeLogs($user_cle, $action) {
         try {
             // On récupère le type d'action
-            // $request = "SELECT Id_Types FROM Types WHERE Intitule_Types = :Intitule";
-            // $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
             $action_type = $this->serachAction_type($action);
-    
+
             // On génère l'instant actuel (date et heure actuelles)
-            // $instant = Instants::currentInstants();
-            // 
-            // // J'enregistre mon instant dans la base de données
-            // $request = "INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES (:jour, :heure)";
-            // $params = $instant->exportToSQL();
-            // // $this->post_request($request, $params);
-            // 
-            // // On récupère l'id de mon instant 
-            // $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
-            // $instant_id = $this->get_request($request, $params, true, true);
             $instant_id = $this->inscriptInstants();
-            
+
             // On ajoute l'action à la base de données
-            // $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
-            // $params = [
-            //     "user_id" => $user_cle,
-            //     "type_id" => $action_type['Id_Types'],
-            //     "instant_id" => $instant_id
-            // ];
-            // 
-            // $this->post_request($request, $params);
-            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id);
+            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants']);
 
         } catch (Exception $e) {
             forms_manip::error_alert($e->getMessage());
@@ -128,33 +108,14 @@ class LoginModel extends Model {
         if($i == $size) 
             throw new Exception("Aucun utilisateur correspondant");
     }
-    protected function searchCle($user): ?int {
-        // On initialise la requête
-        $request = "SELECT Id_Utilisateurs FROM Utilisateurs WHERE Nom_Utilisateurs = :nom AND Email_Utilisateurs = :email AND Cle_Roles = :id_Roles";
-        $params = [
-            'nom' => $user->getIdentifiant(),
-            'email' => $user->getEmail(),
-            'id_Roles' => $this->searchRole($user->getRole())
-        ];
-
-        // On lance la requête
-        $result = $this->get_request($request, $params, true, true);
-
-        // On retourne le rôle
-        return $result;
-    }
-    // Méthode déplacée dans Model
-    // protected function searchRole($role): array {
+    // protected function searchCle($user): ?int {
     //     // On initialise la requête
-    //     if(is_numeric($role)) {
-    //         $request = "SELECT * FROM roles WHERE Id_Role = :Id";
-    //         $params = ["Id" => $role];
-    // 
-    //     } elseif(is_string($role)) {
-    //         $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
-    //         $params = ["Intitule" => $role];
-    //     } else 
-    //     throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+    //     $request = "SELECT Id_Utilisateurs FROM Utilisateurs WHERE Nom_Utilisateurs = :nom AND Email_Utilisateurs = :email AND Cle_Roles = :id_Roles";
+    //     $params = [
+    //         'nom' => $user->getIdentifiant(),
+    //         'email' => $user->getEmail(),
+    //         'id_Roles' => $this->searchRole($user->getRole())
+    //     ];
     // 
     //     // On lance la requête
     //     $result = $this->get_request($request, $params, true, true);

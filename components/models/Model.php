@@ -196,9 +196,8 @@ abstract class Model {
             throw new Exception("Le type n'a pas pu être reconnu. Le nom (string) ou l'identifiant (int) de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
     }
     
-
     /// Méthode protégée recherchant un candidat dans la base de données depuis une de ses candidatures
-    protected function searchcandidatFromCandidature($cle) {
+    protected function searchCandidatFromCandidature($cle) {
         // On initialise la requête
         $request = "SELECT * 
         FROM Candidatures 
@@ -207,6 +206,175 @@ abstract class Model {
 
         // On lance la requête
         return $this->get_request($request);
+    }
+    /// Méthode protégée recherchant une candidature dans la base de données
+    protected function searchCandiature($cle_candidat, $cle_instant) {
+        // On vérifie l'intégrité des données
+        if(empty($cle_candidat) || empty($cle_instant)) {
+            throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');
+            exit;
+        }
+        
+        // On initialise la requête
+        $request = "SELECT * FROM candidatures WHERE Cle_Candidats = :candidat AND Cle_Instants = :instant";    
+        $params = [
+            "candidat" => $cle_candidat,
+            "instant" => $cle_instant
+        ];
+
+        // On retourne le résultat
+        return $this->get_request($request, $params, true, true);
+    }
+    /// Méthode protégée recherchant un diplome dans la base de données
+    protected function searchDiplome($diplome) {
+        // Si diplome est un ID
+        if(is_numeric($diplome)) {
+            
+            echo "Le type fournit est un entier. On recherche un Id.<br>";
+
+            // On initialise la requête
+            $request = "SELECT * FROM diplomes WHERE Id_Diplomes = :id";
+            $params = ["id" => $diplome];
+
+            // On lance la requête
+            $result = $this->get_request($request, $params, true, true);
+
+        // SI diplome est un intitule    
+        } elseif(is_string($diplome)) {
+
+            echo "Le type fournit est un string. On recherche un intitule.<br>";
+
+            // On initialise la requête 
+            $request = "SELECT * FROM diplomes WHERE Intitule_Diplomes = :intitule";
+            $params = ["intitule" => $diplome];
+
+            // On lance la requête
+            $result = $this->get_request($request, $params, true);
+
+        // En cas d'erreur de typage
+        } else {
+            throw new Exception("La saisie du diplome est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+           
+        // On retourne le résultat
+        return $result;
+    }
+    /// Méthode protégée recherchant un type de contrat dans la base de données 
+    protected function searchTypeContrat($contrat) {
+        // Si contrat est un ID
+        if(is_numeric($contrat)) {
+            // On initialise la requête
+            $request = "SELECT * FROM Types_de_contrats WHERE Id_Types_de_contrats = :id";
+            $params = ['id' => $contrat];
+
+        // Si contrat est un intitulé    
+        } elseif(is_string($contrat)) {
+            // On initialise la requête
+            $request =  "SELECT * FROM Types_de_contrats WHERE Intitule_Types_de_contrats = :intitule";
+            $params = ['intitule' => $contrat];
+
+        } else {
+            throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le résultat
+        return $result;
+    }
+    /// Méthode recherchant une source dans la base de données
+    protected function searchSource($source) {
+        // On initialise la requête
+        if(is_numeric($source)) {
+            $request = "SELECT * FROM sources WHERE Id_Sources = :Id";
+            $params = ["Id" => $source];
+
+        } elseif(is_string($source)) {
+            $request = "SELECT * FROM sources WHERE Intitule_Sources = :Intitule";
+            $params = ["Intitule" => $source];
+        } else 
+            throw new Exception("La saisie de la source est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le rôle
+        return $result;
+    }
+    /// Méthode protégée recherchant un poste dans la base de données
+    protected function searchPoste($poste) {
+        // On initialise la requête
+        if(is_numeric($poste)) {
+            $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
+            $params = ["Id" => $poste];
+
+        } elseif(is_string($poste)) {
+            $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
+            $params = ["Intitule" => $poste];
+        } else 
+            throw new Exception("La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le rôle
+        return $result;
+    }
+    /// Méthode protégée recherchant un service dans la base de données 
+    protected function searchService($service) {
+        // Si contrat est un ID
+        if(is_numeric($service)) {
+            // On initialise la requête
+            $request = "SELECT * FROM Services WHERE Id_Services = :id";
+            $params = ['id' => $service];
+
+        // Si contrat est un intitulé    
+        } elseif(is_string($service)) {
+            // On initialise la requête
+            $request =  "SELECT * FROM Services WHERE Intitule_Services = :intitule";
+            $params = ['intitule' => $service];
+
+        } else {
+            throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le résultat
+        return $result;
+    }
+    /// Méthode protégée recherchant une aide dans la base de données
+    protected function searchAide($aide) {
+        // Si aide est un ID
+        if(is_numeric($aide)) {
+            // On initialise la requête
+            $request = "SELECT * FROM Aides_au_recrutement WHERE Id_Aides_au_recrutement = :id";
+            $params = ["id" => $aide];
+
+            // On lance la requête
+            $result = $this->get_request($request, $params, true, true);
+        
+        // Si aide est un intitule    
+        } elseif(is_string($aide)) {
+            // On intitialise la requête
+            $request = "SELECT * FROM Aides_au_recrutement WHERE Intitule_Aide_au_recrutement = :intitule";
+            $params = ["intitule" => $aide];
+
+            // On lance la requête
+            $result = $this->get_request($request, $params, true);
+
+        } else {
+            throw new Exception("La saisie de l'aide est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            exit;
+        }
+
+        // On retourne le résultat
+        return $result;
     }
     
 
@@ -228,8 +396,8 @@ abstract class Model {
         $this->post_request($request, $params);
 
         // On récupère l'id de mon instant 
-        $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
-        return $this->get_request($request, $params, true, true)['Id_Instants'];
+        $request = "SELECT * FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
+        return $this->get_request($request, $params, true, true);
     }
     /// Méthode protégée enregistrant une action dans la base de données
     protected function inscriptAction($cle_user, $cle_action, $cle_instant) {
