@@ -189,82 +189,88 @@ class CandidaturesModel extends Model {
             $this->inscriptAppliquer_a($cle_candidatures, $service);
         }
     }
-    protected function inscriptCandidat($candidat) {
-        // On initialise la requête
-        $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
-                    Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
-                    VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
-        
-        // On lance  requête
-        $this->post_request($request, $candidat->exportToSQL());
-    }
-    protected function inscriptAide($candidat, $aide) {      
-        // On initialise la requête
-        $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
-        $params = [
-            "candidat" => $candidat->getCle(), 
-            "diplome" => $aide["Id_Aides_au_recrutement"]
-        ];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
-    protected function inscriptDiplome($candidat, $diplome) {
-        // On initialise la requête
-        $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
-        $params = [
-            "candidat" => $candidat->getCle(), 
-            "diplome" => $diplome["Id_Diplomes"]
-        ];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
-    protected function inscriptPostuler_a($candidat, $instant) {
-        // On initialise la requête 
-        $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
-        $params = [
-            "candidat" => $candidat->getCle(), 
-            "instant" => $instant
-        ];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
-    protected function inscriptAppliquer_a($candidature, $service) {
-        // On vérifie l'intégrité des données
-        if(empty($candidature) || empty($service)) {
-            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
-            exit;
-        }
-
-        // On inititalise la requête
-        $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
-        $params = [
-            "candidature" => $candidature,
-            "service" => $service
-        ];
-
-        // On exécute la requête
-        $this->post_request($request, $params);
-    }
-    protected function inscriptAvoir_droit_a($candidat, $aide) {
-        // On vérifie l'intégrité des données
-        if(empty($candidat) || empty($aide) || !is_numeric($aide)) {
-            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
-            exit;
-        }
-
-        // On initialise la requête
-        $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
-        $params = [
-            'candidat' => $candidat->getCle(),
-            'aide' => $aide
-        ];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
+    // Méthode déplacée dans Model
+    // protected function inscriptCandidat($candidat) {
+    //     // On initialise la requête
+    //     $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
+    //                 Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
+    //                 VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
+    //     
+    //     // On lance  requête
+    //     $this->post_request($request, $candidat->exportToSQL());
+    // }
+    // Méthode déplacée dans Model
+    // protected function inscriptAide($candidat, $aide) {      
+    //     // On initialise la requête
+    //     $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+    //     $params = [
+    //         "candidat" => $candidat->getCle(), 
+    //         "diplome" => $aide["Id_Aides_au_recrutement"]
+    //     ];
+    // 
+    //     // On lance la requête
+    //     $this->post_request($request, $params);
+    // }
+    // Méthode déplacée dans Model
+    // protected function inscriptDiplome($candidat, $diplome) {
+    //     // On initialise la requête
+    //     $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
+    //     $params = [
+    //         "candidat" => $candidat->getCle(), 
+    //         "diplome" => $diplome["Id_Diplomes"]
+    //     ];
+    // 
+    //     // On lance la requête
+    //     $this->post_request($request, $params);
+    // }
+    // Méthode déplacée dans Model
+    // protected function inscriptPostuler_a($candidat, $instant) {
+    //     // On initialise la requête 
+    //     $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
+    //     $params = [
+    //         "candidat" => $candidat->getCle(), 
+    //         "instant" => $instant
+    //     ];
+    // 
+    //     // On lance la requête
+    //     $this->post_request($request, $params);
+    // }
+    // Méthode déplacée dans Model
+    // protected function inscriptAppliquer_a($candidature, $service) {
+    //     // On vérifie l'intégrité des données
+    //     if(empty($candidature) || empty($service)) {
+    //         throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
+    //         exit;
+    //     }
+    // 
+    //     // On inititalise la requête
+    //     $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
+    //     $params = [
+    //         "candidature" => $candidature,
+    //         "service" => $service
+    //     ];
+    // 
+    //     // On exécute la requête
+    //     $this->post_request($request, $params);
+    // }
+    // Méthode déplacée dans Model
+    // protected function inscriptAvoir_droit_a($candidat, $aide) {
+    //     // On vérifie l'intégrité des données
+    //     if(empty($candidat) || empty($aide) || !is_numeric($aide)) {
+    //         throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
+    //         exit;
+    //     }
+    // 
+    //     // On initialise la requête
+    //     $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+    //     $params = [
+    //         'candidat' => $candidat->getCle(),
+    //         'aide' => $aide
+    //     ];
+    // 
+    //     // On lance la requête
+    //     $this->post_request($request, $params);
+    // }
     
 
     public function searchCandidat($nom, $prenom, $email=null, $telephone=null) {

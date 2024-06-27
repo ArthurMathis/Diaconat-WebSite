@@ -7,7 +7,7 @@ require_once(CLASSE.DS.'Instants.php');
 class LoginModel extends Model {
     public function connectUser($identifiant, $motdepasse) {
         // On cherche l'utilisateur dans la base de données
-        $user = $this->searchUser($identifiant, $motdepasse);
+        $user = $this->verifyUser($identifiant, $motdepasse);
         
         // On récupère les données de l'utilisateur
         $_SESSION['user_cle']           = $user->getCle();
@@ -52,30 +52,33 @@ class LoginModel extends Model {
     private function writeLogs($user_cle, $action) {
         try {
             // On récupère le type d'action
-            $request = "SELECT Id_Types FROM Types WHERE Intitule_Types = :Intitule";
-            $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
+            // $request = "SELECT Id_Types FROM Types WHERE Intitule_Types = :Intitule";
+            // $action_type = $this->get_request($request, ["Intitule" => $action], true, true);
+            $action_type = $this->serachAction_type($action);
     
             // On génère l'instant actuel (date et heure actuelles)
-            $instant = Instants::currentInstants();
-    
-            // J'enregistre mon instant dans la base de données
-            $request = "INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES (:jour, :heure)";
-            $params = $instant->exportToSQL();
-            $this->post_request($request, $params);
-    
-            // On récupère l'id de mon instant 
-            $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
-            $instant_id = $this->get_request($request, $params, true, true);
-    
-            // On ajoute l'action à la base de données
-            $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
-            $params = [
-                "user_id" => $user_cle,
-                "type_id" => $action_type['Id_Types'],
-                "instant_id" => $instant_id['Id_Instants']
-            ];
+            // $instant = Instants::currentInstants();
+            // 
+            // // J'enregistre mon instant dans la base de données
+            // $request = "INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES (:jour, :heure)";
+            // $params = $instant->exportToSQL();
+            // // $this->post_request($request, $params);
+            // 
+            // // On récupère l'id de mon instant 
+            // $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
+            // $instant_id = $this->get_request($request, $params, true, true);
+            $instant_id = $this->inscriptInstants();
             
-            $this->post_request($request, $params);
+            // On ajoute l'action à la base de données
+            // $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
+            // $params = [
+            //     "user_id" => $user_cle,
+            //     "type_id" => $action_type['Id_Types'],
+            //     "instant_id" => $instant_id
+            // ];
+            // 
+            // $this->post_request($request, $params);
+            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id);
 
         } catch (Exception $e) {
             forms_manip::error_alert($e->getMessage());
@@ -83,9 +86,9 @@ class LoginModel extends Model {
     }
 
 
-    // METHODES DE MANIPULATIONS ES UTILISATEURS //
+    // METHODES DE MANIPULATIONS DES UTILISATEURS //
 
-    protected function searchUser($identifiant, $motdepasse): ?Utilisateurs{
+    private function verifyUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
         $request = "SELECT * FROM Utilisateurs WHERE Nom_Utilisateurs = :nom";
         $params = [":nom" => $identifiant];
@@ -140,22 +143,23 @@ class LoginModel extends Model {
         // On retourne le rôle
         return $result;
     }
-    protected function searchRole($role_id): array {
-        // On initialise la requête
-        if(is_numeric($role_id)) {
-            $request = "SELECT * FROM roles WHERE Id_Role = :Id";
-            $params = ["Id" => $role_id];
-
-        } elseif(is_string($role_id)) {
-            $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
-            $params = ["Intitule" => $role_id];
-        } else 
-        throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
-
-        // On lance la requête
-        $result = $this->get_request($request, $params, true, true);
-
-        // On retourne le rôle
-        return $result;
-    }
+    // Méthode déplacée dans Model
+    // protected function searchRole($role): array {
+    //     // On initialise la requête
+    //     if(is_numeric($role)) {
+    //         $request = "SELECT * FROM roles WHERE Id_Role = :Id";
+    //         $params = ["Id" => $role];
+    // 
+    //     } elseif(is_string($role)) {
+    //         $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
+    //         $params = ["Intitule" => $role];
+    //     } else 
+    //     throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+    // 
+    //     // On lance la requête
+    //     $result = $this->get_request($request, $params, true, true);
+    // 
+    //     // On retourne le rôle
+    //     return $result;
+    // }
 }

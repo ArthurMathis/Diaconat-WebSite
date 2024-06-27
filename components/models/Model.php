@@ -32,10 +32,11 @@ abstract class Model {
         }
         return $this->connection;
     }
-
+    /// Méthode protégée retournant la connexion à la base de données
     protected function getConnection() {
         return $this->connection;
     }
+
 
 
     // METHODES DE REQUETES A LA BASE DE DONNEES //
@@ -118,7 +119,101 @@ abstract class Model {
     }
 
 
-    // Geston des instants
+
+    // METHODES DE RECHERCHE DANS LA BASE DE DONNEES //
+
+    /// Méthode protégée recherchant un role dans la base de données
+    protected function searchRole($role): array {
+        // On initialise la requête
+        // if(is_numeric($role)) {
+        if(is_int($role)) {
+            $request = "SELECT * FROM roles WHERE Id_Role = :Id";
+            $params = ["Id" => $role];
+
+        } elseif(is_string($role)) {
+            $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
+            $params = ["Intitule" => $role];
+        } else 
+        throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+
+        // On lance la requête
+        $result = $this->get_request($request, $params, true, true);
+
+        // On retourne le rôle
+        return $result;
+    }
+    /// Méthode protégée recherchant un type d'action dans la base de donnés
+    protected function serachAction_type($action) {
+        if($action == null) {
+            throw new Exception("Données éronnées. La clé action ou son intitulé sont nécessaires pour rechercher une action !");
+            return;
+
+        } elseif(is_int($action)) 
+            $request = "SELECT * FROM types WHERE Id_Types = :action";
+
+        elseif(is_string($action))
+            $request = "SELECT * FROM types WHERE Intitule_Types = :action";
+
+        else {
+            throw new Exception('Type invlide. La clé action (int) ou son intitulé (string) sont nécessaires pour rechercher une action !');
+            return;
+        }    
+
+        $params = [ "action" => $action ];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
+    /// Méthode protégée recherchant un Utilisateur dans la base de données 
+    protected function searchUser($user) {
+        if($user == null)
+            throw new Exception("Le nom ou l'identifiant de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
+
+        // On recherche l'Utilisateur via sont identifiant    
+        elseif(is_int($user)) {
+            // On initialise la requêre
+            $request = "SELECT * FROM Candidats WHERE Id_Candidats = :candidat";
+            $params = [
+                'candidat' => $user
+            ];
+    
+            // On lance la requête
+            return $this->get_request($request, $params, true, true);
+
+        // On recherche l'utilisateur via son nom      
+        } elseif(is_string($user)) {
+            // On initialise la requête 
+            $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :candidat";
+            $params = [
+                'candidat' => $user
+            ];
+
+            // On lance la requête
+            return $this->get_request($request, $params, false, true);
+
+        // Sinon    
+        } else 
+            throw new Exception("Le type n'a pas pu être reconnu. Le nom (string) ou l'identifiant (int) de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
+    }
+    
+
+    /// Méthode protégée recherchant un candidat dans la base de données depuis une de ses candidatures
+    protected function searchcandidatFromCandidature($cle) {
+        // On initialise la requête
+        $request = "SELECT * 
+        FROM Candidatures 
+        INNER JOIN Candidats ON Candidatures.Cle_Candidats = Candidats.Id_Candidats
+        WHERE Candidatures.Id_Candidatures = " . $cle;
+
+        // On lance la requête
+        return $this->get_request($request);
+    }
+    
+
+
+    // METHODES D'INSCRIPTION DANS LA BASE DE DONNES //
+
+    /// Méthode protégées inscrivant un instant dans la base de données et reournant son id
     protected function inscriptInstants($jour=null, $heure=null) {
         if(empty($jour) && empty($heure))
             // On génère l'instant actuel (date et heure actuelles)
@@ -134,8 +229,124 @@ abstract class Model {
 
         // On récupère l'id de mon instant 
         $request = "SELECT Id_Instants FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
-        $instant_id = $this->get_request($request, $params, true, true);
+        return $this->get_request($request, $params, true, true)['Id_Instants'];
+    }
+    /// Méthode protégée enregistrant une action dans la base de données
+    protected function inscriptAction($cle_user, $cle_action, $cle_instant) {
+        // On vérifie l'intégrité des données
+        if(empty($cle_user) || !is_int($cle_user))
+            throw new Exception("La clé Utilisateur est nécessaire pour l'enregistrement d'une action !");
+        elseif(empty($cle_action) || !is_int($cle_action))
+            throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
+        elseif(empty($cle_instant) || !is_int($cle_instant))
+            throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
 
-        return $instant_id;
+        else {
+            // On ajoute l'action à la base de données
+            $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
+            $params = [
+                "user_id" => $cle_user,
+                "type_id" => $cle_action,
+                "instant_id" => $cle_instant
+            ];
+
+            $this->post_request($request, $params);
+        }
+    }
+
+    /// Méthode protégée inscrivant une Candidat dans la base de données
+    protected function inscriptCandidat($candidat) {
+        // On initialise la requête
+        $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
+                    Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
+                    VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
+        
+        // On lance  requête
+        $this->post_request($request, $candidat->exportToSQL());
+    }
+    /// Méthode protégée inscrivant une Aide dans la base de données
+    protected function inscriptAide($candidat, $aide) {      
+        // On initialise la requête
+        $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+        $params = [
+            "candidat" => $candidat->getCle(), 
+            "diplome" => $aide["Id_Aides_au_recrutement"]
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un Diplome dans la base de données
+    protected function inscriptDiplome($candidat, $diplome) {
+        // On initialise la requête
+        $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
+        $params = [
+            "candidat" => $candidat->getCle(), 
+            "diplome" => $diplome["Id_Diplomes"]
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un Postuler_a dans la base de données
+    protected function inscriptPostuler_a($candidat, $instant) {
+        // On initialise la requête 
+        $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
+        $params = [
+            "candidat" => $candidat->getCle(), 
+            "instant" => $instant
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un Appliquer_a dans la base de données
+    protected function inscriptAppliquer_a($cle_candidature, $cle_service) {
+        // On vérifie l'intégrité des données
+        if(empty($cle_candidature) || empty($cle_service)) {
+            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
+            exit;
+        }
+
+        // On inititalise la requête
+        $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
+        $params = [
+            "candidature" => $cle_candidature,
+            "service" => $cle_service
+        ];
+
+        // On exécute la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
+    protected function inscriptAvoir_droit_a($candidat, $cle_aide) {
+        // On vérifie l'intégrité des données
+        if(empty($candidat) || empty($cle_aide) || !is_numeric($cle_aide)) {
+            throw new Exception("Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé d'aide sont nécessaires");
+            exit;
+        }
+
+        // On initialise la requête
+        $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+        $params = [
+            'candidat' => $candidat->getCle(),
+            'aide' => $cle_aide
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un Proposer_a dans la base de données
+    protected function inscriptProposer_a($cle_candidat, $cle_instant) {
+        // On initialise la requête
+        $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) 
+        VALUES (:candidat, :instant)";
+        $params = [
+            'candidat' => $cle_candidat,
+            'instant' => $cle_instant
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
     }
 }
