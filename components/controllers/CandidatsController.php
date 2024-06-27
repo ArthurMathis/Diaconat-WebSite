@@ -37,7 +37,7 @@ class CandidatController extends Controller {
         // On redirige la page
         header('Location: index.php?candidatures=saisie-candidature');
     }
-    public function getSaisieProposition() {
+    public function getSaisieProposition($cle_candidat) {
         // On vérifie l'intégrité du candidat
         // try {
         //     $this->getCandidat();
@@ -46,13 +46,13 @@ class CandidatController extends Controller {
         //     forms_manip::error_alert($e);
         // }
 
-        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
+        return $this->View->getContentProposition("Ypopsi - Nouvelle proposition", $cle_candidat);
     }
     public function getSaisiePropositionFromCandidature($cle) {
         // On récupère la candidature (requête MySQL via le Model)
         // ...
         // On affiche le formulaire prérempli
-        return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
+        return $this->View->getContentPropositionFromCandidatures("Ypopsi - Nouvelle proposition");
     }
 
     public function acceptCandidature($cle) {
@@ -72,5 +72,10 @@ class CandidatController extends Controller {
         }
         
         header('Location: index.php?candidats='.$_SESSION['cle candidat']);
+    }
+
+    public function createProposition($cle, $propositions) {
+        $this->Model->createProposition($cle, $propositions);
+        header('Location: index.php?candidats=' . $cle);
     }
 }

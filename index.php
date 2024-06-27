@@ -267,20 +267,79 @@ if(isset($_GET['login'])) {
                 break;
             
             case 'saisie-propositions' :
-                $candidats->getSaisieProposition();
+                try {
+                    if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
+                        $candidats->getSaisieProposition($_GET['cle_candidat']);
+                    else 
+                        throw new Exception("La clé candidat n'a pas pu être réceptionnée");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
                 break;
 
-            case 'saisie-proposition-from-candidature':
-                if(isset($_GET['cle']) && is_int($_GET['cle']))
+            case 'saisie-propositions-from-candidature':
+                if(isset($_GET['cle']) && is_numeric($_GET['cle']))
                     $candidats->getSaisiePropositionFromCandidature($_GET['cle']);
+                else 
+                    forms_manip::error_alert("La clé n'a pas pu être détectée");
                 break;
             
             case 'saisie-contrats' :
                 break;
+            
+            case 'inscript-propositions':
+                // On récupère les données du formulaire
+                $infos = [
+                    'poste' => $_POST['poste'],
+                    'service' => $_POST['service'],
+                    'type_de_contrat' => $_POST['type_contrat'],
+                    'date debut' => $_POST['date_debut'],
+                    'date fin' => $_POST['date_fin'],
+                    'salaire' => $_POST['salaire_mensuel'],
+                    'nb_heures' => $_POST['taux_horaire_hebdomadaire'],
+                    'trvail_nuit' => isset($_POST['travail_nuit']) ? true : null,
+                    'travail_wk' =>  isset($_POST['travail_wk']) ? true : null
+                ];
+                try {
+                    if(empty($infos['poste']))
+                        throw new Exception("Le champs poste doit être rempli !");
+                    elseif(empty($infos['service']))
+                        throw new Exception("Le champs service doit être rempli !");
+                    elseif(empty($infos['type_de_contrat']))
+                        throw new Exception("Le champs type de contrat doit être rempli !");
+                    elseif(empty($infos['date debut']))
+                        throw new Exception('Le champs date de début doit être rempli !');
+                    elseif(empty($infos['salaire']))
+                        throw new Exception('Le champs salaire doit être rempli !');
+                    elseif(empty($infos['nb_heures']))
+                        throw new Exception('Le champs taux horaire hebdomadaire doit être rempli !');
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+                
+                try {
+                    if(isset($_GET['cle_candidat'])) 
+                        $candidats->createProposition($_GET['cle_candidat'], $infos);
+                    else 
+                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+                
+                break;    
+
+            case 'inscript-propositions-from-candidatures':
+                break;    
 
             case 'reject-candidatures':
                 echo "Méthode sélectionnée";
                 $candidats->rejectCandidature($_GET['cle']);
+                break;  
+            
+            case 'accept-candidatures': 
                 break;    
             
             default: 

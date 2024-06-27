@@ -4,6 +4,8 @@ class forms_manip {
     public static function error_alert($msg) {
         if(empty($msg))
             $msg = "Une erreur est survenue";
+        elseif($msg instanceof Exception)    
+            $msg = $msg->getMessage();
 
         echo "<script>window.history.back(); alert(\"" . $msg . "\");</script>";
         exit;

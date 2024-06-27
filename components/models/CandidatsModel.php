@@ -7,6 +7,7 @@ class CandidatsModel extends Model {
     private function getCandidats($index) {
         // On initialise la requête
         $request = "SELECT 
+        Id_Candidats AS id,
         Nom_Candidats AS nom,
         Prenom_Candidats AS prenom,
         Telephone_Candidats AS telephone,
@@ -217,6 +218,31 @@ class CandidatsModel extends Model {
         return $this->get_request($request);
     }
 
+    public function createPropositons($cle, $propositions) {
+        // On génère l'instant actuel
+        $instant = $this->inscriptInstants()['Id_Instants'];
+
+        // On prépare la proposition
+        array_push($propositions, ['cle candidat' => $cle]);
+        array_push($proposition, ['cle instant' => $instant]);
+        // Ajouter la clé service, la clé poste et la clé type de contrat
+
+        // On génère le contrat
+        $contrat = Contrat::makeContrat($propositions);
+    }
+
+    protected function inscriptProposer_a($cle_candidat, $cle_instant) {
+        // On initialise la requête
+        $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) 
+        VALUES (:candidat, :instant)";
+        $params = [
+            'candidat' => $cle_candidat,
+            'instant' => $cle_instant
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
 }
 // étape 1 : créer l'instant de proposition
 // étape 2 : enregistrer la proposition (instant + candidat)

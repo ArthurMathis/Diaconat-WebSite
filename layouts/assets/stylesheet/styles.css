@@ -197,6 +197,43 @@ form button:is(:hover, :focus) {
   background-color: transparent;
   box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.2);
 }
+form .input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+  width: 100%;
+}
+
+.big-form {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+
+  height: 85dvh;
+  padding: var(--padding) 0;
+  transform: translateX(-50%);
+}
+.big-form .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding);
+
+  padding-bottom: var(--gap);
+
+  overflow-y: scroll;
+}
+.form-container > section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--gap) * 2 / 3);
+
+  width: 100%;
+  height: fit-content;
+
+  padding: 0 var(--padding);
+}
 
 #waves {
   position: fixed;

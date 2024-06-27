@@ -47,7 +47,7 @@
     <?php if($item['statut'] != 'acceptee' && $item['statut'] != 'refusee'): ?>
         <footer>
             <a class="action_button reject-button" href="index.php?candidats=reject-candidatures&cle=<?= $item['cle']; ?>"></a>
-            <a class="action_button accept-button" href=""></a>
+            <a class="action_button accept-button" href="index.php?candidats=saisie-propositions-from-candidature&cle=<?= $item['cle']; ?>"></a>
         </footer>
     <?php endif ?>    
 </div>

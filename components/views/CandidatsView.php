@@ -151,7 +151,7 @@ class CandidatsView extends View {
         else echo "<h2>Aucune proposition enregistrée </h2>"; 
         
         // On ajoute le bouton d'ajout
-        $link = 'index.php?candidats=saisie-propositions';
+        $link = 'index.php?candidats=saisie-propositions&cle_candidat=' . $item['candidat']['id'];
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
@@ -228,7 +228,22 @@ class CandidatsView extends View {
 
 
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
-    public function getSaisieProposition($title) {
+    public function getContentProposition($title, $cle_candidat) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript_candidats.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'proposition.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la formulaire d'ajout d'une proposition
+    public function getContentPropositionFromCandidatures($title) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'proposition.css']);
 
@@ -236,7 +251,7 @@ class CandidatsView extends View {
         $this->generateMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'proposition.php';
+        include FORMULAIRES.DS.'proposition_from_candidature.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

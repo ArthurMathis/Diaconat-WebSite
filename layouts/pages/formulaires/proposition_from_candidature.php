@@ -18,7 +18,7 @@
         </div>
         <div class="checkbox-item">
             <input type="checkbox" id="travail wk" name="travail wk"/>
-            <label for="travail wk">Visible obselète</label>
+            <label for="travail wk">Travail le week-end</label>
         </div>
     </section> 
     <section class="buttons_actions">

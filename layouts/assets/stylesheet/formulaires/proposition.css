@@ -4,17 +4,7 @@ body {
     overflow: hidden;
 }
 
-form {
-    position: fixed;
-    left: 50%;
-    top: 50%;
 
-    width: 860px;
-
-    border-radius: var(--big-radius);
-
-    transform: translate(-50%, -50%);
-}
 form > div {
     display: flex;
     flex-direction: column;
