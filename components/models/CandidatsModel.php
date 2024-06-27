@@ -219,17 +219,34 @@ class CandidatsModel extends Model {
     //     return $this->get_request($request);
     // }
 
-    public function createPropositons($cle, $propositions) {
-        // On génère l'instant actuel
-        $instant = $this->inscriptInstants()['Id_Instants'];
+    public function createPropositions($cle, $propositions) {
+        try {
+            // On génère l'instant actuel
+            $instant = $this->inscriptInstants()['Id_Instants'];
 
-        // On prépare la proposition
-        array_push($propositions, ['cle candidat' => $cle]);
-        array_push($proposition, ['cle instant' => $instant]);
-        // Ajouter la clé service, la clé poste et la clé type de contrat
+            // On ajoute la clé candidat
+            $propositions['cle candidat'] = $cle;
+            // On ajoute la clé instant
+            $propositions['cle instant'] = $instant;
+            // On ajoute la clé poste
+            $propositions['cle poste'] = $this->searchPoste($propositions['poste'])['Id_Postes'];
+            // On ajoute la clé service
+            $propositions['cle service'] = $this->searchService($propositions['service'])['Id_Services'];
+            // On ajoute la clé de type de contrat
+            $propositions['cle type'] = $this->searchTypeContrat($propositions['type_de_contrat'])['Id_Types_de_contrats'];
 
-        // On génère le contrat
-        $contrat = Contrat::makeContrat($propositions);
+            // On génère le contrat
+            $contrat = Contrat::makeContrat($propositions);
+        
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+        
+        // On inscrit la proposition
+        $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
+
+        // On enregistre le contrat
+        $this->inscriptContrats();
     }
 
     // Méthode déplacée dans Model

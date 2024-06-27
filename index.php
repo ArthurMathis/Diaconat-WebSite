@@ -297,9 +297,9 @@ if(isset($_GET['login'])) {
                     'date debut' => $_POST['date_debut'],
                     'date fin' => $_POST['date_fin'],
                     'salaire' => $_POST['salaire_mensuel'],
-                    'nb_heures' => $_POST['taux_horaire_hebdomadaire'],
-                    'trvail_nuit' => isset($_POST['travail_nuit']) ? true : null,
-                    'travail_wk' =>  isset($_POST['travail_wk']) ? true : null
+                    'taux horaire' => $_POST['taux_horaire_hebdomadaire'],
+                    'trvail nuit' => isset($_POST['travail_nuit']) ? true : null,
+                    'travail week-end' =>  isset($_POST['travail_wk']) ? true : null
                 ];
                 try {
                     if(empty($infos['poste']))
@@ -312,7 +312,7 @@ if(isset($_GET['login'])) {
                         throw new Exception('Le champs date de début doit être rempli !');
                     elseif(empty($infos['salaire']))
                         throw new Exception('Le champs salaire doit être rempli !');
-                    elseif(empty($infos['nb_heures']))
+                    elseif(empty($infos['taux horaire']))
                         throw new Exception('Le champs taux horaire hebdomadaire doit être rempli !');
 
                 } catch(Exception $e) {

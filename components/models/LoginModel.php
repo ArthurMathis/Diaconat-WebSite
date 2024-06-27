@@ -108,19 +108,4 @@ class LoginModel extends Model {
         if($i == $size) 
             throw new Exception("Aucun utilisateur correspondant");
     }
-    // protected function searchCle($user): ?int {
-    //     // On initialise la requête
-    //     $request = "SELECT Id_Utilisateurs FROM Utilisateurs WHERE Nom_Utilisateurs = :nom AND Email_Utilisateurs = :email AND Cle_Roles = :id_Roles";
-    //     $params = [
-    //         'nom' => $user->getIdentifiant(),
-    //         'email' => $user->getEmail(),
-    //         'id_Roles' => $this->searchRole($user->getRole())
-    //     ];
-    // 
-    //     // On lance la requête
-    //     $result = $this->get_request($request, $params, true, true);
-    // 
-    //     // On retourne le rôle
-    //     return $result;
-    // }
 }

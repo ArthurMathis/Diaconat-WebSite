@@ -38,14 +38,6 @@ class CandidatController extends Controller {
         header('Location: index.php?candidatures=saisie-candidature');
     }
     public function getSaisieProposition($cle_candidat) {
-        // On vérifie l'intégrité du candidat
-        // try {
-        //     $this->getCandidat();
-        // 
-        // } catch(Exception $e) {
-        //     forms_manip::error_alert($e);
-        // }
-
         return $this->View->getContentProposition("Ypopsi - Nouvelle proposition", $cle_candidat);
     }
     public function getSaisiePropositionFromCandidature($cle) {
@@ -75,7 +67,7 @@ class CandidatController extends Controller {
     }
 
     public function createProposition($cle, $propositions) {
-        $this->Model->createProposition($cle, $propositions);
+        $this->Model->createPropositions($cle, $propositions);
         header('Location: index.php?candidats=' . $cle);
     }
 }
