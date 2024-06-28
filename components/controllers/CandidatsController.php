@@ -71,3 +71,9 @@ class CandidatController extends Controller {
         header('Location: index.php?candidats=' . $cle);
     }
 }
+
+    // date fin
+    // salaire 
+    // travail de nuit
+    // travail wk
+    // Nombres d'heures hebdomadaires

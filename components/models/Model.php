@@ -517,8 +517,4 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégées inscrivant un contrat dans la base de données
-    protected function inscriptContrats() {
-        // On initialise la requête
-    }
 }

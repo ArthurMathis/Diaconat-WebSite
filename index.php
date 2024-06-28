@@ -310,10 +310,10 @@ if(isset($_GET['login'])) {
                         throw new Exception("Le champs type de contrat doit être rempli !");
                     elseif(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
-                    elseif(empty($infos['salaire']))
-                        throw new Exception('Le champs salaire doit être rempli !');
-                    elseif(empty($infos['taux horaire']))
-                        throw new Exception('Le champs taux horaire hebdomadaire doit être rempli !');
+                    // elseif(empty($infos['salaire']))
+                    //     throw new Exception('Le champs salaire doit être rempli !');
+                    // elseif(empty($infos['taux horaire']))
+                    //     throw new Exception('Le champs taux horaire hebdomadaire doit être rempli !');
 
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);

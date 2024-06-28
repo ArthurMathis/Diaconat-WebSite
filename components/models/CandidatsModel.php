@@ -1,7 +1,8 @@
 <?php 
 
 require_once('Model.php');
-require_once(CLASSE.DS.'Candidats.php');
+require_once(CLASSE.DS.'Instants.php');
+require_once(CLASSE.DS.'Contrats.php');
 
 class CandidatsModel extends Model {
     private function getCandidats($index) {
@@ -249,6 +250,624 @@ class CandidatsModel extends Model {
         $this->inscriptContrats();
     }
 
+    /// Méthode protégées inscrivant un contrat dans la base de données
+    protected function inscriptContrats($contrats=[]) {
+        // Requête avec date de fin de contrat
+        if(isset($contrat['date fin'])) {
+            // Requête avec salaire
+            if(isset($contrats['salaire'])) {
+                // Requête avec travail de nuit
+                if(isset($contrats['travail nuit'])) {
+                    // Requête avec travail de week-end
+                    if(isset($contrats['travail wk'])) {
+                        // Requête avec taux horaire hebdomadaire
+                        if(isset($contrats['nb heures'])) {
+                            // On initialise la requête
+                            $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                            // On prépare les paramètres
+                            $params = [
+                                "date_debut" => $contrats['date debut'],
+                                "date_fin" => $contrats['date fin'],
+                                "salaire" => $contrats['salaire'],
+                                "travail_nuit" => $contrats['travail nuit'],
+                                "travail_wk" => $contrats['travail wk'],
+                                "nb_heures" => $contrats['nb heures'],
+                                "cle_candidat" => $contrats['cle candidat'],
+                                "cle_instant" => $contrats['cle instant'],
+                                "cle_service" => $contrats['cle service'],
+                                "cle_poste" => $contrats['cle poste'],
+                                "cle_types" => $contrats['cle types']
+                            ];
+
+                        // Requête sans taux horaire hebdomadaire    
+                        } else {
+                            // On initialise la requête
+                            $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                            // On prépare les paramètres
+                            $params = [
+                                "date_debut" => $contrats['date debut'],
+                                "date_fin" => $contrats['date fin'],
+                                "salaire" => $contrats['salaire'],
+                                "travail_nuit" => $contrats['travail nuit'],
+                                "travail_wk" => $contrats['travail wk'],
+                                "cle_candidat" => $contrats['cle candidat'],
+                                "cle_instant" => $contrats['cle instant'],
+                                "cle_service" => $contrats['cle service'],
+                                "cle_poste" => $contrats['cle poste'],
+                                "cle_types" => $contrats['cle types']
+                            ];
+                        }
+
+                    // Requête sans travail de week-end avec taux horaire hebdomadaire
+                    } elseif(isset($contrats['nb heures'])) {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "nb_heures" => $contrats['nb heures'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+
+                    // Requête sans taux horaire hebdomadaire    
+                    } else {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+                    }
+
+                // Requête sans travail de nuit avec travail de week-end
+                } elseif(isset($contrats['travail wk'])) {
+                    // Requête avec taux horaire hebdomadaire
+                    if(isset($contrats['nb heures'])) {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "nb_heures" => $contrats['nb heures'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+
+                    // Requête sans taux horaire hebdomadaire    
+                    } else {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+                    }
+
+                // Requête sans travail de week-end avec taux horaire hebdomadaire    
+                } elseif(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "salaire" => $contrats['salaire'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+
+                // Requête sans taux horaire hebdomadaire    
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "salaire" => $contrats['salaire'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans salaire avec travail de nuit
+            } if(isset($contrats['travail nuit'])) {
+                // Requête avec travail de week-end
+                if(isset($contrats['travail wk'])) {
+                    // Requête avec taux horaire hebdomadaire
+                    if(isset($contrats['nb heures'])) {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "nb_heures" => $contrats['nb heures'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+
+                    // Requête sans taux horaire hebdomadaire    
+                    } else {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "date_fin" => $contrats['date fin'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+                    }
+
+                // Requête sans travail de week-end avec taux horaire hebdomadaire 
+                } elseif(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                   
+                // Requête sans taux horaire hebdomadaire     
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans travail de nuit avec travail de week-end
+            } elseif(isset($contrats['travail wk'])) {
+                // Requête avec taux horaire hebdomadaire
+                if(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+
+                // Requête sans taux horaire hebdomadaire
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :date_fin, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "date_fin" => $contrats['date fin'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans travail de nuit avec taux horaire hebdomadaire
+            } elseif(isset($contrats['nb heures'])) {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :date_fin, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "date_fin" => $contrats['date fin'],
+                    "nb_heures" => $contrats['nb heures'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+
+            // Requête sans taux horaire hebdomadaire    
+            } else {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :date_fin, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "date_fin" => $contrats['date fin'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+            }
+
+        // Requête sans date de fin avec salaire 
+        } elseif(isset($contrats['salaire'])) {
+            // Requête avec travail de nuit
+            if(isset($contrats['travail nuit'])) {
+                // Requête avec travail de week-end
+                if(isset($contrats['travail wk'])) {
+                    // Requête sans travail de week-end avec taux horaire hebdomadaire 
+                    if(isset($contrats['nb heures'])) {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "nb_heures" => $contrats['nb heures'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+
+                    // Requête sans taux horaire hebdomadaire
+                    } else {
+                        // On initialise la requête
+                        $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        // On prépare les paramètres
+                        $params = [
+                            "date_debut" => $contrats['date debut'],
+                            "salaire" => $contrats['salaire'],
+                            "travail_nuit" => $contrats['travail nuit'],
+                            "travail_wk" => $contrats['travail wk'],
+                            "cle_candidat" => $contrats['cle candidat'],
+                            "cle_instant" => $contrats['cle instant'],
+                            "cle_service" => $contrats['cle service'],
+                            "cle_poste" => $contrats['cle poste'],
+                            "cle_types" => $contrats['cle types']
+                        ];
+                    }
+
+                // Requête sans travail de nuit avec taux horaire hebdomadaire  
+                } elseif(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "salaire" => $contrats['salaire'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                     
+                // Requête sans taux horaire hebdomadaire     
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "salaire" => $contrats['salaire'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans travail de nuit avec travail de week-end 
+            } elseif(isset($contrats['travail wk'])) {
+                // Requête sans travail de week-end avec taux horaire hebdomadaire
+                if(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "salaire" => $contrats['salaire'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+
+                // Requête sans taux horaire hebdomadaire
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)   
+                    VALUES (:date_debut, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "salaire" => $contrats['salaire'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans travail de week-end avec taux horaire hebdomadaire
+            } elseif(isset($contrats['nb heures'])) {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "salaire" => $contrats['salaire'],
+                    "nb_heures" => $contrats['nb heures'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+
+            // Requête sans taux horaire hebdomadaire
+            } else {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "salaire" => $contrats['salaire'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+            }
+
+        // Requête sans salaire avec travail de nuit    
+        } else if(isset($contrats['travail nuit'])) {
+            // Requête avec travail de week-end 
+            if(isset($contrats['travail wk'])) {
+                // Requêtes avec taux horaire hebdomadaire
+                if(isset($contrats['nb heures'])) {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "nb_heures" => $contrats['nb heures'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+
+                // Requête sans taux horaire hebdomadaire    
+                } else {
+                    // On initialise la requête
+                    $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                    VALUES (:date_debut, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    // On prépare les paramètres
+                    $params = [
+                        "date_debut" => $contrats['date debut'],
+                        "travail_nuit" => $contrats['travail nuit'],
+                        "travail_wk" => $contrats['travail wk'],
+                        "cle_candidat" => $contrats['cle candidat'],
+                        "cle_instant" => $contrats['cle instant'],
+                        "cle_service" => $contrats['cle service'],
+                        "cle_poste" => $contrats['cle poste'],
+                        "cle_types" => $contrats['cle types']
+                    ];
+                }
+
+            // Requête sans travail de week-end avec taux horaire hebdomadaire
+            } elseif(isset($contrats['nb heures'])) {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "travail_nuit" => $contrats['travail nuit'],
+                    "nb_heures" => $contrats['nb heures'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+
+            // Requête sans taux horaire hebdomadaire
+            } else {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "travail_nuit" => $contrats['travail nuit'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+            }
+
+        // Requête sans travail de nuit avec travail de week-end    
+        } elseif(isset($contrats['travail wk'])) {
+            // Requête avec taux horaire hebdomadaire
+            if(isset($contrats['nb heures'])) {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "travail_wk" => $contrats['travail wk'],
+                    "nb_heures" => $contrats['nb heures'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+
+            // Requête sans taux horaire hebdomadaire
+            } else {
+                // On initialise la requête
+                $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+                VALUES (:date_debut, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                // On prépare les paramètres
+                $params = [
+                    "date_debut" => $contrats['date debut'],
+                    "travail_wk" => $contrats['travail wk'],
+                    "cle_candidat" => $contrats['cle candidat'],
+                    "cle_instant" => $contrats['cle instant'],
+                    "cle_service" => $contrats['cle service'],
+                    "cle_poste" => $contrats['cle poste'],
+                    "cle_types" => $contrats['cle types']
+                ];
+            }
+
+        // Requête sans travail de week-end avec taux horaire hebdomadaire     
+        } elseif(isset($contrats['nb heures'])) {
+            // On initialise la requête
+            $request = "INSERT INTO Contrats (Date_debut_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+            VALUES (:date_debut, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+            // On prépare les paramètres
+            $params = [
+                "date_debut" => $contrats['date debut'],
+                "nb_heures" => $contrats['nb heures'],
+                "cle_candidat" => $contrats['cle candidat'],
+                "cle_instant" => $contrats['cle instant'],
+                "cle_service" => $contrats['cle service'],
+                "cle_poste" => $contrats['cle poste'],
+                "cle_types" => $contrats['cle types']
+            ];
+
+        // Requête sans taux horaire hebdomadaire
+        } else {
+            // On initialise la requête
+            $request = "INSERT INTO Contrats (Date_debut_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
+            VALUES (:date_debut, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+            // On prépare les paramètres
+            $params = [
+                "date_debut" => $contrats['date debut'],
+                "cle_candidat" => $contrats['cle candidat'],
+                "cle_instant" => $contrats['cle instant'],
+                "cle_service" => $contrats['cle service'],
+                "cle_poste" => $contrats['cle poste'],
+                "cle_types" => $contrats['cle types']
+            ];
+        }
+    
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+
+    // date fin
+    // salaire 
+    // travail de nuit
+    // travail wk
+    // Nombres d'heures hebdomadaires
+
     // Méthode déplacée dans Model
     // protected function inscriptProposer_a($cle_candidat, $cle_instant) {
     //     // On initialise la requête
@@ -258,7 +877,20 @@ class CandidatsModel extends Model {
     //         'candidat' => $cle_candidat,
     //         'instant' => $cle_instant
     //     ];
-// 
+// On prépare les paramètres
+                            // $params = [
+                            //     "date_debut" => $contrats['date debut'],
+                            //     "date_fin" => $contrats['date fin'],
+                            //     "salaire" => $contrats['salaire'],
+                            //     "travail_nuit" => $contrats['travail nuit'],
+                            //     "travail_wk" => $contrats['travail wk'],
+                            //     "nb_heures" => $contrats['nb heures'],
+                            //     "cle_candidat" => $contrats['cle candidat'],
+                            //     "cle_instant" => $contrats['cle instant'],
+                            //     "cle_service" => $contrats['cle service'],
+                            //     "cle_poste" => $contrats['cle poste'],
+                            //     "cle_types" => $contrats['cle types']
+                            // ];    // 
     //     // On lance la requête
     //     $this->post_request($request, $params);
     // }

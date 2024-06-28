@@ -173,7 +173,7 @@ class Contrat {
     }
     private function setCleCandidats($cle) {
         // On vérifie la présence d'une clé
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être strictement positive !");
