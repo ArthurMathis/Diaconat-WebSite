@@ -1,6 +1,6 @@
 <div class="contrats_bulle">
     <header>
-        <h2><?= $item['intitule']; ?></h2>
+        <h2><?= $item['poste']; ?></h2>
         <p><?= $item['service']; ?></p>
         <p><?= $item['etablissement']; ?></p>
     </header>
