@@ -87,8 +87,7 @@ class CandidatsModel extends Model {
     private function getContrats($index) {
         // On initialise la requête 
         $request = "SELECT 
-        Intitule_Missions AS intitule,
-        Intitule_Postes AS postes,
+        Intitule_Postes AS poste,
         Intitule_Services AS service,
         Intitule_Etablissements AS etablissement,
         Salaires_Contrats AS salaire,
@@ -207,18 +206,6 @@ class CandidatsModel extends Model {
     public function setPropositionStatut($statut, $cle) {
         // à compléter
     }
-
-    // Méthode déplacée dans Model
-    // protected function searchcandidatFromCandidature($cle) {
-    //     // On initialise la requête
-    //     $request = "SELECT * 
-    //     FROM Candidatures 
-    //     INNER JOIN Candidats ON Candidatures.Cle_Candidats = Candidats.Id_Candidats
-    //     WHERE Candidatures.Id_Candidatures = " . $cle;
-    // 
-    //     // On lance la requête
-    //     return $this->get_request($request);
-    // }
 
     public function createPropositions($cle, $propositions) {
         try {
@@ -918,41 +905,4 @@ class CandidatsModel extends Model {
 
         echo "<h1>Contrat enregistré !</h1>";
     }
-
-    // date fin
-    // salaire 
-    // travail de nuit
-    // travail wk
-    // Nombres d'heures hebdomadaires
-
-    // Méthode déplacée dans Model
-    // protected function inscriptProposer_a($cle_candidat, $cle_instant) {
-    //     // On initialise la requête
-    //     $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) 
-    //     VALUES (:candidat, :instant)";
-    //     $params = [
-    //         'candidat' => $cle_candidat,
-    //         'instant' => $cle_instant
-    //     ];
-// On prépare les paramètres
-                            // $params = [
-                            //     "date_debut" => $contrats['date debut'],
-                            //     "date_fin" => $contrats['date fin'],
-                            //     "salaire" => $contrats['salaire'],
-                            //     "travail_nuit" => $contrats['travail nuit'],
-                            //     "travail_wk" => $contrats['travail wk'],
-                            //     "nb_heures" => $contrats['nb heures'],
-                            //     "cle_candidat" => $contrats['cle candidat'],
-                            //     "cle_instant" => $contrats['cle instant'],
-                            //     "cle_service" => $contrats['cle service'],
-                            //     "cle_poste" => $contrats['cle poste'],
-                            //     "cle_types" => $contrats['cle types']
-                            // ];    // 
-    //     // On lance la requête
-    //     $this->post_request($request, $params);
-    // }
 }
-// étape 1 : créer l'instant de proposition
-// étape 2 : enregistrer la proposition (instant + candidat)
-// étape 3 : générer le contrat (classe)
-// étape 4 : enregistrer le contrat dans la base de données

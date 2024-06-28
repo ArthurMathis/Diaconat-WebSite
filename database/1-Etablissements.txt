@@ -36,8 +36,6 @@ CREATE TABLE Postes (
 
 -- On génère la table Missions contenant les différentes missions (postes + services) de la Fondation --
 CREATE TABLE Missions (
-    Intitule_Missions VARCHAR(64) NOT NULL UNIQUE,
-
     Cle_Services INTEGER NOT NULL,
     Cle_Postes INTEGER NOT NULL,
     
