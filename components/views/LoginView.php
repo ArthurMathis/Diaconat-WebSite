@@ -5,7 +5,7 @@ require_once 'View.php';
 class LoginView extends View {
     public function getContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'connexion.css']);
+        $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu();
@@ -20,7 +20,7 @@ class LoginView extends View {
 
     public function getSigninContent() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'connexion.css']);
+        $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu();

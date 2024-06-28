@@ -284,6 +284,13 @@ if(isset($_GET['login'])) {
                 else 
                     forms_manip::error_alert("La clé n'a pas pu être détectée");
                 break;
+
+            case 'saisie-propositions-from-empty-candidature':
+                if(isset($_GET['cle']) && is_numeric($_GET['cle']))
+                    $candidats->getSaisiePropositionFromEmptyCandidature($_GET['cle']);
+                else 
+                    forms_manip::error_alert("La clé n'a pas pu être détectée");
+                break;    
             
             case 'saisie-contrats' :
                 break;
@@ -295,12 +302,8 @@ if(isset($_GET['login'])) {
                     'service' => $_POST['service'],
                     'type_de_contrat' => $_POST['type_contrat'],
                     'date debut' => $_POST['date_debut'],
-                    // 'date fin' => $_POST['date_fin'],
-                    // 'salaire' => $_POST['salaire_mensuel'],
-                    // 'taux horaire' => $_POST['taux_horaire_hebdomadaire'],
-                    // 'travail nuit' => isset($_POST['travail_nuit']) ? true : null,
-                    // 'travail week-end' =>  isset($_POST['travail_wk']) ? true : null
                 ];
+
                 try {
                     if(empty($infos['poste']))
                         throw new Exception("Le champs poste doit être rempli !");
@@ -310,10 +313,6 @@ if(isset($_GET['login'])) {
                         throw new Exception("Le champs type de contrat doit être rempli !");
                     elseif(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
-                    // elseif(empty($infos['salaire']))
-                    //     throw new Exception('Le champs salaire doit être rempli !');
-                    // elseif(empty($infos['taux horaire']))
-                    //     throw new Exception('Le champs taux horaire hebdomadaire doit être rempli !');
 
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
@@ -331,10 +330,6 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
-                // foreach($infos as $k => $i)
-                //     echo $k . " => " . gettype($i) . ' : ' . $i . "<br>";
-                // exit;
-
                 try {
                     if(isset($_GET['cle_candidat'])) 
                         $candidats->createProposition($_GET['cle_candidat'], $infos);
@@ -351,11 +346,11 @@ if(isset($_GET['login'])) {
                 break;    
 
             case 'reject-candidatures':
-                echo "Méthode sélectionnée";
                 $candidats->rejectCandidature($_GET['cle']);
                 break;  
             
             case 'accept-candidatures': 
+                $candidat->acceptCandidature($_GET['cle']);
                 break;    
             
             default: 

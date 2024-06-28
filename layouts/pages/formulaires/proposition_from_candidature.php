@@ -1,4 +1,13 @@
 <form method="post" action="">
+    <h2>Service et établissement</h2>
+        <div>
+            <label for="date debut">Date de début</label>
+            <input type="date" name="date debut" id="date debut">
+        </div>
+        <div>
+            <label for="date fin">Date de fin</label>
+            <input type="date" name="date fin" id="date fin">
+        </div>
     <h2>Durée du contrat</h2>
     <div>
         <label for="date debut">Date de début</label>

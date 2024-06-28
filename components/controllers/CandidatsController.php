@@ -41,19 +41,30 @@ class CandidatController extends Controller {
         return $this->View->getContentProposition("Ypopsi - Nouvelle proposition", $cle_candidat);
     }
     public function getSaisiePropositionFromCandidature($cle) {
-        // On récupère la candidature (requête MySQL via le Model)
-        // ...
-        // On affiche le formulaire prérempli
         return $this->View->getContentPropositionFromCandidatures("Ypopsi - Nouvelle proposition");
+    }
+    public function getSaisiePropositionFromEmptyCandidature($cle) {
+        return $this->View->getContentPropositionFromEmptyCandidatures("Ypopsi - Nouvelle proposition");
     }
 
     public function acceptCandidature($cle) {
+
+        $candidature = $this->Model->searchCandidature($cle);
+
+        foreach($candidature as $k => $v)
+            echo $v . " => " . $k < '<br>';
+        exit;
+
+
+
         try {
-            $this->Model->setCandidatureStatut('en attente', $cle);
+            $this->Model->setCandidatureStatut('acceptee', $cle);
 
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
+
+        $candidature = $this->Model->searchCandidature($cle);
     }
     public function rejectCandidature($cle) {
         try {
@@ -71,9 +82,3 @@ class CandidatController extends Controller {
         header('Location: index.php?candidats=' . $cle);
     }
 }
-
-    // date fin
-    // salaire 
-    // travail de nuit
-    // travail wk
-    // Nombres d'heures hebdomadaires

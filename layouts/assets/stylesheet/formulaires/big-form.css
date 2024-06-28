@@ -1,0 +1,38 @@
+body {
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+form {
+    width: 860px;
+}
+form > div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.4em;
+    width: 100%;
+}
+.buttons_actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: fit-content;
+}
+
+.user-link {
+    background-attachment: fixed;
+}
+.user-link, 
+.user-link > a {
+    color: var(--white);
+}
+.user-link > a {
+    font-family: 'Roboto Bold';
+}
+.user-link > a::after {
+    background-color: var(--white);
+}

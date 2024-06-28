@@ -1,4 +1,4 @@
-<form method="post" action="index.php?candidatures=inscription-candidat">
+<form class="big-form" method="post" action="index.php?candidatures=inscription-candidat">
     <div class="form-container">
         <section>
             <h2>Coordonnées</h2>

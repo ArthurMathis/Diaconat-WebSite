@@ -208,7 +208,7 @@ abstract class Model {
         return $this->get_request($request);
     }
     /// Méthode protégée recherchant une candidature dans la base de données
-    protected function searchCandiature($cle_candidat, $cle_instant) {
+    protected function searchCandidature($cle_candidat, $cle_instant) {
         // On vérifie l'intégrité des données
         if(empty($cle_candidat) || empty($cle_instant)) {
             throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');

@@ -43,7 +43,7 @@ class CandidatsView extends View {
         foreach($propositions as $p) if(empty($p['signature'])) {
             $new_p = [
                 'Statut' => empty($p['statut']) ? 'en attente' : 'refusée',
-                'Poste' => $p['intitule'],
+                'Poste' => $p['poste'],
                 'Type de contrat' => $p['type_de_contrat']
             ];
             array_push($propositions_bulles, $new_p);
@@ -226,15 +226,14 @@ class CandidatsView extends View {
     }
 
 
-
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
     public function getContentProposition($title, $cle_candidat) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript_candidats.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu(true);
-
+        
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'proposition.php';
         include FORMULAIRES.DS.'waves.php';
@@ -245,13 +244,28 @@ class CandidatsView extends View {
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
     public function getContentPropositionFromCandidatures($title) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'proposition.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'proposition_from_candidature.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la formulaire d'ajout d'une proposition selon une candidature sans service
+    public function getContentPropositionFromEmptyCandidatures($title) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu(true);
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'proposition_from_empty_candidature.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

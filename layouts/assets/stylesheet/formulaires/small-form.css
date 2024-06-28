@@ -8,12 +8,10 @@ form {
   position: fixed;
   top: 50%;
   left: 50%;
+
   width: 860px;
+
   transform: translate(-50%, -50%);
-}
-form img {
-  position: absolute;
-  top: -120px;
 }
 form > section {
   display: flex;
