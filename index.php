@@ -295,11 +295,11 @@ if(isset($_GET['login'])) {
                     'service' => $_POST['service'],
                     'type_de_contrat' => $_POST['type_contrat'],
                     'date debut' => $_POST['date_debut'],
-                    'date fin' => $_POST['date_fin'],
-                    'salaire' => $_POST['salaire_mensuel'],
-                    'taux horaire' => $_POST['taux_horaire_hebdomadaire'],
-                    'trvail nuit' => isset($_POST['travail_nuit']) ? true : null,
-                    'travail week-end' =>  isset($_POST['travail_wk']) ? true : null
+                    // 'date fin' => $_POST['date_fin'],
+                    // 'salaire' => $_POST['salaire_mensuel'],
+                    // 'taux horaire' => $_POST['taux_horaire_hebdomadaire'],
+                    // 'travail nuit' => isset($_POST['travail_nuit']) ? true : null,
+                    // 'travail week-end' =>  isset($_POST['travail_wk']) ? true : null
                 ];
                 try {
                     if(empty($infos['poste']))
@@ -318,7 +318,23 @@ if(isset($_GET['login'])) {
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
-                
+
+                // On ajoute les champs optionnel
+                if(!empty($_POST['date_fin']))
+                    $infos['date fin'] = $_POST['date_fin'];
+                if(!empty($_POST['salaire_mensuel']))
+                    $infos['salaire'] = intval($_POST['salaire_mensuel']);
+                if(!empty($_POST['taux_horaire_hebdomadaire'])) 
+                    $infos['taux horaire'] = $_POST['taux_horaire_hebdomadaire'];
+                if(isset($_POST['travail_nuit']))
+                    $infos['travail nuit'] = true;
+                if(isset($_POST['travail_wk']))
+                    $infos['travail nuit'] = true;
+
+                // foreach($infos as $k => $i)
+                //     echo $k . " => " . gettype($i) . ' : ' . $i . "<br>";
+                // exit;
+
                 try {
                     if(isset($_GET['cle_candidat'])) 
                         $candidats->createProposition($_GET['cle_candidat'], $infos);

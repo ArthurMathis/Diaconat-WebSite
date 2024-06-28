@@ -222,36 +222,76 @@ class CandidatsModel extends Model {
 
     public function createPropositions($cle, $propositions) {
         try {
+            echo "<h1>On construit la proposition</h1>";
+            echo "On inscrit l'intant actuel<br>";
+
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
 
+            echo "<h2>On ajoute les clés extrenes</h2>";
+
             // On ajoute la clé candidat
             $propositions['cle candidat'] = $cle;
+            echo $propositions['cle candidat'] . "<br>";
+
             // On ajoute la clé instant
             $propositions['cle instant'] = $instant;
+            echo $propositions['cle instant'] . "<br>";
+
             // On ajoute la clé poste
             $propositions['cle poste'] = $this->searchPoste($propositions['poste'])['Id_Postes'];
+            echo $propositions['cle poste'] . "<br>";
+            
             // On ajoute la clé service
             $propositions['cle service'] = $this->searchService($propositions['service'])['Id_Services'];
+            echo $propositions['cle service'] . "<br>";
+
             // On ajoute la clé de type de contrat
             $propositions['cle type'] = $this->searchTypeContrat($propositions['type_de_contrat'])['Id_Types_de_contrats'];
+            echo $propositions['cle type'] . "<br>";
+
+
+            echo "<h2>On construit un contrat </h2>";
 
             // On génère le contrat
             $contrat = Contrat::makeContrat($propositions);
+
+            $infos_contrat = $contrat->exportToSQL();
+
+            foreach($infos_contrat as $k => $v)
+                echo $k . " => " . $v . "<br>";
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
         
+        echo "<h2>On inscrit la proposition</h2>";
+
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
 
+        echo "Proposition inscrite<br>";
+
+        echo "<h2>On inscript la mission</h2>";
+
+        // On inscrit la proposition
+        $this->inscriptMission($contrat->getCleServices(), $contrat->getClePostes());
+
+        echo "Mission inscrite<br>";
+        echo "<h2>On inscrit le contrat</h2>";
+
         // On enregistre le contrat
-        $this->inscriptContrats();
+        $this->inscriptContrats($infos_contrat);
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données
     protected function inscriptContrats($contrats=[]) {
+
+        foreach($contrats as $k => $v)
+            echo $k . " => " . $v . "<br>";
+
+        echo "<h1>On génère la requête</h1>";    
+
         // Requête avec date de fin de contrat
         if(isset($contrat['date fin'])) {
             // Requête avec salaire
@@ -264,7 +304,7 @@ class CandidatsModel extends Model {
                         if(isset($contrats['nb heures'])) {
                             // On initialise la requête
                             $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                             // On prépare les paramètres
                             $params = [
                                 "date_debut" => $contrats['date debut'],
@@ -284,7 +324,7 @@ class CandidatsModel extends Model {
                         } else {
                             // On initialise la requête
                             $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                            VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                             // On prépare les paramètres
                             $params = [
                                 "date_debut" => $contrats['date debut'],
@@ -304,7 +344,7 @@ class CandidatsModel extends Model {
                     } elseif(isset($contrats['nb heures'])) {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -323,7 +363,7 @@ class CandidatsModel extends Model {
                     } else {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -344,7 +384,7 @@ class CandidatsModel extends Model {
                     if(isset($contrats['nb heures'])) {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -363,7 +403,7 @@ class CandidatsModel extends Model {
                     } else {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -382,7 +422,7 @@ class CandidatsModel extends Model {
                 } elseif(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -400,7 +440,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Salaires_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -423,7 +463,7 @@ class CandidatsModel extends Model {
                     if(isset($contrats['nb heures'])) {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -442,7 +482,7 @@ class CandidatsModel extends Model {
                     } else {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :date_fin, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -461,7 +501,7 @@ class CandidatsModel extends Model {
                 } elseif(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -478,7 +518,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -498,7 +538,7 @@ class CandidatsModel extends Model {
                 if(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -516,7 +556,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :date_fin, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :date_fin, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -534,7 +574,7 @@ class CandidatsModel extends Model {
             } elseif(isset($contrats['nb heures'])) {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :date_fin, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :date_fin, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -551,7 +591,7 @@ class CandidatsModel extends Model {
             } else {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Date_fin_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :date_fin, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :date_fin, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -574,7 +614,7 @@ class CandidatsModel extends Model {
                     if(isset($contrats['nb heures'])) {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -593,7 +633,7 @@ class CandidatsModel extends Model {
                     } else {
                         // On initialise la requête
                         $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                        VALUES (:date_debut, :salaire, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                         // On prépare les paramètres
                         $params = [
                             "date_debut" => $contrats['date debut'],
@@ -612,7 +652,7 @@ class CandidatsModel extends Model {
                 } elseif(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :salaire, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -630,7 +670,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :salaire, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -650,7 +690,7 @@ class CandidatsModel extends Model {
                 if(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :salaire, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -668,7 +708,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)   
-                    VALUES (:date_debut, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :salaire, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -686,7 +726,7 @@ class CandidatsModel extends Model {
             } elseif(isset($contrats['nb heures'])) {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :salaire, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -703,7 +743,7 @@ class CandidatsModel extends Model {
             } else {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Salaires_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :salaire, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -724,7 +764,7 @@ class CandidatsModel extends Model {
                 if(isset($contrats['nb heures'])) {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :travail_nuit, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -742,7 +782,7 @@ class CandidatsModel extends Model {
                 } else {
                     // On initialise la requête
                     $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                    VALUES (:date_debut, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                    VALUES (:date_debut, :travail_nuit, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                     // On prépare les paramètres
                     $params = [
                         "date_debut" => $contrats['date debut'],
@@ -760,7 +800,7 @@ class CandidatsModel extends Model {
             } elseif(isset($contrats['nb heures'])) {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :travail_nuit, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -777,7 +817,7 @@ class CandidatsModel extends Model {
             } else {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_de_nuit_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :travail_nuit, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -796,7 +836,7 @@ class CandidatsModel extends Model {
             if(isset($contrats['nb heures'])) {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_week_wend_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :travail_wk, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -813,7 +853,7 @@ class CandidatsModel extends Model {
             } else {
                 // On initialise la requête
                 $request = "INSERT INTO Contrats (Date_debut_Contrats, Travail_week_wend_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-                VALUES (:date_debut, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+                VALUES (:date_debut, :travail_wk, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
                 // On prépare les paramètres
                 $params = [
                     "date_debut" => $contrats['date debut'],
@@ -830,7 +870,7 @@ class CandidatsModel extends Model {
         } elseif(isset($contrats['nb heures'])) {
             // On initialise la requête
             $request = "INSERT INTO Contrats (Date_debut_Contrats, Nombres_heures_hebdomadaires, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-            VALUES (:date_debut, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+            VALUES (:date_debut, :nb_heures, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
             // On prépare les paramètres
             $params = [
                 "date_debut" => $contrats['date debut'],
@@ -846,7 +886,7 @@ class CandidatsModel extends Model {
         } else {
             // On initialise la requête
             $request = "INSERT INTO Contrats (Date_debut_Contrats, Cle_Candidats, Cle_Instants, Cle_Services, Cle_Postes, Cle_Types_de_contrats)
-            VALUES (:date_debut, :cle_candidat, :cle_instant, :cle_service, :cle_poste, cle_types)";
+            VALUES (:date_debut, :cle_candidat, :cle_instant, :cle_service, :cle_poste, :cle_types)";
             // On prépare les paramètres
             $params = [
                 "date_debut" => $contrats['date debut'],
@@ -857,9 +897,26 @@ class CandidatsModel extends Model {
                 "cle_types" => $contrats['cle types']
             ];
         }
+
+        $params['cle_instant']  =strval($params['cle_instant']);
+        $params['cle_service']  =strval($params['cle_service']);
+        $params['cle_poste']  =strval($params['cle_poste']);
+        $params['cle_types']  =strval($params['cle_types']);
+
+        echo "<h2>Requête</h2>";
+        echo $request ."<br>";
+        echo "<h2>Paramètres de la requête</h2>";
+        foreach($params as $k => $v) 
+            echo $k . " => " . gettype($v) . " : " . $v . "<br>";
+
+        // exit;
+
+        echo "<h2>On lance la requête</h2>";
     
         // On lance la requête
         $this->post_request($request, $params);
+
+        echo "<h1>Contrat enregistré !</h1>";
     }
 
     // date fin

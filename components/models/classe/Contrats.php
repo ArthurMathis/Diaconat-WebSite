@@ -10,7 +10,7 @@ class InvalideContratExceptions extends Exception {
 
 class Contrat {
     /// Attributs privés de la classe
-    private $cle=null, $date_debut, $date_fin, $salaire, $demission=false, $date_demission=null, $travail_nuit=false, $travail_wk=false, $nb_heures, $cle_candidats, $cle_instants, $Cle_Services, $Cle_Postes, $Cle_Type;
+    private $cle=null, $date_debut, $date_fin=null, $salaire=null, $demission=false, $date_demission=null, $travail_nuit=false, $travail_wk=false, $nb_heures=null, $cle_candidats, $cle_instants, $Cle_Services, $Cle_Postes, $Cle_Type;
 
     /// Constructeur de la classe
     public function __construct($date_debut, $cle_candidats, $cle_instants, $Cle_Postes, $Cle_Services, $Cle_Type) {
@@ -220,5 +220,38 @@ class Contrat {
 
         // On implémente    
         else  $this->Cle_Type = $cle;
+    }
+
+    public function exportToSQL(): array {
+        // On déclare le tableau de données
+        $result = [
+            "date debut" => $this->getDateDebut(),
+            "cle candidat" => $this->getCleCandidats(),
+            "cle instant" => $this->getCleInstants(),
+            "cle service" => $this->getCleServices(),
+            "cle poste" => $this->getClePostes(),
+            "cle types" => $this->getCleType()
+        ];
+        
+        // On ajoute les données optionnelles
+        if($this->getCle() != null)
+            $result['cle contrat'] = $this->getCle();
+        if($this->getDateFin() != null)
+            $result["date fin"] = $this->getDateFin();
+        if($this->getSalaire() != null)
+            $result['salaire'] = $this->getSalaire();
+        if($this->getDemission() != null)
+            $result['demsision'] = $this->getDemission();
+        if($this->getDateDemission() != null)
+            $result['date demission'] = $this->getDateDemission();
+        if($this->getTravailNuit())
+            $result['travail nuit'] = $this->getTravailNuit();
+        if($this->getTravailWk())
+            $result['travail wk'] = $this->getTravailWk();
+        if($this->getNbHeures() != null)
+            $result['nb heures'] = $this->getNbHeures();
+
+        // On retourne le tableau de données    
+        return $result;
     }
 }

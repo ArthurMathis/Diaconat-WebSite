@@ -233,7 +233,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'inscript_candidats.css']);
 
         // On ajoute la barre de navigation
-        $this->generateMenu();
+        $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'proposition.php';
@@ -248,7 +248,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'proposition.css']);
 
         // On ajoute la barre de navigation
-        $this->generateMenu();
+        $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'proposition_from_candidature.php';

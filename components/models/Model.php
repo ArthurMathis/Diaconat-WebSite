@@ -517,4 +517,16 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
+    /// Méthode protégée isncrivant une mission dans la base de données
+    protected function inscriptMission($cle_service, $cle_poste) {
+        // On intitialise la requête 
+        $request = "INSERT INTO Missions (Cle_Services, Cle_Postes) VALUES (:cle_service, :cle_poste)";
+        $params = [
+            "cle_service" => $cle_service,
+            "cle_poste" => $cle_poste
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
 }

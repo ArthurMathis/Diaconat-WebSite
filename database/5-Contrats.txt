@@ -31,7 +31,5 @@ CREATE TABLE Contrats (
 
     FOREIGN KEY (Cle_Candidats, Cle_Instants) REFERENCES proposer_a(Cle_Candidats, Cle_Instants), 
     FOREIGN KEY (Cle_Services, Cle_Postes) REFERENCES missions(Cle_Services, Cle_Postes),
-    FOREIGN KEY (Cle_Types_de_contrats) REFERENCES types_de_contrats(Id_Types_de_contrats), 
-
-    CONSTRAINT heure_travail CHECK (Nombre_heures_hebdomadaire_Contrats BETWEEN 0 AND 55)
+    FOREIGN KEY (Cle_Types_de_contrats) REFERENCES types_de_contrats(Id_Types_de_contrats)
 );
