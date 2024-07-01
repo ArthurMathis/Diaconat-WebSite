@@ -9,11 +9,11 @@ class HomeController extends Controller {
     }
 
     function displayHome() {
-        $items = $this->Model->getNontraiteesCandidatures();
+        $items = $this->Model->getNonTraiteeCandidatures();
         $dashboard = [
             [
-                'titre' => 'Candidatures en Attente', 
-                'content' => $this->Model->getReductEnattenteCandidatures(), 
+                'titre' => 'Propositions en Attente', 
+                'content' => $this->Model->getReductProposition(), 
                 'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null

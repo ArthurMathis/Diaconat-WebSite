@@ -194,14 +194,14 @@ INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES
     (6, 10)
 ;    
 INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) VALUES 
-    ('en attente',  1,  1,  1,  23,  1),
+    ('non traitee',  1,  1,  1,  23,  1),
     ('acceptee',    1,  2,  1,  56,  1),
     ('non traitee', 1,  3,  2,  14,  1),
     ('non traitee',  2,  4,  3,  38,  3),
     ('refusee',  3,  5,  2,  58,  3),
-    ('en attente',  3,  6,  3,  25,  2),
+    ('non traitee',  3,  6,  3,  25,  2),
     ('acceptee',  4,  7,  1,  4,   1),
-    ('en attente',  5,  8,  2,  47,  5),
+    ('non traitee',  5,  8,  2,  47,  5),
     ('non traitee',  6,  9,  1,  65,  4),
     ('non traitee',  6,  10, 4,  26,  4)
 ;    
