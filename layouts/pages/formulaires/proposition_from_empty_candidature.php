@@ -17,8 +17,8 @@
         </section>
         <section>
             <h2>Horaires et rémunérations</h2>
-            <input type="number" placeholder="Salaire mensuel">
-            <input type="number" placeholder="taux horaire hebdomadaire">
+            <input id="salaire_mensuel" name="salaire_mensuel" type="number" placeholder="Salaire mensuel">
+            <input id="taux_horaire_hebdomadaire" name="taux_horaire_hebdomadaire" type="number" placeholder="taux horaire hebdomadaire">
             <div class="checkbox-liste">
                 <div class="checkbox-item">
                     <label for="travail nuit">Travail de nuit</label>
