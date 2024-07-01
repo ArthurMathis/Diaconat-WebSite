@@ -195,20 +195,32 @@ abstract class Model {
         } else 
             throw new Exception("Le type n'a pas pu être reconnu. Le nom (string) ou l'identifiant (int) de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
     }
-    
+
+    /// Méthode protégée recherchant une candidature dans la base de données
+    protected function searchCandidature($cle) {
+        // On initialise la requête
+        $request = "SELECT * FROM Candidatures WHERE Id_candidatures = :cle";
+        $params = ['cle' => $cle];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
     /// Méthode protégée recherchant un candidat dans la base de données depuis une de ses candidatures
     protected function searchCandidatFromCandidature($cle) {
         // On initialise la requête
         $request = "SELECT * 
         FROM Candidatures 
         INNER JOIN Candidats ON Candidatures.Cle_Candidats = Candidats.Id_Candidats
-        WHERE Candidatures.Id_Candidatures = " . $cle;
+        WHERE Candidatures.Id_Candidatures = :cle";
+        $params = [
+            'cle' => $cle
+        ];
 
         // On lance la requête
-        return $this->get_request($request);
+        return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant une candidature dans la base de données
-    protected function searchCandidature($cle_candidat, $cle_instant) {
+    /// Méthode protégée recherchant une candidature depuis sont candidat et son instant dans la base de données
+    protected function searchCandidatureFromCandidat($cle_candidat, $cle_instant) {
         // On vérifie l'intégrité des données
         if(empty($cle_candidat) || empty($cle_instant)) {
             throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');
@@ -375,6 +387,24 @@ abstract class Model {
 
         // On retourne le résultat
         return $result;
+    }
+    /// Méthode protégée recherchant un Appliquer_a depuis sa candidature
+    protected function searchAppliquer_aFromCandidature($cle) {
+        // On initialise la requête
+        $request = "SELECT * FROM Appliquer_a WHERE Cle_Candidatures = :cle";
+        $params = ['cle' => $cle];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
+    /// Méthode protégée recherchant un Appliquer_a depuis son service
+    protected function searchAppliquer_aFromService($cle) {
+        // On initialise la requête
+        $request = "SELECT * FROM Appliquer_a WHERE Cle_Services = :cle";
+        $params = ['cle' => $cle];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
     }
     
 

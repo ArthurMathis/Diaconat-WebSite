@@ -343,6 +343,82 @@ if(isset($_GET['login'])) {
                 break;    
 
             case 'inscript-propositions-from-candidatures':
+                try {
+                    // On récupère les données du formulaire
+                    $infos = [
+                        'date debut' => $_POST['date_debut']
+                    ];
+
+                    if(empty($infos['date debut']))
+                        throw new Exception('Le champs date de début doit être rempli !');
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                // On ajoute les champs optionnel
+                if(!empty($_POST['date_fin']))
+                    $infos['date fin'] = $_POST['date_fin'];
+                if(!empty($_POST['salaire_mensuel']))
+                    $infos['salaire'] = intval($_POST['salaire_mensuel']);
+                if(!empty($_POST['taux_horaire_hebdomadaire'])) 
+                    $infos['taux horaire'] = $_POST['taux_horaire_hebdomadaire'];
+                if(isset($_POST['travail_nuit']))
+                    $infos['travail nuit'] = true;
+                if(isset($_POST['travail_wk']))
+                    $infos['travail nuit'] = true;
+
+                // On récupère la clé candidature
+                try {
+                    if(isset($_GET['cle_candidature'])) 
+                        $candidats->createPropositionFromCandidature($_GET['cle_candidature'], $infos);
+                    else 
+                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+                break;    
+
+            case 'inscript-propositions-from-empty-candidatures':
+                try {
+                    // On récupère les données du formulaire
+                    $infos = [
+                        'service' => $_POST['service'],
+                        'date debut' => $_POST['date_debut']
+                    ];
+
+                    if(empty($infos['service']))
+                        throw new Exception("Le champs service doit être rempli !");
+                    elseif(empty($infos['date debut']))
+                        throw new Exception('Le champs date de début doit être rempli !');
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                // On ajoute les champs optionnel
+                if(!empty($_POST['date_fin']))
+                    $infos['date fin'] = $_POST['date_fin'];
+                if(!empty($_POST['salaire_mensuel']))
+                    $infos['salaire'] = intval($_POST['salaire_mensuel']);
+                if(!empty($_POST['taux_horaire_hebdomadaire'])) 
+                    $infos['taux horaire'] = $_POST['taux_horaire_hebdomadaire'];
+                if(isset($_POST['travail_nuit']))
+                    $infos['travail nuit'] = true;
+                if(isset($_POST['travail_wk']))
+                    $infos['travail nuit'] = true;
+
+                // On récupère la clé candidature
+                try {
+                    if(isset($_GET['cle_candidature'])) 
+                        $candidats->createPropositionFromEmptyCandidature($_GET['cle_candidature'], $infos);
+                    else 
+                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
                 break;    
 
             case 'reject-candidatures':

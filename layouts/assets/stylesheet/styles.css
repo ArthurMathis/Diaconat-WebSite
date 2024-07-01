@@ -190,7 +190,14 @@ form .input-container {
   gap: 4px;
   width: 100%;
 }
+form .buttons_actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  width: 100%;
+  height: fit-content;
+}
 .big-form {
   position: fixed;
   left: 50%;

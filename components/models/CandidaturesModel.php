@@ -174,7 +174,7 @@ class CandidaturesModel extends Model {
         // On inscript la demande de service
         if(!empty($candidatures['service'])) {
             // On récupère la candidature
-            $cle_candidatures = $this->searchCandidature($candidat->getCle(), $instant)['Id_Candidatures'];
+            $cle_candidatures = $this->searchCandidatureFromCandidat($candidat->getCle(), $instant)['Id_Candidatures'];
 
             // On récupère la clé service
             $service = $this->searchService($candidatures['service'])['Id_Services'];

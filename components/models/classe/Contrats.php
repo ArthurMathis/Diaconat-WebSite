@@ -131,14 +131,14 @@ class Contrat {
     }
     private function setSalaire($salaire) {
         // On vérifie que le salaire est un entier 
-        if(!is_int($salaire))
+        if(!is_numeric($salaire))
             throw new InvalideContratExceptions('Le salaire doit être un entier !');
         // On vérifie que le salaire est non nul
-        elseif(0 < $salaire)
+        elseif(intval($salaire) <= 0)
             throw new InvalideContratExceptions('Le salaire ne peut pas être négatif ou nul !');
 
         // On implémente
-        else $this->salaire = $salaire;
+        else $this->salaire = intval($salaire);
     }
     private function setDemission() {
         $this->demission = true;
@@ -163,10 +163,10 @@ class Contrat {
     }
     private function setNbHeures($heures) {
         // On vérifie que le nombre d'heures est un entier
-        if(!is_int($heures))
+        if(!is_numeric($heures))
             throw new InvalideContratExceptions("Le taux horaires hebdomadaire doit être un entier !");
         // On vérifie que le nombre d'heures et non nul
-        elseif(0 < $heures)
+        elseif($heures <= 0)
             throw new InvalidArgumentException("le taux horaires hebdomadaires ne peut pas être négatif ou nul !");
 
         else $this->nb_heures = $heures;

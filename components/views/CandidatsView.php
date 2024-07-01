@@ -242,9 +242,9 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
-    public function getContentPropositionFromCandidatures($title) {
+    public function getContentPropositionFromCandidatures($title, $cle_candidature, $statut_candidature) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu(true);
@@ -257,7 +257,7 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'une proposition selon une candidature sans service
-    public function getContentPropositionFromEmptyCandidatures($title) {
+    public function getContentPropositionFromEmptyCandidatures($title, $cle_candidature, $statut_candidature) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 

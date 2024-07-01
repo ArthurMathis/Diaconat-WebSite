@@ -1,15 +1,8 @@
-<form class="big-form" method="post" action="">
+<form class="big-form" method="post" action="index.php?candidats=inscript-propositions-from-empty-candidatures&cle_candidature=<?= $cle_candidature; ?>">
     <div class="form-container">
         <section>
             <h2>Service et établissement</h2>
-            <div class="input-container">
-                <label for="date debut">Date de début</label>
-                <input type="text" id="service" name="service" placeholder="Services">
-            </div>
-            <div class="input-container">
-                <label for="date fin">Date de fin</label>
-                <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats">
-            </div>
+            <input type="text" id="service" name="service" placeholder="Services">
         </section>
         <section>
             <h2>Durée du contrat</h2>
@@ -17,7 +10,7 @@
                 <label for="date debut">Date de début</label>
                 <input type="date" name="date debut" id="date debut">
             </div>
-            <div class="input-container">
+            <div class="input-container" <?php if($statut_candidature == "CDI") echo 'style="display: none"'; ?>>
                 <label for="date fin">Date de fin</label>
                 <input type="date" name="date fin" id="date fin">
             </div>

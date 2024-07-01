@@ -19,7 +19,7 @@ CREATE TABLE Contrats (
     Date_demission_Contrats DATE, 
     Travail_de_nuit_Contrats BOOLEAN DEFAULT FALSE, 
     Travail_week_end_Contrats BOOLEAN DEFAULT FALSE, 
-    Nombre_heures_hebdomadaire_Contrats INTEGER,
+    Nombre_heures_hebdomadaires_Contrats INTEGER,
     Statut_Proposition BOOLEAN DEFAULT FALSE, 
     Date_signature_Contrats DATE,
 
