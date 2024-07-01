@@ -146,7 +146,7 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet Porpositions d'un candidat selon les informations de son profil
     public function getPropositionsBoard($item) {
         echo '<section class="onglet">';
-        if(!empty($item['contrats'])) foreach($item['contrats'] as $obj)
+        if(!empty($item['contrats'])) foreach($item['contrats'] as $obj) 
             $this->getPropositionsBulles($obj);
         else echo "<h2>Aucune proposition enregistrée </h2>"; 
         

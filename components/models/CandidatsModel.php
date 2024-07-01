@@ -87,6 +87,7 @@ class CandidatsModel extends Model {
     private function getContrats($index) {
         // On initialise la requête 
         $request = "SELECT 
+        Id_Contrats AS cle,
         Intitule_Postes AS poste,
         Intitule_Services AS service,
         Intitule_Etablissements AS etablissement,
@@ -112,10 +113,8 @@ class CandidatsModel extends Model {
         WHERE c.Cle_Candidats = " . $index;
 
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request);
+
     }
     private function getRendezVous($index) {
         // On initialise la requête 
@@ -208,8 +207,16 @@ class CandidatsModel extends Model {
             $this->post_request($request, $params);
         }
     }
-    public function setPropositionStatut($statut, $cle) {
-        // à compléter
+    public function setPropositionStatut($cle) {
+        // On initialise la requête
+        $request = "UPDATE Contrats SET Statut_Proposition = :statut WHERE Id_Contrats = :cle";
+        $params = [
+            'statut' => 1,
+            'cle' => $cle
+        ];
+        
+        // On exécute la requête
+        $this->post_request($request, $params);
     }
 
     public function createPropositions($cle, $propositions) {

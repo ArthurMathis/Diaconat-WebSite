@@ -38,9 +38,9 @@
             <?php endif ?>  
         </div>
     </content>
-    <?php if($item['statut'] != 'acceptee' && $item['statut'] != 'refusee'): ?>
+    <?php if(empty($item['signature']) && empty($item['statut'])): ?>
         <footer>
-            <a class="action_button reject-button" href=""></a>
+            <a class="action_button reject-button" href="index.php?candidats=reject-propositions&cle_proposition=<?= $item['cle']; ?>"></a>
             <a class="action_button accept-button" href=""></a>
         </footer>
     <?php endif ?>  

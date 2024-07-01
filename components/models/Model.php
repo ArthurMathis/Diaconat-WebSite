@@ -125,8 +125,7 @@ abstract class Model {
     /// Méthode protégée recherchant un role dans la base de données
     protected function searchRole($role): array {
         // On initialise la requête
-        // if(is_numeric($role)) {
-        if(is_int($role)) {
+        if(is_numeric($role)) {
             $request = "SELECT * FROM roles WHERE Id_Role = :Id";
             $params = ["Id" => $role];
 

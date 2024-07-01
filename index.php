@@ -279,15 +279,15 @@ if(isset($_GET['login'])) {
                 break;
 
             case 'saisie-propositions-from-candidature':
-                if(isset($_GET['cle']) && is_numeric($_GET['cle']))
-                    $candidats->getSaisiePropositionFromCandidature($_GET['cle']);
+                if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
+                    $candidats->getSaisiePropositionFromCandidature($_GET['cle_candidature']);
                 else 
                     forms_manip::error_alert("La clé n'a pas pu être détectée");
                 break;
 
             case 'saisie-propositions-from-empty-candidature':
-                if(isset($_GET['cle']) && is_numeric($_GET['cle']))
-                    $candidats->getSaisiePropositionFromEmptyCandidature($_GET['cle']);
+                if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
+                    $candidats->getSaisiePropositionFromEmptyCandidature($_GET['cle_candidature']);
                 else 
                     forms_manip::error_alert("La clé n'a pas pu être détectée");
                 break;    
@@ -419,15 +419,31 @@ if(isset($_GET['login'])) {
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
-                break;    
+                break;       
 
             case 'reject-candidatures':
-                $candidats->rejectCandidature($_GET['cle']);
+                try {
+                    if(isset($_GET['cle_candidature']))
+                    $candidats->rejectCandidature($_GET['cle_candidature']);
+                    else 
+                        throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
                 break;  
-            
-            case 'accept-candidatures': 
-                $candidat->acceptCandidature($_GET['cle']);
-                break;    
+               
+            case 'reject-propositions':
+                try {
+                    if(isset($_GET['cle_proposition']))
+                        $candidats->rejectProposition($_GET['cle_proposition']);
+                    else 
+                        throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+                break; 
             
             default: 
                 throw new Exception ('Action inidentifiable');

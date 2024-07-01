@@ -73,9 +73,24 @@ class CandidatController extends Controller {
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
-        
-        // header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
     }
+
+    /// Méthode publique donnant le statut acceptée une candidature
+    public function accepProposition($cle) {
+        // Ajouter la signature
+    }
+    /// Méthode publique donnant le statut refusée une candidature
+    public function rejectProposition($cle) {
+        try {
+            $this->Model->setPropositionStatut($cle);
+
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+    }
+
 
     /// Méthode publique générant une proposition et l'inscrivant dans la base de donnés
     public function createProposition($cle, $propositions) {
