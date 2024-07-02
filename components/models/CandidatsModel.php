@@ -50,10 +50,7 @@ class CandidatsModel extends Model {
         INNER JOIN diplomes AS d on o.Cle_Diplomes = d.Id_Diplomes";
 
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request);
     }
     private function getCandidatures($index) {
         // On initialise la requête
@@ -76,13 +73,13 @@ class CandidatsModel extends Model {
         LEFT JOIN services as serv ON app.Cle_Services = serv.Id_Services
         LEFT JOIN etablissements AS e ON serv.Cle_Etablissements = e.id_Etablissements
 
-        WHERE c.Cle_Candidats = " . $index;
+        WHERE c.Cle_Candidats = :cle";
+        $params = [
+            'cle' => $index
+        ];
 
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request, $params);
     }
     private function getContrats($index) {
         // On initialise la requête 
@@ -110,10 +107,14 @@ class CandidatsModel extends Model {
         INNER JOIN Etablissements AS e ON s.Cle_Etablissements = e.Id_Etablissements
         INNER JOIN instants AS i ON c.Cle_Instants = i.Id_Instants
         INNER JOIN Types_de_contrats AS t ON c.Cle_Types_de_contrats = t.Id_Types_de_contrats
-        WHERE c.Cle_Candidats = " . $index;
+
+        WHERE c.Cle_Candidats = :cle";
+        $params = [
+            'cle' => $index
+        ];
 
         // On lance la requête
-        return $this->get_request($request);
+        return $this->get_request($request, $params);
     }
     private function getRendezVous($index) {
         // On initialise la requête 
@@ -125,13 +126,14 @@ class CandidatsModel extends Model {
         FROM  avoir_rendez_vous_avec AS rdv
         INNER JOIN utilisateurs AS u ON rdv.Cle_Utilisateurs = u.Id_Utilisateurs
         INNER JOIN instants AS i  ON rdv.Cle_Instants = i.Id_Instants
-        WHERE rdv.Cle_Candidats = " . $index;
 
+        WHERE rdv.Cle_Candidats = :cle";
+        $params = [
+            'cle' => $index
+        ];
+        
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request, $params);
     }
     public function getContent($index) {
         // On vérifie l'intégrité des données

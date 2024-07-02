@@ -152,7 +152,7 @@ class CandidatsView extends View {
     /// Méthode publique générant l'onglet conrtat d'un candidat
     protected function getContratsBoard($item=[]) {
         echo '<section class="onglet">';
-        if(!empty($item['contrat'])) foreach($item['contrat'] as $obj)
+        if(!empty($item['contrats'])) foreach($item['contrats'] as $obj)
             $this->getContratsBulles($obj);
         else echo "<h2>Aucun contrat enregistré </h2>";   
 
