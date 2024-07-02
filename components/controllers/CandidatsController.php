@@ -56,40 +56,30 @@ class CandidatController extends Controller {
         return $this->View->getContentPropositionFromEmptyCandidatures("Ypopsi - Nouvelle proposition", $cle_candidature, $type_candidature);
     }
 
-    /// Méthode publique donnant le statut acceptée une candidature
+    /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {
-        try {
-            $this->Model->setCandidatureStatut('acceptee', $cle);
-
-        } catch(Exception $e) {
-            forms_manip::error_alert($e);
-        }
+        $this->Model->setCandidatureStatut('acceptee', $cle);
     }
-    /// Méthode publique donnant le statut refusée une candidature
+    /// Méthode publique donnant le statut refusée à une candidature
     public function rejectCandidature($cle) {
-        try {
-            $this->Model->setCandidatureStatut('refusee', $cle);
-
-        } catch(Exception $e) {
-            forms_manip::error_alert($e);
-        }
+        $this->Model->setCandidatureStatut('refusee', $cle);
         header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
     }
 
-    /// Méthode publique donnant le statut acceptée une candidature
+    /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptProposition($cle) {
         // Ajouter la signature
         $this->Model->addSignature($cle);
         header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
     }
-    /// Méthode publique donnant le statut refusée une candidature
+    /// Méthode publique donnant le statut refusée à une candidature
     public function rejectProposition($cle) {
-        try {
-            $this->Model->setPropositionStatut($cle);
-
-        } catch(Exception $e) {
-            forms_manip::error_alert($e);
-        }
+        $this->Model->setPropositionStatut($cle);
+        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+    }
+    /// Méthode publique ajoutant une demissione à un contrat
+    public function demissioneContrat($cle) {
+        $this->Model->addDemission($cle);
         header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
     }
 

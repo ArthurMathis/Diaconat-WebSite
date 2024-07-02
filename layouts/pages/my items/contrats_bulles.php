@@ -10,11 +10,13 @@
             // On récupère la date actuelle
             require_once(CLASSE.DS.'Instants.php');
             $date = instants::currentInstants()->getDate();
-            
-            if($date < $item['date_debut']): 
-        ?>
+
+            if($item['demission']):
+        ?>    
+            <p class="refusee">Démission</p>
+        <?php elseif($date < $item['date_debut']): ?>
             <p class="a_venir">A venir</p>
-        <?php elseif($item['date_fin'] < ($date || $item['demission'])): ?>  
+        <?php elseif($item['date_fin'] < $date): ?>  
             <p class="termine">Terminé</p> 
         <?php else : ?> 
             <p class="en_cours">En cours</p> 
@@ -43,5 +45,10 @@
                 <p>Emploi de week-end</p>
             <?php endif ?>  
         </div>
-     </content>
+    </content>
+    <?php if($item['demission'] == null || $date < $item['date_fin']): ?>
+        <footer>
+            <a class="action_button reject-button" href="index.php?candidats=demission&cle_contrat=<?= $item['cle']; ?>"></a>
+        </footer>
+    <?php endif ?> 
 </div>

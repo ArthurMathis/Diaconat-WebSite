@@ -94,7 +94,7 @@ class CandidatsModel extends Model {
         Travail_week_end_Contrats AS week_end,
         Date_debut_Contrats AS date_debut,
         Date_fin_Contrats AS date_fin,
-        Demissionne_Contrats AS demission,
+        Date_demission_Contrats AS demission,
         Intitule_Types_de_contrats AS type_de_contrat,
         Jour_Instants AS proposition,
         Statut_Proposition AS statut,
@@ -131,7 +131,7 @@ class CandidatsModel extends Model {
         $params = [
             'cle' => $index
         ];
-        
+
         // On lance la requête
         return $this->get_request($request, $params);
     }
@@ -193,20 +193,23 @@ class CandidatsModel extends Model {
     }
 
     public function setCandidatureStatut($statut, $cle) {
-        if(empty($statut) || !is_string($statut))
-            throw new Exception('Statut invalide !');   
-        
-        else {
-            // On initialise la requête
-            $request = "UPDATE Candidatures SET Statut_Candidatures = :statut WHERE Id_Candidatures = :cle";
-            $params = [
-                'statut' => $statut,
-                'cle' => $cle
-            ];
+        try {
+            if(empty($statut) || !is_string($statut))
+                throw new Exception('Statut invalide !');
 
-            // On exécute la requête
-            $this->post_request($request, $params);
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
         }
+           
+        // On initialise la requête
+        $request = "UPDATE Candidatures SET Statut_Candidatures = :statut WHERE Id_Candidatures = :cle";
+        $params = [
+            'statut' => $statut,
+            'cle' => $cle
+        ];
+
+        // On exécute la requête
+        $this->post_request($request, $params);
     }
     public function setPropositionStatut($cle) {
         // On initialise la requête
@@ -943,10 +946,25 @@ class CandidatsModel extends Model {
     /// Méthode publique ajoutant une signature à un contrat
     public function addSignature($cle) {
         // On génère l'instant actuel
-        $instant = $this->inscriptInstants()['Id_Instants'];
+        $instant = Instants::currentInstants()->getDate();
 
         // On initialise la requête
         $request = "UPDATE Contrats SET Date_signature_Contrats = :date WHERE Id_Contrats = :contrat";
+        $params = [
+            'date' => $instant,
+            'contrat' => $cle
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode ajoutant une démission à un contrat 
+    public function addDemission($cle) {
+        // On génère l'instant actuel
+        $instant = Instants::currentInstants()->getDate();
+
+        // On initialise la requête
+        $request = "UPDATE Contrats SET Date_demission_Contrats = :date WHERE Id_Contrats = :contrat";
         $params = [
             'date' => $instant,
             'contrat' => $cle

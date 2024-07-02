@@ -267,15 +267,10 @@ if(isset($_GET['login'])) {
                 break;
             
             case 'saisie-propositions' :
-                try {
-                    if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
-                        $candidats->getSaisieProposition($_GET['cle_candidat']);
-                    else 
-                        throw new Exception("La clé candidat n'a pas pu être réceptionnée");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
+                    $candidats->getSaisieProposition($_GET['cle_candidat']);
+                else 
+                    throw new Exception("La clé candidat n'a pas pu être réceptionnée");
                 break;
 
             case 'saisie-propositions-from-candidature':
@@ -330,15 +325,10 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
-                try {
-                    if(isset($_GET['cle_candidat'])) 
-                        $candidats->createProposition($_GET['cle_candidat'], $infos);
-                    else 
-                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_candidat'])) 
+                    $candidats->createProposition($_GET['cle_candidat'], $infos);
+                else 
+                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 
                 break;    
 
@@ -369,15 +359,10 @@ if(isset($_GET['login'])) {
                     $infos['travail nuit'] = true;
 
                 // On récupère la clé candidature
-                try {
-                    if(isset($_GET['cle_candidature'])) 
-                        $candidats->createPropositionFromCandidature($_GET['cle_candidature'], $infos);
-                    else 
-                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_candidature'])) 
+                    $candidats->createPropositionFromCandidature($_GET['cle_candidature'], $infos);
+                else 
+                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 break;    
 
             case 'inscript-propositions-from-empty-candidatures':
@@ -410,54 +395,41 @@ if(isset($_GET['login'])) {
                     $infos['travail nuit'] = true;
 
                 // On récupère la clé candidature
-                try {
-                    if(isset($_GET['cle_candidature'])) 
-                        $candidats->createPropositionFromEmptyCandidature($_GET['cle_candidature'], $infos);
-                    else 
-                        throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_candidature'])) 
+                    $candidats->createPropositionFromEmptyCandidature($_GET['cle_candidature'], $infos);
+                else 
+                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 break;       
 
             case 'reject-candidatures':
-                try {
-                    if(isset($_GET['cle_candidature']))
+                if(isset($_GET['cle_candidature']))
                     $candidats->rejectCandidature($_GET['cle_candidature']);
-                    else 
-                        throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                else 
+                    throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
                 break;  
                
             case 'reject-propositions':
-                try {
-                    if(isset($_GET['cle_proposition']))
-                        $candidats->rejectProposition($_GET['cle_proposition']);
-                    else 
-                        throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_proposition']))
+                    $candidats->rejectProposition($_GET['cle_proposition']);
+                else 
+                    throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
                 break; 
 
             case 'inscript-contrats':
                 break;    
 
             case 'inscript-contrats-from-proposition':
-                try {
-                    if(isset($_GET['cle_proposition']))
-                        $candidats->acceptProposition($_GET['cle_proposition']);
-                    else 
-                        throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
-
-                } catch(Exception $e) {
-                    forms_manip::error_alert($e);
-                }
+                if(isset($_GET['cle_proposition']))
+                    $candidats->acceptProposition($_GET['cle_proposition']);
+                else 
+                    throw new Exception("Impossible d'inscrire le contrat, clé de contrat est introuvable !");
+                break; 
+                
+            case 'demission':
+                if(isset($_GET['cle_contrat']))
+                    $candidats->demissioneContrat($_GET['cle_contrat']);
+                else 
+                    throw new Exception("Impossible de renseigner la démission, clé de contrat est introuvable !");
                 break;    
             
             default: 

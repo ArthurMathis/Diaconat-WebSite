@@ -260,6 +260,7 @@ main section content div > p:first-of-type {
     font-family: 'Roboto Bold';
 }
 /* On met en page les boutons de candidatures */
+main section .contrats_bulle footer,
 main section .propositions_bulle footer,
 main section .candidatures_bulle footer {
     display: flex;
@@ -323,6 +324,9 @@ main section .contrats_bulle article p.termine::before {
 }
 main section .contrats_bulle article p.en_cours::before {
     background-color: var(--enattente);
+}
+main section .contrats_bulle article p.refusee::before {
+    background-color: var(--refusee);
 }
 main section .propositions_bulle article p.acceptee::before {
     background-color: var(--acceptee);

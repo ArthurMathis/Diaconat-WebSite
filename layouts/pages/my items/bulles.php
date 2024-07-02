@@ -31,12 +31,14 @@
                     </tbody>
                 </table>
             </div>
-            <div class="boutons">
-                <a href="">Consulter</a>
-                <div class="fleche">
-                    <span></span>
+            <?php if(isset($link) && $link != null): ?>
+                <div class="boutons">
+                    <a href="<?= $link; ?>">Consulter</a>
+                    <div class="fleche">
+                        <span></span>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     <?php else : ?>
         <p>Aucun élément</p>
