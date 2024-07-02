@@ -46,7 +46,7 @@
             <?php endif ?>  
         </div>
     </content>
-    <?php if($item['demission'] == null || $date < $item['date_fin']): ?>
+    <?php if($item['demission'] == null && ($item['date_fin'] == null || $date < $item['date_fin'])): ?>
         <footer>
             <a class="action_button reject-button" href="index.php?candidats=demission&cle_contrat=<?= $item['cle']; ?>"></a>
         </footer>
