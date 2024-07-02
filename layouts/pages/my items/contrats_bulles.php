@@ -9,12 +9,12 @@
         <?php 
             // On récupère la date actuelle
             require_once(CLASSE.DS.'Instants.php');
-            $date = instants::currentInstants();
+            $date = instants::currentInstants()->getDate();
             
-            if($date->getDate() < $item['date_debut']): 
+            if($date < $item['date_debut']): 
         ?>
             <p class="a_venir">A venir</p>
-        <?php elseif($item['date_fin'] < ($date->getDate() || $item['demission'])): ?>  
+        <?php elseif($item['date_fin'] < ($date || $item['demission'])): ?>  
             <p class="termine">Terminé</p> 
         <?php else : ?> 
             <p class="en_cours">En cours</p> 

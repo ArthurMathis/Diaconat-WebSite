@@ -42,7 +42,7 @@ abstract class Model {
     // METHODES DE REQUETES A LA BASE DE DONNEES //
     
     /// Méthode privée permettant de vérifier les paramètres fournis au fonction de requêtes
-    private function test_data_request($request, $params): bool {
+    private function test_data_request(&$request, &$params): bool {
         // On déclare une variable tampon
         $res = false;
     
@@ -57,7 +57,7 @@ abstract class Model {
         return $res;
     }
     /// Méthode privée exécutant une requête GET à la base de données
-    protected function get_request($request, $params = [], $unique=false, $present=false): ?array {
+    protected function get_request(&$request, &$params = [], $unique=false, $present=false): ?array {
         // On vérifie le paramètre uniquue
         if(empty($unique) || !is_bool($unique)) 
             $unique = false;
@@ -96,7 +96,7 @@ abstract class Model {
         return null;
     }
     /// Méthode privée exécutant une requête POST à la base de données
-    protected function post_request($request, $params): bool {
+    protected function post_request(&$request, &$params): bool {
         // On déclare une variable tampon
         $res = true;
     

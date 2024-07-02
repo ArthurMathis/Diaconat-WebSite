@@ -14,9 +14,19 @@ class CandidatsView extends View {
 
         // On construit le tableaux de contrats simplifiés 
         foreach($contrats as $c) if(!empty($c['signature'])){
+            // On définit le statut du contrat
+            $date = instants::currentInstants()->getDate();
+            if($date < $c['date_debut'])
+                $statut = "A venir";
+            elseif($c['date_fin'] < ($date || $c['demission']))
+                $statut = "Terminé";
+            else    
+                $statut = "En cours";
+
+            // On construit le nouvel item    
             $new_c = [
-                'Statut' => $c['statut'],
-                'Poste' => $c['intitule'],
+                'Statut' => $statut,
+                'Poste' => $c['poste'],
                 'Type de contrat' => $c['type_de_contrat']
             ];
             
@@ -123,13 +133,26 @@ class CandidatsView extends View {
     }
 
     /// Méthode publique générant une ContratsBulles selon les information d'un contrat
-    public function getContratsBulles($item) {
+    protected function getContratsBulles($item) {
         include(MY_ITEMS.DS.'contrats_bulles.php');
     }
+    /// Méthode publique générant une PorpositionsBulles selon les informations d'une proposition
+    protected function getPropositionsBulles($item=[]) {
+        include(MY_ITEMS.DS.'propositions_bulles.php');
+    }
+    /// Méthode publique générant une CandidaturesBulles selon les informations d'une Candidature
+    protected function getCandidaturesBulles($item=[]) {
+        include(MY_ITEMS.DS.'candidatures_bulles.php');
+    }
+    /// Méthode publique générant une RendezVousBulles seln les informations d'un rendez-vous
+    protected function getRendezVousBulles($item=[]) {
+        include(MY_ITEMS.DS.'rendez_vous_bulles.php');
+    }
+
     /// Méthode publique générant l'onglet conrtat d'un candidat
-    public function getContratsBoard($item=[]) {
+    protected function getContratsBoard($item=[]) {
         echo '<section class="onglet">';
-        if(!empty($item['contrat'])) foreach($item['contrats'] as $obj)
+        if(!empty($item['contrat'])) foreach($item['contrat'] as $obj)
             $this->getContratsBulles($obj);
         else echo "<h2>Aucun contrat enregistré </h2>";   
 
@@ -138,13 +161,8 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
-
-    /// Méthode publique générant une PorpositionsBulles selon les informations d'une proposition
-    public function getPropositionsBulles($item=[]) {
-        include(MY_ITEMS.DS.'propositions_bulles.php');
-    }
     /// Méthode publique générant l'onglet Porpositions d'un candidat selon les informations de son profil
-    public function getPropositionsBoard($item) {
+    protected function getPropositionsBoard($item) {
         echo '<section class="onglet">';
         if(!empty($item['contrats'])) foreach($item['contrats'] as $obj) 
             $this->getPropositionsBulles($obj);
@@ -155,13 +173,8 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
-
-    /// Méthode publique générant une CandidaturesBulles selon les informations d'une Candidature
-    public function getCandidaturesBulles($item=[]) {
-        include(MY_ITEMS.DS.'candidatures_bulles.php');
-    }
     /// Méthode publique générant l'onglet Candidatures d'un candidat selon les informations de son profil
-    public function getCandidaturesBoard($item) {
+    protected function getCandidaturesBoard($item) {
         echo '<section class="onglet">';
         if(!empty($item['candidatures'])) foreach($item['candidatures'] as $obj)
             $this->getCandidaturesBulles($obj);
@@ -172,13 +185,8 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'add_button.php');  
         echo "</section>";
     }
-
-    /// Méthode publique générant une RendezVousBulles seln les informations d'un rendez-vous
-    public function getRendezVousBulles($item=[]) {
-        include(MY_ITEMS.DS.'rendez_vous_bulles.php');
-    }
     /// Méthode publique générant l'onglet rendez-vous d'un candidat selon les informations de son profil
-    public function getRendezVousBoard($item=[]) {
+    protected function getRendezVousBoard($item=[]) {
         echo '<section class="onglet">';
         if(!empty($item['rendez-vous'])) foreach($item['rendez-vous'] as $obj)
             $this->getRendezVousBulles($obj);

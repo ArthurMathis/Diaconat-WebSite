@@ -114,7 +114,6 @@ class CandidatsModel extends Model {
 
         // On lance la requête
         return $this->get_request($request);
-
     }
     private function getRendezVous($index) {
         // On initialise la requête 
