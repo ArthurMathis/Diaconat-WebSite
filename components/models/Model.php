@@ -57,7 +57,7 @@ abstract class Model {
         return $res;
     }
     /// Méthode privée exécutant une requête GET à la base de données
-    protected function get_request(&$request, &$params = [], $unique=false, $present=false): ?array {
+    protected function get_request(&$request, $params = [], $unique=false, $present=false): ?array {
         // On vérifie le paramètre uniquue
         if(empty($unique) || !is_bool($unique)) 
             $unique = false;
@@ -96,7 +96,7 @@ abstract class Model {
         return null;
     }
     /// Méthode privée exécutant une requête POST à la base de données
-    protected function post_request(&$request, &$params): bool {
+    protected function post_request(&$request, $params): bool {
         // On déclare une variable tampon
         $res = true;
     
@@ -132,8 +132,9 @@ abstract class Model {
         } elseif(is_string($role)) {
             $request = "SELECT * FROM roles WHERE Intitule_Role = :Intitule";
             $params = ["Intitule" => $role];
+
         } else 
-        throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou un echaine de caractères !");
+            throw new Exception("La saisie du rôle est mal typée. Le rôle doit être un identifiant (entier positif) ou une chaine de caractères !");
 
         // On lance la requête
         $result = $this->get_request($request, $params, true, true);
@@ -427,6 +428,19 @@ abstract class Model {
         // On récupère l'id de mon instant 
         $request = "SELECT * FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
         return $this->get_request($request, $params, true, true);
+    }
+    /// Méthode protégée inscrivant un Utilisateurs dans la base de données
+    protected function inscriptUtilisateurs($utilisateur=[]) {
+        if(empty($utilisateur)) 
+            throw new Exception("Impossible d'inscrire un Utilisateur. Données manquantes !");
+
+        else {
+            // On initialise la requête
+            $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :id_Roles)";
+
+            // On lance la requête
+            $this->post_request($request, $utilisateur);
+        }
     }
     /// Méthode protégée enregistrant une action dans la base de données
     protected function inscriptAction($cle_user, $cle_action, $cle_instant) {

@@ -25,8 +25,9 @@ class LoginController extends Controller {
         exit;
     }
     /// Méthode publique inscrivant un utilisateur à l'application
-    public function createIdentification($identifiant, $email, $motdepasse) {
-        $this->Model->firstConnectUser($identifiant, $email, $motdepasse);
+    public function createIdentification($infos) {
+        // $this->Model->firstConnectUser($infos);
+        $this->Model->createUser($infos);
         header('Location: index.php');
         exit;
     }

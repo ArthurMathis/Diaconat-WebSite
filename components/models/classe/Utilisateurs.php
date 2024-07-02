@@ -8,7 +8,7 @@ class InvalideUtilisateurExceptions extends Exception {
 
 class Utilisateurs {
     /// Attributs privés de la classe
-    private $cle, $identifiant, $email, $motdepasse, $role, $role_id;
+    private $cle, $identifiant, $nom, $prenom, $email, $motdepasse, $role, $role_id;
 
     /// Constructeur de la classe
     public function __construct($identifiant, $email, $motdepasse, $role) {
@@ -26,17 +26,50 @@ class Utilisateurs {
         }
     }
 
+    static public function makeUtilisateurs($infos=[]) {
+        // On vérifie la présence des données
+        if(empty($infos))
+            return;
+
+        // On vérifie l'intégrité des données
+        if(!isset($infos['identifiant']) || !isset($infos['email']) || !isset($infos['mot de passe']) || !isset($infos['role']))
+            throw new Exception('Donnnées éronnées. Champs manquants.');
+
+            // On construit le contrat
+        $utilisateur = new Utilisateurs($infos['identifiant'], $infos['email'], $infos['mot de passe'], $infos['role']);
+
+        // On ajoute les champs suplémentaires
+        foreach($infos as $key => $value) switch($key) {
+            case 'nom':
+                $utilisateur->setNom($value);
+                break;
+
+            case 'prenom': 
+                $utilisateur->setPrenom($value);
+                break;
+                
+            default: 
+                throw new Exception('Paramètre inidentifiable: ' . $key . ".");
+        }
+
+        // On retourne le nouvel utilisateur
+        return $utilisateur;
+    }
+
     /// Getters
+    public function getCle(){ return $this->cle; }
     public function getIdentifiant(){ return $this->identifiant; }
+    public function getNom() { return $this->nom; }
+    public function getPrenom() { return $this->prenom; }
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
     public function getRole(){ return $this->role; }
     public function getRole_id(){ /* ... */ }
-    public function getCle(){ return $this->cle; }
+
 
     /// Setters
     private function setIdentifiant($identifiant){
-        // On vérifie que le nom est non-vide
+        // On vérifie que l'indentifiant utilisateur est non-vide
         if(empty($identifiant))
             throw new InvalideUtilisateurExceptions("L'identifiant d'un utilisateur ne peut être vide !");
         // On vérifie que le nom est un string
@@ -45,6 +78,28 @@ class Utilisateurs {
         
             // On implémente
         else $this->identifiant = $identifiant;
+    }
+    private function setNom($nom) {
+        // On vérifie que le nom est non-vide
+        if(empty($nom))
+            throw new InvalideUtilisateurExceptions("Le nom d'un utilisateur ne peut être vide !");
+        // On vérifie que le nom est un string
+        elseif(!is_string($nom))
+            throw new InvalideUtilisateurExceptions("Le nom d'un utilisateur doit être une chaine de caractères !");
+        
+            // On implémente
+        else $this->nom = $nom;
+    }
+    private function setPrenom($prenom) {
+        // On vérifie que le prénom est non-vide
+        if(empty($prenom))
+            throw new InvalideUtilisateurExceptions("Le prénom d'un utilisateur ne peut être vide !");
+        // On vérifie que le prénom est un string
+        elseif(!is_string($prenom))
+            throw new InvalideUtilisateurExceptions("Le prénom d'un utilisateur doit être une chaine de caractères !");
+        
+            // On implémente
+        else $this->prenom = $prenom;
     }
     private function setEmail($email){
         // On vérifie que l'email est non-vide
@@ -104,16 +159,6 @@ class Utilisateurs {
         else $this->role_id = $role_id;
     }
 
-    /// Méthode publique permettant la construction d'un Utilisateurs depuis un tableau associatif 
-    public static function createFromArray(array $data): Utilisateurs {
-        return new self(
-            $data['identifiant'],
-            $data['email'],
-            $data['motdepasse'],
-            $data['role'], 
-            $data['cle']
-        );
-    }
     /// Méthode retournant l'item sous forme d'un tableau associatif
     public function exportToArray(): array {
         return [
@@ -124,4 +169,18 @@ class Utilisateurs {
             'cle' => $this->getCle()
         ];
     }
+    /// Méthode publique retournant les données de l'Utilisateurs pour une requêtes SQL
+    public function exportToSQL($cle_role): ?array {
+        if($this->getNom() == null || $this->getPrenom() == null) 
+            throw new Exception("Le nom et le prenom de l'utilisateur sont requis pour une exportation SQL.");
+        
+        else return [
+            'identifiant' => $this->getIdentifiant(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom(),
+            'email' => $this->getEmail(),
+            'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
+            'id_Roles' => $cle_role
+        ];
+    } 
 }

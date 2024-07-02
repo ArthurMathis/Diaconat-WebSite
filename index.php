@@ -49,43 +49,53 @@ if(isset($_GET['login'])) {
             break;
 
         // On inscrit l'utilisateur    
-        case 'inscription' : 
-            try {
-                // On récupère les données saisies
-                $identifiant    = $_POST["identifiant"];
-                $email          = $_POST["email"];
-                $motdepasse     = $_POST["motdepasse"];
-                $confirmation   = $_POST["confirmation"];
-    
-                // On vérifie leur intégrité
-                if(empty($identifiant)) {
-                    throw new Exception("Le champs identifiant doit être rempli !");
-                } elseif(empty($email)) {
-                    throw new Exception("Le champs email doit être rempli !");
-                }  elseif(empty($motdepasse)) {
-                    throw new Exception("Le champs mot de passe doit être rempli !");
-                }  elseif(empty($confirmation)) {
-                    throw new Exception("Le champs confirmation doit être rempli !");
-                } elseif($motdepasse != $confirmation) {
-                    throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
-                }
-
-            // On récupère les éventuelles erreurs    
-            } catch(Exception $e){
-                forms_manip::error_alert($e->getMessage());
-            }
-
-            try {
-                // On inscrit l'utilisateur
-                $login->createIdentification($identifiant, $email, $motdepasse);
-
-            // On récupère les éventuelles erreurs        
-            } catch(Exception $e) {
-                forms_manip::error_alert($e->getMessage());
-            }
-
-            // On sort de la boucle swicth
-            break;    
+        // case 'inscription' : 
+        //     try {
+        //         // On récupère les données saisies
+        //         $infos = [
+        //             'identifiant' => $_POST["identifiant"],
+        //             'nom' => $_POST["nom"],
+        //             'prenom' => $_POST["prenom"],
+        //             'email' => $_POST["email"],
+        //             'motdepasse' => $_POST["motdepasse"],
+        //             'confirmation' => $_POST["confirmation"]
+        //         ];
+        // 
+        //         // On vérifie leur intégrité
+        //         if(empty($infos['identifiant'])) {
+        //             throw new Exception("Le champs identifiant doit être rempli !");
+        //         } elseif(empty($infos['nom'])) {
+        //             throw new Exception("Le champs nom doit être rempli !");
+        //         } elseif(empty($infos['prenom'])) {
+        //             throw new Exception("Le champs prénom doit être rempli !");
+        //         } elseif(empty($infos['email'])) {
+        //             throw new Exception("Le champs email doit être rempli !");
+        //         }  elseif(empty($infos['motdepasse'])) {
+        //             throw new Exception("Le champs mot de passe doit être rempli !");
+        //         }  elseif(empty($infos['confirmation'])) {
+        //             throw new Exception("Le champs confirmation doit être rempli !");
+        //         } elseif($infos['motdepasse'] != $infos['confirmation']) {
+        //             throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
+        //         }
+        // 
+        //     // On récupère les éventuelles erreurs    
+        //     } catch(Exception $e){
+        //         forms_manip::error_alert($e->getMessage());
+        //     }
+        // 
+        //     $infos['role'] = 'Invité';
+        // 
+        //     try {
+        //         // On inscrit l'utilisateur
+        //         $login->createIdentification($infos);
+        // 
+        //     // On récupère les éventuelles erreurs        
+        //     } catch(Exception $e) {
+        //         forms_manip::error_alert($e->getMessage());
+        //     }
+        // 
+        //     // On sort de la boucle swicth
+        //     break;    
 
         // On déconnecte l'utilisateur    
         case 'deconnexion' : 
