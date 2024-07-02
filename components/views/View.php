@@ -20,8 +20,16 @@ class View {
                 "action" => "index.php?candidatures=home"
             ],
             [
-                "intitule" => "Préférences",
-                "action" => ""
+                "intitule" => "Employers",
+                "action" => "#"
+            ],
+            [
+                "intitule" => "Utilisateurs",
+                "action" => "#"
+            ],
+            [
+                "intitule" => "Statistiques",
+                "action" => "#"
             ],
             [
                 "intitule" => "Se déconnecter",

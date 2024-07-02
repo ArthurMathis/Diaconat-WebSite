@@ -377,76 +377,76 @@ button:is(:hover, :focus),
 }
 
 .add_button {
-    position: relative;
-    display: block;
-    width: var(--padding);
-    height: var(--padding);
+  position: relative;
+  display: block;
+  width: var(--padding);
+  height: var(--padding);
 
-    border-radius: 50%;
-    background-color: var(--blue);
+  border-radius: 50%;
+  background-color: var(--blue);
 
-    will-change: box-shadow;
-    transition: box-shadow 150ms ease;
+  will-change: box-shadow;
+  transition: box-shadow 150ms ease;
 }
 .add_button::before, 
 .add_button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-    display: block;
-    width: 50%;
-    height: 4px;
+  display: block;
+  width: 50%;
+  height: 4px;
 
-    background-color: var(--white);
+  background-color: var(--white);
 
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .add_button::before {
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .add_button::after {
-    transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(90deg);
 }
 .add_button:is(:hover, :focus) {
-    box-shadow: var(--button-shadow);
+  box-shadow: var(--button-shadow);
 }
 
 /******** BARRE DE NAVIGATION ********/
 .nav-barre,
 .form-barre {
-    position: sticky;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: var(--nav-barre-size);
-    width: 100%;
-    z-index: 1;
-    padding: 2em 3em 0;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--nav-barre-size);
+  width: 100%;
+  z-index: 1;
+  padding: 2em 3em 0;
 }
 .form-barre h1 {
-    color: var(--white);
+  color: var(--white);
 }
 .form-barre img {
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 
-    z-index: -1;
+  z-index: -1;
 }
 .nav-barre h3,
 .form-barre h3 {
-    color: var(--blue);
-    text-align: right;
+  color: var(--blue);
+  text-align: right;
 }
 #barre-de-navigation h3::selection {
-    background-color: transparent;
+  background-color: transparent;
 }
 #barre-de-navigation h3::after {
-    background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 /******** STYLE DU MENU ********/
@@ -508,15 +508,18 @@ button:is(:hover, :focus),
 }
 #menu main content a {
   position: relative;
+
   color: var(--white);
   font-family: "Roboto Mono";
   font-size: var(--font-size-big);
   font-weight: 440;
-  will-change: opacity;
-  transition: 250ms ease opacity;
-}
-#menu main content a.not-hover {
+
   opacity: 0.4;
+  will-change: opacity;
+  transition: 150ms ease opacity;
+}
+#menu main content a:hover {
+  opacity: 1;
 }
 #menu main img:first-of-type {
   position: fixed;
@@ -581,7 +584,7 @@ button:is(:hover, :focus),
   z-index: 1;
 }
 .table-wrapper table thead *::selection {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .table-wrapper table thead th {
