@@ -122,8 +122,8 @@ INSERT INTO types (Intitule_Types) VALUES
     ('Deconnexion')
 ;
 -- On insère un Utilisateur --
-INSERT INTO Utilisateurs (Nom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles) VALUES
-    ('mathis.a', '$2y$10$v4dqo33AIxgykeQssBlf2.keYBXoopgQO0xEcJlq6Q/ev.h09nOm6','arthur.mathis@diaconat-mulhouse.fr', 1)
+INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES
+    ('mathis.a', 'Mathis', 'Arthur', '$2y$10$v4dqo33AIxgykeQssBlf2.keYBXoopgQO0xEcJlq6Q/ev.h09nOm6','arthur.mathis@diaconat-mulhouse.fr', 1, 1)
 ;
 
 -- On insère les candidats --

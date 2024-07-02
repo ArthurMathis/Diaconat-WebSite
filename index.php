@@ -5,6 +5,7 @@ require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');
 require_once(CONTROLLERS.DS.'CandidatsController.php');
+require_once(CONTROLLERS.DS.'UtilisateursController.php');
 require_once(COMPONENTS.DS.'forms_manip.php');
 
 // On démarre la session de l'utilisateur
@@ -478,6 +479,10 @@ if(isset($_GET['login'])) {
         forms_manip::error_alert($e);
     }
 
+
+} elseif(isset($_GET['utilisateurs'])) {
+    $utilisateur = new UtilisateurController();
+    $utilisateur->displayUtilisateurs();
 
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();

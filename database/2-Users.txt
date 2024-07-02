@@ -7,13 +7,17 @@ CREATE TABLE Roles (
 -- On génère la table Utilisateurs contenant les informations de chaque Utilisateurs de l'application --
 CREATE TABLE Utilisateurs (
 	Id_Utilisateurs INTEGER AUTO_INCREMENT PRIMARY KEY,
+    Identifiant_Utilisateurs VARCHAR(64) NOT NULL,
     Nom_Utilisateurs VARCHAR(64) NOT NULL,
+    Prenom_Utilisateurs VARCHAR(64) NOT NULL,
     MotDePasse_Utilisateurs VARCHAR(256) NOT NULL,
     Email_Utilisateurs VARCHAR(64) UNIQUE,
 
     Cle_Roles INTEGER NOT NULL,
+    Cle_Etablissements INTEGER NOT NULL,
 
-    FOREIGN KEY (Cle_Roles) REFERENCES Roles(Id_Role)
+    FOREIGN KEY (Cle_Roles) REFERENCES Roles(Id_Role),
+    FOREIGN KEY (Cle_Etablissements) REFERENCES Etablissements(Id_Etablissements)
 );
 
 -- On génère la table Types contenant les types d'actions réalisable par un Utilisateur --

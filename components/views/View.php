@@ -25,7 +25,7 @@ class View {
             ],
             [
                 "intitule" => "Utilisateurs",
-                "action" => "#"
+                "action" => "index.php?utilisateurs=home"
             ],
             [
                 "intitule" => "Statistiques",
