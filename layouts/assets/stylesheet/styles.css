@@ -516,7 +516,6 @@ button:is(:hover, :focus),
 
   opacity: 0.4;
   will-change: opacity;
-  transition: 150ms ease opacity;
 }
 #menu main content a:hover {
   opacity: 1;

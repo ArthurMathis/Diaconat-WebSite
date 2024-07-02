@@ -10,7 +10,7 @@ class InvalideContratExceptions extends Exception {
 
 class Contrat {
     /// Attributs privés de la classe
-    private $cle=null, $date_debut, $date_fin=null, $salaire=null, $demission=false, $date_demission=null, $travail_nuit=false, $travail_wk=false, $nb_heures=null, $cle_candidats, $cle_instants, $Cle_Services, $Cle_Postes, $Cle_Type;
+    private $cle=null, $date_debut, $date_fin=null, $salaire=null, $date_demission=null, $travail_nuit=false, $travail_wk=false, $nb_heures=null, $signature=null, $cle_candidats, $cle_instants, $Cle_Services, $Cle_Postes, $Cle_Type;
 
     /// Constructeur de la classe
     public function __construct($date_debut, $cle_candidats, $cle_instants, $Cle_Postes, $Cle_Services, $Cle_Type) {
@@ -46,20 +46,28 @@ class Contrat {
                 $contrat->setSalaire($value);
                 break;    
 
-            case 'demission':
-                // On vérifie la présence de la date de démission
-                if(!isset($infos['date demission']))
-                    throw new InvalideContratExceptions("Impossible de renseigner une démission sans sa date");
-                // On implémente 
-                else {
-                    $contrat->setDemission();
-                    try {
-                        $contrat->setDateDemission($infos['date demission']);
-                    } catch (InvalideContratExceptions $e) {
-                        unset($contrat->demission);
-                    }
-                }
-                break; 
+            // case 'demission':
+            //     // On vérifie la présence de la date de démission
+            //     if(!isset($infos['date demission']))
+            //         throw new InvalideContratExceptions("Impossible de renseigner une démission sans sa date");
+            //     // On implémente 
+            //     else {
+            //         $contrat->setDemission();
+            //         try {
+            //             $contrat->setDateDemission($infos['date demission']);
+            //         } catch (InvalideContratExceptions $e) {
+            //             unset($contrat->demission);
+            //         }
+            //     }
+            //     break; 
+
+            case 'date demission':
+                $contrat->setDateDemission($value);
+                break;
+
+            case 'signature': 
+                $contrat->setSignature($value);
+                break;    
 
             case 'travail nuit':
                 $contrat->setTravailNuit();
@@ -83,11 +91,11 @@ class Contrat {
     public function getDateDebut() { return $this->date_debut; }
     public function getDateFin() { return $this->date_fin; }
     public function getSalaire() { return $this->salaire; }
-    public function getDemission() { return $this->demission; }
     public function getDateDemission() { return $this->date_demission; }
     public function getTravailNuit() { return $this->travail_nuit; }
     public function getTravailWk() { return $this->travail_wk; }
     public function getNbHeures() { return $this->nb_heures; }
+    public function getSignature() { return $this->signature; }
     public function getCleCandidats() { return $this->cle_candidats; }
     public function getCleInstants() { return $this->cle_instants; }
     public function getCleServices() { return $this->Cle_Services; }
@@ -140,9 +148,6 @@ class Contrat {
         // On implémente
         else $this->salaire = intval($salaire);
     }
-    private function setDemission() {
-        $this->demission = true;
-    }
     private function setDateDemission($date) {
         // On vérifie que la date de début est un string
         if(empty($date))
@@ -170,6 +175,13 @@ class Contrat {
             throw new InvalidArgumentException("le taux horaires hebdomadaires ne peut pas être négatif ou nul !");
 
         else $this->nb_heures = $heures;
+    }
+    private function setSignature($signature) {
+        // On vérifie que la siganture est une date 
+        if($signature instanceof DateTime || Instants::isDate($signature))
+            $this->signature = $signature;
+        else 
+            throw new Exception("La signature d'un contrat doit être une date !");
     }
     private function setCleCandidats($cle) {
         // On vérifie la présence d'une clé
@@ -240,8 +252,6 @@ class Contrat {
             $result["date fin"] = $this->getDateFin();
         if($this->getSalaire() != null)
             $result['salaire'] = $this->getSalaire();
-        if($this->getDemission() != null)
-            $result['demsision'] = $this->getDemission();
         if($this->getDateDemission() != null)
             $result['date demission'] = $this->getDateDemission();
         if($this->getTravailNuit())
@@ -250,6 +260,8 @@ class Contrat {
             $result['travail wk'] = $this->getTravailWk();
         if($this->getNbHeures() != null)
             $result['nb heures'] = $this->getNbHeures();
+        if($this->getSignature() != null)
+            $result['signature'] = $this->getSignature();
 
         // On retourne le tableau de données    
         return $result;

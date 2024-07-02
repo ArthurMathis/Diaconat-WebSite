@@ -326,7 +326,7 @@ abstract class Model {
             $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
             $params = ["Intitule" => $poste];
         } else 
-            throw new Exception("La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");
+            throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
 
         // On lance la requête
         $result = $this->get_request($request, $params, true, true);

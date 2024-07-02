@@ -55,6 +55,10 @@ class CandidatController extends Controller {
         $type_candidature = $this->Model->getTypeContrat($cle_candidature);
         return $this->View->getContentPropositionFromEmptyCandidatures("Ypopsi - Nouvelle proposition", $cle_candidature, $type_candidature);
     }
+    /// Méthode publique affichant le formulaire de saisie d'un contrat
+    public function getSaisieContrats($cle_candidat) {
+        return $this->View->getContentContrats("Ypopsi - Nouveau contrat", $cle_candidat);
+    }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {
@@ -110,5 +114,19 @@ class CandidatController extends Controller {
         $this->createProposition($cle_candidat, $propositions);
         // On assigne le nouveau statut à la candidature
         $this->acceptCandidature($cle_candidature);
+    }
+
+    public function createContrat($cle_candidats, &$contrats=[]) {
+        echo "<h1>Arrivée dans le controller</h1>";
+
+        echo "On lance la procédure de création de contrat<br>";
+
+        $this->Model->createContrats($cle_candidats, $contrats);
+
+        echo "Procédure terminée<br>";
+
+        echo "On redirige la page<br>";
+
+        header('Location: index.php?candidats=' . $cle_candidats);
     }
 }

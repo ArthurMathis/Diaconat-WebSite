@@ -131,20 +131,19 @@ class CandidatsView extends View {
 
         echo "</section>";
     }
-
-    /// Méthode publique générant une ContratsBulles selon les information d'un contrat
+    /// Méthode protégée générant une ContratsBulles selon les information d'un contrat
     protected function getContratsBulles($item) {
         include(MY_ITEMS.DS.'contrats_bulles.php');
     }
-    /// Méthode publique générant une PorpositionsBulles selon les informations d'une proposition
+    /// Méthode protégée générant une PorpositionsBulles selon les informations d'une proposition
     protected function getPropositionsBulles($item=[]) {
         include(MY_ITEMS.DS.'propositions_bulles.php');
     }
-    /// Méthode publique générant une CandidaturesBulles selon les informations d'une Candidature
+    /// Méthode protégée générant une CandidaturesBulles selon les informations d'une Candidature
     protected function getCandidaturesBulles($item=[]) {
         include(MY_ITEMS.DS.'candidatures_bulles.php');
     }
-    /// Méthode publique générant une RendezVousBulles seln les informations d'un rendez-vous
+    /// Méthode protégée générant une RendezVousBulles seln les informations d'un rendez-vous
     protected function getRendezVousBulles($item=[]) {
         include(MY_ITEMS.DS.'rendez_vous_bulles.php');
     }
@@ -157,7 +156,7 @@ class CandidatsView extends View {
         else echo "<h2>Aucun contrat enregistré </h2>";   
 
         // On ajoute le bouton d'ajout
-        $link = '';
+        $link = 'index.php?candidats=saisie-contrats&cle_candidat=' . $item['candidat']['id'];
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
@@ -274,6 +273,21 @@ class CandidatsView extends View {
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'proposition_from_empty_candidature.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la formulaire d'ajout d'un contrat
+    public function getContentContrats($title, $cle_candidat) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu(true);
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'contrats.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
