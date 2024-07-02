@@ -77,8 +77,10 @@ class CandidatController extends Controller {
     }
 
     /// Méthode publique donnant le statut acceptée une candidature
-    public function accepProposition($cle) {
+    public function acceptProposition($cle) {
         // Ajouter la signature
+        $this->Model->addSignature($cle);
+        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
     }
     /// Méthode publique donnant le statut refusée une candidature
     public function rejectProposition($cle) {

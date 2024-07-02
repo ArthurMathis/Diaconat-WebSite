@@ -444,6 +444,21 @@ if(isset($_GET['login'])) {
                     forms_manip::error_alert($e);
                 }
                 break; 
+
+            case 'inscript-contrats':
+                break;    
+
+            case 'inscript-contrats-from-proposition':
+                try {
+                    if(isset($_GET['cle_proposition']))
+                        $candidats->acceptProposition($_GET['cle_proposition']);
+                    else 
+                        throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+                break;    
             
             default: 
                 throw new Exception ('Action inidentifiable');

@@ -939,6 +939,21 @@ class CandidatsModel extends Model {
 
         echo "<h1>Contrat enregistré !</h1>";
     }
+    /// Méthode publique ajoutant une signature à un contrat
+    public function addSignature($cle) {
+        // On génère l'instant actuel
+        $instant = $this->inscriptInstants()['Id_Instants'];
+
+        // On initialise la requête
+        $request = "UPDATE Contrats SET Date_signature_Contrats = :date WHERE Id_Contrats = :contrat";
+        $params = [
+            'date' => $instant,
+            'contrat' => $cle
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
     /// Méthode protégée vérifiant qu'une mission est dans la base de données
     protected function verifyMission($cle_service, $cle_poste) {
         echo "On recherche la mission<br>";

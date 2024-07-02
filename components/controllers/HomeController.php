@@ -14,7 +14,7 @@ class HomeController extends Controller {
             [
                 'titre' => 'Propositions en Attente', 
                 'content' => $this->Model->getReductProposition(), 
-                'nb_item_max' => 2,
+                'nb_item_max' => 4,
                 'link_add' => null,
                 'link_consult' => null
             ],
