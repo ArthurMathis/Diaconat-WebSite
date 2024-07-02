@@ -70,7 +70,7 @@ class LoginModel extends Model {
 
     private function verifyUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
-        $request = "SELECT * FROM Utilisateurs WHERE Nom_Utilisateurs = :nom";
+        $request = "SELECT * FROM Utilisateurs WHERE Identifiant_Utilisateurs = :nom";
         $params = [":nom" => $identifiant];
         $users = $this->get_request($request, $params, false, true);
 
@@ -81,7 +81,7 @@ class LoginModel extends Model {
 
         // On fait défiler la table
         while($i < $size && !$find) {
-            if($users[$i]["Nom_Utilisateurs"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse_Utilisateurs"])) {
+            if($users[$i]["Identifiant_Utilisateurs"] == $identifiant && password_verify($motdepasse, $users[$i]["MotDePasse_Utilisateurs"])) {
                 // On implémente find
                 $find = true;
 
