@@ -649,7 +649,7 @@ button:is(:hover, :focus),
   content: "";
   position: absolute;
   top: 50%;
-  right: 5px;
+  right: 20px;
   display: block;
   width: 10px;
   height: 10px;
@@ -770,10 +770,10 @@ button:is(:hover, :focus),
 
 
 #main-liste .table-wrapper table tbody tr {
-  opacity: 0;
+  visibility: hidden;
 }
 #main-liste .table-wrapper table tbody tr.visible {
-  opacity: 1;
+  visibility: visible;
 }
 
 /*# sourceMappingURL=styles.css.map */

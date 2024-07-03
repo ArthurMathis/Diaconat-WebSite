@@ -5,6 +5,52 @@ require_once(CLASSE.DS.'Instants.php');
 require_once(CLASSE.DS.'Contrats.php');
 
 class CandidatsModel extends Model {
+    /// Méthode publique récupérant dans la base de données la liste des candidats
+    public function getContent() {
+        // On initialise la requête
+        $request = "SELECT 
+            Id_Candidats AS Cle,
+            Nom_candidats AS Nom, 
+            Prenom_Candidats AS Prenom, 
+            Email_Candidats AS Email, 
+            Ville_Candidats AS Ville, 
+            Notations_Candidats AS Notation
+            FROM Candidats AS c";
+    
+        // On lance la requête
+        $temp = $this->get_request($request, []);
+    
+        // On traite les données
+        foreach ($temp as &$obj) {  // Utilisation de la référence
+            if ($obj['Notation'] == null) {
+                $obj['Notation'] = "Aucune notation";
+            }    
+        }
+        unset($obj);
+    
+        // On retourne la liste
+        return $temp;
+    }
+    
+
+    /// Méthode publique retournant la fiche profil d'un candidat
+    public function getContentCandidat($index) {
+        // On vérifie l'intégrité des données
+        if(!is_numeric($index))
+            throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
+
+        $candidats = $this->getCandidats($index);
+        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+
+        return [
+            'candidat' => $candidats,
+            'aide' => $this->getAides($index),
+            'candidatures' => $this->getCandidatures($index),
+            'contrats' => $this->getContrats($index),
+            'rendez-vous' => $this->getRendezVous($index)
+        ];
+    }
+    /// Méthode privée retournant un candidat selon son Id 
     private function getCandidats($index) {
         // On initialise la requête
         $request = "SELECT 
@@ -31,20 +77,7 @@ class CandidatsModel extends Model {
     
         return $result[0];
     }
-    private function getAides($index) {
-        // On initialise la requête
-        $request = "SELECT 
-        Intitule_Aides_au_recrutement AS intitule 
-
-        FROM Aides_au_recrutement AS aide
-        INNER JOIN Avoir_droit_a AS avoir ON aide.Id_Aides_au_recrutement = avoir.Cle_Aides_au_recrutement
-        WHERE avoir.Cle_candidats = " . $index;
-
-        // On lance la requête
-        $result = $this->get_request($request);
-    
-        return empty($result) ? null : $result[0];
-    }
+    /// Méthode privée retournant la liste des diplômes obetnus par un candidat 
     private function getDiplomes($index) {
         // On initialise la requête
         $request = "SELECT Intitule_Diplomes
@@ -56,6 +89,7 @@ class CandidatsModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
+    /// Méthode privée retournant la liste des candidatures d'un candidat 
     private function getCandidatures($index) {
         // On initialise la requête
         $request = "SELECT 
@@ -85,6 +119,7 @@ class CandidatsModel extends Model {
         // On lance la requête
         return $this->get_request($request, $params);
     }
+    /// Méthode privée retournant la liste des contrats d'un candidat 
     private function getContrats($index) {
         // On initialise la requête 
         $request = "SELECT 
@@ -120,6 +155,7 @@ class CandidatsModel extends Model {
         // On lance la requête
         return $this->get_request($request, $params);
     }
+    /// Méthode privée retournant la liste des rendez-vous d'un candidat 
     private function getRendezVous($index) {
         // On initialise la requête 
         $request = "SELECT 
@@ -139,28 +175,29 @@ class CandidatsModel extends Model {
         // On lance la requête
         return $this->get_request($request, $params);
     }
-    public function getContentCandidat($index) {
-        // On vérifie l'intégrité des données
-        if(!is_numeric($index))
-            throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
 
-        $candidats = $this->getCandidats($index);
-        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+    /// Méthode privée retournant la liste des aides au recrutement
+    private function getAides($index) {
+        // On initialise la requête
+        $request = "SELECT 
+        Intitule_Aides_au_recrutement AS intitule 
 
-        return [
-            'candidat' => $candidats,
-            'aide' => $this->getAides($index),
-            'candidatures' => $this->getCandidatures($index),
-            'contrats' => $this->getContrats($index),
-            'rendez-vous' => $this->getRendezVous($index)
-        ];
+        FROM Aides_au_recrutement AS aide
+        INNER JOIN Avoir_droit_a AS avoir ON aide.Id_Aides_au_recrutement = avoir.Cle_Aides_au_recrutement
+        WHERE avoir.Cle_candidats = " . $index;
+
+        // On lance la requête
+        $result = $this->get_request($request);
+    
+        return empty($result) ? null : $result[0];
     }
-
     public function getTypeContrat($cle_candidature) {
         $candidature = $this->searchCandidature($cle_candidature);
         return $this->searchTypeContrat($candidature['Cle_Types_de_contrats'])['Intitule_Types_de_contrats'];
     }
+    
 
+    /// Méthode publique construisant un candidat selon son Id
     public function makeCandidat($index) {
         // On initialise la requête
         $request = "SELECT 
@@ -196,6 +233,7 @@ class CandidatsModel extends Model {
         return $candidat;
     }
 
+    /// Méthode publique implémentant le statut d'une candidature
     public function setCandidatureStatut($statut, $cle) {
         try {
             if(empty($statut) || !is_string($statut))
@@ -215,6 +253,7 @@ class CandidatsModel extends Model {
         // On exécute la requête
         $this->post_request($request, $params);
     }
+    /// Méthode publique implémentant le statut d'une proposition
     public function setPropositionStatut($cle) {
         // On initialise la requête
         $request = "UPDATE Contrats SET Statut_Proposition = :statut WHERE Id_Contrats = :cle";
@@ -227,68 +266,39 @@ class CandidatsModel extends Model {
         $this->post_request($request, $params);
     }
 
+    /// Méthode construisant une nouvelle proposition d'embauche et l'inscrivant dans la base de données
     public function createPropositions($cle, $propositions) {
         try {
-            echo "<h1>On construit la proposition</h1>";
-            echo "On inscrit l'intant actuel<br>";
-
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
 
-            echo "<h2>On ajoute les clés extrenes</h2>";
-
             // On ajoute la clé candidat
             $propositions['cle candidat'] = $cle;
-            echo "Clé candidat: " . $propositions['cle candidat'] . "<br>";
-
             // On ajoute la clé instant
             $propositions['cle instant'] = $instant;
-            echo "Clé instant: " . $propositions['cle instant'] . "<br>";
-
             // On ajoute la clé poste
-            $propositions['cle poste'] = is_numeric($propositions['poste']) ? $propositions['poste'] : $this->searchPoste($propositions['poste'])['Id_Postes'];;
-            echo "Clé poste: " . $propositions['cle poste'] . "<br>";
-            
+            $propositions['cle poste'] = is_numeric($propositions['poste']) ? $propositions['poste'] : $this->searchPoste($propositions['poste'])['Id_Postes'];    
             // On ajoute la clé service
             $propositions['cle service'] = is_numeric($propositions['service']) ? $propositions['service'] : $this->searchService($propositions['service'])['Id_Services'];
-            echo "Clé service: " . $propositions['cle service'] . "<br>";
-
             // On ajoute la clé de type de contrat
             $propositions['cle type'] = isset($propositions['type']) && is_numeric($propositions['type']) ? $propositions['type'] : $this->searchTypeContrat($propositions['type_de_contrat'])['Id_Types_de_contrats'];
-            echo "Clé type: " . $propositions['cle type'] . "<br>";
-
-
-            echo "<h2>On construit un contrat </h2>";
 
             // On génère le contrat
             $contrat = Contrat::makeContrat($propositions);
-
             $infos_contrat = $contrat->exportToSQL();
-
-            foreach($infos_contrat as $k => $v)
-                echo $k . " => " . $v . "<br>";
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
         
-        echo "<h2>On inscrit la proposition</h2>";
-
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
-
-        echo "Proposition inscrite<br>";
-
-        echo "<h2>On test la présence de la mission</h2>";
-
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
-
-
-        echo "<h2>On inscrit le contrat</h2>";
 
         // On enregistre le contrat 
         $this->inscriptContrats($infos_contrat);
     }
+    /// Méthode construisant une nouvelle proposition d'embauche depuis une candidature et l'inscrivant dans la base de données
     public function createPropositionsFromCandidature($cle_candidature, &$propositions=[], &$cle_candidat) {
         // On récupère la candidature
         $candidature = $this->searchCandidature($cle_candidature);
@@ -301,6 +311,7 @@ class CandidatsModel extends Model {
         // On récupère la clé candidat
         $cle_candidat = $this->searchCandidatFromCandidature($cle_candidature)['Cle_Candidats'];
     }
+    /// Méthode construisant une nouvelle proposition d'embauche depuis une cnadidature sans service et l'inscrivant dans la base de données
     public function createPropositionsFromEmptyCandidature($cle_candidature, &$propositions=[], &$cle_candidat) {
         // On récupère la candidature
         $candidature = $this->searchCandidature($cle_candidature);
@@ -312,6 +323,7 @@ class CandidatsModel extends Model {
         // On récupère la clé candidat
         $cle_candidat = $this->searchCandidatFromCandidature($cle_candidature)['Cle_Candidats'];
     }
+    /// Méthode construisant nouveau contrat et l'inscrivant dans la base de données
     public function createContrats($cle_candidats, &$contrat=[]) {
         try {
             echo "<h2>On construit la proposition</h2>";

@@ -1,7 +1,6 @@
 <nav class="options_barre">
     <article>
-        <a class="action_button reverse_color" href="index.php?candidats=home">Liste des candidats</a>
-        <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Nouvelle candidature</a>
+        <a class="action_button reverse_color" href="index.php?candidatures=home">Liste des candidaturess</a>
     </article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>

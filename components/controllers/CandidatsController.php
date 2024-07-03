@@ -11,7 +11,8 @@ class CandidatController extends Controller {
 
     /// Méthode publique affichant la liste des candidats inscrits dans la base de données
     public function displayContent() {
-
+        $items = $this->Model->getContent();
+        $this->View->getContent('Candidats', $items);
     }
     /// Méthode publique affichant la page candidat
     public function displayCandidat($Cle_Candidat) {
@@ -104,16 +105,7 @@ class CandidatController extends Controller {
     }
 
     public function createContrat($cle_candidats, &$contrats=[]) {
-        echo "<h1>Arrivée dans le controller</h1>";
-
-        echo "On lance la procédure de création de contrat<br>";
-
         $this->Model->createContrats($cle_candidats, $contrats);
-
-        echo "Procédure terminée<br>";
-
-        echo "On redirige la page<br>";
-
         header('Location: index.php?candidats=' . $cle_candidats);
     }
 }

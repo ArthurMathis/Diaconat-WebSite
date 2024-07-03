@@ -201,7 +201,7 @@ class CandidatsView extends View {
     }
 
     /// Méthode retournant le contenu de la page profil d'un candidat selon ses informations
-    public function getContentCandidat($title, $item=[]) {
+    public function getContentCandidat($title, &$item=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [PAGES_STYLES.DS.'candidats.css']);
 
@@ -230,6 +230,24 @@ class CandidatsView extends View {
         echo "</content>";
 
         include(SCRIPTS.DS.'import-candidats.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
+    public function getContent($titre, &$items=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+
+        $id = 'main-liste';
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+        include BARRES.DS.'liste_candidats_barre.php';
+
+        $this->getListesItems($titre, $items, null, $id);
+
+        include(SCRIPTS.DS.'import-listes.php');
+        include(SCRIPTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

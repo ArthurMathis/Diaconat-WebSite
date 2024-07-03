@@ -1,7 +1,10 @@
 <section class="liste_items<?php if(isset($classe) && !empty($classe)) echo $classe ?>" <?php if(isset($id) && !empty($id)): ?>id="<?= $id; ?>"<?php endif ?>>
     <div class="entete">
         <h2><?= $titre; ?></h2>
-        <h3><?php $size = empty($items) ? 0 : count($items); ?></h3>
+        <h3><?php 
+            $size = empty($items) ? 0 : count($items); 
+            echo $size;
+        ?></h3>
     </div>
     <?php $keys = !empty($items) ? array_keys($items[0]) : ["Aucun élément"]; ?>
     <div class="table-wrapper">

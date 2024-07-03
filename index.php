@@ -73,7 +73,7 @@ if(isset($_GET['login'])) {
     switch($_GET['candidatures']) {
         case 'home' :
             $candidatures->dispayCandidatures();
-            break;
+            break; 
 
         case 'saisie-nouveau-candidat' : 
             $candidatures->displaySaisieCandidat();
@@ -86,10 +86,6 @@ if(isset($_GET['login'])) {
         case 'saisie-candidature' : 
             $candidatures->displaySaisieCandidature();
             break;
-
-        // case 'saisie-proposition':
-        //     $candidatures->displaySaisieProposition();    
-        //     break;
 
         case 'inscription-candidat' :
             // On récupère le contenu des champs
@@ -227,7 +223,7 @@ if(isset($_GET['login'])) {
 
             case 'saisie-candidatures': 
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
-                $candidats->getSaisieCandidature($_GET['cle_candidat']);
+                    $candidats->getSaisieCandidature($_GET['cle_candidat']);
                 else 
                     throw new Exception("La clé candidat n'a pas pu être réceptionnée");
                 break;
