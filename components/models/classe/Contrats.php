@@ -46,21 +46,6 @@ class Contrat {
                 $contrat->setSalaire($value);
                 break;    
 
-            // case 'demission':
-            //     // On vérifie la présence de la date de démission
-            //     if(!isset($infos['date demission']))
-            //         throw new InvalideContratExceptions("Impossible de renseigner une démission sans sa date");
-            //     // On implémente 
-            //     else {
-            //         $contrat->setDemission();
-            //         try {
-            //             $contrat->setDateDemission($infos['date demission']);
-            //         } catch (InvalideContratExceptions $e) {
-            //             unset($contrat->demission);
-            //         }
-            //     }
-            //     break; 
-
             case 'date demission':
                 $contrat->setDateDemission($value);
                 break;

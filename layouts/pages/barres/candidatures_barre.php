@@ -2,7 +2,7 @@
     <article>
         <a class="action_button" href="">Importer des candidatures</a>
         <a class="action_button" href="">Exporter des candidatures</a>
-        <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Saisir des candidatures</a>
+        <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Nouvelle candidature</a>
     </article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>

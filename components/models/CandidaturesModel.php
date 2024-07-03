@@ -17,10 +17,13 @@ class CandidaturesModel extends Model {
         telephone_candidats AS Téléphone, 
         intitule_sources AS Source, 
         Disponibilite_Candidats AS Disponibilité
+
         FROM `candidatures` as c
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
-        INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources";
+        INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
+        
+        ORDER BY c.Id_Candidatures DESC";
     
         // On lance la requête
         return $this->get_request($request);

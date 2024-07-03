@@ -122,6 +122,24 @@ abstract class Model {
 
     // METHODES DE RECHERCHE DANS LA BASE DE DONNEES //
 
+    /// Méthode protégée recherchant un etablissement dans la base de données
+    protected function searchEtablissement($etablissement) {
+        if(is_numeric($etablissement)) 
+            // On initialise la requête
+            $request = "SELECT * FROM Etablissements WHERE Id_Etablissements = :etablissement";
+        
+         elseif(is_string($etablissement)) 
+            // On initialise la requête
+            $request = "SELECT * FROM Etablissements WHERE Intitule_Etablissements = :etablissement";
+
+        // On prépare les paramètres de la requête
+        $params = [
+            'etablissement' => $etablissement
+        ];
+        
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
     /// Méthode protégée recherchant un role dans la base de données
     protected function searchRole($role): array {
         // On initialise la requête
@@ -436,7 +454,8 @@ abstract class Model {
 
         else {
             // On initialise la requête
-            $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :id_Roles)";
+            $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Etablissements, Cle_Roles)
+                        VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :cle_etablissement, :cle_role)";
 
             // On lance la requête
             $this->post_request($request, $utilisateur);

@@ -347,6 +347,10 @@ button,
   will-change: box-shadow;
   transition: 150ms ease box-shadow;
 }
+.action_button.reverse_color {
+  color: var(--white);
+  background-color: var(--blue);
+}
 .action_button::selection {
     background-color: transparent;
 }

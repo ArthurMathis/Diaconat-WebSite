@@ -18,7 +18,9 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Statut_Candidatures = 'non traitee'";
+        WHERE c.Statut_Candidatures = 'non traitee'
+        
+        ORDER BY c.Id_Candidatures DESC";
     
         // On lance la requête
         $result = $this->get_request($request);
@@ -37,7 +39,9 @@ class HomeModel extends Model {
         FROM Contrats AS con
         INNER JOIN Candidats AS can ON con.Cle_Candidats = can.Id_Candidats
         INNER JOIN Postes AS p ON con.Cle_Postes = p.Id_Postes
-        WHERE con.Statut_Proposition = 0";
+        WHERE con.Statut_Proposition = 0
+        
+        ORDER BY con.Id_Contrats DESC";
 
         // On lance la requête
         return $this->get_request($request);

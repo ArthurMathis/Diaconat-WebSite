@@ -8,16 +8,19 @@ class InvalideUtilisateurExceptions extends Exception {
 
 class Utilisateurs {
     /// Attributs privés de la classe
-    private $cle, $identifiant, $nom, $prenom, $email, $motdepasse, $role, $role_id;
+    private $cle, $identifiant, $nom, $prenom, $email, $motdepasse, $etablissement, $role;
 
     /// Constructeur de la classe
-    public function __construct($identifiant, $email, $motdepasse, $role) {
+    public function __construct($identifiant, $nom, $prenom, $email, $motdepasse, $etablissement, $role) {
         $this->cle == null;
 
         try{
             $this->setIdentifiant($identifiant);
+            $this->setNom($nom);
+            $this->setPrenom($prenom);
             $this->setEmail($email);
             $this->setMotdepasse($motdepasse);
+            $this->setEtablissement($etablissement);
             $this->setRole($role);
 
         // On récuèpre les éventuelles erreurs
@@ -29,31 +32,14 @@ class Utilisateurs {
     static public function makeUtilisateurs($infos=[]) {
         // On vérifie la présence des données
         if(empty($infos))
-            return;
+            throw new Exception("Erreur lors de la génération de l'utilisateur. Tableau de données absent.");
 
         // On vérifie l'intégrité des données
-        if(!isset($infos['identifiant']) || !isset($infos['email']) || !isset($infos['mot de passe']) || !isset($infos['role']))
+        if(!isset($infos['identifiant']) ||!isset($infos['nom']) ||!isset($infos['prenom']) || !isset($infos['email']) || !isset($infos['mot de passe']) ||!isset($infos['etablissement']) || !isset($infos['role']))
             throw new Exception('Donnnées éronnées. Champs manquants.');
 
-            // On construit le contrat
-        $utilisateur = new Utilisateurs($infos['identifiant'], $infos['email'], $infos['mot de passe'], $infos['role']);
-
-        // On ajoute les champs suplémentaires
-        foreach($infos as $key => $value) switch($key) {
-            case 'nom':
-                $utilisateur->setNom($value);
-                break;
-
-            case 'prenom': 
-                $utilisateur->setPrenom($value);
-                break;
-                
-            default: 
-                throw new Exception('Paramètre inidentifiable: ' . $key . ".");
-        }
-
         // On retourne le nouvel utilisateur
-        return $utilisateur;
+        return new Utilisateurs($infos['identifiant'], $infos['nom'], $infos['prenom'], $infos['email'], $infos['mot de passe'], $infos['etablissement'], $infos['role']);
     }
 
     /// Getters
@@ -63,8 +49,8 @@ class Utilisateurs {
     public function getPrenom() { return $this->prenom; }
     public function getEmail(){ return $this->email; }
     public function getMotdepasse(){ return $this->motdepasse; }
+    public function getEtablissement(){ return $this->etablissement; }
     public function getRole(){ return $this->role; }
-    public function getRole_id(){ /* ... */ }
 
 
     /// Setters
@@ -125,12 +111,23 @@ class Utilisateurs {
         
         else $this->motdepasse = $motdepasse;
     }
+    private function setEtablissement($etablissement) {
+        // On vérifie que l'établissement est non-vide
+        if(empty($etablissement))
+            throw new InvalideUtilisateurExceptions("L'établissement d'un utilisateur ne peut être vide !");
+        // On vérifie que l'établissement est un string
+        elseif(!is_numeric($etablissement))
+            throw new InvalideUtilisateurExceptions("L'établissement d'un utilisateur doit être une chaine de caractères");
+        
+            // On implémente
+        else $this->etablissement = $etablissement;
+    }
     private function setRole($role){
         // On vérifie que le role est non-vide
         if(empty($role))
             throw new InvalideUtilisateurExceptions("Le rôle d'un utilisateur ne peut être vide !");
         // On vérifie que le mot de passe est un string
-        elseif(!is_string($role))
+        elseif(!is_numeric($role))
             throw new InvalideUtilisateurExceptions("Le rôle d'un utilisateur doit être une chaine de caractères");
         
             // On implémente
@@ -147,17 +144,6 @@ class Utilisateurs {
         // On implémente
         else $this->cle = $cle;
     }
-    public function setRole_id($role_id) {
-        // On vérifie que l'id est un nombre positif ou nul
-        if($role_id == null || !is_int($role_id)) 
-            throw new InvalideUtilisateurExceptions("La clé extrene de rôle doit être un entier !");
-        // On vérifie que l'id est un nombre positif ou nul
-        elseif($role_id < 0) 
-            throw new InvalideUtilisateurExceptions("La clé extrene de rôle doit être supéieure ou égale à 0 !");
-
-        // On implémente
-        else $this->role_id = $role_id;
-    }
 
     /// Méthode retournant l'item sous forme d'un tableau associatif
     public function exportToArray(): array {
@@ -170,7 +156,7 @@ class Utilisateurs {
         ];
     }
     /// Méthode publique retournant les données de l'Utilisateurs pour une requêtes SQL
-    public function exportToSQL($cle_role): ?array {
+    public function exportToSQL(): ?array {
         if($this->getNom() == null || $this->getPrenom() == null) 
             throw new Exception("Le nom et le prenom de l'utilisateur sont requis pour une exportation SQL.");
         
@@ -180,7 +166,8 @@ class Utilisateurs {
             'prenom' => $this->getPrenom(),
             'email' => $this->getEmail(),
             'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
-            'id_Roles' => $cle_role
+            'cle_etablissement' => $this->getEtablissement(),
+            'cle_role' => $this->getRole()
         ];
     } 
 }

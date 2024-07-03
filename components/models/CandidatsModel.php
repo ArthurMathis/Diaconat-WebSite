@@ -20,10 +20,14 @@ class CandidatsModel extends Model {
         Notations_Candidats AS notation
 
         FROM candidats AS c
-        WHERE c.Id_Candidats = " . $index;
+        WHERE c.Id_Candidats = :cle";
+
+        $params = [
+            "cle" => $index
+        ];
 
         // On lance la requête
-        $result = $this->get_request($request);
+        $result = $this->get_request($request, $params);
     
         return $result[0];
     }

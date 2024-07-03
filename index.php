@@ -46,56 +46,7 @@ if(isset($_GET['login'])) {
             }
 
             // On sort de la boucle swicth
-            break;
-
-        // On inscrit l'utilisateur    
-        // case 'inscription' : 
-        //     try {
-        //         // On récupère les données saisies
-        //         $infos = [
-        //             'identifiant' => $_POST["identifiant"],
-        //             'nom' => $_POST["nom"],
-        //             'prenom' => $_POST["prenom"],
-        //             'email' => $_POST["email"],
-        //             'motdepasse' => $_POST["motdepasse"],
-        //             'confirmation' => $_POST["confirmation"]
-        //         ];
-        // 
-        //         // On vérifie leur intégrité
-        //         if(empty($infos['identifiant'])) {
-        //             throw new Exception("Le champs identifiant doit être rempli !");
-        //         } elseif(empty($infos['nom'])) {
-        //             throw new Exception("Le champs nom doit être rempli !");
-        //         } elseif(empty($infos['prenom'])) {
-        //             throw new Exception("Le champs prénom doit être rempli !");
-        //         } elseif(empty($infos['email'])) {
-        //             throw new Exception("Le champs email doit être rempli !");
-        //         }  elseif(empty($infos['motdepasse'])) {
-        //             throw new Exception("Le champs mot de passe doit être rempli !");
-        //         }  elseif(empty($infos['confirmation'])) {
-        //             throw new Exception("Le champs confirmation doit être rempli !");
-        //         } elseif($infos['motdepasse'] != $infos['confirmation']) {
-        //             throw new Exception("Les champs mot de passe et confirmation doivent être identiques");
-        //         }
-        // 
-        //     // On récupère les éventuelles erreurs    
-        //     } catch(Exception $e){
-        //         forms_manip::error_alert($e->getMessage());
-        //     }
-        // 
-        //     $infos['role'] = 'Invité';
-        // 
-        //     try {
-        //         // On inscrit l'utilisateur
-        //         $login->createIdentification($infos);
-        // 
-        //     // On récupère les éventuelles erreurs        
-        //     } catch(Exception $e) {
-        //         forms_manip::error_alert($e->getMessage());
-        //     }
-        // 
-        //     // On sort de la boucle swicth
-        //     break;    
+            break;  
 
         // On déconnecte l'utilisateur    
         case 'deconnexion' : 
@@ -492,7 +443,63 @@ if(isset($_GET['login'])) {
 
 } elseif(isset($_GET['utilisateurs'])) {
     $utilisateur = new UtilisateurController();
-    $utilisateur->displayUtilisateurs();
+
+    switch($_GET['utilisateurs']) {
+        case 'home':
+            $utilisateur->displayUtilisateurs();
+            break;
+
+        case 'logs':
+            $utilisateur->displayHistorique();
+            break;
+
+        case 'saisie-inscription':
+            $utilisateur->displaySaisieUtilisateur();
+            break;
+
+        case 'inscription':
+            try {
+                $infos = [
+                    'identifiant' => $_POST['identifiant'],
+                    'nom' => $_POST['nom'],
+                    'prenom' => $_POST['prenom'],
+                    'email' => $_POST['email'],
+                    'mot de passe' => $_POST['motdepasse'],
+                    'confirmation' => $_POST['confirmation'],
+                    'etablissement' => $_POST['etablissement'],
+                    'role' => $_POST['role']
+                ];
+                
+                if(empty($infos['identifiant']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs identifiant doit être rempli.");
+                elseif(empty($infos['nom']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs nom doit être rempli.");
+                elseif(empty($infos['prenom']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs prenom doit être rempli.");
+                elseif(empty($infos['email']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs email doit être rempli.");
+                elseif(empty($infos['mot de passe']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs mot de passe doit être rempli.");
+                elseif(empty($infos['confirmation']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs confirmation doit être rempli.");
+                    elseif(empty($infos['etablissement']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs étabissement doit être rempli.");
+                elseif(empty($infos['role']))
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs role doit être rempli.");
+                elseif($infos['mot de passe'] != $infos['confirmation'])
+                    throw new Exception("Erreyur lors de la récupération des données. Le champs mot de passe doit être identique au champs confirmation.");
+
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
+            }
+
+            $utilisateur->createUtilisateur($infos);
+            
+            break;    
+            
+        default: 
+            $utilisateur->displayUtilisateurs();
+    }
 
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();

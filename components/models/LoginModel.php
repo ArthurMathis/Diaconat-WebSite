@@ -20,35 +20,35 @@ class LoginModel extends Model {
         // On enregistre les logs
         $this->writeLogs($_SESSION['user_cle'], "Connexion");
     }
-    public function createUser($infos=[]) {
-        // On récupère le rôle invité pour l'asigner à l'utilisateur
-        $role = $this->searchRole($infos['role']);        
-
-        // On crée l'utilisateur
-        // $user = new Utilisateurs($infos['identifiant'], $infos['$email'], $infos['$motdepasse'], $role['Intitule_Role']);
-        $user = Utilisateurs::makeUtilisateurs($infos);
-
-        // // On prépare la requête SQL
-        // $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :id_Roles)";
-        // $params = [
-        //     'identifiant' => $user->getIdentifiant(),
-        //     'nom' => $user->getNom(),
-        //     'prenom' => $user->getPrenom(),
-        //     'email' => $user->getEmail(),
-        //     'motdepasse' => password_hash($user->getMotdepasse(), PASSWORD_DEFAULT),
-        //     'id_Roles' => $role['Id_Role']
-        // ];
-        // 
-        // // On exécute la requête
-        // $this->post_request($request, $params);
-        $this->inscriptUtilisateurs($user->exportToSQL($role));
-    }
-    public function firstConnectUser($identifiant, $email, $motdepasse) {
-        // On ajoute l'utilisateur à la base de données
-        $this->createUser($identifiant, $email, $motdepasse);
-        // On récupère l'utilisateur et son identifiant 
-        $this->connectUser($identifiant, $motdepasse);
-    }
+    // public function createUser($infos=[]) {
+    //     // On récupère le rôle invité pour l'asigner à l'utilisateur
+    //     $role = $this->searchRole($infos['role']);        
+    // 
+    //     // On crée l'utilisateur
+    //     // $user = new Utilisateurs($infos['identifiant'], $infos['$email'], $infos['$motdepasse'], $role['Intitule_Role']);
+    //     $user = Utilisateurs::makeUtilisateurs($infos);
+    // 
+    //     // // On prépare la requête SQL
+    //     // $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :id_Roles)";
+    //     // $params = [
+    //     //     'identifiant' => $user->getIdentifiant(),
+    //     //     'nom' => $user->getNom(),
+    //     //     'prenom' => $user->getPrenom(),
+    //     //     'email' => $user->getEmail(),
+    //     //     'motdepasse' => password_hash($user->getMotdepasse(), PASSWORD_DEFAULT),
+    //     //     'id_Roles' => $role['Id_Role']
+    //     // ];
+    //     // 
+    //     // // On exécute la requête
+    //     // $this->post_request($request, $params);
+    //     $this->inscriptUtilisateurs($user->exportToSQL($role));
+    // }
+    // public function firstConnectUser($identifiant, $email, $motdepasse) {
+    //     // On ajoute l'utilisateur à la base de données
+    //     $this->createUser($identifiant, $email, $motdepasse);
+    //     // On récupère l'utilisateur et son identifiant 
+    //     $this->connectUser($identifiant, $motdepasse);
+    // }
 
     public function deconnectUser() {
         $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
