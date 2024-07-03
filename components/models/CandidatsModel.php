@@ -139,7 +139,7 @@ class CandidatsModel extends Model {
         // On lance la requête
         return $this->get_request($request, $params);
     }
-    public function getContent($index) {
+    public function getContentCandidat($index) {
         // On vérifie l'intégrité des données
         if(!is_numeric($index))
             throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
@@ -379,12 +379,6 @@ class CandidatsModel extends Model {
 
     /// Méthode protégées inscrivant un contrat dans la base de données
     protected function inscriptContrats($contrats=[]) {
-
-        foreach($contrats as $k => $v)
-            echo $k . " => " . $v . "<br>";
-
-        echo "<h1>On génère la requête</h1>";    
-
         // Requête avec date de fin de contrat
         if(isset($contrat['date fin'])) {
             // Requête avec salaire
@@ -1023,25 +1017,13 @@ class CandidatsModel extends Model {
             ];
         }
 
-        $params['cle_instant']  =strval($params['cle_instant']);
-        $params['cle_service']  =strval($params['cle_service']);
-        $params['cle_poste']  =strval($params['cle_poste']);
-        $params['cle_types']  =strval($params['cle_types']);
+        $params['cle_instant'] = strval($params['cle_instant']);
+        $params['cle_service'] = strval($params['cle_service']);
+        $params['cle_poste'] = strval($params['cle_poste']);
+        $params['cle_types'] = strval($params['cle_types']);
 
-        echo "<h2>Requête</h2>";
-        echo $request ."<br>";
-        echo "<h2>Paramètres de la requête</h2>";
-        foreach($params as $k => $v) 
-            echo $k . " => " . gettype($v) . " : " . $v . "<br>";
-
-        // exit;
-
-        echo "<h2>On lance la requête</h2>";
-    
         // On lance la requête
         $this->post_request($request, $params);
-
-        echo "<h1>Contrat enregistré !</h1>";
     }
     /// Méthode publique ajoutant une signature à un contrat
     public function addSignature($cle) {

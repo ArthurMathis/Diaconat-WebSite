@@ -183,7 +183,7 @@ class CandidatsView extends View {
         else echo "<h2>Aucune candidature enregistrée </h2>";
         
         // On ajoute le bouton d'ajout
-        $link = 'index.php?candidats=saisie-candidatures';
+        $link = 'index.php?candidats=saisie-candidatures&cle_candidat=' . $item['candidat']['id'];
         include(MY_ITEMS.DS.'add_button.php');  
         echo "</section>";
     }
@@ -201,7 +201,7 @@ class CandidatsView extends View {
     }
 
     /// Méthode retournant le contenu de la page profil d'un candidat selon ses informations
-    public function getContent($title, $item=[]) {
+    public function getContentCandidat($title, $item=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [PAGES_STYLES.DS.'candidats.css']);
 

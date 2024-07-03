@@ -221,8 +221,15 @@ if(isset($_GET['login'])) {
 
     else try { 
         switch($_GET['candidats']) {
+            case 'home':
+                $candidats->displayContent();
+                break;
+
             case 'saisie-candidatures': 
-                $candidats->getSaisieCandidature();
+                if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
+                $candidats->getSaisieCandidature($_GET['cle_candidat']);
+                else 
+                    throw new Exception("La clé candidat n'a pas pu être réceptionnée");
                 break;
             
             case 'saisie-propositions' :

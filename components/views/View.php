@@ -20,7 +20,7 @@ class View {
                 "action" => "index.php?candidatures=home"
             ],
             [
-                "intitule" => "Employers",
+                "intitule" => "Candidats",
                 "action" => "#"
             ],
             [

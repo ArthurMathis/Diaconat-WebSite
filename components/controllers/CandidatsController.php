@@ -9,35 +9,22 @@ class CandidatController extends Controller {
         $this->loadView('CandidatsView');
     }
 
+    /// Méthode publique affichant la liste des candidats inscrits dans la base de données
+    public function displayContent() {
+
+    }
     /// Méthode publique affichant la page candidat
     public function displayCandidat($Cle_Candidat) {
         // Récupération d'un candidat
-        $item = $this->Model->getContent($Cle_Candidat);
-        // On garde en mémoire la clé du candidat pour les éventuelles modification
-        $_SESSION['cle candidat'] = $Cle_Candidat;
-
-        return $this->View->getContent("Candidat " . $item['candidat']['nom'] . ' ' . $item['candidat']['prenom'], $item);
-    }
-
-    /// Méthode privée récupérant dans la base de données le candidat depuis sa clé
-    private function getCandidat() {
-        if(!isset($_SESSION['cle candidat']) && !empty($_SESSION['cle candidat']))
-            throw new Exception("Aucun candidat n'est assigné à la demande !");
-
-        $_SESSION['candidat'] = $this->Model->makeCandidat($_SESSION['cle candidat']);
-        unset($_SESSION['cle candidat']);
+        $item = $this->Model->getContentCandidat($Cle_Candidat);
+        // On retourne lapage du candidat
+        return $this->View->getContentCandidat("Candidat " . $item['candidat']['nom'] . ' ' . $item['candidat']['prenom'], $item);
     }
 
     /// Méthode publique affichant le formulaire de saisie d'une candidature
-    public function getSaisieCandidature() { 
+    public function getSaisieCandidature($cle_candidat) { 
         // On vérifie l'intégrité du candidat
-        try {
-            $this->getCandidat();
-
-        } catch(Exception $e) {
-            forms_manip::error_alert($e);
-        }
-
+        $_SESSION['candidat'] = $this->Model->makeCandidat($cle_candidat);
         // On redirige la page
         header('Location: index.php?candidatures=saisie-candidature');
     }
