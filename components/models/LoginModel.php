@@ -15,40 +15,10 @@ class LoginModel extends Model {
         $_SESSION['user_email']         = $user->getEmail();
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();
-        $_SESSION['user_role_id']       = $user->getRole_id();
 
         // On enregistre les logs
         $this->writeLogs($_SESSION['user_cle'], "Connexion");
     }
-    // public function createUser($infos=[]) {
-    //     // On récupère le rôle invité pour l'asigner à l'utilisateur
-    //     $role = $this->searchRole($infos['role']);        
-    // 
-    //     // On crée l'utilisateur
-    //     // $user = new Utilisateurs($infos['identifiant'], $infos['$email'], $infos['$motdepasse'], $role['Intitule_Role']);
-    //     $user = Utilisateurs::makeUtilisateurs($infos);
-    // 
-    //     // // On prépare la requête SQL
-    //     // $request = "INSERT INTO utilisateurs (identifiant_utilisateurs, nom_utilisateurs, prenom_utilisateurs, email_utilisateurs, motdepasse_utilisateurs, Cle_Roles)  VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :id_Roles)";
-    //     // $params = [
-    //     //     'identifiant' => $user->getIdentifiant(),
-    //     //     'nom' => $user->getNom(),
-    //     //     'prenom' => $user->getPrenom(),
-    //     //     'email' => $user->getEmail(),
-    //     //     'motdepasse' => password_hash($user->getMotdepasse(), PASSWORD_DEFAULT),
-    //     //     'id_Roles' => $role['Id_Role']
-    //     // ];
-    //     // 
-    //     // // On exécute la requête
-    //     // $this->post_request($request, $params);
-    //     $this->inscriptUtilisateurs($user->exportToSQL($role));
-    // }
-    // public function firstConnectUser($identifiant, $email, $motdepasse) {
-    //     // On ajoute l'utilisateur à la base de données
-    //     $this->createUser($identifiant, $email, $motdepasse);
-    //     // On récupère l'utilisateur et son identifiant 
-    //     $this->connectUser($identifiant, $motdepasse);
-    // }
 
     public function deconnectUser() {
         $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
@@ -90,17 +60,22 @@ class LoginModel extends Model {
                 // On implémente find
                 $find = true;
 
-                // On récupère le rôle de l'utilisateur 
-                $role = $this->searchRole($users[$i]["Cle_Roles"]);
+                // On construit notre Utilisateur
                 try {
-                    // On construit notre Utilisateur
-                    $user = new Utilisateurs($identifiant, $users[$i]['Email_Utilisateurs'], $motdepasse, $role['Intitule_Role']);
+                    $user = new Utilisateurs(
+                        $users[$i]['Identifiant_Utilisateurs'], 
+                        $users[$i]['Nom_Utilisateurs'],
+                        $users[$i]['Prenom_Utilisateurs'],
+                        $users[$i]['Email_Utilisateurs'], 
+                        $motdepasse, 
+                        $users[$i]['Cle_Etablissements'],
+                        $users[$i]['Cle_Roles']
+                    );
                     $user->setcle($users[$i]['Id_Utilisateurs']);
-                    $user->setRole_id($users[$i]['Cle_Roles']);
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    forms_manip::error_alert($e->getMessage());
+                    forms_manip::error_alert($e);
                 }
 
                 // On retourne notre utilisateur, la connexion est validée
