@@ -1,4 +1,13 @@
 /**
+ * @brief Fonction téléchargeant le tableau de candidatures dans le script
+ * @param {*} source 
+ * @returns 
+ */
+function recupCandidatures(source) {
+    return document.querySelector(source).rows;
+}
+
+/**
  * @brief Fonction déterminant le code couleur des éléments d'un tableau selon un e liste de critères
  * @param {*} items Le tableau
  * @param {*} criteres La liste de critères 

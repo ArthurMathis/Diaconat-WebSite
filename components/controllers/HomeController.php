@@ -38,6 +38,6 @@ class HomeController extends Controller {
             ],
         ];
     
-        return $this->View->getContent("Candidatures non-traitée", $items, $dashboard);
+        return $this->View->getContent($items, $dashboard);
     }
 }

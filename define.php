@@ -31,10 +31,9 @@ define('IMG', ASSETS.DS.'img');
 // Les feuilles de styles
 define('FORMS_STYLES', STYLESHEET.DS.'formulaires');
 define('PAGES_STYLES', STYLESHEET.DS.'pages');
-// Les scripts
 
-define('JAVASCRIPT', ASSETS.DS.'scripts');
-define('JAVASCRIPT_OBJ', JAVASCRIPT.DS.'objects');
+// Les scripts
+define('JAVASCRIPT','layouts/assets/scripts/');
 
 // On charge le contenu du fichier .env
 function env_start() {

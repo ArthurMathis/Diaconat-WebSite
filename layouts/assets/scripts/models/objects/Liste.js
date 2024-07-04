@@ -35,10 +35,12 @@ class Liste {
     callback(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) 
-                entry.target.classList.add('visible');
-    
+                // entry.target.classList.add('visible');
+                entry.target.style.visibility = "visible";
+
             else 
-                entry.target.classList.remove('visible');
+                // entry.target.classList.remove('visible');
+                entry.target.style.visibility = "hidden";
         });
     }
 }

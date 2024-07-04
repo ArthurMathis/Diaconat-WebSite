@@ -9,7 +9,7 @@ nb_candidatures = nb_candidatures[nb_candidatures.length - 1];
  * @brief Fonction téléchargeant le tableau de candidatures dans le script
  */
 function recupCandidatures() {
-    return document.querySelector('.liste_items .table-wrapper table tbody').rows;
+    return document.querySelector().rows;
 }
 
 // FONCTION DE COULEURS

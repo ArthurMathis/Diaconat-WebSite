@@ -768,12 +768,12 @@ button:is(:hover, :focus),
   transform: translateY(calc(-50% + 1px)) rotate(-45deg);
 }
 
-
+/*
 #main-liste .table-wrapper table tbody tr {
   visibility: hidden;
 }
 #main-liste .table-wrapper table tbody tr.visible {
   visibility: visible;
-}
+}*/
 
 /*# sourceMappingURL=styles.css.map */
