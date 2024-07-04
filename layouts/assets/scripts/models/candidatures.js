@@ -312,15 +312,12 @@ function filtrerParDate(item, index, critere_date=[]) {
  * @brief Fonction permettant de réaliser une suite de recherches dans un tableau HTML
  * @param {*} items Le tableau de lignes
  * @param {*} criteres Le tableau contenant les index et critères des recherches
- * @returns 
  */
 function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=null) {
-    if (items === null || (criteres_statut !== null && criteres_statut.index < 0) 
-        || (criteres_date !== null && criteres_date.index < 0)) {
-        return;
-    }
+    if (items === null || (criteres_statut !== null && criteres_statut.index < 0) || (criteres_date !== null && criteres_date.index < 0)) 
+        throw new Error("Erreur lors de la recherche par filtre. Les listes de critères sont incohérentes.");
 
-    // On déclare norte tableau de recherche
+    // On déclare notre tableau de recherche
     let search = Array.from(items);
 
     if(criteres_statut)

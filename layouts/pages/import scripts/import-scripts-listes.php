@@ -1,7 +1,6 @@
 <script src="layouts/assets/scripts/models/candidatures.js"></script>
 <script src="layouts/assets/scripts/views/candidatures.js"></script>
-<?php 
-echo "<script>
+<script>
 let item_clicked = null;
 let method_tri = true;
 entete.forEach((item, index) => {
@@ -15,7 +14,7 @@ entete.forEach((item, index) => {
 
         // On cherche les éventuelles erreurs
         if(candidatures_triees == null || candidatures_triees.length === 0)
-            alert(\"Alerte : Tri non executé.\");
+            alert("Alerte : Tri non executé.");
         
         else {
             // On déconstruit et reconstruit le tableau
@@ -37,4 +36,4 @@ entete.forEach((item, index) => {
 
     });
 });
-</script>";
+</script>

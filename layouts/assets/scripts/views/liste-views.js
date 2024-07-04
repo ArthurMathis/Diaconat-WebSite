@@ -22,7 +22,6 @@ function retireLignes(items) {
     for(let i = 0; i < items.length; i++) 
         items[i].style.display = 'none';
 }
-
 /**
  * @brief Fonction affichant le nombre d'items présents dans le tableau
  * @param {*} nb_items Le nombre d'éléments présents

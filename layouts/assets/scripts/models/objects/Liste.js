@@ -1,4 +1,11 @@
+/**
+ * @brief Classe représentant un tableau HTML permettant l'apparition et la disparition dynamique de ses lignes
+ */
 class Liste {
+    /**
+     * @brief Constructeur de la classe
+     * @param id L'identifiant de la liste
+     */
     constructor(id) {
         this.parent = document.querySelector('#' + id + ' .table-wrapper');
         this.items = Array.from(document.querySelectorAll('#' + id + ' .table-wrapper table tbody tr'));
@@ -11,16 +18,20 @@ class Liste {
             }
         );
         this.int();
-
-        console.log(this.parent);
-        console.log(this.items);
     }
 
+    /**
+     * @brief Méthode lançant la détection de visibilité
+     */
     int() {
         this.items.forEach(item => {
             this.observer.observe(item);
         });
     }
+    /**
+     * @brief Méthode affichant/cachant une ligne
+     * @param entries La ligne
+     */
     callback(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) 

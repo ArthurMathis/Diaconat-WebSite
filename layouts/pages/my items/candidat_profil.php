@@ -79,7 +79,6 @@
         </div>
     </section>
     <footer>
-        <a class="action_button" href="">Exporter</a>
         <a class="action_button" href="">Editer</a>
     </footer>
 </aside>
