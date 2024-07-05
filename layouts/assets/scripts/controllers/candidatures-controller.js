@@ -1,6 +1,7 @@
 // On récupère le tableau de candidatures
 const source = '.liste_items .table-wrapper table tbody';
-let candidatures = recupCandidatures(source);
+// let candidatures = recupCandidatures(source);
+let candidatures = document.querySelector('.liste_items .table-wrapper table tbody').rows
 const entete = Array.from(document.querySelector('.liste_items .table-wrapper table thead tr').cells);
 
 
@@ -57,10 +58,43 @@ const rechercher_menu = document.getElementById('rechercher-menu');
 const filtrer_menu = document.getElementById('filtrer-menu');
 
 // On ajoute les codes couleurs
-// setColor(candidatures, ['non traitee', 'en attente', 'acceptee', 'refusee'], 0);
-console.log(candidatures);
-console.log(typeof candidatures);
-
+setColor(candidatures, [
+    {
+        content: 'non traitee', 
+        class: 'non-traitee'
+    },
+    // {
+    //     content: 'en attente', 
+    //     class: 'en-attente'
+    // },
+    {
+        content: 'acceptee', 
+        class: 'acceptee'
+    },
+    {
+        content: 'refusee', 
+        class: 'refusee'
+    }
+], 0);
+setColor(candidatures, [
+    {
+        content: 'Email', 
+        class: 'email'
+    },
+    {
+        content: 'Hellowork', 
+        class: 'hellowork'
+    },
+    {
+        content: 'Hublo', 
+        class: 'hublo'
+    },
+    {
+        content: 'Telephone', 
+        class: 'telephone'
+    }
+], 6);
+setColorDispo(candidatures, 7);
 
 
 // On ajoute la Liste dynamique //

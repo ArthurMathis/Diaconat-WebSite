@@ -15,50 +15,62 @@ function recupCandidatures(source) {
  */
 function setColor(items=[], criteres=[], index) {
     // On vérifie l'intégrité d'items
-    if(items == null)
-        throw new Error("Erreur lors de la déterminsation du code couleur. Le tableau ne peut pas être nul !");
-    // else if(typeof items !== Array)
-    //     throw new Error("Erreur lors de la déterminsation du code couleur. Le tableau doit être de type Array !");
+    if (items == null) {
+        throw new Error("Erreur lors de la détermination du code couleur. Le tableau ne peut pas être nul !");
+    }
+    if (!Array.isArray(criteres)) {
+        throw new Error("Erreur lors de la détermination du code couleur. La liste de critères doit être de type Array !");
+    }
+    if (index == null || !Number.isInteger(index) || index < 0) {
+        throw new Error("Erreur lors de la détermination du code couleur. L'index doit être un nombre entier non négatif !");
+    }
+    if (items.length > 0 && items[0].cells.length <= index) {
+        throw new Error("Erreur lors de la détermination du code couleur. L'index ne peut pas dépasser la dimension du tableau !");
+    }
 
-    // On vérifie l'intégrité de criteres
-    if(criteres == null)
-        throw new Error("Erreur lors de la déterminsation du code couleur.La liste de critères ne peut pas être nulle !");
-    // else if(typeof criteres !== Array)
-    //     throw new Error("Erreur lors de la détermination du code couleur. La liste de critères doit être de type Array !");
-
-    // On vérifie l'intégrité de l'index
-    if(index == null)
-        throw new Error("Erreur lors de la déterminsation du code couleur. L'index ne peut pas être nul !");
-    // else if(!Number.isInterger(index))
-    //     throw new Error("Erreur lors de la déterminsation du code couleur. L'index doit être un nombre entier !");
-    else if(index < 0)
-        throw new Error("Erreur lors de la déterminsation du code couleur. L'index ne peut pas être négatif !");
-
-    if(items[0].length < index)
-        throw new Error("Erreur lors de la détermination du code couleur. L'index ne peut pas dépassé la dimension du tableau !");
+    // Conversion de items en tableau
+    items = Array.from(items);
 
     console.log(items);
 
     // On fait défiler le tableau
-    items.array.forEach(ligne => {
+    items.forEach(ligne => {
         // On recherche le critere
-        i = 0, find = false;
-        while(i < criteres.length && !find) {
+        let i = 0, find = false;
+        while (i < criteres.length && !find) {
             // On compare
-            if(ligne.cells[index].textContent.trim() === criteres[i].content.trim()) {
+            if (ligne.cells[index].textContent.trim() === criteres[i].content.trim()) {
                 // On implémente 
                 find = true;
                 ligne.classList.add(criteres[i].class);
             }
-
             // On implémente
             i++;
         }
 
         // On vérifie qu'un critère a été sélectionné
-        if(find === false)
-            throw new Erreor("Erreur lors de la détermination du code couleur. La ligne : " + ligne + " ne correspond à aucun critères !");
+        if (!find) {
+            throw new Error("Erreur lors de la détermination du code couleur. La ligne : " + ligne + " ne correspond à aucun critères !");
+        }
     });
+}
+/**
+ * @brief Fonction assignant un code couleur selon les diponibiltés
+ * @param {*} items Le tableau de candidatures
+ * @param {*} index La colonnes contenant les disponibilités
+ */
+function setColorDispo(items=[], index) {
+    // On génère la date actuelle
+    const current_date = new Date();
+
+    // On compare les disponibilités 
+    for(let i = 0; i < items.length; i++) {
+        const date = new Date(items[i].cells[index].innerHTML.trim());
+
+        // On assigne la couleur
+        if(date < current_date)
+            items[i].classList.add('date_depassee');
+    }
 }
 
 
