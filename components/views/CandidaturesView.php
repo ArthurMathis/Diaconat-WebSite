@@ -8,16 +8,25 @@ class CandidaturesView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
 
-        $id = 'main-liste';
+        // $id = 'main-liste';
 
         // On ajoute les barres de navigation
         $this->generateMenu();
         include BARRES.DS.'candidatures_barre.php';
 
-        $this->getListesItems($titre, $items, $nb_items_max, $id);
+        $this->getListesItems($titre, $items, $nb_items_max, 'main-liste');
 
-        include(SCRIPTS.DS.'import-listes.php');
-        include(SCRIPTS.DS.'import-candidatures.php');
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/candidatures-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+        // include(SCRIPTS.DS.'import-listes.php');
+        // include(SCRIPTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

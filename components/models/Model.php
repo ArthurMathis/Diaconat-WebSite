@@ -223,13 +223,27 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un candidat dans la base de données depuis une de ses candidatures
-    protected function searchCandidatFromCandidature($cle) {
+    /// Méthode publique recherchant un candidat dans la base de données depuis une de ses candidatures
+    public function searchCandidatFromCandidature($cle) {
         // On initialise la requête
         $request = "SELECT * 
         FROM Candidatures 
         INNER JOIN Candidats ON Candidatures.Cle_Candidats = Candidats.Id_Candidats
         WHERE Candidatures.Id_Candidatures = :cle";
+        $params = [
+            'cle' => $cle
+        ];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
+    /// Méthode publique recherchant un candidat dans la base de données depuis une de ses contrats
+    public function searchcandidatFromContrat($cle) {
+        // On initialise la requête
+        $request = "SELECT * 
+        FROM Contrats 
+        INNER JOIN Candidats ON Contrats.Cle_Candidats = Candidats.Id_Candidats
+        WHERE Contrats.Id_Contrats = :cle";
         $params = [
             'cle' => $cle
         ];

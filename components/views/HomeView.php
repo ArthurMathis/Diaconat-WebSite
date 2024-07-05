@@ -17,14 +17,13 @@ class HomeView extends View {
         echo "</aside>";
         echo "</content>";
         
+        // On importe les scripts JavaScript
         $scripts = [
             'views/liste-views.js',
             'models/liste-model.js',
             'controllers/home-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
-        // include(SCRIPTS.DS.'import-scripts-listes.php');
-        // include(SCRIPTS.DS.'import-listes.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

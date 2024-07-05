@@ -368,7 +368,7 @@ if(isset($_GET['login'])) {
                 break;       
 
             case 'reject-candidatures':
-                if(isset($_GET['cle_candidature']))
+                if(isset($_GET['cle_candidature']) && !empty($_GET['cle_candidature']))
                     $candidats->rejectCandidature($_GET['cle_candidature']);
                 else 
                     throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
@@ -437,11 +437,11 @@ if(isset($_GET['login'])) {
                 break;    
             
             default: 
-                throw new Exception ('Action inidentifiable');
+                throw new Exception("L'action n'a pas pu être identifiée !");
         } 
     } catch(Exception $e) {
         forms_manip::error_alert($e);
-    }
+    } 
 
 
 } elseif(isset($_GET['utilisateurs'])) {

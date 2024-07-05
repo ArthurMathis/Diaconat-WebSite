@@ -54,25 +54,30 @@ class CandidatController extends Controller {
     }
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectCandidature($cle) {
+        // On refuse la candidature
         $this->Model->setCandidatureStatut('refusee', $cle);
-        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+        $cle_candidat = $this->Model->searchCandidatFromCandidature($cle);
+        header('Location: index.php?candidats=' . $cle_candidat['Id_Candidats']);
     }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptProposition($cle) {
         // Ajouter la signature
         $this->Model->addSignature($cle);
-        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+        $cle_candidat = $this->Model->searchcandidatFromContrat($cle);
+        header('Location: index.php?candidats=' . $cle_candidat['Id_Candidats']);
     }
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectProposition($cle) {
         $this->Model->setPropositionStatut($cle);
-        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+        $cle_candidat = $this->Model->searchcandidatFromContrat($cle);
+        header('Location: index.php?candidats=' . $cle_candidat['Id_Candidats']);
     }
     /// Méthode publique ajoutant une demissione à un contrat
     public function demissioneContrat($cle) {
         $this->Model->addDemission($cle);
-        header('Location: index.php?candidats=' . $_SESSION['cle candidat']);
+        $cle_candidat = $this->Model->searchcandidatFromContrat($cle);
+        header('Location: index.php?candidats=' . $cle_candidat['Id_Candidats']);
     }
 
 
