@@ -202,8 +202,7 @@ function recupChapsDate(liste_date=[]) {
             'type': 'min', 
             'value': new Date(liste_date[0].value)
         });
-        liste_date[0].value = null;
-    }
+       }
         
     if(liste_date[1].value) {
         criteres_date.push({

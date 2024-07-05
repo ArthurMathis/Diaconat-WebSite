@@ -28,11 +28,11 @@ function retireLignes(items) {
  * @param {*} nb_items Le nombre d'éléments présents
  * @returns 
  */
-function afficheNbItems(nb_items) {
-    if(!Number.isInteger(nb_items))
+function afficheNbItems(item, nb_items) {
+    if(item === null ||!Number.isInteger(nb_items))
         return;
 
-    nb_candidatures.innerHTML = nb_items;
+    item.innerHTML = nb_items;
 }
 
 /**

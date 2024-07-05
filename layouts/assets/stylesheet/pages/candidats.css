@@ -31,9 +31,11 @@ aside {
 
     padding: var(--padding);
 
-    color: var(--white);
     border-radius: 0 var(--big-radius) 0 0;
     background-color: var(--blue);
+}
+aside * {
+    color: var(--white);
 }
 aside header, 
 aside section {
