@@ -152,11 +152,20 @@ class CandidatsView extends View {
     protected function getContratsBoard($item=[]) {
         echo '<section class="onglet">';
         if(!empty($item['contrats'])) {
-            foreach($item['contrats'] as $obj) 
-                if(!empty($obj['signature']))
-                    $this->getContratsBulles($obj);
+            $compt = 0; $i = 0; $size = count($item['contrats']);
+            for($i = 0; $i < $size; $i++) {
+                if(!empty($item['contrats'][$i]['signature'])){
+                    $this->getContratsBulles($item['contrats'][$i]);
+                    $compt++;
+                }
+            }
+               
+            // On vérifie la présence de signature
+            if($compt == 0)
+                echo "<h2>Aucun contrat enregistré</h2>";
 
-        } else echo "<h2>Aucun contrat enregistré</h2>";   
+        } else 
+            echo "<h2>Aucun contrat enregistré</h2>";   
 
         // On ajoute le bouton d'ajout
         $link = 'index.php?candidats=saisie-contrats&cle_candidat=' . $item['candidat']['id'];
