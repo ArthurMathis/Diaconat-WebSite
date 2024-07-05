@@ -12,19 +12,19 @@
     <div id="statut_input">
         <h3>Rôles</h3>
         <div class="container-statut">
-            <input type="checkbox" name="administrateur" checked>
-            <p>Administration</p>
+            <input type="checkbox" name="Administrateur" checked>
+            <p>Administrateur</p>
         </div>
         <div class="container-statut">
-            <input type="checkbox" name="moderateur" checked>
+            <input type="checkbox" name="Modérateur" checked>
             <p>Modérateur</p>
         </div>
         <div class="container-statut">
-            <input type="checkbox" name="utilisateur" checked>
+            <input type="checkbox" name="Utilisateur" checked>
             <p>Utilisateur</p>
         </div>
         <div class="container-statut">
-            <input type="checkbox" name="invite" checked>
+            <input type="checkbox" name="Invité" checked>
             <p>Invité</p>
         </div>
     </div>

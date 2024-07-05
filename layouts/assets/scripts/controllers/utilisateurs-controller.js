@@ -108,21 +108,10 @@ filtrer.addEventListener('click', () => {
         };
         const champs_infos = [
             {
-                champs: document.getElementById('filtre-poste'),
+                champs: document.getElementById('filtre-etablissement'),
                 index: 3
-            },
-            {
-                champs: document.getElementById('filtre-source'),
-                index: 6
             }
         ];
-        const champs_date = {
-            index: 7,
-            champs : [
-                document.getElementById('filtre-date-max'),
-                document.getElementById('filtre-date-min')
-            ]
-        };
 
         // On recupère le bouton de recherche
         const bouton = document.getElementById('valider-filtre');
@@ -136,10 +125,10 @@ filtrer.addEventListener('click', () => {
             try {
                 const criteres = recupChamps(champs_infos);
                 const criteres_statut = recupCheckbox(champs_statut);
-                const criteres_date = recupChampsDate(champs_date);
+                console.log(criteres_statut);
 
                 // // On vérifie la présence de critères
-                if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
+                if(criteres.length === 0  && criteres_statut.criteres.length === 4) {
                     // On réinitialise le tableau 
                     resetLignes(candidatures);
                     candidatures_selection = Array.from(candidatures);
@@ -151,7 +140,7 @@ filtrer.addEventListener('click', () => {
                         candidatures_selection = Array.from(candidatures);
                 
                     // On applique les filtres
-                    candidatures_selection = multiFiltre(candidatures_selection, criteres, criteres_statut, criteres_date);
+                    candidatures_selection = multiFiltre(candidatures_selection, criteres, criteres_statut);
                 
                     // On met à jour l'affichage
                     retireLignes(candidatures);
