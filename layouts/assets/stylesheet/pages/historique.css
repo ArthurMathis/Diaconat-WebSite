@@ -1,0 +1,33 @@
+.liste_items .table-wrapper table th:first-of-type, 
+.liste_items .table-wrapper table th:nth-of-type(2) {
+    padding-left: var(--padding);
+}
+.liste_items .table-wrapper table th:first-of-type::before, 
+.liste_items .table-wrapper table th:nth-of-type(2)::before{
+    content: "";
+    position: absolute;
+    left: var(--margin);
+    top: 50%;
+  
+    display: block;
+    width: var(--font-size-small);
+    height: var(--font-size-small);
+    z-index: 0;
+    
+    border-radius: var(--font-size-small);
+    transform: translateY(-50%);
+}
+.liste_items .table-wrapper table tbody tr.deconnexion th:first-of-type::before, 
+.liste_items .table-wrapper table tbody tr.administrateur th:nth-of-type(2)::before {
+    background-color: var(--nontraitee);
+}
+.liste_items .table-wrapper table tbody tr.connexion th:first-of-type::before, 
+.liste_items .table-wrapper table tbody tr.moderateur th:nth-of-type(2)::before {
+    background-color: var(--enattente);
+}
+.liste_items .table-wrapper table tbody tr.utilisateur th:nth-of-type(2)::before {
+    background-color: var(--acceptee);
+}
+.liste_items .table-wrapper table tbody tr.invite th:nth-of-type(2)::before{
+    background-color: var(--refusee);
+}
