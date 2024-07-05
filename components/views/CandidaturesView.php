@@ -25,8 +25,6 @@ class CandidaturesView extends View {
             'controllers/candidatures-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
-        // include(SCRIPTS.DS.'import-listes.php');
-        // include(SCRIPTS.DS.'import-candidatures.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
