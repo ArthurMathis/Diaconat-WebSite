@@ -6,7 +6,7 @@ class CandidaturesView extends View {
     /// Méthode publique retournant la page de candidatures (liste)
     public function getContent($titre, $items = [], $nb_items_max=null) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'liste-page.css', PAGES_STYLES.DS.'candidatures.css']);
 
         // $id = 'main-liste';
 

@@ -1,0 +1,86 @@
+.options_barre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: calc(var(--gap) * 2) var(--padding) var(--gap);
+}
+.options_barre article {
+    display: flex;
+    gap: var(--margin);
+    width: fit-content;
+    height: fit-content;
+}
+.options_barre article p {
+    font-weight: 600;
+}
+.options_barre article a {
+    text-wrap: nowrap;
+}
+  
+.candidatures-menu {
+    position: fixed;
+    top: 15em;
+    display: none;
+    justify-content: left;
+    gap: var(--margin);
+    width: 100%;
+    z-index: 2;
+    padding: var(--padding);
+    background-color: var(--white);
+    overflow-y: hidden;
+    box-shadow: 0 15px 5px 5px rgba(0, 0, 0, 0.05);
+}
+.candidatures-menu.active {
+    display: flex;
+}
+.candidatures-menu section {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 2);
+    width: clamp(240px, 30%, 320px);
+}
+.candidatures-menu #statut_input {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 2);
+    width: 120px;
+}
+.candidatures-menu #statut_input .container-statut {
+    display: flex;
+}
+.candidatures-menu #statut_input input {
+    height: var(--font-size-standart);
+}
+.candidatures-menu > button {
+    width: fit-content;
+    cursor: pointer;
+}
+.candidatures-menu #valider-filtre, .candidatures-menu #lancer-recherche {
+    position: absolute;
+    bottom: var(--padding);
+    right: var(--padding);
+    padding: 0 var(--padding);
+}
+.candidatures-menu .input-date {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--margin) / 4);
+}
+  
+.liste_items {
+    width: 100%;
+    height: calc(100dvh - 15em);
+    padding-top: calc(var(--margin) / 2);
+}
+.liste_items .table-wrapper, .liste_items .entete {
+    padding: 0 3em;
+}
+.liste_items .table-wrapper {
+    overflow-y: auto;
+    height: calc(100dvh - 8em - 150px);
+}
+.liste_items .table-wrapper table th {
+    position: relative;
+    padding-left: var(--margin);
+}

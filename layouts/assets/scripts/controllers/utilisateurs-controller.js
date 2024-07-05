@@ -2,8 +2,6 @@
 let candidatures = document.querySelector('.liste_items .table-wrapper table tbody').rows
 const entete = Array.from(document.querySelector('.liste_items .table-wrapper table thead tr').cells);
 
-
-
 // On ajoute le système de tri //
 
 let item_clicked = null;
@@ -43,8 +41,6 @@ entete.forEach((item, index) => {
     });
 });
 
-
-
 // On ajoute les fonctionnalités de tri et de recherche // 
 
 // On récupère les boutons
@@ -58,37 +54,22 @@ const filtrer_menu = document.getElementById('filtrer-menu');
 // On ajoute les codes couleurs
 setColor(candidatures, [
         {
-            content: 'non traitee', 
-            class: 'non-traitee'
+            content: 'Administrateur', 
+            class: 'administrateur'
         },
         {
-            content: 'acceptee', 
-            class: 'acceptee'
+            content: 'Modérateur', 
+            class: 'moderateur'
         },
         {
-            content: 'refusee', 
-            class: 'refusee'
+            content: 'Utilisateur', 
+            class: 'utilisateur'
+        },{
+            content: 'Invité', 
+            class: 'invite'
         }
     ], 0);
-setColor(candidatures, [
-        {
-            content: 'Email', 
-            class: 'email'
-        },
-        {
-            content: 'Hellowork', 
-            class: 'hellowork'
-        },
-        {
-            content: 'Hublo', 
-            class: 'hublo'
-        },
-        {
-            content: 'Telephone', 
-            class: 'telephone'
-        }
-    ], 6);
-setColorDispo(candidatures, 7);
+
 
 
 // On ajoute la Liste dynamique //
@@ -157,13 +138,6 @@ filtrer.addEventListener('click', () => {
                 const criteres_statut = recupCheckbox(champs_statut);
                 const criteres_date = recupChampsDate(champs_date);
 
-                console.log("Liste des statuts");
-                console.log(criteres_statut);
-                console.log("Liste des critères");
-                console.log(criteres);
-                console.log("Liste des dates");
-                console.log(criteres_date);
-
                 // // On vérifie la présence de critères
                 if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
                     // On réinitialise le tableau 
@@ -229,11 +203,7 @@ rechercher.addEventListener('click', () => {
             },
             {
                 champs: document.getElementById('recherche-email'),
-                index: 4
-            },
-            {
-                champs: document.getElementById('recherche-telephone'),
-                index: 5
+                index: 3
             }
         ];
 

@@ -6,7 +6,7 @@ class UtilisateursView extends View {
     /// Méthode publique retournant la vue Utilisateurs
     public function getUtilisateursContent($titre, $items) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'liste-page.css', PAGES_STYLES.DS.'utilisateurs.css']);
 
         $id = 'main-liste';
 
@@ -16,8 +16,14 @@ class UtilisateursView extends View {
 
         $this->getListesItems($titre, $items, null, $id);
 
-        include(SCRIPTS.DS.'import-listes.php');
-        include(SCRIPTS.DS.'import-candidatures.php');
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/utilisateurs-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -25,7 +31,7 @@ class UtilisateursView extends View {
     /// Méthode publique retournant la vue Historique
     public function gethistoriqueContent($titre, $items) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'liste-page.css']);
 
         $id = 'main-liste';
 

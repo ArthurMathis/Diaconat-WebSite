@@ -29,6 +29,7 @@ class UtilisateursModel extends Model {
         // On initialise la requête
         $request = "SELECT
         Intitule_Types AS Action,
+        Intitule_Role AS Role,
         Nom_Utilisateurs AS Nom,
         Prenom_Utilisateurs AS Prenom, 
         Jour_Instants AS Date,
@@ -36,6 +37,7 @@ class UtilisateursModel extends Model {
         
         FROM Actions AS a
         INNER JOIN Utilisateurs AS u ON a.Cle_Utilisateurs = u.Id_Utilisateurs
+        INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role
         INNER JOIN Types AS t ON a.Cle_Types = t.Id_Types
         INNER JOIN Instants AS i ON a.Cle_Instants = i.Id_Instants
         
