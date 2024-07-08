@@ -255,6 +255,13 @@ if(isset($_GET['login'])) {
                 else 
                     throw new Exception("La clé n'a pas pu être détectée !");
                 break;    
+
+            case 'saisie-rendez-vous':
+                if(isset($_GET['cle_candidat']))
+                    $candidats->getSaisieRendezVous($_GET['cle_candidat']);
+                else 
+                    throw new Exception("La clé candidat n'a pas pu être récupérée !");
+                break;    
             
             case 'inscript-propositions':
                 // On récupère les données du formulaire
@@ -428,6 +435,36 @@ if(isset($_GET['login'])) {
                 else 
                     throw new Exception("Impossible d'inscrire le contrat, clé de contrat est introuvable !");
                 break; 
+
+            case 'inscript-rendez-vous':
+                // On récupère le formulaire
+                $infos = [
+                    'recruteur' => $_POST['recruteur'],
+                    'etablissement' => $_POST['etablissement'],
+                    'date' => $_POST['date'],
+                    'time' => $_POST['time']
+                ];
+
+                try {
+                    if(empty($infos['recruteur']))
+                        throw new Exception("Le champs recruteur doit être rempli !");
+                    elseif(empty($infos['etablissement']))
+                        throw new Exception("Le champs etablissement doit être rempli !");
+                    elseif(empty($infos['date']))
+                        throw new Exception("Le champs date doit être rempli !");
+                    elseif(empty($infos['time']))
+                        throw new Exception("Le champs horaire doit être rempli !");
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                if(isset($_GET['cle_candidat']))
+                    $candidats->createRendezVous($_GET['cle_candidat'], $infos);
+                else 
+                    throw new Exception("Impossible d'inscrire le contrat. La clé candidat est inrouvale !");
+
+                break;   
                 
             case 'demission':
                 if(isset($_GET['cle_contrat']))

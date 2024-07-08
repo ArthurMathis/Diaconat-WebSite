@@ -140,6 +140,11 @@ INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Ema
     ('Andre', 'Tom', '01.23.45.68.30', 'tom.andre@example.com', '1010 Boulevard de la Pluie', 'Toulouse', '31003', '2024-07-19', FALSE)
 ;
 
+INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats, Notations_Candidats,Descriptions_Candidats, A_Candidats, B_Candidats, C_Candidats) VALUES
+    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', TRUE, '3', "Elément dynamique et motivé. S'exprime bien, à conseiller !", TRUE, FALSE, TRUE)
+;
+
+
 INSERT INTO Aides_au_recrutement (Intitule_Aides_au_recrutement) VALUES 
     ("Bourse d'étude"),
     ("Rachat de bourse d'étude"),
@@ -168,7 +173,8 @@ INSERT INTO Instants (Jour_Instants, Heure_Instants) VALUES
     ('2024-06-10', '19:15:00'),
     ('2024-07-16', '12-48-00'),
     ('2025-01-13', '17-45-32'),
-    ('2024-12-02', '13-45-00')
+    ('2024-12-02', '13-45-00'),
+    ('2024-09-09', '14-30-00')
 ;
 
 -- On insère les types de contrats --
@@ -191,7 +197,8 @@ INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES
     (4, 7),
     (5, 8),
     (6, 9),
-    (6, 10)
+    (6, 10),
+    (11, 11)
 ;    
 INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) VALUES 
     ('non traitee',  1,  1,  1,  23,  1),
@@ -203,7 +210,8 @@ INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_
     ('acceptee',  4,  7,  1,  4,   1),
     ('non traitee',  5,  8,  2,  47,  5),
     ('non traitee',  6,  9,  1,  65,  4),
-    ('non traitee',  6,  10, 4,  26,  4)
+    ('non traitee',  6,  10, 4,  26,  4),
+    ('non traitee', 11, 11, 3, 3, 3)
 ;    
 
 -- On insère les contrats --

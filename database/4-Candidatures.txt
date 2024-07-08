@@ -57,10 +57,12 @@ CREATE TABLE Avoir_rendez_vous_avec (
     Cle_Candidats INTEGER NOT NULL,
     Cle_Utilisateurs INTEGER NOT NULL,
     Cle_Instants INTEGER NOT NULL,
+    Cle_Etablissements INTEGER NOT NULL,
 
     FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
     FOREIGN KEY (Cle_Utilisateurs) REFERENCES utilisateurs(Id_Utilisateurs),
     FOREIGN KEY (Cle_Instants) REFERENCES instants(Id_Instants),
+    FOREIGN KEY (Cle_Etablissements) REFERENCES Etablissements(Id_Etablissements),
 
     PRIMARY KEY (Cle_Candidats, Cle_Utilisateurs, Cle_Instants)
 );

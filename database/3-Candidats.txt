@@ -16,9 +16,7 @@ CREATE TABLE Candidats (
     Descriptions_Candidats TEXT, 
     A_Candidats BOOLEAN DEFAULT FALSE, 
     B_Candidats BOOLEAN DEFAULT FALSE, 
-    C_Candidats BOOLEAN DEFAULT FALSE, 
-    D_Candidats BOOLEAN DEFAULT FALSE, 
-    E_Candidats BOOLEAN DEFAULT FALSE, 
+    C_Candidats BOOLEAN DEFAULT FALSE,  
     
     CONSTRAINT Notations CHECK (Notations_Candidats BETWEEN 0 AND 5)
 );

@@ -11,23 +11,28 @@ class forms_manip {
         exit;
     }
     
-    public static function nameFormat($str): ?string {
-        if(empty($str))
-            return null; 
+    public static function nameFormat($str): string {
+        // if(empty($str))
+        //     return null; 
+// 
+        // // On prépare la chaine de caractères aux traitements
+        // $str = str_split(trim($str));
+// 
+        // // On met la première lettre en majuscule
+        // $str[0] = strtoupper($str[0]);
+// 
+        // // On met les lettres suivant en minuscule
+        // $size = count($str);
+        // for($i = 1; $i < $size; $i++) 
+        //     $str[$i] = strtolower($str[$i]);
+// 
+        // // On retourne la chaine concaténée
+        // return implode('', $str);
 
-        // On prépare la chaine de caractères aux traitements
-        $str = str_split(trim($str));
+        if(!is_string($str))
+            throw new Exception("Le formatage d'un nom doit se réaliser sur une chaine de caractères. ");
 
-        // On met la première lettre en majuscule
-        $str[0] = strtoupper($str[0]);
-
-        // On met les lettres suivant en minuscule
-        $size = count($str);
-        for($i = 1; $i < $size; $i++) 
-            $str[$i] = strtolower($str[$i]);
-
-        // On retourne la chaine concaténée
-        return implode('', $str);
+        return ucwords(strtolower($str));
     }
     public static function numberFormat($number): ?string {
         // On test la présence de données
@@ -60,5 +65,12 @@ class forms_manip {
            
         // On retourne le résultat en chaine de caractères
         return implode('', $temp);
+    }
+    static public function majusculeFormat($str) {
+        if(!is_string($str))
+        throw new Exception("Le formatage d'un nom doit se réaliser sur une chaine de caractères. ");
+
+        // Convertit les caractères accentués en caractères non accentués et en majuscule
+        return strtoupper(preg_replace('/[^A-Za-z0-9\- ]/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str)));
     }
 }

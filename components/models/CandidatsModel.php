@@ -63,7 +63,11 @@ class CandidatsModel extends Model {
         Ville_Candidats AS ville,
         CodePostal_Candidats AS code_postal,
         Disponibilite_Candidats AS disponibilite,
-        Notations_Candidats AS notation
+        Notations_Candidats AS notation,
+        Descriptions_Candidats AS description, 
+        A_Candidats AS a, 
+        B_Candidats AS b, 
+        C_Candidats AS c
 
         FROM candidats AS c
         WHERE c.Id_Candidats = :cle";
@@ -159,13 +163,17 @@ class CandidatsModel extends Model {
     private function getRendezVous($index) {
         // On initialise la requête 
         $request = "SELECT 
-        Nom_Utilisateurs AS utilisateur,
+        Nom_Utilisateurs AS nom,
+        Prenom_Utilisateurs AS prenom,
         Jour_Instants AS date,
+        Heure_Instants AS heure,
+        Intitule_Etablissements AS etablissement,
         Compte_rendu_Avoir_rendez_vous_avec AS description
 
         FROM  avoir_rendez_vous_avec AS rdv
         INNER JOIN utilisateurs AS u ON rdv.Cle_Utilisateurs = u.Id_Utilisateurs
         INNER JOIN instants AS i  ON rdv.Cle_Instants = i.Id_Instants
+        INNER JOIN Etablissements AS e ON e.Id_Etablissements = rdv.Cle_Etablissements
 
         WHERE rdv.Cle_Candidats = :cle";
         $params = [
@@ -326,67 +334,57 @@ class CandidatsModel extends Model {
     /// Méthode construisant nouveau contrat et l'inscrivant dans la base de données
     public function createContrats($cle_candidats, &$contrat=[]) {
         try {
-            echo "<h2>On construit la proposition</h2>";
-            echo "On inscrit l'intant actuel<br>";
-
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
-
-            echo "On ajoute la date de signature<br>";
-
             $contrat['signature'] = Instants::currentInstants()->getdate();
-
-            echo "<h3>On ajoute les clés extrenes</h3>";
 
             // On ajoute la clé candidat
             $contrat['cle candidat'] = $cle_candidats;
-            echo "Clé candidat: " . $contrat['cle candidat'] . "<br>";
-
             // On ajoute la clé instant
             $contrat['cle instant'] = $instant;
-            echo "Clé instant: " . $contrat['cle instant'] . "<br>";
-
             // On ajoute la clé poste
             $contrat['cle poste'] = is_numeric($contrat['poste']) ? $contrat['poste'] : $this->searchPoste($contrat['poste'])['Id_Postes'];;
-            echo "Clé poste: " . $contrat['cle poste'] . "<br>";
-            
             // On ajoute la clé service
             $contrat['cle service'] = is_numeric($contrat['service']) ? $contrat['service'] : $this->searchService($contrat['service'])['Id_Services'];
-            echo "Clé service: " . $contrat['cle service'] . "<br>";
-
             // On ajoute la clé de type de contrat
             $contrat['cle type'] = isset($contrat['type']) && is_numeric($contrat['type']) ? $contrat['type'] : $this->searchTypeContrat($contrat['type_de_contrat'])['Id_Types_de_contrats'];
-            echo "Clé type: " . $contrat['cle type'] . "<br>";
 
-            echo "<h2>On construit un contrat </h2>";
             // On génère le contrat
             $contrat = Contrat::makeContrat($contrat);
-
             $infos_contrat = $contrat->exportToSQL();
-
-            foreach($infos_contrat as $k => $v)
-                echo $k . " => " . $v . "<br>";
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
-        
-        echo "<h2>On inscrit la proposition</h2>";
 
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
-
-        echo "Proposition inscrite<br>";
-
-        echo "<h2>On test la présence de la mission</h2>";
-
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
 
 
-        echo "<h2>On inscrit le contrat</h2>";
-
         // On enregistre le contrat 
         $this->inscriptContrats($infos_contrat);
+    }
+    public function createRendezVous($cle_candidat, &$rendezvous=[]) {
+        try {
+            // On génère l'instant
+            $rendezvous['date'] = $this->inscriptInstants($rendezvous['date'], $rendezvous['time'])['Id_Instants'];
+            unset($rendezvous['time']);
+
+            // On récupère l'établissement
+            $rendezvous['etablissement'] = $this->searchEtablissement($rendezvous['etablissement'])['Id_Etablissements'];
+
+            // On récupère la clé de l'utilisateur
+            $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUser($rendezvous['recrruteur'])['Id_Utilisateurs'];
+
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+
+        echo "<br>Candidat: ";
+        var_dump($cle_candidat);
+
+        $this->inscriptAvoir_rendez_vous_avec($rendezvous['recruteur'], $cle_candidat, $rendezvous['etablissement'], $rendezvous['date']);
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données

@@ -4,4 +4,3 @@
     <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
     <button type="submit" value="new_user">Se connecter</button>
 </form>
-<p class="user-link">Vous n'avez pas de compte ?<a class="LignesHover" href="index.php?login=get_inscription">Inscrivez-vous</a></p>

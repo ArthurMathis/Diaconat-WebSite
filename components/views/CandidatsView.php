@@ -103,8 +103,9 @@ class CandidatsView extends View {
         // On construit le tableaux de rendez-vous simplifiés
         foreach($rendezvous as $r) {
             $new_r = [
-                'Recruteur' => $r['utilisateur'],
-                'Date' => $r['date'] // corrected syntax error
+                'Recruteur' => forms_manip::majusculeFormat($r['nom']) . ' ' . $r['prenom'],
+                'Date' => $r['date'],
+                'Etablissement' => $r['etablissement']
             ];
             array_push($rendezvous_bulles, $new_r);
         }
@@ -148,8 +149,8 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'rendez_vous_bulles.php');
     }
 
-    /// Méthode publique générant l'onglet conrtat d'un candidat
-    protected function getContratsBoard($item=[]) {
+    /// Méthode publique générant l'onglet contrat d'un candidat
+    protected function getContratsBoard(&$item=[]) {
         echo '<section class="onglet">';
         if(!empty($item['contrats'])) {
             $compt = 0; $i = 0; $size = count($item['contrats']);
@@ -173,7 +174,7 @@ class CandidatsView extends View {
         echo "</section>";
     }
     /// Méthode publique générant l'onglet Porpositions d'un candidat selon les informations de son profil
-    protected function getPropositionsBoard($item) {
+    protected function getPropositionsBoard(&$item) {
         echo '<section class="onglet">';
         if(!empty($item['contrats'])) foreach($item['contrats'] as $obj) 
             $this->getPropositionsBulles($obj);
@@ -184,8 +185,14 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
+    /// Méthode protégée gnérant l'onglet Suggestion d'un candidat selon les informations de son profil
+    protected function getSuggestionBoard(&$item=[]) {
+        echo '<section class="onglet">';
+        echo '<H2>En développement</H2>';
+        echo "</section>";
+    }
     /// Méthode publique générant l'onglet Candidatures d'un candidat selon les informations de son profil
-    protected function getCandidaturesBoard($item) {
+    protected function getCandidaturesBoard(&$item) {
         echo '<section class="onglet">';
         if(!empty($item['candidatures'])) foreach($item['candidatures'] as $obj)
             $this->getCandidaturesBulles($obj);
@@ -197,15 +204,23 @@ class CandidatsView extends View {
         echo "</section>";
     }
     /// Méthode publique générant l'onglet rendez-vous d'un candidat selon les informations de son profil
-    protected function getRendezVousBoard($item=[]) {
+    protected function getRendezVousBoard(&$item=[]) {
         echo '<section class="onglet">';
         if(!empty($item['rendez-vous'])) foreach($item['rendez-vous'] as $obj)
             $this->getRendezVousBulles($obj);
         else echo "<h2>Aucun rendez-vous enregistré </h2>"; 
         
         // On ajoute le bouton d'ajout
-        $link = '';
+        $link = 'index.php?candidats=saisie-rendez-vous&cle_candidat=' . $item['candidat']['id'];
         include(MY_ITEMS.DS.'add_button.php'); 
+        echo "</section>";
+    }
+    /// Méthode protégée générant l'onglet de notation d'un candidat selon les informations de son profil
+    protected function getNotationBoard(&$item=[]) {
+        echo '<section class="onglet">';
+        
+        include(MY_ITEMS.DS.'notation.php');
+
         echo "</section>";
     }
 
@@ -218,9 +233,10 @@ class CandidatsView extends View {
             'Tableau de bord',
             'Contrats',
             'Propositions',
+            'Suggestions',
             'Candidatures',
-            'Rendez-vous'
-            // 'Notation'
+            'Rendez-vous',
+            'Notation'
         ] ;
 
         // On ajoute la barre de navigation
@@ -233,19 +249,25 @@ class CandidatsView extends View {
         $this->getDashboard($item);
         $this->getContratsBoard($item);
         $this->getPropositionsBoard($item);
+        $this->getSuggestionBoard($item);
         $this->getCandidaturesBoard($item);
         $this->getRendezVousBoard($item);
+        $this->getNotationBoard($item);
         echo "</main>";
         echo "</content>";
 
-        include(SCRIPTS.DS.'import-candidats.php');
+        // On importe les scripts JavaScript
+        $scripts = [ 'views/candidats-view.js' ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // include(SCRIPTS.DS.'import-candidats.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
     public function getContent($titre, &$items=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'candidatures.css']);
+        $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'liste-page.css']);
 
         $id = 'main-liste';
 
@@ -318,6 +340,21 @@ class CandidatsView extends View {
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'contrats.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant le formulaire d'ajout d'un contrat
+    public function GetContentRendezVous($title, $cle_candidat) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu(true);
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'rendez_vous.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

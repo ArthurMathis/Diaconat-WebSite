@@ -47,6 +47,10 @@ class CandidatController extends Controller {
     public function getSaisieContrats($cle_candidat) {
         return $this->View->getContentContrats("Ypopsi - Nouveau contrat", $cle_candidat);
     }
+    /// Méthode publique affichant le formulaire de saisie d'un rendez-cous
+    public function getSaisierendezVous($cle_candidat) {
+        return $this->View->GetContentRendezVous("Nouveau rendez-vous", $cle_candidat);
+    }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {
@@ -108,9 +112,13 @@ class CandidatController extends Controller {
         // On assigne le nouveau statut à la candidature
         $this->acceptCandidature($cle_candidature);
     }
-
+    /// Méthode publique inscrivant un contrat dans la base de données
     public function createContrat($cle_candidats, &$contrats=[]) {
         $this->Model->createContrats($cle_candidats, $contrats);
         header('Location: index.php?candidats=' . $cle_candidats);
+    }
+    public function createRendezVous($cle_candidat, &$rendezvous=[]) {
+        $this->Model->createRendezVous($cle_candidat, $rendezvous);
+        header('Location: index.php?candidats=' . $cle_candidat);
     }
 }

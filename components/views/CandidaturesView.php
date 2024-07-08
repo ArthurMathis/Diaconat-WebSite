@@ -62,7 +62,7 @@ class CandidaturesView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateMenu();
+        $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription_candidatures.php';

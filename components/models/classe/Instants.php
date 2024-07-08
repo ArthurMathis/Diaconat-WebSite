@@ -43,15 +43,20 @@ class Instants {
         return $dateTime && $dateTime->format($format) === $dateString;
     }
     public static function isHeure($heureString, $format = 'H:i:s') {
+        // Vérifier si le format fourni est 'H:i' et ajouter ':00' si c'est le cas
+        if (strlen($heureString) === 5 && substr_count($heureString, ':') === 1) 
+            $heureString .= ':00';
+
         // On crée un objet DateTime à partir de l'heure donnée et du format
         $dateTime = DateTime::createFromFormat($format, $heureString);
+
         // On vérifie si l'objet DateTime a été créé avec succès et si l'heure correspond au format donné
         return $dateTime && $dateTime->format($format) === $heureString;
     }
 
     public static function currentInstants(): Instants {
         // On crée un objet DateTime représentant la date et l'heure actuelle
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new DateTime('now', new DateTimeZone('Europe/Paris'));
         
         // On récupère la date au format 'Y-m-d' et l'heure au format 'H:i:s'
         $date = $now->format('Y-m-d');

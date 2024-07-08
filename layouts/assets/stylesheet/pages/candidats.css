@@ -46,7 +46,7 @@ aside p {
 }
 aside footer {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: end;
     gap: var(--margin);
 
@@ -228,15 +228,13 @@ main section .rendez_vous_bulle {
 }
 main section .contrats_bulle article p,  
 main section .propositions_bulle article p,  
-main section .candidatures_bulle article p,  
-main section .rendez_vous_bulle .date p{
+main section .candidatures_bulle article p {
     position: relative;
     width: fit-content;
 }
 main section .contrats_bulle article p::before,
 main section .propositions_bulle article p::before,
-main section .candidatures_bulle article p::before,
-main section .rendez_vous_bulle .date p::before {
+main section .candidatures_bulle article p::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -264,7 +262,8 @@ main section content div > p:first-of-type {
 /* On met en page les boutons de candidatures */
 main section .contrats_bulle footer,
 main section .propositions_bulle footer,
-main section .candidatures_bulle footer {
+main section .candidatures_bulle footer,
+main section .rendez_vous_bulle footer {
     display: flex;
     justify-content: right;
     align-items: flex-end;
@@ -352,6 +351,67 @@ main section .candidatures_bulle article p.non-traitee::before {
     background-color: var(--nontraitee);
 }
 
+.grid {
+    display: flex;
+    justify-content: start;
+    gap: var(--gap);
+
+    width: 100%;
+}
+.grid .notation_bulle {
+    width: clamp(480px, calc(50% - var(--margin)), 720px);
+    height: 360px;
+
+    padding: calc(var(--gap) * 2 / 3);
+
+    border-radius: var(--margin);
+    border: 2px solid var(--light-grey);
+    background-color: var(--white);
+    box-shadow: var(--small-bulle-shadow);
+}
+.grid article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+
+    width: min(360px, calc(50% - var(--margin)));
+}
+.grid article .notation_bulle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: fit-content;
+}
+#carcatéristiques {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    gap:var(--margin);
+}
+#carcatéristiques content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    gap: calc(var(--margin) / 3);
+}
+#carcatéristiques content p {
+    margin-right: calc(var(--margin) / 2);
+}
+.grid .notation_bulle .notation {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: calc(var(--margin) / 2);
+}
+.grid .notation_bulle .notation img {
+    opacity: 0.25;
+}
+
+/* Gestion des boutons d'ajout en bas de page */
 .add_button {
     position: fixed;
     bottom: 2em;

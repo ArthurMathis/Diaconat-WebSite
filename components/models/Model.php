@@ -593,13 +593,27 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée isncrivant une mission dans la base de données
+    /// Méthode protégée inscrivant une mission dans la base de données
     protected function inscriptMission($cle_service, $cle_poste) {
         // On intitialise la requête 
         $request = "INSERT INTO Missions (Cle_Services, Cle_Postes) VALUES (:cle_service, :cle_poste)";
         $params = [
             "cle_service" => $cle_service,
             "cle_poste" => $cle_poste
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée inscrivant un rendez vous dans la base de données
+    protected function inscriptAvoir_rendez_vous_avec($cle_utilisateur, $cle_candidat, $cle_etablissement, $cle_instants) {
+        // On intitialise la requête 
+        $request = "INSERT INTO Avoir_rendez_vous_avec (Cle_Utilisateurs, Cle_Candidats, Cle_Etablissements, Cle_Instants) VALUES (:cle_utilisateurs, :cle_candidats, :cle_etablissements, :cle_instants)";
+        $params = [
+            ":cle_utilisateurs" => $cle_utilisateur, 
+            ":cle_candidats" => $cle_candidat, 
+            ":cle_etablissements" => $cle_etablissement, 
+            ":cle_instants" => $cle_instants
         ];
 
         // On lance la requête
