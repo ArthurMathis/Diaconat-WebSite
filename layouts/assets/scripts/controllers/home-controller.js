@@ -41,3 +41,7 @@ entete.forEach((item, index) => {
 
     });
 });
+
+// On ajoute la Liste dynamique //
+
+const liste = new Liste("main-liste");

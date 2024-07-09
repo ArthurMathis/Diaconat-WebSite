@@ -28,7 +28,8 @@ abstract class Model {
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         } catch(PDOException $e) {
-            forms_manip::error_alert($e->getMessage());
+            // forms_manip::error_alert($e->getMessage());
+            die("Connexion à la base de données réchouée. " . $e->getMessage());
         }
         return $this->connection;
     }
@@ -616,6 +617,25 @@ abstract class Model {
             ":cle_instants" => $cle_instants
         ];
 
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+
+    /// Méthode protégée mettant à jour la notation d'uyn utilisateur 
+    public function updateNotation($cle_candidat, &$notation=[]) {
+        // On initialise la requête
+        $request = "UPDATE Candidats 
+        SET Notations_Candidats = :notation, Descriptions_Candidats = :description, A_candidats = :a, B_Candidats = :b, C_Candidats = :c
+        Where Id_Candidats = :cle";
+        $params = [
+            'notation' => $notation['notation'],
+            'description' => $notation['description'],
+            'a' => $notation['a'],
+            'b' => $notation['b'],
+            'c' => $notation['c'],
+            'cle' => $cle_candidat
+        ];
+        
         // On lance la requête
         $this->post_request($request, $params);
     }

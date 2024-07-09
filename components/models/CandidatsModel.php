@@ -51,7 +51,7 @@ class CandidatsModel extends Model {
         ];
     }
     /// Méthode privée retournant un candidat selon son Id 
-    private function getCandidats($index) {
+    public function getCandidats($index) {
         // On initialise la requête
         $request = "SELECT 
         Id_Candidats AS id,

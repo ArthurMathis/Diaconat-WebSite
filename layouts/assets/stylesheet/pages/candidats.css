@@ -74,6 +74,9 @@ aside header div {
     width: 100%;
     height: fit-content;
 }
+aside header div p {
+    font-family: "Roboto Bold";
+}
 aside section {
     display: flex;
     flex-direction: column;
@@ -355,26 +358,32 @@ main section .candidatures_bulle article p.non-traitee::before {
     display: flex;
     justify-content: start;
     gap: var(--gap);
+    flex-wrap: wrap;
 
     width: 100%;
 }
 .grid .notation_bulle {
-    width: clamp(480px, calc(50% - var(--margin)), 720px);
-    height: 360px;
+    padding: calc(var(--gap) * 4 / 3) var(--gap);
 
-    padding: calc(var(--gap) * 2 / 3);
-
-    border-radius: var(--margin);
+    border-radius: 45px;
     border: 2px solid var(--light-grey);
     background-color: var(--white);
     box-shadow: var(--small-bulle-shadow);
+}
+.grid > .notation_bulle {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin);
+
+    width: 520px;
+    height: fit-content;
 }
 .grid article {
     display: flex;
     flex-direction: column;
     gap: var(--gap);
 
-    width: min(360px, calc(50% - var(--margin)));
+    width: 520px;
 }
 .grid article .notation_bulle {
     display: flex;
@@ -410,13 +419,18 @@ main section .candidatures_bulle article p.non-traitee::before {
 .grid .notation_bulle .notation img {
     opacity: 0.25;
 }
+.grid .notation_bulle .notation .bille_notation.active img {
+    opacity: 1;
+}
 
 /* Gestion des boutons d'ajout en bas de page */
+#edit_button,
 .add_button {
     position: fixed;
     bottom: 2em;
     right: 3em;
 }
+#edit_button:is(:hover, :focus),
 .add_button:is(:hover, :focus) {
     box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.85);
 }

@@ -14,7 +14,12 @@
                 </li>
             <?php endif ?>  
         </div>
-        <h2><?= $item['candidat']['prenom']; ?></h2>
+        <div>
+            <h2><?= $item['candidat']['prenom']; ?></h2>
+            <?php if($item['candidat']['a'] || $item['candidat']['b'] || $item['candidat']['c']): ?>
+                <p>Alerte notation !</p>
+            <?php endif ?>
+        </div>
         <h3><?= $item['candidatures'][0]['type_de_contrat']; ?></h3>
         <p><?= forms_manip::nameFormat($item['candidatures'][0]['statut']); ?></p>  
     </header>

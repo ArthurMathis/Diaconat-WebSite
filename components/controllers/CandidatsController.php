@@ -51,6 +51,11 @@ class CandidatController extends Controller {
     public function getSaisierendezVous($cle_candidat) {
         return $this->View->GetContentRendezVous("Nouveau rendez-vous", $cle_candidat);
     }
+    /// Méthode publique affichant le formulaire d'édition d'une notation
+    public function getEditNotation($cle_candidat) {
+        $item = $this->Model->getCandidats($cle_candidat);
+        return $this->View->getEditNotation($item);
+    }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {
@@ -119,6 +124,11 @@ class CandidatController extends Controller {
     }
     public function createRendezVous($cle_candidat, &$rendezvous=[]) {
         $this->Model->createRendezVous($cle_candidat, $rendezvous);
+        header('Location: index.php?candidats=' . $cle_candidat);
+    }
+
+    public function updateNotation($cle_candidat, &$notation=[]) {
+        $this->Model->updateNotation($cle_candidat, $notation);
         header('Location: index.php?candidats=' . $cle_candidat);
     }
 }

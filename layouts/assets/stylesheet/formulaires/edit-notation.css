@@ -1,0 +1,41 @@
+p {
+    color: var(--white);
+}
+
+textarea {
+    width: 100%;
+    height: 160px;
+}
+
+.etoile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--margin);
+    width: 100%;
+}
+.etoile-container input[type="checkbox"] {
+    position: relative;
+    background-color: transparent;
+}
+.etoile-container input[type="checkbox"]::after {
+    content: url('../../img/etoile.svg');
+
+    width: var(--font-size-standart);
+    height: var(--font-size-standart);
+
+    opacity: 0.25;
+    background-color: transparent; 
+    transform: translate(-50%, -50%);
+}
+.etoile-container input[type="checkbox"],
+.etoile-container input[type="checkbox"]:hover {
+    box-shadow: none;
+}
+.etoile-container input[type="checkbox"]:is(:checked, .selected)::after {
+    opacity: 1;
+}
+
+.double-items {
+    justify-content: center;
+}

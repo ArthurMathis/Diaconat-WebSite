@@ -39,9 +39,10 @@
 <div class="notation_bulle">
     <h2>Remarque</h2>
     <?php if(isset($item['candidat']['description']) && empty($item['candidat']['description'])): ?>
-        <p><?= $item['candidat']['description']; ?></p>
-    <?php else: ?>
         <p style="color: var(--grey)">Aucun descriptif enregistré</p>
+    <?php else: ?>
+        <p><?= $item['candidat']['description']; ?></p>
     <?php endif ?>    
 </div>
 </div>
+<a id="edit_button" class="action_button reverse_color" href="index.php?candidats=edit-notation&cle_candidat=<?=$item['candidat']['id'] ?>">Modifier</a>

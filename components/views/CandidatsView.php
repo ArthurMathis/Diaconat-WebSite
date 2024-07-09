@@ -218,9 +218,7 @@ class CandidatsView extends View {
     /// Méthode protégée générant l'onglet de notation d'un candidat selon les informations de son profil
     protected function getNotationBoard(&$item=[]) {
         echo '<section class="onglet">';
-        
-        include(MY_ITEMS.DS.'notation.php');
-
+        include(MY_ITEMS.DS.'notation.php'); 
         echo "</section>";
     }
 
@@ -279,6 +277,28 @@ class CandidatsView extends View {
 
         include(SCRIPTS.DS.'import-listes.php');
         include(SCRIPTS.DS.'import-candidatures.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
+
+    public function getEditNotation(&$item=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Modification de la notation de ' . forms_manip::majusculeFormat($item['nom']) . ' ' . $item['prenom'], 
+        [FORMS_STYLES.DS.'small-form.css', FORMS_STYLES.DS.'edit-notation.css']);
+
+        // On ajoute les barres de navigation
+        $this->generateFormMenu(true);
+
+        // On ajoute le formulaire de connexion
+        include FORMULAIRES.DS.'edit-notation.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'controllers/edit-notation-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

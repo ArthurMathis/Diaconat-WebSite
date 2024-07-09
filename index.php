@@ -471,6 +471,32 @@ if(isset($_GET['login'])) {
                     $candidats->demissioneContrat($_GET['cle_contrat']);
                 else 
                     throw new Exception("Impossible de renseigner la démission, clé de contrat est introuvable !");
+                break; 
+                
+            case 'edit-notation':
+                if(isset($_GET['cle_candidat']))
+                    $candidats->getEditNotation($_GET['cle_candidat']);
+                else 
+                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                break;  
+                
+            case 'update-notation':
+                try {
+                    $notation = [
+                        'notation' => max($_POST['notation']),
+                        'a' => isset($_POST['a']) ? 1 : 0,
+                        'b' => isset($_POST['b']) ? 1 : 0,
+                        'c' => isset($_POST['c']) ? 1 : 0,
+                        'description' => $_POST['description']
+                    ];
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                if(isset($_GET['cle_candidat']))
+                    $candidats->updateNotation($_GET['cle_candidat'], $notation);
+                else 
+                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;    
             
             default: 

@@ -19,6 +19,7 @@ class HomeView extends View {
         
         // On importe les scripts JavaScript
         $scripts = [
+            'models/objects/Liste.js',
             'views/liste-views.js',
             'models/liste-model.js',
             'controllers/home-controller.js'

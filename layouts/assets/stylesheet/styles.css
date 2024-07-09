@@ -88,7 +88,7 @@ a {
   font-family: "Roboto Bold";
 }
 a::selection {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 input[type="radio"],
@@ -130,6 +130,25 @@ input[type="checkbox"]::after {
 input[type="radio"]:checked::after,
 input[type="checkbox"]:checked::after {
   background-color: var(--blue);
+}
+
+textarea {
+  padding: var(--margin);
+
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  border-radius: var(--margin);
+  background-color: var(--white);
+
+
+  will-change: box-shadow;
+  transition: box-shadow ease 150ms;
+
+  resize: none;
+  outline: none;
+}
+textarea:is(:hover, :focus) {
+  box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.2);
 }
 
 form {
