@@ -85,6 +85,6 @@
     </section>
     <footer>
         <a class="action_button" href="mailto:<?= $item['candidat']['email']; ?>">Le contacter</a>
-        <a class="action_button" href="">Editer</a>   
+        <a class="action_button" href="index.php?candidats=edit-candidat&cle_candidat=<?= $item['candidat']['id']; ?>">Editer</a>   
     </footer>
 </aside>

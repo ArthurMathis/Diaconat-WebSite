@@ -303,6 +303,26 @@ class CandidatsView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+    public function getEditCandidat(&$item=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Modification de ' . forms_manip::majusculeFormat($item['candidat']['nom']) . ' ' . $item['candidat']['prenom'], [FORMS_STYLES.DS.'big-form.css']);
+
+        // On ajoute les barres de navigation
+        $this->generateFormMenu(true);
+
+        // On ajoute le formulaire de connexion
+        include FORMULAIRES.DS.'edit-candidat.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'controllers/edit-notation-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
 
 
     /// Méthode publique retournant la formulaire d'ajout d'une proposition

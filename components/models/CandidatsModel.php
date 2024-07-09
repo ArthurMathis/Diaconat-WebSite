@@ -31,7 +31,20 @@ class CandidatsModel extends Model {
         // On retourne la liste
         return $temp;
     }
-    
+    /// Méthode publique récupérant les données à metttre à jour dans la base de données
+    public function getEditContent($index) {
+        // On vérifie l'intégrité des données
+        if(!is_numeric($index))
+            throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
+
+        $candidats = $this->getCandidats($index);
+        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+
+        return [
+            'candidat' => $candidats,
+            'aide' => $this->get_request("SELECT Id_Aides_au_recrutement AS id, Intitule_Aides_au_recrutement AS intitule FROM Aides_au_recrutement", [])
+        ];
+    }
 
     /// Méthode publique retournant la fiche profil d'un candidat
     public function getContentCandidat($index) {

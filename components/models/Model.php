@@ -58,7 +58,7 @@ abstract class Model {
         return $res;
     }
     /// Méthode privée exécutant une requête GET à la base de données
-    protected function get_request(&$request, $params = [], $unique=false, $present=false): ?array {
+    protected function get_request($request, $params = [], $unique=false, $present=false): ?array {
         // On vérifie le paramètre uniquue
         if(empty($unique) || !is_bool($unique)) 
             $unique = false;
@@ -635,7 +635,7 @@ abstract class Model {
             'c' => $notation['c'],
             'cle' => $cle_candidat
         ];
-        
+
         // On lance la requête
         $this->post_request($request, $params);
     }

@@ -479,6 +479,13 @@ if(isset($_GET['login'])) {
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;  
+
+            case 'edit-candidat':
+                if(isset($_GET['cle_candidat']))
+                    $candidats->getEditCandidat($_GET['cle_candidat']);
+                else 
+                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                break;  
                 
             case 'update-notation':
                 try {

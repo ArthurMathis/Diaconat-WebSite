@@ -56,6 +56,11 @@ class CandidatController extends Controller {
         $item = $this->Model->getCandidats($cle_candidat);
         return $this->View->getEditNotation($item);
     }
+    /// Méthode publique affichant le formulaire d'édition d'un candidat
+    public function getEditCandidat($cle_candidat) {
+        $item = $this->Model->getEditContent($cle_candidat);
+        return $this->View->getEditCandidat($item);
+    }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {

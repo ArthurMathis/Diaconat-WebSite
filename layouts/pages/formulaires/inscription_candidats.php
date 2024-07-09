@@ -50,5 +50,4 @@
             <button type="submit" class="submit_button" value="new_user">Inscrire</button>
         </section>
     </div> 
-    <p class="user-link">Candidat déjà inscrit ? <a class="LignesHover" href="index.php?candidatures=saisie-candidat">Le rechercher</a><p>
 </form>
