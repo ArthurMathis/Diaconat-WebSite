@@ -509,12 +509,12 @@ if(isset($_GET['login'])) {
             case 'update-candidat':
                 try {
                     $candidat = [
-                        'nom' => $_POST['nom'],
-                        'prenom' => $_POST['prenom'], 
+                        'nom' => forms_manip::nameFormat($_POST['nom']),
+                        'prenom' => forms_manip::nameFormat($_POST['prenom']), 
                         'email' => $_POST['email'], 
-                        'telephone' => $_POST['telephone'], 
+                        'telephone' => forms_manip::numberFormat($_POST['telephone']), 
                         'adresse' => $_POST['adresse'], 
-                        'ville' => $_POST['ville'], 
+                        'ville' => forms_manip::nameFormat($_POST['ville']), 
                         'code-postal' => $_POST['code-postal'], 
                         'diplome' => [
                             $_POST["diplome-1"], 

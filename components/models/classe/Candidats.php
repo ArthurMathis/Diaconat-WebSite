@@ -54,7 +54,7 @@ class Candidat {
             throw new InvalideCandidatExceptions("Le nom d'un candidat doit être une chaine de carcatères !");
         elseif(preg_match('/\d/', $nom))
             throw new InvalideCandidatExceptions("Le nom d'un candidat ne peut pas contenir de nombres !");
-        elseif(preg_match('/[^\w\s]/', $nom))
+        elseif(preg_match('/[^\p{L}\p{M}\s\'-]/u', $nom))
             throw new InvalideCandidatExceptions("Le nom d'un candidat ne peut pas contenir de carcatères spéciaux !");
 
         // On implémente    
@@ -68,7 +68,7 @@ class Candidat {
             throw new InvalideCandidatExceptions("Le prenom d'un candidat doit être une chaine de carcatères !");
         elseif(preg_match('/\d/', $prenom))
             throw new InvalideCandidatExceptions("Le prenom d'un candidat ne peut pas contenir de nombres !");
-        elseif(preg_match('/[^\w\s]/', $prenom))
+        elseif(preg_match('/[^\p{L}\p{M}\s\'-]/u', $prenom))
             throw new InvalideCandidatExceptions("Le prenom d'un candidat ne peut pas contenir de carcatères spéciaux !");
 
         // On implémente    
