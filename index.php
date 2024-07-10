@@ -504,6 +504,34 @@ if(isset($_GET['login'])) {
                     $candidats->updateNotation($_GET['cle_candidat'], $notation);
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                break;  
+                
+            case 'update-candidat':
+                try {
+                    $candidat = [
+                        'nom' => $_POST['nom'],
+                        'prenom' => $_POST['prenom'], 
+                        'email' => $_POST['email'], 
+                        'telephone' => $_POST['telephone'], 
+                        'adresse' => $_POST['adresse'], 
+                        'ville' => $_POST['ville'], 
+                        'code-postal' => $_POST['code-postal'], 
+                        'diplome' => [
+                            $_POST["diplome-1"], 
+                            $_POST["diplome-2"], 
+                            $_POST["diplome-3"]
+                        ], 
+                        'aide' => $_POST['aide']
+                    ];
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                if(isset($_GET['cle_candidat']))
+                    $candidats->updateCandidat($_GET['cle_candidat'], $candidat);
+                else 
+                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;    
             
             default: 

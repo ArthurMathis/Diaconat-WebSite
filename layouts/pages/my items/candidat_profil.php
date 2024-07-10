@@ -27,9 +27,9 @@
         <div>
             <p>Diplômes</p>
             <div>
-                <?php if(isset($item['candidat']['diplomes']) && 0 < count($item['candidat']['diplomes'])): ?>
-                    <?php foreach($item['candidat']['diplomes'] as $obj): ?>
-                        <p><?= $obj; ?></p>
+                <?php if(isset($item['candidat'][0]['diplomes']) && 0 < count($item['candidat'][0]['diplomes'])): ?>
+                    <?php foreach($item['candidat'][0]['diplomes'] as $obj): ?>
+                        <p><?= $obj['Intitule_Diplomes']; ?></p>
                     <?php endforeach ?>   
                 <?php else : ?>
                     <p>Aucun diplôme saisie</p>     

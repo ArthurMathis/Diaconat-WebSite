@@ -1101,4 +1101,62 @@ class CandidatsModel extends Model {
 
         else echo "Mission trouvée<br>";
     }
+
+    public function makeUpdatecandidat($cle_candidat, &$candidat) {
+        try {
+            $c = new Candidat($candidat['nom'], $candidat['prenom'], $candidat['email'], $candidat['telephone'], $candidat['adresse'], $candidat['ville'], $candidat['code-postal']);
+            unset($candidat['nom']);
+            unset($candidat['prenom']);
+            unset($candidat['email']);
+            unset($candidat['telephone']);
+            unset($candidat['adresse']);
+            unset($candidat['ville']);
+            unset($candidat['code-postal']);
+
+        } catch(InvalideCandidatExceptions $e) {
+            forms_manip::error_alert($e);
+        }
+
+        // On met à jour le candidat
+        $this->updateCandidat($cle_candidat, $c->exportToSQL_update());
+        unset($c);
+
+        // On supprime les diplomes du candidat
+        $request = "DELETE FROM Obtenir WHERE Cle_Candidats = :cle";
+        $params = ['cle' => $cle_candidat];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+
+        // On récupère la liste des diplomes
+        for($i = 0; $i < count($candidat['diplome']); $i++) {
+            if(!empty($candidat['diplome'][$i]) && 0 < strlen($candidat['diplome'][$i])) {
+                $temp = $this->searchDiplome($candidat['diplome'][$i]);
+
+                if(empty($temp)) {
+                    // On ajoute le nouveau diplome à la base de données
+                    $this->createDiplome($candidat['diplome'][$i]);
+
+                    // On récupère le diplome
+                    $temp = $this->searchDiplome($candidat['diplome'][$i]);
+                }
+
+                unset($candidat['diplome'][$i]);
+                $this->inscriptDiplome($cle_candidat, $temp['Id_Diplomes']);
+            }
+        }
+        unset($candidat['diplome']);
+
+        // On supprime l'aide du candidat
+        $request = "DELETE FROM Avoir_droit_a WHERE Cle_Candidats = :cle";
+        $params = ['cle' => $cle_candidat];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+
+        if($candidat['aide']) 
+            $this->inscriptAvoir_droit_a($cle_candidat, $candidat['aide']);
+        
+        unset($candidat);
+    }
 }

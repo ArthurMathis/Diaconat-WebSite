@@ -38,7 +38,7 @@ class Candidat {
             return;
 
         // On vérifie l'intégrité des données
-        elseif(!is_int($cle)) 
+        elseif(!is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un candidat doit être strictement positive !");
@@ -157,6 +157,17 @@ class Candidat {
             "code_postal" => $this->getCodePostal(),
             "disponibilite" => $this->getDisponibilite(),
             "visite" => $this->getVisite_medicale()
+        ];
+    }
+    public function exportToSQL_update() {
+        return [
+            "nom" => $this->getNom(),
+            "prenom" => $this->getPrenom(),
+            "email" => $this->getEmail(), 
+            "telephone" => $this->getTelephone(),
+            "adresse" => $this->getAdresse(),
+            "ville" => $this->getVille(),
+            "code_postal" => $this->getCodePostal()
         ];
     }
     public function exportToSQL_cle() {

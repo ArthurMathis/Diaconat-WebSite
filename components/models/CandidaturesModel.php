@@ -104,18 +104,10 @@ class CandidaturesModel extends Model {
 
         // On enregistre les diplomes
         foreach($diplomes as $item) 
-            $this->inscriptDiplome($candidat, $item);
+            $this->inscriptDiplome($candidat->getCle(), $item['Id_Diplomes']);
 
         if($aide != null) 
-            $this->inscriptAvoir_droit_a($candidat, $aide);
-    }
-    public function createDiplome($diplome) {
-        // On initialise la requête
-        $request = "INSERT INTO Diplomes (Intitule_Diplomes) VALUES (:intitule)";
-        $params = ["intitule" => $diplome];
-
-        // On lance la requête
-        $this->post_request($request, $params);
+            $this->inscriptAvoir_droit_a($candidat->getCle(), $aide);
     }
     public function createAide($aide) {
         // On initialise la requête

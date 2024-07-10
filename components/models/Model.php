@@ -522,13 +522,18 @@ abstract class Model {
         $this->post_request($request, $params);
     }
     /// Méthode protégée inscrivant un Diplome dans la base de données
-    protected function inscriptDiplome($candidat, $diplome) {
+    protected function inscriptDiplome($cle_candidat, $cle_diplome) {
         // On initialise la requête
         $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
         $params = [
-            "candidat" => $candidat->getCle(), 
-            "diplome" => $diplome["Id_Diplomes"]
+            "candidat" => $cle_candidat, 
+            "diplome" => $cle_diplome
         ];
+
+        echo "<h3>Requête</h3>";
+        var_dump($request);
+        echo "<h3>Paramêtres</h3>";
+        var_dump($params);
 
         // On lance la requête
         $this->post_request($request, $params);
@@ -564,9 +569,9 @@ abstract class Model {
         $this->post_request($request, $params);
     }
     /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
-    protected function inscriptAvoir_droit_a($candidat, $cle_aide) {
+    protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide) {
         // On vérifie l'intégrité des données
-        if(empty($candidat) || empty($cle_aide) || !is_numeric($cle_aide)) {
+        if(empty($cle_candidat) || empty($cle_aide) || !is_numeric($cle_aide)) {
             throw new Exception("Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé d'aide sont nécessaires");
             exit;
         }
@@ -574,7 +579,7 @@ abstract class Model {
         // On initialise la requête
         $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
         $params = [
-            'candidat' => $candidat->getCle(),
+            'candidat' => $cle_candidat,
             'aide' => $cle_aide
         ];
 
@@ -635,6 +640,38 @@ abstract class Model {
             'c' => $notation['c'],
             'cle' => $cle_candidat
         ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée mettant à jour la notation d'uyn utilisateur 
+    public function updateCandidat($cle_candidat, &$candidat=[]) {
+        // On initialise la requête
+        $request = "UPDATE Candidats 
+        SET Nom_candidats = :nom, Prenom_Candidats = :prenom, Email_Candidats = :email, Telephone_Candidats = :telephone, Adresse_Candidats = :adresse, Ville_Candidats = :ville, CodePostal_Candidats = :code_postal
+        Where Id_Candidats = :cle";
+        $params = [
+            'nom' => $candidat['nom'], 
+            'prenom' => $candidat['prenom'], 
+            'email' => $candidat['email'], 
+            'telephone' => $candidat['telephone'], 
+            'adresse' => $candidat['adresse'], 
+            'ville' => $candidat['ville'], 
+            'code_postal' => $candidat['code_postal'],
+            'cle' => $cle_candidat
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+
+
+
+
+    public function createDiplome($diplome) {
+        // On initialise la requête
+        $request = "INSERT INTO Diplomes (Intitule_Diplomes) VALUES (:intitule)";
+        $params = ["intitule" => $diplome];
 
         // On lance la requête
         $this->post_request($request, $params);

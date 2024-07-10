@@ -470,7 +470,8 @@ button:is(:hover, :focus),
   position: fixed;
   top: 0;
   left: 0;
-
+  
+  max-height: 28dvh;
   z-index: -1;
 }
 .nav-barre h3,
@@ -810,3 +811,6 @@ button:is(:hover, :focus),
 }*/
 
 /*# sourceMappingURL=styles.css.map */
+
+
+/******** RESPONSIVE ********/

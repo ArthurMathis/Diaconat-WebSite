@@ -1,4 +1,4 @@
-<form class="big-form" method="post" action="">
+<form class="big-form" method="post" action="index.php?candidats=update-candidat&cle_candidat=<?= $item['candidat']['id']?>">
     <div class="form-container">
         <section>
             <h2>Coordonnées</h2>
