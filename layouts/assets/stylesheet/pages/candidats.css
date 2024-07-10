@@ -410,6 +410,9 @@ main section .candidatures_bulle article p.non-traitee::before {
 #carcatéristiques content p {
     margin-right: calc(var(--margin) / 2);
 }
+#carcatéristiques content input[type="checkbox"] {
+    cursor: default;
+}
 .grid .notation_bulle .notation {
     display: flex;
     flex-direction: row;

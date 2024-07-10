@@ -46,4 +46,23 @@ class HomeModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
+    /// Méthode publique récupérant les rendez-vous
+    public function getreductRendezVous() {
+        // On initialise la requête
+        $request = "SELECT 
+        Nom_Candidats AS Nom, 
+        Prenom_Candidats AS Prenom,
+        Jour_Instants AS Jour,
+        Heure_Instants AS Heure
+        
+        FROM Avoir_rendez_vous_avec AS rdv
+        INNER JOIN Candidats AS c ON rdv.Cle_Candidats = c.Id_Candidats
+        INNER JOIN Instants AS i ON rdv.Cle_Instants = i.Id_Instants
+        
+        WHERE rdv.Cle_Utilisateurs = :cle";
+        $params = ['cle' => $_SESSION['user_cle']];
+
+        // On lance la requête
+        $this->get_request($request, $params);
+    }
 }

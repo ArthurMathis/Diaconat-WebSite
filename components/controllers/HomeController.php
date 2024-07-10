@@ -14,7 +14,14 @@ class HomeController extends Controller {
             [
                 'titre' => 'Propositions en Attente', 
                 'content' => $this->Model->getReductProposition(), 
-                'nb_item_max' => 4,
+                'nb_item_max' => 6,
+                'link_add' => null,
+                'link_consult' => null
+            ],
+            [
+                'titre' => 'Rendez-vous programmés', 
+                'content' => $this->Model->getreductRendezVous(), 
+                'nb_item_max' => 6,
                 'link_add' => null,
                 'link_consult' => null
             ],
@@ -26,16 +33,7 @@ class HomeController extends Controller {
                 'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null
-            ],
-            [
-                'titre' => 'Rendez-vous programmés', 
-                'content' => [
-                    ["En développement" => "Fonctionnalité indisponible, pour le moment. Le site est encore en développement"]
-                ], 
-                'nb_item_max' => 2,
-                'link_add' => null,
-                'link_consult' => null
-            ],
+            ]
         ];
     
         return $this->View->getContent($items, $dashboard);
