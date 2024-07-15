@@ -211,8 +211,11 @@ function recupCheckbox(champs=[], criteres=[]) {
  */
 function recupChampsDate(champs=[], criteres=[]) {
     // On vérifie l'intégrité des données
-    if(champs.champs.length === 0 || 2 < champs.champs.length)
+    if(champs.champs.length === 0 || 2 < champs.champs.length) {
+        console.warn('Le nombre de champs est invalide');
         return; 
+    }
+        
 
     // On récupère les dates
     let new_c = [];
@@ -233,13 +236,14 @@ function recupChampsDate(champs=[], criteres=[]) {
 
     if(new_c.length > 0)
         // On retourne la liste de critères 
-        return {
+        criteres.push({
             'index': champs.index, 
             'criteres': new_c,
             'type': 'date'
-        };
+        });
 
-    else return null;
+    else 
+        console.warn("Aucun critère ajouté");
 }
 
 /**
@@ -390,7 +394,7 @@ function multiFiltre(items, criteres=[]) {
         // On implémente l'échantillon
         switch(criteres[i].type) {
             case 'date':
-                search = search.filter(item => filtrerParDate(item, criteres[i].index, criteres[i].critere));
+                search = search.filter(item => filtrerParDate(item, criteres[i].index, criteres[i].criteres));
                 break;
         
             case 'multi':
@@ -403,9 +407,6 @@ function multiFiltre(items, criteres=[]) {
 
             default: 
                 console.warn(`Critère invalide à l'index ${i}.`);
-                
-            // default:
-            //     search = search.filter(item => filtrerPar(item, criteres[i].index, criteres[i].critere));
         }
 
         // On implémente le compteur
