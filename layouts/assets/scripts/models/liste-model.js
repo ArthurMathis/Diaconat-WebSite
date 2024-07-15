@@ -266,12 +266,12 @@ function filtrerPar(item, index, critere) {
  * @param {*} criteres La liste des valeurs recherchées
  */
 function filterParCriteres(item, index, criteres=[]) {
-    if (index < 0 || index >= item.cells.length) 
-        throw new Error("Impossible d'appliquer le filtre. Indice de invalide !");
+    if (index < 0 || item.cells.length <= index) 
+        console.warn("Impossible d'appliquer le filtre. Indice de invalide !");
 
     // On fait défiler les criteres
     let i = 0, find = false;
-    while(!find && i < criteres.length) {
+    while(find === false && i < criteres.length) {
         console.log('On compare : ' + item.cells[index].textContent.trim() + ' avec : ' + criteres[i]);
         // On compare
         if(item.cells[index].textContent.trim() === criteres[i])
@@ -394,7 +394,7 @@ function multiFiltre(items, criteres=[]) {
                 break;
         
             case 'multi':
-                search = search.filter(item => filterParCriteres(item, criteres[i].index, criteres[i].critere));
+                search = search.filter(item => filterParCriteres(item, criteres[i].index, criteres[i].criteres));
                 break;
 
             case 'default': 

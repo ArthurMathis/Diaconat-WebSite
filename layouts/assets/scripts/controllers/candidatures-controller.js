@@ -168,6 +168,9 @@ filtrer.addEventListener('click', () => {
                 recupCheckbox(champs_statut, criteres);
                 recupChampsDate(champs_date, criteres);
 
+                console.log(criteres);
+                return;
+
                 // On vérifie la présence de critères
                 // if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
                 if(criteres.length === 0) {
