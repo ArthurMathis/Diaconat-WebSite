@@ -12,20 +12,20 @@
     <div id="statut_input">
         <h3>Statuts</h3>
         <div class="container-statut">
-            <input type="checkbox" name="non traitee" checked>
-            <p>non-traitée</p>
+            <input type="checkbox" name="Non-traitée" checked>
+            <p>Non-traitée</p>
         </div>
-        <div class="container-statut">
+        <!--<div class="container-statut">
             <input type="checkbox" name="en attente" checked>
             <p>en attente</p>
+        </div>-->
+        <div class="container-statut">
+            <input type="checkbox" name="Acceptée" checked>
+            <p>Acceptée</p>
         </div>
         <div class="container-statut">
-            <input type="checkbox" name="acceptee" checked>
-            <p>acceptée</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="refusee" checked>
-            <p>refusée</p>
+            <input type="checkbox" name="Refusée" checked>
+            <p>Refusée</p>
         </div>
     </div>
     <section>

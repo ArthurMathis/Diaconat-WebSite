@@ -151,7 +151,7 @@ class CandidaturesModel extends Model {
             $request = "INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) 
                         VALUES (:statut, :candidat, :instant, :source, :poste, :contrat)";
             $params = [
-                "statut" => 'non traitee', 
+                "statut" => 'Non-traitée', 
                 "candidat" => $candidat->getCle(), 
                 "instant" => $instant, 
                 "source" => $source, 

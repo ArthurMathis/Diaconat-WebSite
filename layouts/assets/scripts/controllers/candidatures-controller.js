@@ -58,15 +58,15 @@ const filtrer_menu = document.getElementById('filtrer-menu');
 // On ajoute les codes couleurs
 setColor(candidatures, [
         {
-            content: 'non traitee', 
+            content: 'Non-traitée', 
             class: 'non-traitee'
         },
         {
-            content: 'acceptee', 
+            content: 'Acceptée', 
             class: 'acceptee'
         },
         {
-            content: 'refusee', 
+            content: 'Refusée', 
             class: 'refusee'
         }
     ], 0);
@@ -120,7 +120,6 @@ filtrer.addEventListener('click', () => {
 
     } else {
         // On récupère les champs du formulaire
-        // const champs_statut = document.getElementById('statut_input').querySelectorAll('input');
         const champs_statut = {
                 champs: Array.from(document.getElementById('statut_input').querySelectorAll('input')),
                 index: 0
@@ -153,19 +152,25 @@ filtrer.addEventListener('click', () => {
         newBouton.addEventListener('click', () => {
             // On récupère la liste de critères
             try {
-                const criteres = recupChamps(champs_infos);
-                const criteres_statut = recupCheckbox(champs_statut);
-                const criteres_date = recupChampsDate(champs_date);
+                // const criteres = recupChamps(champs_infos);
+                // const criteres_statut = recupCheckbox(champs_statut);
+                // const criteres_date = recupChampsDate(champs_date);
+                // 
+                // console.log("Liste des statuts");
+                // console.log(criteres_statut);
+                // console.log("Liste des critères");
+                // console.log(criteres);
+                // console.log("Liste des dates");
+                // console.log(criteres_date);
 
-                console.log("Liste des statuts");
-                console.log(criteres_statut);
-                console.log("Liste des critères");
-                console.log(criteres);
-                console.log("Liste des dates");
-                console.log(criteres_date);
+                let criteres = [];
+                recupChamps(champs_infos, criteres);
+                recupCheckbox(champs_statut, criteres);
+                recupChampsDate(champs_date, criteres);
 
-                // // On vérifie la présence de critères
-                if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
+                // On vérifie la présence de critères
+                // if(criteres.length === 0  && criteres_statut.criteres.length === 4 && criteres_date.Criteres === undefined) {
+                if(criteres.length === 0) {
                     // On réinitialise le tableau 
                     resetLignes(candidatures);
                     candidatures_selection = Array.from(candidatures);
@@ -177,7 +182,9 @@ filtrer.addEventListener('click', () => {
                         candidatures_selection = Array.from(candidatures);
                 
                     // On applique les filtres
-                    candidatures_selection = multiFiltre(candidatures_selection, criteres, criteres_statut, criteres_date);
+                    candidatures_selection = multiFiltre(candidatures_selection, criteres);
+                    console.log('Filtration terminée');
+                    console.log(candidatures_selection);
                 
                     // On met à jour l'affichage
                     retireLignes(candidatures);
