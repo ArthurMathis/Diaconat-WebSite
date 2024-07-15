@@ -84,7 +84,11 @@
         </div>
     </section>
     <footer>
-        <a class="action_button" href="mailto:<?= $item['candidat']['email']; ?>">Le contacter</a>
-        <a class="action_button" href="index.php?candidats=edit-candidat&cle_candidat=<?= $item['candidat']['id']; ?>">Editer</a>   
+        <a class="circle_button reverse_color" href="mailto:<?= $item['candidat']['email']; ?>">
+            <img src="layouts\assets\img\logo\white-paperplane.svg" alt="Logo d'envoi d'un courrier, représenté par un avion en papier">
+        </a>
+        <a class="circle_button reverse_color" href="index.php?candidats=edit-candidat&cle_candidat=<?= $item['candidat']['id']; ?>">
+            <img src="layouts\assets\img\logo\white-edit.svg" alt="Logo de modification du candidat, représenté par un carnet et un stylo">
+        </a>  
     </footer>
 </aside>

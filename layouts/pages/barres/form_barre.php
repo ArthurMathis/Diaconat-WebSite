@@ -1,8 +1,15 @@
 <?php if(!empty($liste_menu)): ?>
     <nav class="form-barre" id="barre-de-navigation">
-        <img src="layouts/assets/img/bulle.svg">
+        <img id="illustration_bulle" src="layouts/assets/img/bulle.svg">
         <h1>Ypopsi</h1>
-        <h3 class="LignesHover">Menu</h3>
+        <div class="section-logo">
+            <a class="LignesHover" href="index.php">
+                <img  src="layouts\assets\img\logo\home.svg" alt="Logo de la page d'accueil, représenté par une maison">
+            </a>
+            <div id="bouton-menu" class="LignesHover">
+                <img  class="LignesHover"src="layouts\assets\img\logo\menu.svg" alt="Logo du menu, représenté par un burger">
+            </div>
+        </div>
     </nav>
     <section id="menu">
         <main>
@@ -23,8 +30,12 @@
     <script src="layouts\assets\scripts\views\entete.js"></script>
 <?php else: ?>    
     <nav class="form-barre">
-        <img src="layouts/assets/img/bulle.svg">
+        <img id="illustration_bulle" src="layouts/assets/img/bulle.svg">
         <h1>Ypopsi</h1> 
-        <h3>Diaconat</h3>
+        <div class="section-logo">
+            <a class="LignesHover" href="index.php">
+                <img  src="layouts\assets\img\logo\home.svg" alt="Logo de la page d'accueil, représenté par une maison">
+            </a>
+        </div>
     </nav>
 <?php endif ?> 

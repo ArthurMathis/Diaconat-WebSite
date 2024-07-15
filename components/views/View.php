@@ -34,7 +34,7 @@ class View {
             [
                 "intitule" => "Préférences",
                 "action" => "#",
-                "logo" => LOGO.DS."white-préférences.svg"
+                "logo" => LOGO.DS."white-preferences.svg"
             ],
             [
                 "intitule" => "Se déconnecter",
@@ -51,10 +51,13 @@ class View {
     public function generateCommonFooter() {
         include COMMON.DS.'footer.php';
     }
-    public function generateMenu() {
+    public function generateMenu($home=false) {
         $liste_menu = $this->menu;
         // On ajoute la barre de navigation
-        include BARRES.DS.'navbarre.php';
+        if($home == true)
+            include BARRES.DS.'home-navbarre.php';
+        else
+            include BARRES.DS.'navbarre.php';
     }
     public function generateFormMenu($menu=false) {
         $liste_menu = [];

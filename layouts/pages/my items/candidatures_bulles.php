@@ -42,11 +42,17 @@
     </content>
     <?php if($item['statut'] == 'Non-traitée'): ?>
         <footer>
-            <a class="action_button reject-button" href="index.php?candidats=reject-candidatures&cle_candidature=<?= $item['cle']; ?>"></a>
+            <a class="circle_button" href="index.php?candidats=reject-candidatures&cle_candidature=<?= $item['cle']; ?>">
+                <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de refus de la candidature, représenté par une croix">
+            </a>
             <?php if(empty($item['service'])): ?>
-                <a class="action_button accept-button" href="index.php?candidats=saisie-propositions-from-empty-candidature&cle_candidature=<?= $item['cle']; ?>"></a>
+                <a class="circle_button" href="index.php?candidats=saisie-propositions-from-empty-candidature&cle_candidature=<?= $item['cle']; ?>">
+                    <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la candidature, représenté par une coche">
+                </a>
             <?php else : ?>
-                <a class="action_button accept-button" href="index.php?candidats=saisie-propositions-from-candidature&cle_candidature=<?= $item['cle']; ?>"></a>  
+                <a class="circle_button" href="index.php?candidats=saisie-propositions-from-candidature&cle_candidature=<?= $item['cle']; ?>">
+                    <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la candidature, représenté par une coche">
+                </a>  
             <?php endif; ?>     
         </footer>
     <?php endif ?>    

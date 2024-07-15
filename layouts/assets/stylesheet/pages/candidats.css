@@ -46,7 +46,7 @@ aside p {
 }
 aside footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: end;
     gap: var(--margin);
 

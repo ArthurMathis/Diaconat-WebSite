@@ -40,8 +40,12 @@
     </content>
     <?php if(empty($item['signature']) && empty($item['statut'])): ?>
         <footer>
-            <a class="action_button reject-button" href="index.php?candidats=reject-propositions&cle_proposition=<?= $item['cle']; ?>"></a>
-            <a class="action_button accept-button" href="index.php?candidats=inscript-contrats-from-proposition&cle_proposition=<?= $item['cle']; ?>"></a>
+            <a class="circle_button" href="index.php?candidats=reject-propositions&cle_proposition=<?= $item['cle']; ?>">
+                <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de refus de la proposition, représenté par une croix">
+            </a>
+            <a class="circle_button" href="index.php?candidats=inscript-contrats-from-proposition&cle_proposition=<?= $item['cle']; ?>">
+                <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la proposition, représenté par une coche">
+            </a>
         </footer>
     <?php endif ?>  
 </div>

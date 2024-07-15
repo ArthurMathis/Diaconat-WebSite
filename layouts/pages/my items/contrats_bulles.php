@@ -48,7 +48,9 @@
     </content>
     <?php if($item['demission'] == null && ($item['date_fin'] == null || $date < $item['date_fin'])): ?>
         <footer>
-            <a class="action_button reject-button" href="index.php?candidats=demission&cle_contrat=<?= $item['cle']; ?>"></a>
+            <a class="circle_button" href="index.php?candidats=demission&cle_contrat=<?= $item['cle']; ?>">
+                <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de dmission du contrat, représenté par une croix">
+            </a>
         </footer>
     <?php endif ?> 
 </div>

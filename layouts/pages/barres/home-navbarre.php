@@ -1,9 +1,6 @@
 <nav class="nav-barre" id="barre-de-navigation">
     <h1>Ypopsi</h1>
     <div class="section-logo">
-        <a class="LignesHover" href="index.php">
-            <img  src="layouts\assets\img\logo\home.svg" alt="Logo de la page d'accueil, représenté par une maison">
-        </a>
         <div id="bouton-menu" class="LignesHover">
             <img  class="LignesHover"src="layouts\assets\img\logo\menu.svg" alt="Logo du menu, représenté par un burger">
         </div>

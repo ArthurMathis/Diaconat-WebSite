@@ -24,7 +24,11 @@
         <?php endif?>    
     </content>
     <footer>
-        <a class="action_button reverse_color" href="">Supprimer</a>
-        <a class="action_button reverse_color" href="">Editer</a>
+        <a class="circle_button" href="">
+            <img src="layouts\assets\img\logo\white-trash.svg" alt="Logo de suppression du rendez-vous, représenté par une poubelle">
+        </a>
+        <a class="circle_button" href="">
+            <img src="layouts\assets\img\logo\white-edit.svg" alt="Logo de modification du rendez-vous, représenté par un carnet et un stylo">
+        </a>
     </footer>
 </div>
