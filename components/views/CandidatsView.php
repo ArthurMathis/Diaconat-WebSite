@@ -185,12 +185,6 @@ class CandidatsView extends View {
         include(MY_ITEMS.DS.'add_button.php'); 
         echo "</section>";
     }
-    /// Méthode protégée gnérant l'onglet Suggestion d'un candidat selon les informations de son profil
-    protected function getSuggestionBoard(&$item=[]) {
-        echo '<section class="onglet">';
-        echo '<H2>En développement</H2>';
-        echo "</section>";
-    }
     /// Méthode publique générant l'onglet Candidatures d'un candidat selon les informations de son profil
     protected function getCandidaturesBoard(&$item) {
         echo '<section class="onglet">';
@@ -231,7 +225,6 @@ class CandidatsView extends View {
             'Tableau de bord',
             'Contrats',
             'Propositions',
-            'Suggestions',
             'Candidatures',
             'Rendez-vous',
             'Notation'
@@ -247,7 +240,6 @@ class CandidatsView extends View {
         $this->getDashboard($item);
         $this->getContratsBoard($item);
         $this->getPropositionsBoard($item);
-        $this->getSuggestionBoard($item);
         $this->getCandidaturesBoard($item);
         $this->getRendezVousBoard($item);
         $this->getNotationBoard($item);
@@ -275,8 +267,11 @@ class CandidatsView extends View {
 
         $this->getListesItems($titre, $items, null, $id);
 
-        include(SCRIPTS.DS.'import-listes.php');
-        include(SCRIPTS.DS.'import-candidatures.php');
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/candidats-view.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -313,12 +308,6 @@ class CandidatsView extends View {
         // On ajoute le formulaire de connexion
         include FORMULAIRES.DS.'edit-candidat.php';
         include FORMULAIRES.DS.'waves.php';
-
-        // On importe les scripts JavaScript
-        $scripts = [
-            'controllers/edit-notation-controller.js'
-        ];
-        include(SCRIPTS.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

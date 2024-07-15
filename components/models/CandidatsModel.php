@@ -101,10 +101,13 @@ class CandidatsModel extends Model {
 
         FROM candidats AS c
         INNER JOIN obtenir AS o ON c.Id_candidats = o.Cle_Candidats
-        INNER JOIN diplomes AS d on o.Cle_Diplomes = d.Id_Diplomes";
+        INNER JOIN diplomes AS d on o.Cle_Diplomes = d.Id_Diplomes
+        
+        WHERE c.Id_Candidats = :cle";
+        $params = ['cle' => $index];
 
         // On lance la requête
-        return $this->get_request($request);
+        return $this->get_request($request, $params);
     }
     /// Méthode privée retournant la liste des candidatures d'un candidat 
     private function getCandidatures($index) {

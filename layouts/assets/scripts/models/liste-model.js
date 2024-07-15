@@ -74,85 +74,6 @@ function setColorDispo(items=[], index) {
 
 // FONCTIONS DE FILTRE //
 
-// function recupChamps(liste_champs=[]) {
-//     // On vérifie l'intgrité des données
-//     if (!Array.isArray(liste_champs)) 
-//         throw new Error("Erreur lors de la récupération des critères. La liste de critères doit être de type Array !");
-//     
-//     let criteres = [];
-//     // On fait défiler les champs
-//     for(let i = 0; i < liste_champs.length; i++) {
-//         // On teste l'intégrité des données
-//         if(liste_champs[i].champs.value !== "") {
-//             // On ajoute le critère
-//             criteres.push({
-//                 'index': liste_champs[i].index,
-//                 'critere': liste_champs[i].champs.value
-//             });
-//             
-//             // On réinitialise le champs
-//             liste_champs[i].champs.value = null;
-//         }
-//     }
-// 
-//     // On retourne la liste de critères
-//     return criteres;
-// }
-// function recupCheckbox(liste_champs=[]) {
-//     // On vérifie l'intgrité des données
-//     if (!Array.isArray(liste_champs.champs)) 
-//         throw new Error("Erreur lors de la récupération des critères. La liste de critères doit être de type Array !");
-// 
-//     let criteres_statut = [];
-//     liste_champs.champs.forEach(c => {
-//         if(c.checked)
-//             criteres_statut.push(c.name);
-//     });
-// 
-//     // On retourne la liste de critères 
-//     return {
-//         'index': liste_champs.index, 
-//         'criteres': criteres_statut,
-//         'type': 'multi'
-//     };
-// }
-// /**
-//  * @brief Fonction permettant de récupérer les données saisies dans les sélections de dates du formulaire
-//  * @param {*} liste_date la liste des dates
-//  * @returns 
-//  */
-// function recupChampsDate(liste_date=[]) {
-//     // On vérifie l'intégrité des données
-//     if(liste_date.champs.length === 0 || 2 < liste_date.champs.length)
-//         return; 
-// 
-//     // On récupère les dates
-//     let criteres_date = [];
-//     if(liste_date.champs[0].value) {
-//         criteres_date.push({
-//             type: 'min', 
-//             value: new Date(liste_date.champs[0].value)
-//         });
-//         liste_date.champs[0].value = null;
-//     }
-//     if(liste_date.champs[1].value) {
-//         criteres_date.push({
-//             type: 'max', 
-//             value: new Date(liste_date.champs[1].value)
-//         });
-//         liste_date.champs[1].value = null;
-//     }
-// 
-//     if(criteres_date.length > 0)
-//         // On retourne la liste de critères 
-//         return {
-//             index: liste_date.index, 
-//             criteres: criteres_date
-//         };
-// 
-//     else return null;
-// }
-
 /**
  * @brief Fonction permettant de définir une liste de critères selon une liste de champs textuels 
  * @param {*} champs La liste de champs de saisie
@@ -175,7 +96,7 @@ function recupChamps(champs=[], criteres=[]) {
             });
 
             // On réiitialise le champs
-            champs[i].champs
+            champs[i].champs.value = null;
         }
     }
 }
@@ -330,39 +251,6 @@ function filtrerParDate(item, index, critere_date=[]) {
     // On retourne le résultat
     return res;
 }
-/**
- * @brief Fonction permettant de réaliser une suite de recherches dans un tableau HTML
- * @param {*} items Le tableau de lignes
- * @param {*} criteres Le tableau contenant les index et critères des recherches
- */
-// function multiFiltre(items, criteres = [], criteres_statut=null, criteres_date=null) {
-//     if (items === null || (criteres_statut !== null && criteres_statut.index < 0) || (criteres_date !== null && criteres_date.index < 0)) 
-//         throw new Error("Erreur lors de la recherche par filtre. Les listes de critères sont incohérentes.");
-// 
-//     // On déclare notre tableau de recherche
-//     let search = Array.from(items);
-// 
-//     if(criteres_statut)
-//         // On filtre selon le statut
-//         search = search.filter(item => filterParCriteres(item, criteres_statut.index, criteres_statut.criteres));
-// 
-//     if(criteres_date)    
-//         // On filtre selon le statut
-//         search = search.filter(item => filtrerParDate(item, criteres_date.index, criteres_date.criteres));
-// 
-//     // On applique les autres critères
-//     let i = 0;
-//     while(search !== null && i < criteres.length) {
-//         console.log("On filtre selon le critère : " + criteres[i].critere + ", dans la colonne : " + criteres[i].index);
-//         // On implémente l'échantillon
-//         search = search.filter(item => filtrerParDate(item, criteres_date.index, criteres_date.criteres));
-//         i++;
-//     }
-// 
-//     // On retourne la sélection après filtres
-//     return search;
-// }
-
 /**
  * @brief Fonction permettant de filtrer un tableau d'élément selon une liste de critères
  * @param {*} items Le tableau

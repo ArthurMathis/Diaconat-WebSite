@@ -16,19 +16,15 @@
         <h3><?= $item['type_de_contrat']; ?></h3>
         <?php 
             switch($item['statut']) {
-                case 'acceptee':
+                case 'Acceptée':
                     echo '<p class="acceptee">Acceptée</p>';
                     break;
 
-                case 'refusee':
+                case 'Refusée':
                     echo '<p class="refusee">Refusée</p>';
                     break;
 
-                case 'en attente':
-                    echo '<p class="en-attente">En attente</p>';
-                    break;
-
-                case 'non traitee':
+                case 'Non-traitée':
                     echo '<p class="non-traitee">Non traitée</p>';
                     break;
             }
@@ -44,7 +40,7 @@
             <p><?= $item['source']; ?></p>
         </div>
     </content>
-    <?php if($item['statut'] == 'non traitee'): ?>
+    <?php if($item['statut'] == 'Non-traitée'): ?>
         <footer>
             <a class="action_button reject-button" href="index.php?candidats=reject-candidatures&cle_candidature=<?= $item['cle']; ?>"></a>
             <?php if(empty($item['service'])): ?>

@@ -64,12 +64,12 @@ class CandidatController extends Controller {
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptCandidature($cle) {
-        $this->Model->setCandidatureStatut('acceptee', $cle);
+        $this->Model->setCandidatureStatut('Acceptée', $cle);
     }
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectCandidature($cle) {
         // On refuse la candidature
-        $this->Model->setCandidatureStatut('refusee', $cle);
+        $this->Model->setCandidatureStatut('Refusée', $cle);
         $cle_candidat = $this->Model->searchCandidatFromCandidature($cle);
         header('Location: index.php?candidats=' . $cle_candidat['Id_Candidats']);
     }

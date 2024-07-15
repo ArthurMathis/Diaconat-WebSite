@@ -84,7 +84,7 @@ setColor(candidatures, [
             class: 'hublo'
         },
         {
-            content: 'Telephone', 
+            content: 'Téléphone', 
             class: 'telephone'
         }
     ], 6);
@@ -253,7 +253,8 @@ rechercher.addEventListener('click', () => {
 
         newBouton.addEventListener('click', () => {
             // On récupère la liste de critères
-            const criteres = recupChamps(champs_infos);
+            let criteres = [];
+            recupChamps(champs_infos, criteres);
 
             // On vérifie la présence de critères
             if(criteres.length === 0) {

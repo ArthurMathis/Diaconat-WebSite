@@ -18,7 +18,7 @@ class HomeModel extends Model {
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
         INNER JOin postes as p on c.Cle_Postes = p.Id_Postes
         INNER JOIN sources as s on c.Cle_Sources = s.Id_Sources
-        WHERE c.Statut_Candidatures = 'non traitee'
+        WHERE c.Statut_Candidatures = 'Non-traitée'
         
         ORDER BY c.Id_Candidatures DESC";
     
