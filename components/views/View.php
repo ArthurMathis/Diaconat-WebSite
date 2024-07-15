@@ -13,25 +13,35 @@ class View {
         return [
             [
                 "intitule" => "Accueil",
-                "action" => "index.php"
+                "action" => "index.php",
+                "logo" => LOGO.DS."white-home.svg"
             ],
             [
                 "intitule" => "Candidatures",
-                "action" => "index.php?candidatures=home"
-            ],
-            [
-                "intitule" => "Utilisateurs",
-                "action" => "index.php?utilisateurs=home"
+                "action" => "index.php?candidatures=home",
+                "logo" => LOGO.DS."white-candidature.svg"
             ],
             [
                 "intitule" => "Statistiques",
-                "action" => "#"
+                "action" => "#",
+                "logo" => LOGO.DS."white-statistiques.svg"
+            ],
+            [
+                "intitule" => "Besoins",
+                "action" => "#",
+                "logo" => LOGO.DS."white-offre.svg"
+            ],
+            [
+                "intitule" => "Préférences",
+                "action" => "#",
+                "logo" => LOGO.DS."white-préférences.svg"
             ],
             [
                 "intitule" => "Se déconnecter",
-                "action" => "index.php?login=deconnexion"
+                "action" => "index.php?login=deconnexion",
+                "logo" => LOGO.DS."white-log-out.svg"
             ]
-            ];
+        ];
     }
 
 

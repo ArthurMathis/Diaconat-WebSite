@@ -27,6 +27,7 @@ define('SCRIPTS', PAGES.DS.'import scripts');
 // Les sources
 define('STYLESHEET', ASSETS.DS.'stylesheet');
 define('IMG', ASSETS.DS.'img');
+define('LOGO', IMG.DS.'logo');
 
 // Les feuilles de styles
 define('FORMS_STYLES', STYLESHEET.DS.'formulaires');

@@ -457,11 +457,25 @@ button:is(:hover, :focus),
   left: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   height: var(--nav-barre-size);
   width: 100%;
   z-index: 1;
   padding: 2em 3em 0;
+}
+.nav-barre > div, .form-barre > div {
+  display: flex;
+  justify-content: right;
+  align-items: start;
+  gap: var(--margin);
+}
+.nav-barre .LignesHover::after,
+.form-barre .LignesHover::after {
+  background-color: var(--blue);
+}
+
+.nav-barre img {
+  width: 2em;
 }
 .form-barre h1 {
   color: var(--white);
@@ -512,7 +526,7 @@ button:is(:hover, :focus),
   border: 2px solid var(--white);
   overflow: hidden;
 }
-#menu main div {
+#menu header {
   position: absolute;
   top: var(--margin);
   left: var(--gap);
@@ -522,16 +536,15 @@ button:is(:hover, :focus),
   width: calc(100% - 2 * var(--gap));
   height: fit-content;
 }
-#menu main div h1, 
-#menu main div h2 {
-  color: var(--white);
+#menu .LignesHover img {
+  width: var(--gap);
 }
-#menu main div h2 {
-  position: relative;
-  z-index: 3;
-}
-#menu main div h2::after {
+#menu .LignesHover::after {
   background-color: var(--white);
+}
+#menu main h1, 
+#menu main h2 {
+  color: var(--white);
 }
 #menu main content {
   display: flex;
@@ -543,9 +556,17 @@ button:is(:hover, :focus),
   height: 100%;
   padding: calc(3 * var(--padding)) calc(4 * var(--gap));
 }
-#menu main content a {
+#menu main content article {
   position: relative;
-
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: var(--padding);
+}
+#menu main content article:hover * {
+  opacity: 1;
+}
+#menu main content article a {
   color: var(--white);
   font-family: "Roboto Mono";
   font-size: var(--font-size-big);
@@ -554,10 +575,12 @@ button:is(:hover, :focus),
   opacity: 0.4;
   will-change: opacity;
 }
-#menu main content a:hover {
-  opacity: 1;
+#menu main content article img {
+  width: var(--font-size-big);
+  opacity: 0.4;
+  will-change: opacity;
 }
-#menu main img:first-of-type {
+#menu main > img:first-of-type {
   position: fixed;
   bottom: 42.5%;
   left: 17.5%;
@@ -565,7 +588,7 @@ button:is(:hover, :focus),
   width: 17.5%;
   animation: infinite-vertical-move 4s infinite ease-in-out;
 }
-#menu main img:last-of-type {
+#menu main > img:last-of-type {
   position: fixed;
   bottom: 0;
   left: 0;

@@ -1,6 +1,6 @@
-const button_menu = document.querySelector('#barre-de-navigation h3');
+const button_menu = document.getElementById('bouton-menu');
 const menu = document.getElementById('menu');
-const button_fermer = menu.querySelector('main div h2');
+const button_fermer = document.getElementById('bouton-close-menu');
 const link = menu.querySelectorAll('main content a');
 
 // On ajoute les events d'ouverture et de fermeture du menu
