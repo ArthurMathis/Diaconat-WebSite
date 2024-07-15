@@ -1,12 +1,13 @@
 <?php 
 
 require_once('define.php');
+require_once(COMPONENTS.DS.'forms_manip.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');
 require_once(CONTROLLERS.DS.'CandidatsController.php');
 require_once(CONTROLLERS.DS.'UtilisateursController.php');
-require_once(COMPONENTS.DS.'forms_manip.php');
+require_once(CONTROLLERS.DS.'PreferencesController.php');
 
 // On démarre la session de l'utilisateur
 session_start();
@@ -541,6 +542,14 @@ if(isset($_GET['login'])) {
         forms_manip::error_alert($e);
     } 
 
+
+} elseif(isset($_GET['preferences'])) {
+    $preferences = new PreferencesController();
+
+    switch($_GET['preferences']) {
+        default : 
+            $preferences->display();
+    }
 
 } elseif(isset($_GET['utilisateurs'])) {
     $utilisateur = new UtilisateurController();

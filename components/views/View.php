@@ -21,19 +21,19 @@ class View {
                 "action" => "index.php?candidatures=home",
                 "logo" => LOGO.DS."white-candidature.svg"
             ],
-            [
-                "intitule" => "Statistiques",
-                "action" => "#",
-                "logo" => LOGO.DS."white-statistiques.svg"
-            ],
-            [
-                "intitule" => "Besoins",
-                "action" => "#",
-                "logo" => LOGO.DS."white-offre.svg"
-            ],
+            // [
+            //     "intitule" => "Statistiques",
+            //     "action" => "#",
+            //     "logo" => LOGO.DS."white-statistiques.svg"
+            // ],
+            // [
+            //     "intitule" => "Besoins",
+            //     "action" => "#",
+            //     "logo" => LOGO.DS."white-offre.svg"
+            // ],
             [
                 "intitule" => "Préférences",
-                "action" => "#",
+                "action" => "index.php?preferences=home",
                 "logo" => LOGO.DS."white-preferences.svg"
             ],
             [
