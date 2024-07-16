@@ -172,8 +172,6 @@ filtrer.addEventListener('click', () => {
                 
                     // On applique les filtres
                     candidatures_selection = multiFiltre(candidatures_selection, criteres);
-                    console.log('Filtration terminée');
-                    console.log(candidatures_selection);
                 
                     // On met à jour l'affichage
                     retireLignes(candidatures);
