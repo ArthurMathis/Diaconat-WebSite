@@ -547,8 +547,41 @@ if(isset($_GET['login'])) {
     $preferences = new PreferencesController();
 
     switch($_GET['preferences']) {
+        case 'home':
+            $preferences->display(); 
+            break;
+
+        case 'edit-password':
+            break;   
+            
+        case 'liste-utilisateurs':
+            break;
+
+        case 'liste-nouveaux-utilisateurs':
+            break;    
+            
+        case 'historique':
+            break;    
+
+        case 'liste-postes':
+            break;
+
+        case 'liste-services':
+            break;
+            
+        case 'liste-etablissements':
+            break;
+            
+        case 'liste-poles':
+            break;
+            
+        case 'autres':
+            break;    
+
         default : 
+            $_GET['preferences'] = 'home';
             $preferences->display();
+            break;
     }
 
 } elseif(isset($_GET['utilisateurs'])) {
