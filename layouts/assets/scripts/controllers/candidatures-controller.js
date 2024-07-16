@@ -289,7 +289,7 @@ rechercher.addEventListener('click', () => {
 });
 
 // On corrige le bug de double affichage
-const menu_button = document.getElementById('barre-de-navigation').querySelector('h3');
+const menu_button = document.getElementById('bouton-menu');
 menu_button.addEventListener('click', () => {
     cacheMenu(filtrer_menu);
     cacheMenu(rechercher_menu);

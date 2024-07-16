@@ -9,47 +9,54 @@
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
-    <div id="statut_input">
-        <h3>Statuts</h3>
-        <div class="container-statut">
-            <input type="checkbox" name="Non-traitée" checked>
-            <p>Non-traitée</p>
-        </div>
-        <!--<div class="container-statut">
-            <input type="checkbox" name="en attente" checked>
-            <p>en attente</p>
-        </div>-->
-        <div class="container-statut">
-            <input type="checkbox" name="Acceptée" checked>
-            <p>Acceptée</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="Refusée" checked>
-            <p>Refusée</p>
-        </div>
-    </div>
-    <section>
-        <input type="text" id="filtre-poste" placeholder="Poste">
-        <input type="text" id="filtre-source" placeholder="Source">
-    </section>
-    <div class="input-date">
-        <h3>Date minimale</h3>
-        <input type="date" id="filtre-date-max" name="filre-data-max">
-    </div>
-    <div class="input-date">
-        <h3>Date maximale</h3>
-        <input type="date" id="filtre-date-min" name="filre-data-min">
-    </div>
-    <button id="valider-filtre">Appliquer</button>
+    <h2>Filtrer par</h2>
+    <content>
+        <section id="statut_input">
+            <p>Statuts</p>
+            <div class="container-statut">
+                <input type="checkbox" name="Non-traitée" checked>
+                <p>Non-traitée</p>
+            </div>
+            <div class="container-statut">
+                <input type="checkbox" name="Acceptée" checked>
+                <p>Acceptée</p>
+            </div>
+            <div class="container-statut">
+                <input type="checkbox" name="Refusée" checked>
+                <p>Refusée</p>
+            </div>
+        </section>
+        <section>
+            <p>Postes et sources</p>
+            <input type="text" id="filtre-poste" placeholder="Poste">
+            <input type="text" id="filtre-source" placeholder="Source">
+        </section>
+        <section class="input-date">
+            <p>Date minimale</p>
+            <input type="date" id="filtre-date-max" name="filre-data-max">
+        </section>
+        <section class="input-date">
+            <p>Date maximale</p>
+            <input type="date" id="filtre-date-min" name="filre-data-min">
+        </section>
+    </content>
+    <button id="valider-filtre" class="circle_button">
+        <img src="layouts\assets\img\logo\white-filtre.svg" alt="">
+    </button>
 </div>
 <div class="candidatures-menu" id="rechercher-menu">
-    <section>
-        <input type="text" id="recherche-nom"  placeholder="Nom">
-        <input type="text" id="recherche-prenom" placeholder="Prenom">
-    </section>
-    <section>
-        <input type="text" id="recherche-email" placeholder="Email">
-        <input type="text" id="recherche-telephone" placeholder="Telephone">
-    </section>
-    <button id="lancer-recherche">Lancer</button>
+    <h2>Rechercher par</h2>
+    <content>
+        <section>
+            <input type="text" id="recherche-nom"  placeholder="Nom">
+            <input type="text" id="recherche-prenom" placeholder="Prenom">
+        </section>
+        <section>
+            <input type="text" id="recherche-email" placeholder="Email">
+            <input type="text" id="recherche-telephone" placeholder="Telephone">
+        </section>
+    </content>
+    <button id="lancer-recherche" class="circle_button">
+        <img src="layouts\assets\img\logo\white-recherche.svg" alt="">
+    </button>
 </div>

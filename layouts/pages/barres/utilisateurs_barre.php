@@ -1,7 +1,6 @@
 <nav class="options_barre">
     <article>
-        <a class="action_button reverse_color" href="index.php?utilisateurs=logs">Historique de connexion</a>
-        <a class="action_button" href="index.php?utilisateurs=saisie-inscription">Nouvel utilisateur</a>
+        <a class="action_button reverse_color" href="index.php?prefrences=...">Nouvel utilisateur</a>
     </article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>
@@ -9,37 +8,49 @@
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
-    <div id="statut_input">
-        <h3>Rôles</h3>
-        <div class="container-statut">
-            <input type="checkbox" name="Administrateur" checked>
-            <p>Administrateur</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="Modérateur" checked>
-            <p>Modérateur</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="Utilisateur" checked>
-            <p>Utilisateur</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="Invité" checked>
-            <p>Invité</p>
-        </div>
-    </div>
-    <section>
-        <input type="text" id="filtre-etablissement" placeholder="Etablissement">
-    </section>
-    <button id="valider-filtre">Appliquer</button>
+    <h2>Filtrer par</h2>
+    <content>
+        <section id="statut_input">
+            <h3>Rôles</h3>
+            <div class="container-statut">
+                <input type="checkbox" name="Administrateur" checked>
+                <p>Administrateur</p>
+            </div>
+            <div class="container-statut">
+                <input type="checkbox" name="Modérateur" checked>
+                <p>Modérateur</p>
+            </div>
+            <div class="container-statut">
+                <input type="checkbox" name="Utilisateur" checked>
+                <p>Utilisateur</p>
+            </div>
+            <div class="container-statut">
+                <input type="checkbox" name="Invité" checked>
+                <p>Invité</p>
+            </div>
+        </section>
+        <section>
+            <h3>Etablissement</h3>
+            <input type="text" id="filtre-etablissement" placeholder="Etablissement">
+        </section>
+    </content>
+    <button id="valider-filtre" class="circle_button">
+        <img src="layouts\assets\img\logo\white-filtre.svg" alt="">
+    </button>
 </div>
 <div class="candidatures-menu" id="rechercher-menu">
-    <section>
-        <input type="text" id="recherche-nom"  placeholder="Nom">
-        <input type="text" id="recherche-prenom" placeholder="Prenom">
-    </section>
-    <section>
-        <input type="text" id="recherche-email" placeholder="Email">
-    </section>
-    <button id="lancer-recherche">Lancer</button>
+    <h2>Rechercher par</h2>
+    <content>
+        <section>
+            <input type="text" id="recherche-nom"  placeholder="Nom">
+            <input type="text" id="recherche-prenom" placeholder="Prenom">
+        </section>
+        <section>
+            <input type="text" id="recherche-email" placeholder="Email">
+            <input type="text" id="recherche-telephone" placeholder="Telephone">
+        </section>
+    </content>
+    <button id="lancer-recherche" class="circle_button">
+        <img src="layouts\assets\img\logo\white-recherche.svg" alt="">
+    </button>
 </div>

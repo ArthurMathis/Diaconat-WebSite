@@ -423,6 +423,8 @@ button:is(:hover, :focus),
   width: var(--padding);
   height: var(--padding);
 
+  padding: 0;
+
   border: 2px solid var(--blue);
   border-radius: var(--gap);
   background-color: var(--blue);
