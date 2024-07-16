@@ -5,7 +5,7 @@
             <h2>Votre compte</h2>
         </header>
         <content>
-            <a <?php if($_GET['preferences'] == "home") echo 'class="selected"'; ?> href="">Consulter vos informations</a>
+            <a <?php if($_GET['preferences'] == "home") echo 'class="selected"'; ?> href="index.php?preferences=home">Consulter vos informations</a>
             <a <?php if($_GET['preferences'] == "edit-password") echo 'class="selected"'; ?> href="">Modifier votre mot de passe</a>
         </content>
     </article>
@@ -15,7 +15,7 @@
             <h2>Utilisateurs</h2>
         </header>
         <content>
-            <a <?php if($_GET['preferences'] == "liste-utilisateurs") echo 'class="selected"'; ?> href="">Liste des utilisateurs</a>
+            <a <?php if($_GET['preferences'] == "liste-utilisateurs") echo 'class="selected"'; ?> href="index.php?preferences=liste-utilisateurs">Liste des utilisateurs</a>
             <a <?php if($_GET['preferences'] == "liste-nouveaux-utilisateurs") echo 'class="selected"'; ?> href="">Nouveaux utilisateurs</a>
             <a <?php if($_GET['preferences'] == "historique") echo 'class="selected"'; ?> href="">Historique de connexion</a>
         </content>

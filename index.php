@@ -555,6 +555,7 @@ if(isset($_GET['login'])) {
             break;   
             
         case 'liste-utilisateurs':
+            $preferences->displayUtilisateurs();
             break;
 
         case 'liste-nouveaux-utilisateurs':

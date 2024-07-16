@@ -1,31 +1,40 @@
 body {
-    width: 100dvw;
-    height: 100dvh;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
 }
 
+body > content {
+    display: flex;
+
+    height: calc(100vh - 8em);
+
+    margin-top: var(--padding);
+
+    background-color: red;
+}
+
 /******** Barre de préférences ********/
-body > aside {
+body > content > aside {
     display: flex;
     flex-direction: column;
     justify-content: start;
     gap: var(--gap);
 
     width: 20%;
-    height: calc(100% - 8em);
+    height: 100%;
 
-    margin-top: var(--padding);
     padding: var(--padding) var(--gap);
 
     border-radius: 0 85px 0 0;
     background-color: var(--blue);
 }
-body > aside article {
+body > content > aside article {
     display: block;
     width: 100%;
     height: fit-content;
 }
-body > aside header {
+body > content > aside header {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -36,14 +45,14 @@ body > aside header {
 
     margin-bottom: var(--gap);
 }
-body > aside header img {
+body > content > aside header img {
     width: var(--font-size-medium);
 }
-body > aside header h2 {
+body > content > aside header h2 {
     color: var(--white);
 }
 
-body > aside content {
+body > content > aside content {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -54,18 +63,18 @@ body > aside content {
 
     padding-left: calc(var(--font-size-medium) + var(--margin));
 }
-body > aside content a {
+body > content > aside content a {
     padding: calc(var(--margin) / 3) 0;
 
     color: var(--white);
     font-family: "Roboto";
 }
-body > aside content a.selected,
-body > aside content a:hover {
+body > content > aside content a.selected,
+body > content > aside content a:hover {
     position: relative;
     font-family: "Roboto Bold";
 }
-body > aside content a.selected::before {
+body > content > aside content a.selected::before {
     content: '';
     position: absolute;
     top: calc(100% / 6);
@@ -78,3 +87,5 @@ body > aside content a.selected::before {
     border-radius: 1px;
     background-color: var(--white);
 }
+
+/******** Main ********/
