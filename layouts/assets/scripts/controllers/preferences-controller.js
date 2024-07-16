@@ -2,8 +2,6 @@
 let candidatures = document.querySelector('.liste_items .table-wrapper table tbody').rows
 const entete = Array.from(document.querySelector('.liste_items .table-wrapper table thead tr').cells);
 
-
-
 // On ajoute le système de tri //
 
 let item_clicked = null;
@@ -45,6 +43,12 @@ entete.forEach((item, index) => {
 
 
 
+// On ajoute la Liste dynamique //
+
+const liste = new Liste("main-liste");
+
+
+
 // On ajoute les fonctionnalités de tri et de recherche // 
 
 // On récupère les boutons
@@ -56,45 +60,26 @@ const rechercher_menu = document.getElementById('rechercher-menu');
 const filtrer_menu = document.getElementById('filtrer-menu');
 
 
+
 // On ajoute les codes couleurs
 setColor(candidatures, [
-        {
-            content: 'Non-traitée', 
-            class: 'non-traitee'
-        },
-        {
-            content: 'Acceptée', 
-            class: 'acceptee'
-        },
-        {
-            content: 'Refusée', 
-            class: 'refusee'
-        }
-    ], 0);
-setColor(candidatures, [
-        {
-            content: 'Email', 
-            class: 'email'
-        },
-        {
-            content: 'Hellowork', 
-            class: 'hellowork'
-        },
-        {
-            content: 'Hublo', 
-            class: 'hublo'
-        },
-        {
-            content: 'Téléphone', 
-            class: 'telephone'
-        }
-    ], 6);
-setColorDispo(candidatures, 7);
-
-
-// On ajoute la Liste dynamique //
-
-const liste = new Liste("main-liste");
+    {
+        content: 'Administrateur', 
+        class: 'administrateur'
+    },
+    {
+        content: 'Modérateur', 
+        class: 'moderateur'
+    },
+    {
+        content: 'Utilisateur', 
+        class: 'utilisateur'
+    },
+    {
+        content: 'Invité', 
+        class: 'invite'
+    }
+], 0);
 
 
 
@@ -112,36 +97,23 @@ filtrer.addEventListener('click', () => {
     cacheMenu(rechercher_menu);
 
     if(filtrerIsVisible) {
-        champs = null;
-        champs_statut = null;
-        champs_date = null;
+        champs_roles = null;
 
         // On cache le formulaire
         cacheMenu(filtrer_menu);
 
     } else {
         // On récupère les champs du formulaire
-        const champs_statut = {
-                champs: Array.from(document.getElementById('statut_input').querySelectorAll('input')),
-                index: 0
+        const champs_roles = {
+            champs: Array.from(document.getElementById('role_input').querySelectorAll('input')),
+            index: 0
         };
-        const champs_infos = [
+        const champs = [
             {
-                champs: document.getElementById('filtre-poste'),
-                index: 3
-            },
-            {
-                champs: document.getElementById('filtre-source'),
-                index: 6
+                champs: document.getElementById('filtre-etablissement'),
+                index: 4
             }
         ];
-        const champs_date = {
-            index: 7,
-            champs : [
-                document.getElementById('filtre-date-max'),
-                document.getElementById('filtre-date-min')
-            ]
-        };
 
         // On recupère le bouton de recherche
         const bouton = document.getElementById('valider-filtre');
@@ -154,18 +126,19 @@ filtrer.addEventListener('click', () => {
             // On récupère la liste de critères
             try {
                 let criteres = [];
-                recupChamps(champs_infos, criteres);
-                recupCheckbox(champs_statut, criteres);
-                recupChampsDate(champs_date, criteres);
+                recupChamps(champs, criteres);
+                recupCheckbox(champs_roles, criteres);
 
                 // On vérifie la présence de critères
                 if(criteres.length === 0) {
+                    console.log('On réinitialise le tableau');
                     // On réinitialise le tableau 
                     resetLignes(candidatures);
                     candidatures_selection = Array.from(candidatures);
                     afficheNbItems(candidatures !== null ? candidatures.length : 0);
                 
                 } else {
+                    console.log('On filtre le tableau');
                     // On réinitialise la sélection
                     if(lastAction === "filtre") 
                         candidatures_selection = Array.from(candidatures);
@@ -174,12 +147,12 @@ filtrer.addEventListener('click', () => {
                     candidatures_selection = multiFiltre(candidatures_selection, criteres);
                     console.log('Filtration terminée');
                     console.log(candidatures_selection);
-                
+
                     // On met à jour l'affichage
                     retireLignes(candidatures);
                     resetLignes(candidatures_selection);
                     afficheNbItems(document.querySelector('.liste_items .entete h3'), candidatures_selection !== null ? candidatures_selection.length : 0);
-                
+
                     // On cache le menu
                     filtrerIsVisible = !filtrerIsVisible;
                 }
@@ -194,87 +167,9 @@ filtrer.addEventListener('click', () => {
 
         // On affiche le menu
         montreMenu(filtrer_menu);
+
     }
     filtrerIsVisible = !filtrerIsVisible;
-});
-
-// On ajoute le menu de filtration
-let rechercherIsVisible = false;
-rechercher.addEventListener('click', () => {
-    // On cache l'autre fomulaire
-    cacheMenu(filtrer_menu);
-
-    if(rechercherIsVisible) {
-        champs = null;
-        champs_statut = null;
-        champs_date = null;
-
-        // On cache le formulaire
-        cacheMenu(rechercher_menu);
-
-    } else {
-        // On récupère les champs du formulaire
-        const champs_infos = [
-            {
-                champs: document.getElementById('recherche-nom'),
-                index: 1
-            },
-            {
-                champs: document.getElementById('recherche-prenom'),
-                index: 2
-            },
-            {
-                champs: document.getElementById('recherche-email'),
-                index: 4
-            },
-            {
-                champs: document.getElementById('recherche-telephone'),
-                index: 5
-            }
-        ];
-
-        // On recupère le bouton de recherche
-        const bouton = document.getElementById('lancer-recherche');
-
-        // Nettoyer les anciens gestionnaires d'événements pour éviter les ajouts multiples
-        const newBouton = bouton.cloneNode(true);
-        bouton.parentNode.replaceChild(newBouton, bouton);
-
-        newBouton.addEventListener('click', () => {
-            // On récupère la liste de critères
-            let criteres = [];
-            recupChamps(champs_infos, criteres);
-
-            // On vérifie la présence de critères
-            if(criteres.length === 0) {
-                // On réinitialise le tableau 
-                resetLignes(candidatures);
-                candidatures_selection = Array.from(candidatures);
-                afficheNbItems(candidatures !== null ? candidatures.length : 0);
-
-            } else {
-                // On applique les filtres
-                candidatures_selection = multiFiltre(candidatures_selection, criteres);
-
-                // On met à jour l'affichage
-                retireLignes(candidatures);
-                resetLignes(candidatures_selection);
-                afficheNbItems(candidatures_selection !== null ? candidatures_selection.length : 0);
-
-                // On cache le menu
-                rechercherIsVisible = !rechercherIsVisible;  
-            }
-
-            lastAction = "recherche";
-            
-            // On cache le menu
-            cacheMenu(rechercher_menu);
-        });
-
-        // On affiche le menu
-        montreMenu(rechercher_menu);
-    }
-    rechercherIsVisible = !rechercherIsVisible;
 });
 
 // On corrige le bug de double affichage

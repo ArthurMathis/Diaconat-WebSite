@@ -12,7 +12,7 @@ class PreferencesView extends View {
         $this->generateMenu();
 
         echo '<content>';
-        include(MY_ITEMS.DS.'utilisateur_profil.php');
+        include(MY_ITEMS.DS.'preferences.php');
         echo '</content>';
 
         // On ajoute le pied de page  
@@ -22,13 +22,13 @@ class PreferencesView extends View {
     /// Méthode publique retournant la liste utilisateurs
     public function getUtilisateursContent($items=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [PAGES_STYLES.DS.'preferences.css', PAGES_STYLES.DS.'liste-page.css']);
+        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [PAGES_STYLES.DS.'preferences.css', PAGES_STYLES.DS.'liste-page.css', PAGES_STYLES.DS.'utilisateurs.css']);
 
         // On ajoute les barres de navigation
         $this->generateMenu();
 
         echo '<content>';
-        include(MY_ITEMS.DS.'utilisateur_profil.php');
+        include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="liste-utilisateurs">';
         include BARRES.DS.'utilisateurs_barre.php';
         $this->getListesItems("Utilisateurs", $items, null, "main-liste");
@@ -40,7 +40,7 @@ class PreferencesView extends View {
             'views/liste-views.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
-            'controllers/utilisateurs-controller.js'
+            'controllers/preferences-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
 

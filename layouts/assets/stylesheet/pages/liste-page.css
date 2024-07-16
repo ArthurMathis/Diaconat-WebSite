@@ -78,7 +78,7 @@
 .candidatures-menu #statut_input {
     width: 160px;
 }
-.candidatures-menu #statut_input .container-statut {
+.candidatures-menu section .container-statut {
     display: flex;
     gap: 6px;
 }
