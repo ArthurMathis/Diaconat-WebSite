@@ -165,7 +165,8 @@ class Utilisateurs {
             'nom' => $this->getNom(),
             'prenom' => $this->getPrenom(),
             'email' => $this->getEmail(),
-            'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
+            // 'motdepasse' => password_hash($this->getMotdepasse(), PASSWORD_DEFAULT),
+            'motdepasse' => $this->getMotdepasse(),
             'cle_etablissement' => $this->getEtablissement(),
             'cle_role' => $this->getRole()
         ];

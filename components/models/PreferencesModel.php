@@ -3,10 +3,12 @@
 require_once(MODELS.DS.'Model.php');
 require_once(CLASSE.DS.'Instants.php');
 require_once(CLASSE.DS.'Candidats.php');
+require_once(CLASSE.DS.'Utilisateurs.php');
+require_once(COMPONENTS.DS.'Passwordgenerator.php');
 
 class PreferencesModel extends Model {
 
-    
+
     /// Méthode publique récupérant la liste des Utilisateurs
     public function getUtilisateurs() {
         // On initialise la requête 
@@ -21,6 +23,26 @@ class PreferencesModel extends Model {
         INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role
         INNER JOIN Etablissements AS e ON u.Cle_Etablissements = e.Id_Etablissements
 
+        ORDER BY Role";
+
+        // On lance la requête
+        return $this->get_request($request);
+    }
+    /// Méthode publique récupérant les nouveaux utilisateurs 
+    public function getNouveauxUtilisateurs() {
+        // On initialise la requête
+        $request = "SELECT
+        Intitule_Role AS Role, 
+        Identifiant_Utilisateurs AS Identifiant,
+        MotDePasse_Utilisateurs AS 'Mot de passe', 
+        Intitule_Etablissements AS Etablissement
+        
+        FROM Utilisateurs AS u
+        INNER JOIN Roles AS r ON u.cle_Roles = r.Id_Role
+        INNER JOIN Etablissements AS e ON u.Cle_Etablissements = e.Id_Etablissements
+
+        WHERE MotDePasseTemp_Utilisateurs = 1
+        
         ORDER BY Role";
 
         // On lance la requête
@@ -70,6 +92,9 @@ class PreferencesModel extends Model {
         $infos['etablissement'] = $temp['Id_Etablissements'];
         // On vide la mémoire temporaire
         unset($temp);
+
+        // On génère un mot de passe
+        $infos['mot de passe'] = PasswordGenerator::random_mot_de_passe();
 
         // On crée l'utilisateur
         $user = Utilisateurs::makeUtilisateurs($infos);

@@ -1,4 +1,4 @@
-<form class="big-form" method="post" action="index.php?utilisateurs=inscription">
+<form class="big-form" method="post" action="index.php?preferences=inscription-utilisateur">
     <div class="form-container">
         <section>
             <h2>Informations personnelles</h2>
@@ -6,11 +6,6 @@
             <input type="text" id="nom" name="nom" placeholder="Nom">
             <input type="text" id="prenom" name="prenom" placeholder="Prénom">
             <input type="text" id="email" name="email" placeholder="Adresse mail">
-        </section>
-        <section>
-            <h2>Mot de passe</h2>
-            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
-            <input type="password" id="confirmation" name="confirmation" placeholder="Confirmation du mot de passe">
         </section>
         <section>
             <h2>Statut</h2>

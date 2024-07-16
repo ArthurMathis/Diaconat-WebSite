@@ -201,17 +201,17 @@ INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES
     (11, 11)
 ;    
 INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) VALUES 
-    ('non traitee',  1,  1,  1,  23,  1),
-    ('acceptee',    1,  2,  1,  56,  1),
-    ('non traitee', 1,  3,  2,  14,  1),
-    ('non traitee',  2,  4,  3,  38,  3),
-    ('refusee',  3,  5,  2,  58,  3),
-    ('non traitee',  3,  6,  3,  25,  2),
-    ('acceptee',  4,  7,  1,  4,   1),
-    ('non traitee',  5,  8,  2,  47,  5),
-    ('non traitee',  6,  9,  1,  65,  4),
-    ('non traitee',  6,  10, 4,  26,  4),
-    ('non traitee', 11, 11, 3, 3, 3)
+    ('Non-traitée',  1,  1,  1,  23,  1),
+    ('Acceptée',    1,  2,  1,  56,  1),
+    ('Non-traitée', 1,  3,  2,  14,  1),
+    ('Non-traitée',  2,  4,  3,  38,  3),
+    ('Refusée',  3,  5,  2,  58,  3),
+    ('Non-traitée',  3,  6,  3,  25,  2),
+    ('Acceptée',  4,  7,  1,  4,   1),
+    ('Non-traitée',  5,  8,  2,  47,  5),
+    ('Non-traitée',  6,  9,  1,  65,  4),
+    ('Non-traitée',  6,  10, 4,  26,  4),
+    ('Non-traitée', 11, 11, 3, 3, 3)
 ;    
 
 -- On insère les contrats --

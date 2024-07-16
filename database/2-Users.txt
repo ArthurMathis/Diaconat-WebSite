@@ -12,6 +12,7 @@ CREATE TABLE Utilisateurs (
     Prenom_Utilisateurs VARCHAR(64) NOT NULL,
     MotDePasse_Utilisateurs VARCHAR(256) NOT NULL,
     Email_Utilisateurs VARCHAR(64) UNIQUE,
+    MotDePasseTemp_Utilisateurs BOOLEAN DEFAULT TRUE,
 
     Cle_Roles INTEGER NOT NULL,
     Cle_Etablissements INTEGER NOT NULL,

@@ -20,11 +20,18 @@ class PreferencesController extends Controller {
         $items = $this->Model->getUtilisateurs();
         return $this->View->getUtilisateursContent($items);
     }
+    /// Méthode publique retournant la page de nouvels utilisateurs
+    public function displayNouveauxUtilisateurs() {
+        $items = $this->Model->getNouveauxUtilisateurs();
+        return $this->View->getNouveauxUtilisateursContent($items);
+    }
     /// Méthode publique retournant la page Historique
     public function displayHistorique() {
         $items = $this->Model->getHistorique();
         return $this->View->getHistoriqueContent($items);
     }
+
+
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
     public function displaySaisieUtilisateur() {
         $role = $this->Model->getRoles();

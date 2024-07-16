@@ -1,7 +1,5 @@
 <nav class="options_barre">
-    <article>
-        <a class="action_button reverse_color" href="index.php?preferences=saisie-utilisateur">Nouvel utilisateur</a>
-    </article>
+    <article></article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>
         <p class="action_button" id="rechercher-button">Rechercher</p>
@@ -11,7 +9,7 @@
     <h2>Filtrer par</h2>
     <content>
         <section id="role_input">
-            <h3>Rôles</h3>
+            <p>Rôles</p>
             <div class="container-statut">
                 <input type="checkbox" name="Administrateur" checked>
                 <p>Administrateur</p>
@@ -30,7 +28,7 @@
             </div>
         </section>
         <section>
-            <h3>Etablissement</h3>
+            <p>Etablissement</p>
             <input type="text" id="filtre-etablissement" placeholder="Etablissement">
         </section>
     </content>
@@ -42,12 +40,8 @@
     <h2>Rechercher par</h2>
     <content>
         <section>
-            <input type="text" id="recherche-nom"  placeholder="Nom">
-            <input type="text" id="recherche-prenom" placeholder="Prenom">
-        </section>
-        <section>
-            <input type="text" id="recherche-email" placeholder="Email">
-            <input type="text" id="recherche-telephone" placeholder="Telephone">
+            <p>Identifiant</p>
+            <input type="text" id="recherche-identifiant"  placeholder="Identifiant">
         </section>
     </content>
     <button id="lancer-recherche" class="circle_button">

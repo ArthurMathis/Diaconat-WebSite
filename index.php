@@ -558,7 +558,43 @@ if(isset($_GET['login'])) {
             $preferences->displayUtilisateurs();
             break;
 
+        case 'saisie-utilisateur':
+            $preferences->displaySaisieUtilisateur();
+            break;    
+
+        case 'inscription-utilisateur':
+            try {
+                $infos = [
+                    'identifiant' => $_POST['identifiant'],
+                    'nom' => $_POST['nom'],
+                    'prenom' => $_POST['prenom'],
+                    'email' => $_POST['email'],
+                    'etablissement' => $_POST['etablissement'],
+                    'role' => $_POST['role']
+                ];
+                
+                if(empty($infos['identifiant']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs identifiant doit être rempli.");
+                elseif(empty($infos['nom']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs nom doit être rempli.");
+                elseif(empty($infos['prenom']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs prenom doit être rempli.");
+                elseif(empty($infos['email']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs email doit être rempli.");
+                    elseif(empty($infos['etablissement']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs étabissement doit être rempli.");
+                elseif(empty($infos['role']))
+                    throw new Exception("Erreur lors de la récupération des données. Le champs role doit être rempli.");
+
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
+            }
+
+            $preferences->createUtilisateur($infos);
+            break;    
+
         case 'liste-nouveaux-utilisateurs':
+            $preferences->displayNouveauxUtilisateurs();
             break;    
             
         case 'historique':
