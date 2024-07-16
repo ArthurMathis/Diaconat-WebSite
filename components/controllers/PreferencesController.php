@@ -14,6 +14,10 @@ class PreferencesController extends Controller {
         $items=[];
         return $this->View->getContent($items);
     }
+    /// Méthode publique retournant la pge de modification du mot de passe
+    public function displayEdit() {
+        return $this->View->getEditpassword();
+    }
 
     /// Méthode publique retournant la page Utilisateurs
     public function displayUtilisateurs() {

@@ -1,0 +1,98 @@
+main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    width: 80%;
+    height: calc(100vh - 8em);
+
+    padding-right: 15%;
+}
+
+/******** Formulaire ********/
+form {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: var(--gap);
+
+    width: 740px;
+    max-width: calc(80vw - 6em);
+    height: 680px;
+    max-height: calc(100vh - 12em);
+    z-index: 2;
+
+    background-color: rgba(254, 254, 254, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: var(--small-bulle-shadow);
+}
+form h3 {
+    margin-top: var(--margin);
+    color: var(--black);
+}
+form section {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: var(--margin);
+
+    width: 100%;
+}
+
+
+body > content > aside {
+    z-index: 1;
+}
+.morph {
+    position: absolute;
+    display: block;
+    z-index: 0;
+
+    border-radius: 50%;
+    background-color: rgba(226, 232, 248, 0.8);
+
+    filter: blur(15px);
+}
+.morph:first-of-type {
+    top: 10%;
+    left: 15%;
+
+    width: 240px;
+    height: 240px;
+}
+.morph:nth-of-type(2) {
+    top: 2%;
+    left: 45%;
+
+    width: 120px;
+    height: 120px;
+}
+.morph:nth-of-type(3) {
+    top: 0;
+    left: 65%;
+
+    width: 320px;
+    height: 320px;;
+}
+.morph:nth-of-type(4) {
+    top: 43%;
+    left: 38%;
+
+    width: 140px;
+    height: 140px;
+}
+.morph:nth-of-type(5) {
+    top: 55%;
+    left: 5%;
+
+    width: 360px;
+    height: 360px;
+}
+.morph:nth-of-type(6) {
+    top: 55%;
+    left: 60%;
+
+    width: 480px;
+    height: 480px;
+}

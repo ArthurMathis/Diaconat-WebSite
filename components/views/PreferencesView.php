@@ -18,6 +18,28 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+    /// Méthod epublique retournant la page de modification du mot de passe
+    public function getEditpassword() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Préférences', [
+            PAGES_STYLES.DS.'preferences.css', 
+            FORMS_STYLES.DS.'edit-user.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main>';
+        include(FORMULAIRES.DS.'edit-user.php');
+        echo '</amin>';
+        echo '</content>';
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    } 
+
     /// Méthode publique retournant la liste utilisateurs
     public function getUtilisateursContent(&$items=[]) {
         // On ajoute l'entete de page
@@ -84,9 +106,8 @@ class PreferencesView extends View {
     }
     
 
-
     /// Méthode publique retournant la vue saisie utilisateur
-    public function getSaisieUtilisateur($role) {
+    public function getSaisieUtilisateur(&$role) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'big-form.css']);
 

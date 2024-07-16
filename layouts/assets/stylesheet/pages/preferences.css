@@ -2,6 +2,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+
+    background: linear-gradient(175deg, var(--white), 75%, var(--light-blue));
 }
 
 body > content {

@@ -6,7 +6,7 @@
         </header>
         <content>
             <a <?php if($_GET['preferences'] == "home") echo 'class="selected"'; ?> href="index.php?preferences=home">Consulter vos informations</a>
-            <a <?php if($_GET['preferences'] == "edit-password") echo 'class="selected"'; ?> href="">Modifier votre mot de passe</a>
+            <a <?php if($_GET['preferences'] == "edit-password") echo 'class="selected"'; ?> href="index.php?preferences=edit-password">Modifier votre mot de passe</a>
         </content>
     </article>
     <article>
@@ -16,8 +16,8 @@
         </header>
         <content>
             <a <?php if($_GET['preferences'] == "liste-utilisateurs") echo 'class="selected"'; ?> href="index.php?preferences=liste-utilisateurs">Liste des utilisateurs</a>
-            <a <?php if($_GET['preferences'] == "liste-nouveaux-utilisateurs") echo 'class="selected"'; ?> href="">Nouveaux utilisateurs</a>
-            <a <?php if($_GET['preferences'] == "historique") echo 'class="selected"'; ?> href="">Historique de connexion</a>
+            <a <?php if($_GET['preferences'] == "liste-nouveaux-utilisateurs") echo 'class="selected"'; ?> href="index.php?preferences=liste-nouveaux-utilisateurs">Nouveaux utilisateurs</a>
+            <a <?php if($_GET['preferences'] == "historique") echo 'class="selected"'; ?> href="index.php?preferences=saisie-utilisateur">Historique de connexion</a>
         </content>
     </article>
     <article>
@@ -26,11 +26,11 @@
             <h2>Données</h2>
         </header>
         <content>
-            <a <?php if($_GET['preferences'] == "liste-postes") echo 'class="selected"'; ?> href="">Postes</a>
-            <a <?php if($_GET['preferences'] == "liste-services") echo 'class="selected"'; ?> href="">Services</a>
-            <a <?php if($_GET['preferences'] == "liste-etablissements") echo 'class="selected"'; ?> href="">Etablissements</a>
-            <a <?php if($_GET['preferences'] == "liste-poles") echo 'class="selected"'; ?> href="">Pôles</a>
-            <a <?php if($_GET['preferences'] == "autres") echo 'class="selected"'; ?> href="">Autres</a>
+            <a <?php if($_GET['preferences'] == "liste-postes") echo 'class="selected"'; ?> href="index.php?preferences=liste-postes">Postes</a>
+            <a <?php if($_GET['preferences'] == "liste-services") echo 'class="selected"'; ?> href="index.php?preferences=liste-services">Services</a>
+            <a <?php if($_GET['preferences'] == "liste-etablissements") echo 'class="selected"'; ?> href="index.php?preferences=liste-etablissements">Etablissements</a>
+            <a <?php if($_GET['preferences'] == "liste-poles") echo 'class="selected"'; ?> href="index.php?preferences=liste-poles">Pôles</a>
+            <a <?php if($_GET['preferences'] == "autres") echo 'class="selected"'; ?> href="index.php?preferences=autres">Autres</a>
         </content>
     </article>
 </aside>

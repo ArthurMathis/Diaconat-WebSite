@@ -552,6 +552,7 @@ if(isset($_GET['login'])) {
             break;
 
         case 'edit-password':
+            $preferences->displayEdit();
             break;   
             
         case 'liste-utilisateurs':
@@ -598,21 +599,27 @@ if(isset($_GET['login'])) {
             break;    
             
         case 'historique':
+            echo 'historique';
             break;    
 
         case 'liste-postes':
+            echo 'historique';
             break;
 
         case 'liste-services':
+            echo 'liste des services';
             break;
             
         case 'liste-etablissements':
+            echo 'listes des établissements';
             break;
             
         case 'liste-poles':
+            echo 'listes des pôles';
             break;
             
         case 'autres':
+            echo 'autres';
             break;    
 
         default : 
