@@ -75,14 +75,14 @@
     color: var(--grey);
 }
 
-.candidatures-menu #statut_input {
+.candidatures-menu .small-section {
     width: 160px;
 }
 .candidatures-menu section .container-statut {
     display: flex;
     gap: 6px;
 }
-.candidatures-menu #statut_input input {
+.candidatures-menu .small-section input {
     height: var(--font-size-standart);
 }
 

@@ -104,6 +104,38 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+    /// Méthode publique retournant la vue Historique
+    public function gethistoriqueContent(&$items) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css',
+            PAGES_STYLES.DS.'historique.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'historique_barre.php';
+        $this->getListesItems("Hitorique de connexions", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/historique-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
     
 
     /// Méthode publique retournant la vue saisie utilisateur

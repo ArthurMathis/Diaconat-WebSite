@@ -613,7 +613,7 @@ if(isset($_GET['login'])) {
             break;    
             
         case 'historique':
-            echo 'historique';
+            $preferences->displayHistorique();
             break;    
 
         case 'liste-postes':
