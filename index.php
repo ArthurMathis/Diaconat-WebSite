@@ -553,7 +553,21 @@ if(isset($_GET['login'])) {
 
         case 'edit-password':
             $preferences->displayEdit();
-            break;   
+            break; 
+            
+        case 'update-password':
+            try {
+                if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
+                    throw new Exception('Erreur lors de la mise à jour du mot de passe. Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
+                elseif($_POST['new-password'] != $_POST['confirmation'])
+                    throw new Exception('Erreur lors de la mise à jour du mot de passe. Le nouveau mot de passe et sa confirmation doivent être identiques !');
+
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
+            }
+
+            $preferences->updatePassword($_POST['password'], $_POST['new-password']);
+            break;    
             
         case 'liste-utilisateurs':
             $preferences->displayUtilisateurs();
@@ -603,7 +617,7 @@ if(isset($_GET['login'])) {
             break;    
 
         case 'liste-postes':
-            echo 'historique';
+            echo 'liste des postes';
             break;
 
         case 'liste-services':

@@ -626,12 +626,33 @@ abstract class Model {
         $this->post_request($request, $params);
     }
 
-    /// Méthode protégée mettant à jour la notation d'uyn utilisateur 
+
+    /// Méthode publique mettant à jour le mot de passe d'un utilisateur
+    public function updatePassword(&$password) {
+        echo "<h2>On enregistre le nouveau mot de passe</h2>";
+        // On initialise la requête
+        $request = "UPDATE Utilisateurs
+        SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = true
+        WHERE Id_Utilisateurs = :cle";
+        $params = [
+            'cle' => $_SESSION['user_cle'],
+            'password' => password_hash($password, PASSWORD_DEFAULT)
+        ];
+
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramètres</h3>";
+        var_dump($params);
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode publique mettant à jour la notation d'un candidat 
     public function updateNotation($cle_candidat, &$notation=[]) {
         // On initialise la requête
         $request = "UPDATE Candidats 
         SET Notations_Candidats = :notation, Descriptions_Candidats = :description, A_candidats = :a, B_Candidats = :b, C_Candidats = :c
-        Where Id_Candidats = :cle";
+        WHERE Id_Candidats = :cle";
         $params = [
             'notation' => $notation['notation'],
             'description' => $notation['description'],
@@ -644,7 +665,7 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée mettant à jour la notation d'uyn utilisateur 
+    /// Méthode publique mettant à jour la notation d'un candidat 
     public function updateCandidat($cle_candidat, &$candidat=[]) {
         // On initialise la requête
         $request = "UPDATE Candidats 
@@ -664,8 +685,6 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-
-
 
 
     public function createDiplome($diplome) {

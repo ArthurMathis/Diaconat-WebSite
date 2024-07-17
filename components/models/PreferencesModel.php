@@ -33,8 +33,8 @@ class PreferencesModel extends Model {
         // On initialise la requête
         $request = "SELECT
         Intitule_Role AS Role, 
-        Identifiant_Utilisateurs AS Identifiant,
-        MotDePasse_Utilisateurs AS 'Mot de passe', 
+        Nom_Utilisateurs AS Nom,
+        Prenom_Utilisateurs AS Prénom, 
         Intitule_Etablissements AS Etablissement
         
         FROM Utilisateurs AS u
@@ -94,12 +94,42 @@ class PreferencesModel extends Model {
         unset($temp);
 
         // On génère un mot de passe
-        $infos['mot de passe'] = PasswordGenerator::random_mot_de_passe();
+        $infos['mot de passe'] = PasswordGenerator::random_password($infos['nom'], $infos['prenom']);
 
         // On crée l'utilisateur
         $user = Utilisateurs::makeUtilisateurs($infos);
 
         // On inscrit l'Utilisateur
         $this->inscriptUtilisateurs($user->exportToSQL());        
+    }
+    /// Méthode publique vérifiant le mot de passe de l'utilisateur
+    public function verify_password(&$password) {
+        echo "<h2>On récupère les informations</h2>";
+        // On initialise la requête
+        $request = "SELECT * FROM Utilisateurs WHERE Id_Utilisateurs = :cle";
+        $params = ['cle' => $_SESSION['user_cle']];
+
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramètres</h3>";
+        var_dump($params);
+
+
+        $user = $this->get_request($request, $params, 1, 1)[0];
+
+        echo "<h3>Le résultat</h3>";
+        var_dump($user);
+
+        echo "<h2>On compare les mots de passe</h2>";
+        echo "<h3>Ancien mot de passe</h3>";
+        var_dump($password);
+
+        // On compare les mots de passe
+        $res = password_verify($password, $user['MotDePasse_Utilisateurs']);
+
+        echo "<h3>Le test</h3>";
+        var_dump($res);
+
+        return $res;
     }
 }

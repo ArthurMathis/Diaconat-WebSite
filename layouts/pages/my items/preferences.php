@@ -17,7 +17,7 @@
         <content>
             <a <?php if($_GET['preferences'] == "liste-utilisateurs") echo 'class="selected"'; ?> href="index.php?preferences=liste-utilisateurs">Liste des utilisateurs</a>
             <a <?php if($_GET['preferences'] == "liste-nouveaux-utilisateurs") echo 'class="selected"'; ?> href="index.php?preferences=liste-nouveaux-utilisateurs">Nouveaux utilisateurs</a>
-            <a <?php if($_GET['preferences'] == "historique") echo 'class="selected"'; ?> href="index.php?preferences=saisie-utilisateur">Historique de connexion</a>
+            <a <?php if($_GET['preferences'] == "historique") echo 'class="selected"'; ?> href="index.php?preferences=historique">Historique de connexion</a>
         </content>
     </article>
     <article>

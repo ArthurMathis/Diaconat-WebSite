@@ -42,6 +42,20 @@ class PreferencesController extends Controller {
         return $this->View->getSaisieUtilisateur($role);
     }
 
+    public function updatePassword(&$password, &$new_password) {
+        echo "<h1>On Met à jour le mot de passe</h1>";
+        echo "<h3>Ancien mot de passe</h3>";
+        var_dump($password);
+        echo "<h3>Nouveau mot de passe</h3>";
+        var_dump($new_password);
+        if($this->Model->verify_password($password)) {
+            $this->Model->updatePassword($new_password);
+            header('Location: index.php');
+
+        } else 
+            forms_manip::error_alert("Erreur lors de la mise à jour du mot de passe. L'ancien mot de passe ne correspond pas !");
+    }
+
     public function createUtilisateur(&$infos=[]) {
         // On vérifie l'intégrité des données
         if($infos == null || empty($infos))
