@@ -642,66 +642,6 @@ if(isset($_GET['login'])) {
             break;
     }
 
-} elseif(isset($_GET['utilisateurs'])) {
-    $utilisateur = new UtilisateurController();
-
-    switch($_GET['utilisateurs']) {
-        case 'home':
-            $utilisateur->displayUtilisateurs();
-            break;
-
-        case 'logs':
-            $utilisateur->displayHistorique();
-            break;
-
-        case 'saisie-inscription':
-            $utilisateur->displaySaisieUtilisateur();
-            break;
-
-        case 'inscription':
-            try {
-                $infos = [
-                    'identifiant' => $_POST['identifiant'],
-                    'nom' => $_POST['nom'],
-                    'prenom' => $_POST['prenom'],
-                    'email' => $_POST['email'],
-                    'mot de passe' => $_POST['motdepasse'],
-                    'confirmation' => $_POST['confirmation'],
-                    'etablissement' => $_POST['etablissement'],
-                    'role' => $_POST['role']
-                ];
-                
-                if(empty($infos['identifiant']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs identifiant doit être rempli.");
-                elseif(empty($infos['nom']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs nom doit être rempli.");
-                elseif(empty($infos['prenom']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs prenom doit être rempli.");
-                elseif(empty($infos['email']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs email doit être rempli.");
-                elseif(empty($infos['mot de passe']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs mot de passe doit être rempli.");
-                elseif(empty($infos['confirmation']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs confirmation doit être rempli.");
-                    elseif(empty($infos['etablissement']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs étabissement doit être rempli.");
-                elseif(empty($infos['role']))
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs role doit être rempli.");
-                elseif($infos['mot de passe'] != $infos['confirmation'])
-                    throw new Exception("Erreyur lors de la récupération des données. Le champs mot de passe doit être identique au champs confirmation.");
-
-            } catch(Exception $e) {
-                forms_manip::error_alert($e);
-            }
-
-            $utilisateur->createUtilisateur($infos);
-            
-            break;    
-            
-        default: 
-            $utilisateur->displayUtilisateurs();
-    }
-
 } elseif(isset($_SESSION['user_cle'])) {
     $home = new HomeController();
     $home->displayHome();

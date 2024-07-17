@@ -66,7 +66,7 @@ setColor(candidatures, [
         content: 'Connexion', 
         class: 'connexion'
     },{
-        content: 'Deconnexion', 
+        content: 'Déconnexion', 
         class: 'deconnexion'
     }
 ], 0);

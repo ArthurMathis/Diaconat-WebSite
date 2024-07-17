@@ -65,6 +65,8 @@ class PreferencesModel extends Model {
         INNER JOIN Types AS t ON a.Cle_Types = t.Id_Types
         INNER JOIN Instants AS i ON a.Cle_Instants = i.Id_Instants
 
+        WHERE t.Intitule_Types IN ('Connexion', 'Déconnexion')
+
         ORDER BY Date DESC, Heure DESC";
 
         // On lance la requête

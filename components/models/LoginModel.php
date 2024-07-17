@@ -24,21 +24,6 @@ class LoginModel extends Model {
         $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
         session_destroy();
     }
-    private function writeLogs($user_cle, $action) {
-        try {
-            // On récupère le type d'action
-            $action_type = $this->serachAction_type($action);
-
-            // On génère l'instant actuel (date et heure actuelles)
-            $instant_id = $this->inscriptInstants();
-
-            // On ajoute l'action à la base de données
-            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants']);
-
-        } catch (Exception $e) {
-            forms_manip::error_alert($e->getMessage());
-        }
-    }
 
 
     // METHODES DE MANIPULATIONS DES UTILISATEURS //

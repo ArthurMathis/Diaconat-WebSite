@@ -36,6 +36,8 @@ CREATE TABLE Instants (
 
 -- On génère la table Actions stockant les actions des Utilisateurs --
 CREATE TABLE Actions (
+    Description_Actions TEXT, 
+    
 	Cle_Utilisateurs INTEGER NOT NULL,
     Cle_Types INTEGER NOT NULL,
     CLe_Instants INTEGER NOT NULL,

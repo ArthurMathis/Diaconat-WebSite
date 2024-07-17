@@ -37,6 +37,22 @@ abstract class Model {
     protected function getConnection() {
         return $this->connection;
     }
+    /// Méthode privée inscrivant les actions dans la base de données
+    protected function writeLogs(&$user_cle, $action, $description=null) {
+        try {
+            // On récupère le type d'action
+            $action_type = $this->serachAction_type($action);
+
+            // On génère l'instant actuel (date et heure actuelles)
+            $instant_id = $this->inscriptInstants();
+
+            // On ajoute l'action à la base de données
+            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
+
+        } catch (Exception $e) {
+            forms_manip::error_alert($e->getMessage());
+        }
+    }
 
 
 
@@ -486,7 +502,19 @@ abstract class Model {
         elseif(empty($cle_instant) || !is_int($cle_instant))
             throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
 
-        else {
+        else if(!empty($description)) {
+            // On ajoute l'action à la base de données
+            $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants, Description_Actions) VALUES (:user_id, :type_id, :instant_id, :description)";
+            $params = [
+                "user_id" => $cle_user,
+                "type_id" => $cle_action,
+                "instant_id" => $cle_instant,
+                'description' => $description
+            ];
+
+            $this->post_request($request, $params);
+
+        } else {
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
             $params = [

@@ -119,7 +119,18 @@ INSERT INTO Roles (Intitule_Role) VALUES
 -- On insère les types d'actions des Utilisateurs --
 INSERT INTO types (Intitule_Types) VALUES 
     ('Connexion'), 
-    ('Deconnexion')
+    ('Déconnexion'),
+    ('Modification de mot de passe'),
+    ('Inscription utilisateur'),
+    ('Inscription candidat'), 
+    ('Inscription d\'une candidature'),
+    ('Refus d\'une candidature'),
+    ('Insciption d\'une proposition'),
+    ('Refus d\'une proposition'),
+    ('Inscription d\'un contrat'),
+    ('Acceptation d\'un contrat'),
+    ('Refus d\'un contrat'),
+    ('Démission d\'un contrat')
 ;
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES

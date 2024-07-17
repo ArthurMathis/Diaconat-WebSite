@@ -36,7 +36,7 @@ class CandidaturesModel extends Model {
         return $this->get_request($request, [], false, true);
     }
 
-    public function verify_candidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {
+    public function verify_candidat(&$candidat=[], $diplomes=[], $aide, $visite_medicale) {
         // On vérifie l'intégrité des données
         try {
             $candidat = new Candidat(
@@ -92,7 +92,7 @@ class CandidaturesModel extends Model {
         $_SESSION['aide']     = $aide;
     }
 
-    public function createCandidat($candidat, $diplomes=[], $aide) {
+    public function createCandidat(&$candidat, $diplomes=[], $aide) {
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
 
@@ -106,8 +106,16 @@ class CandidaturesModel extends Model {
         foreach($diplomes as $item) 
             $this->inscriptDiplome($candidat->getCle(), $item['Id_Diplomes']);
 
+        // On enregistre les aides
         if($aide != null) 
             $this->inscriptAvoir_droit_a($candidat->getCle(), $aide);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Inscription candidat", 
+            "Inscription du candidat " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
+        );
     }
     public function createAide($aide) {
         // On initialise la requête
@@ -119,14 +127,11 @@ class CandidaturesModel extends Model {
     }
 
 
-    public function inscriptCandidature($candidat, $candidatures=[]) {
+    public function inscriptCandidature(&$candidat, $candidatures=[]) {
         // On iscrit la candidature 
         try {
             // On inscrit l'instant 
             $instant = $this->inscriptInstants()['Id_Instants'];
-
-            echo "On génère la nouvelle candidature<br>";
-            echo "Clé de l'utilisateur : " . $candidat->getCle();
 
             // Si la clé n'est pas présente
             if($candidat->getCle() == null) {
@@ -183,6 +188,13 @@ class CandidaturesModel extends Model {
             // On inscrit la demande
             $this->inscriptAppliquer_a($cle_candidatures, $service);
         }
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Inscription d'une candidature", 
+            "Nouvelle candidature de " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
+        );
     }
 
     public function searchCandidat($nom, $prenom, $email=null, $telephone=null) {
