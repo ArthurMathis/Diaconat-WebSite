@@ -8,47 +8,33 @@
     </article>
 </nav>
 <div class="candidatures-menu" id="filtrer-menu">
-    <div id="statut_input">
-        <h3>Statuts</h3>
-        <div class="container-statut">
-            <input type="checkbox" name="non traitee" checked>
-            <p>non-traitée</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="en attente" checked>
-            <p>en attente</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="acceptee" checked>
-            <p>acceptée</p>
-        </div>
-        <div class="container-statut">
-            <input type="checkbox" name="refusee" checked>
-            <p>refusée</p>
-        </div>
-    </div>
-    <section>
-        <input type="text" id="filtre-poste" placeholder="Poste">
-        <input type="text" id="filtre-source" placeholder="Source">
-    </section>
-    <div class="input-date">
-        <h3>Date minimale</h3>
-        <input type="date" id="filtre-date-max" name="filre-data-max">
-    </div>
-    <div class="input-date">
-        <h3>Date maximale</h3>
-        <input type="date" id="filtre-date-min" name="filre-data-min">
-    </div>
-    <button id="valider-filtre">Appliquer</button>
+    <h2>Filtrer par</h2>
+    <content>
+        <section>
+            <p>Informations relatives au poste</p>
+            <input type="text" id="filtre-ville" placeholder="Ville">
+            <input type="text" id="filtre-source" placeholder="Notation">
+        </section>
+    </content>
+    <button id="valider-filtre" class="circle_button">
+        <img src="layouts\assets\img\logo\white-filtre.svg" alt="">
+    </button>
 </div>
 <div class="candidatures-menu" id="rechercher-menu">
-    <section>
-        <input type="text" id="recherche-nom"  placeholder="Nom">
-        <input type="text" id="recherche-prenom" placeholder="Prenom">
-    </section>
-    <section>
-        <input type="text" id="recherche-email" placeholder="Email">
-        <input type="text" id="recherche-telephone" placeholder="Telephone">
-    </section>
-    <button id="lancer-recherche">Lancer</button>
+    <h2>Rechercher selon</h2>
+    <content>
+        <section>
+            <p>Informations personnelles</p>
+            <input type="text" id="recherche-nom"  placeholder="Nom">
+            <input type="text" id="recherche-prenom" placeholder="Prenom">
+        </section>
+        <section>
+            <p>Information de communication</p>
+            <input type="text" id="recherche-email" placeholder="Email">
+            <input type="text" id="recherche-telephone" placeholder="Telephone">
+        </section>
+    </content>
+    <button id="lancer-recherche" class="circle_button">
+        <img src="layouts\assets\img\logo\white-recherche.svg" alt="">
+    </button>
 </div>

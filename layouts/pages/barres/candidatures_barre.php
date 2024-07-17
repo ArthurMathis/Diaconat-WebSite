@@ -11,7 +11,7 @@
 <div class="candidatures-menu" id="filtrer-menu">
     <h2>Filtrer par</h2>
     <content>
-        <section id="statut_input">
+        <section id="statut_input" class="small-section">
             <p>Statuts</p>
             <div class="container-statut">
                 <input type="checkbox" name="Non-traitée" checked>
@@ -31,11 +31,11 @@
             <input type="text" id="filtre-poste" placeholder="Poste">
             <input type="text" id="filtre-source" placeholder="Source">
         </section>
-        <section class="input-date">
+        <section>
             <p>Date minimale</p>
             <input type="date" id="filtre-date-max" name="filre-data-max">
         </section>
-        <section class="input-date">
+        <section>
             <p>Date maximale</p>
             <input type="date" id="filtre-date-min" name="filre-data-min">
         </section>
@@ -48,10 +48,12 @@
     <h2>Rechercher par</h2>
     <content>
         <section>
+            <p>Informations personnelles</p>
             <input type="text" id="recherche-nom"  placeholder="Nom">
             <input type="text" id="recherche-prenom" placeholder="Prenom">
         </section>
         <section>
+            <p>Informations de communication</p>
             <input type="text" id="recherche-email" placeholder="Email">
             <input type="text" id="recherche-telephone" placeholder="Telephone">
         </section>

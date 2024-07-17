@@ -10,8 +10,8 @@
 <div class="candidatures-menu" id="filtrer-menu">
     <h2>Filtrer par</h2>
     <content>
-        <section id="role_input">
-            <h3>Rôles</h3>
+        <section id="role_input" class="small-section">
+            <p>Rôles</p>
             <div class="container-statut">
                 <input type="checkbox" name="Administrateur" checked>
                 <p>Administrateur</p>
@@ -30,7 +30,7 @@
             </div>
         </section>
         <section>
-            <h3>Etablissement</h3>
+            <p>Etablissement</p>
             <input type="text" id="filtre-etablissement" placeholder="Etablissement">
         </section>
     </content>

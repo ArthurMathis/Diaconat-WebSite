@@ -1,1 +1,0 @@
-<script src="layouts\assets\scripts\views\candidats.js"></script>

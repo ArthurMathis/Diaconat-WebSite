@@ -247,7 +247,9 @@ class CandidatsView extends View {
         echo "</content>";
 
         // On importe les scripts JavaScript
-        $scripts = [ 'views/candidats-view.js' ];
+        $scripts = [
+            'views/candidats-view.js'
+        ];
         include(SCRIPTS.DS.'import-scripts.php');
 
         // include(SCRIPTS.DS.'import-candidats.php');
@@ -259,17 +261,18 @@ class CandidatsView extends View {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Candidatures', [PAGES_STYLES.DS.'liste-page.css']);
 
-        $id = 'main-liste';
-
         // On ajoute les barres de navigation
         $this->generateMenu();
         include BARRES.DS.'liste_candidats_barre.php';
 
-        $this->getListesItems($titre, $items, null, $id);
+        $this->getListesItems($titre, $items, null, 'main-liste');
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/candidats-view.js'
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/candidats-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
 
