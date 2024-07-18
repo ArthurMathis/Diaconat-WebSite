@@ -271,10 +271,8 @@ abstract class Model {
     /// Méthode protégée recherchant une candidature depuis sont candidat et son instant dans la base de données
     protected function searchCandidatureFromCandidat($cle_candidat, $cle_instant) {
         // On vérifie l'intégrité des données
-        if(empty($cle_candidat) || empty($cle_instant)) {
+        if(empty($cle_candidat) || empty($cle_instant)) 
             throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');
-            exit;
-        }
         
         // On initialise la requête
         $request = "SELECT * FROM candidatures WHERE Cle_Candidats = :candidat AND Cle_Instants = :instant";    
@@ -290,9 +288,6 @@ abstract class Model {
     protected function searchDiplome($diplome) {
         // Si diplome est un ID
         if(is_numeric($diplome)) {
-            
-            echo "Le type fournit est un entier. On recherche un Id.<br>";
-
             // On initialise la requête
             $request = "SELECT * FROM diplomes WHERE Id_Diplomes = :id";
             $params = ["id" => $diplome];
@@ -302,9 +297,6 @@ abstract class Model {
 
         // SI diplome est un intitule    
         } elseif(is_string($diplome)) {
-
-            echo "Le type fournit est un string. On recherche un intitule.<br>";
-
             // On initialise la requête 
             $request = "SELECT * FROM diplomes WHERE Intitule_Diplomes = :intitule";
             $params = ["intitule" => $diplome];
@@ -313,10 +305,8 @@ abstract class Model {
             $result = $this->get_request($request, $params, true);
 
         // En cas d'erreur de typage
-        } else {
-            throw new Exception("La saisie du diplome est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");
-            exit;
-        }
+        } else 
+            throw new Exception("La saisie du diplome est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");        
            
         // On retourne le résultat
         return $result;
@@ -335,11 +325,9 @@ abstract class Model {
             $request =  "SELECT * FROM Types_de_contrats WHERE Intitule_Types_de_contrats = :intitule";
             $params = ['intitule' => $contrat];
 
-        } else {
+        } else 
             throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
-            exit;
-        }
-
+        
         // On lance la requête
         $result = $this->get_request($request, $params, true, true);
 
@@ -398,11 +386,9 @@ abstract class Model {
             $request =  "SELECT * FROM Services WHERE Intitule_Services = :intitule";
             $params = ['intitule' => $service];
 
-        } else {
+        } else 
             throw new Exception("La saisie du type de contrat est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
-            exit;
-        }
-
+        
         // On lance la requête
         $result = $this->get_request($request, $params, true, true);
 
@@ -429,10 +415,8 @@ abstract class Model {
             // On lance la requête
             $result = $this->get_request($request, $params, true);
 
-        } else {
-            throw new Exception("La saisie de l'aide est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");
-            exit;
-        }
+        } else 
+            new Exception("La saisie de l'aide est mal typée. Elle doit être un identifiant (entier positif) ou un echaine de caractères !");        
 
         // On retourne le résultat
         return $result;
@@ -493,7 +477,7 @@ abstract class Model {
         }
     }
     /// Méthode protégée enregistrant une action dans la base de données
-    protected function inscriptAction($cle_user, $cle_action, $cle_instant) {
+    protected function inscriptAction(&$cle_user, &$cle_action, &$cle_instant, $description) {
         // On vérifie l'intégrité des données
         if(empty($cle_user) || !is_int($cle_user))
             throw new Exception("La clé Utilisateur est nécessaire pour l'enregistrement d'une action !");
@@ -558,11 +542,6 @@ abstract class Model {
             "diplome" => $cle_diplome
         ];
 
-        echo "<h3>Requête</h3>";
-        var_dump($request);
-        echo "<h3>Paramêtres</h3>";
-        var_dump($params);
-
         // On lance la requête
         $this->post_request($request, $params);
     }
@@ -581,10 +560,8 @@ abstract class Model {
     /// Méthode protégée inscrivant un Appliquer_a dans la base de données
     protected function inscriptAppliquer_a($cle_candidature, $cle_service) {
         // On vérifie l'intégrité des données
-        if(empty($cle_candidature) || empty($cle_service)) {
-            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
-            exit;
-        }
+        if(empty($cle_candidature) || empty($cle_service)) 
+            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');        
 
         // On inititalise la requête
         $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
@@ -599,10 +576,8 @@ abstract class Model {
     /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
     protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide) {
         // On vérifie l'intégrité des données
-        if(empty($cle_candidat) || empty($cle_aide) || !is_numeric($cle_aide)) {
-            throw new Exception("Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé d'aide sont nécessaires");
-            exit;
-        }
+        if(empty($cle_candidat) || empty($cle_aide) || !is_numeric($cle_aide)) 
+            throw new Exception("Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé d'aide sont nécessaires");        
 
         // On initialise la requête
         $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
@@ -657,7 +632,6 @@ abstract class Model {
 
     /// Méthode publique mettant à jour le mot de passe d'un utilisateur
     public function updatePassword(&$password) {
-        echo "<h2>On enregistre le nouveau mot de passe</h2>";
         // On initialise la requête
         $request = "UPDATE Utilisateurs
         SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = true
@@ -666,12 +640,7 @@ abstract class Model {
             'cle' => $_SESSION['user_cle'],
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
-
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramètres</h3>";
-        var_dump($params);
-
+        
         // On lance la requête
         $this->post_request($request, $params);
     }

@@ -30,11 +30,15 @@ class PreferencesController extends Controller {
         return $this->View->getNouveauxUtilisateursContent($items);
     }
     /// Méthode publique retournant la page Historique
-    public function displayHistorique() {
-        $items = $this->Model->getHistorique();
-        return $this->View->getHistoriqueContent($items);
+    public function displayConnexionHistorique() {
+        $items = $this->Model->getConnexionHistorique();
+        return $this->View->getConnexionHistoriqueContent($items);
     }
-
+    /// Méthode publique retournant la page Historique
+    public function displayActionHistorique() {
+        $items = $this->Model->getActionHistorique();
+        return $this->View->getActionHistoriqueContent($items);
+    }
 
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
     public function displaySaisieUtilisateur() {

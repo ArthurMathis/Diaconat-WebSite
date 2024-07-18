@@ -103,7 +103,7 @@ class CandidaturesModel extends Model {
         $candidat->setCle($search['Id_Candidats']);
 
         // On enregistre les diplomes
-        foreach($diplomes as $item) 
+        if(!empty($diplomes)) foreach($diplomes as $item) 
             $this->inscriptDiplome($candidat->getCle(), $item['Id_Diplomes']);
 
         // On enregistre les aides
@@ -180,11 +180,13 @@ class CandidaturesModel extends Model {
             $service = $this->searchService($candidatures['service'])['Id_Services'];
 
             // On vérifie l'intégrité des données
-            if(empty($service)) {
-                throw new Exception('Service introuvable');
-                exit;
+            try {
+                if(empty($service)) 
+                                throw new Exception('Service introuvable');
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
             }
-
+            
             // On inscrit la demande
             $this->inscriptAppliquer_a($cle_candidatures, $service);
         }
@@ -192,8 +194,8 @@ class CandidaturesModel extends Model {
         // On enregistre les logs
         $this->writeLogs(
             $_SESSION['user_cle'], 
-            "Inscription d'une candidature", 
-            "Nouvelle candidature de " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
+            "Nouvelle candidature", 
+            "Nouvelle candidature de " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom()) . " au poste de " . $candidatures["poste"]
         );
     }
 
@@ -218,10 +220,8 @@ class CandidaturesModel extends Model {
             ];
             $candidats = $this->get_request($request, $params, true);
 
-        } else {
+        } else 
             throw new Exception("Imposssible d'effectuer la requête sans email ou numéro de téléphone !");
-            exit;
-        }
         
         // On retourne le résultat
         return $candidats;

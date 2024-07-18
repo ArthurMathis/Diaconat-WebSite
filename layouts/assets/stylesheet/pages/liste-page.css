@@ -82,6 +82,9 @@
     display: flex;
     gap: 6px;
 }
+.candidatures-menu section .container-statut.margin {
+    margin-bottom: calc(var(--margin) * 2 / 3);
+}
 .candidatures-menu .small-section input {
     height: var(--font-size-standart);
 }

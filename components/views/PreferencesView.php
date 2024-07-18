@@ -104,13 +104,13 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
-    /// Méthode publique retournant la vue Historique
-    public function gethistoriqueContent(&$items) {
+    /// Méthode publique retournant la vue Historique de connexions
+    public function getConnexionHistoriqueContent(&$items) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
             PAGES_STYLES.DS.'liste-page.css',
-            PAGES_STYLES.DS.'historique.css'
+            PAGES_STYLES.DS.'connexion-historique.css'
         ]);
 
         // On ajoute les barres de navigation
@@ -119,8 +119,8 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'historique_barre.php';
-        $this->getListesItems("Hitorique de connexions", $items, null, "main-liste");
+        include BARRES.DS.'connexion_historique_barre.php';
+        $this->getListesItems("Historique de connexions", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
 
@@ -129,14 +129,45 @@ class PreferencesView extends View {
             'views/liste-views.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
-            'controllers/historique-controller.js'
+            'controllers/connexion-historique-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
-    
+    /// Méthode publique retournant la vue Historique d'actions
+    public function getActionHistoriqueContent(&$items) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css',
+            PAGES_STYLES.DS.'action-historique.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'action_historique_barre.php';
+        $this->getListesItems("Historique d'actions", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/action-historique-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
 
     /// Méthode publique retournant la vue saisie utilisateur
     public function getSaisieUtilisateur(&$role) {

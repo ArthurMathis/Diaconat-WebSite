@@ -124,11 +124,9 @@ if(isset($_GET['login'])) {
                 forms_manip::error_alert($e->getMessage());
             }
 
-            foreach($diplomes as $d) {
-                if(strlen($d) > 128) {
+            foreach($diplomes as $d) 
+                if(strlen($d) > 128) 
                     forms_manip::error_alert("Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
-                }
-            }
 
             $candidat = [
                 'nom' => $nom, 
@@ -612,8 +610,12 @@ if(isset($_GET['login'])) {
             $preferences->displayNouveauxUtilisateurs();
             break;    
             
-        case 'historique':
-            $preferences->displayHistorique();
+        case 'connexion-historique':
+            $preferences->displayConnexionHistorique();
+            break;  
+            
+        case 'action-historique':
+            $preferences->displayActionHistorique();
             break;    
 
         case 'liste-postes':

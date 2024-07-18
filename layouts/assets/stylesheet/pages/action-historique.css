@@ -1,0 +1,29 @@
+.liste_items .table-wrapper table th:first-of-type {
+    padding-left: var(--padding);
+}
+.liste_items .table-wrapper table th:first-of-type::before {
+    content: "";
+    position: absolute;
+    left: var(--margin);
+    top: 50%;
+  
+    display: block;
+    width: var(--font-size-small);
+    height: var(--font-size-small);
+    z-index: 0;
+    
+    border-radius: var(--font-size-small);
+    transform: translateY(-50%);
+}
+.liste_items .table-wrapper table tbody tr.demission th:first-of-type::before {
+    background-color: var(--nontraitee);
+}
+.liste_items .table-wrapper table tbody tr.utilisateur th:first-of-type::before {
+    background-color: var(--enattente);
+}
+.liste_items .table-wrapper table tbody tr.candidat th:first-of-type::before {
+    background-color: var(--acceptee);
+}
+.liste_items .table-wrapper table tbody tr.refus th:first-of-type::before{
+    background-color: var(--refusee);
+}

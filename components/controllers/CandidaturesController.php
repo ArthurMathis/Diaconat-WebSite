@@ -66,8 +66,12 @@ class CandidaturesController extends Controller {
 
         if($candidat->getCle() === null) {
             // On test la présence du candidat dans la base de données
-            $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
-
+            try {
+                $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
+            }
+            
             if(empty($search)) {
                 // On ajoute le candidat à la base de données
                 $this->Model->createCandidat($candidat, $diplomes, $aide);
@@ -78,12 +82,10 @@ class CandidaturesController extends Controller {
                 $candidat->setCle($search['Id_Candidats']);
         }
         
-        echo $candidat->getCle();
-        
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
         
         // On redirige la page
-        header("Location: index.php");
+        header("Location: index.php?candidats=" . $candidat->getCle());
     }
 }

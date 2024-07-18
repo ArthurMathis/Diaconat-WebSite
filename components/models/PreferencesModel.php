@@ -49,7 +49,7 @@ class PreferencesModel extends Model {
         return $this->get_request($request);
     }
     /// Méthode publique récupérant l'historique de connexion
-    public function getHistorique() {
+    public function getConnexionHistorique() {
         // On initialise la requête
         $request = "SELECT
         Intitule_Types AS Action,
@@ -68,6 +68,27 @@ class PreferencesModel extends Model {
         WHERE t.Intitule_Types IN ('Connexion', 'Déconnexion')
 
         ORDER BY Date DESC, Heure DESC";
+
+        // On lance la requête
+        return $this->get_request($request);
+    }
+    /// Méthode publique récupérant l'historique d'action
+    public function getActionHistorique() {
+        // On initialise la requête
+        $request = "SELECT
+        Intitule_Types AS Action,
+        CONCAT(u.Nom_Utilisateurs, ' ', u.Prenom_Utilisateurs) AS Utilisateur,
+        Jour_Instants AS Date,
+        Description_Actions AS Description
+
+        FROM Actions AS a
+        INNER JOIN Utilisateurs AS u ON a.Cle_Utilisateurs = u.Id_Utilisateurs
+        INNER JOIN Types AS t ON a.Cle_Types = t.Id_Types
+        INNER JOIN Instants AS i ON a.Cle_Instants = i.Id_Instants
+
+        WHERE t.Intitule_Types NOT IN ('Connexion', 'Déconnexion')
+
+        ORDER BY Date DESC";
 
         // On lance la requête
         return $this->get_request($request);
