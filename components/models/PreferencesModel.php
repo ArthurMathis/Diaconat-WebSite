@@ -86,7 +86,7 @@ class PreferencesModel extends Model {
 
         WHERE t.Intitule_Types NOT IN ('Connexion', 'Déconnexion')
 
-        ORDER BY Date DESC";
+        ORDER BY Date DESC, Heure_Instants DESC";
 
         // On lance la requête
         return $this->get_request($request);

@@ -454,6 +454,18 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
+    /// Méthode protégée recherchant un contrat dans la base de données
+    protected function searchContrat(&$cle_contrat) {
+        if(empty($cle_contrat) || !is_numeric($cle_contrat))
+            throw new Exception('Erreur lors de la recherche du contrat. La clé contrat doit être un nombre entier positif !');
+
+        // On initialise la requête
+        $request  = "SELECT * FROM Contrats WHERE Id_Contrats = :cle";
+        $params = ['cle' => $cle_contrat];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
     
 
 

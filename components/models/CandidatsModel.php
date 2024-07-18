@@ -1130,6 +1130,14 @@ class CandidatsModel extends Model {
 
         // On lance la requête
         $this->post_request($request, $params);
+
+        // On enregistre les logs
+        $candidat = $this->searchcandidatFromContrat($cle);
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouveau contrat",
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a accepté la proposition d'offre pour le poste " . forms_manip::nameFormat($this->searchPoste($this->searchContrat($cle)['Cle_Postes'])['Intitule_Postes'])
+        );
     }
     /// Méthode ajoutant une démission à un contrat 
     public function addDemission($cle) {
