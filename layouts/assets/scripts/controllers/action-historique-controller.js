@@ -75,7 +75,7 @@ setColor(candidatures, [
         class: 'candidat'
     },
     {
-        content: 'Nouveau Contrat', 
+        content: 'Nouveau contrat', 
         class: 'candidat'
     },
     {
@@ -99,7 +99,7 @@ setColor(candidatures, [
         class: 'refus'
     },
     {
-        content: "Démission d'un contrat", 
+        content: "Démission", 
         class: 'demission'
     }
 ], 0);

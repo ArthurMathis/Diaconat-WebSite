@@ -1153,6 +1153,14 @@ class CandidatsModel extends Model {
 
         // On lance la requête
         $this->post_request($request, $params);
+
+        // On enregistre les logs
+        $candidat = $this->searchcandidatFromContrat($cle);
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Démission",
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a démissioné de son travail de " . forms_manip::nameFormat($this->searchPoste($this->searchContrat($cle)['Cle_Postes'])['Intitule_Postes'])
+        );
     }
     /// Méthode protégée vérifiant qu'une mission est dans la base de données
     protected function verifyMission($cle_service, $cle_poste) {
