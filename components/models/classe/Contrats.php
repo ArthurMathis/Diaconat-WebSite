@@ -223,6 +223,7 @@ class Contrat {
         // On déclare le tableau de données
         $result = [
             "date debut" => $this->getDateDebut(),
+            "signature" => $this->getSignature() != null ? $this->getSignature() : NULL,
             "cle candidat" => $this->getCleCandidats(),
             "cle instant" => $this->getCleInstants(),
             "cle service" => $this->getCleServices(),
@@ -245,8 +246,7 @@ class Contrat {
             $result['travail wk'] = $this->getTravailWk();
         if($this->getNbHeures() != null)
             $result['nb heures'] = $this->getNbHeures();
-        if($this->getSignature() != null)
-            $result['signature'] = $this->getSignature();
+        
 
         // On retourne le tableau de données    
         return $result;

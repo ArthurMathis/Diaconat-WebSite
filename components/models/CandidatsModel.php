@@ -290,8 +290,50 @@ class CandidatsModel extends Model {
         $this->post_request($request, $params);
     }
 
+    /// Méthpode publique refusant une candidature et inscrivant les logs
+    public function rejectCandidature(&$cle_candidature) {
+        // On implémente le statut de la candidature
+        $this->setCandidatureStatut('Refusée', $cle_candidature);
+
+        // On récupère les informations de la candidature
+        $candidat = $this->searchCandidatFromCandidature($cle_candidature);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Refus d'une candidature", 
+            "Refus de la candidature de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . 
+            " au poste de " . forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_candidature)['Cle_Postes'])['Intitule_Postes'])
+        );
+    }
+    /// Méthode publique refusant une proposition et inscrivant les logs
+    public function rejectProposition(&$cle_proposition) {
+        echo "<h1>On enregistre le refus de la proposition</h1>";
+        echo "<h2>On implément le statut de la proposition</h2>";
+
+        // On implémente le statut de la proposition
+        $this->setPropositionStatut($cle_proposition);        
+
+        echo "<h2>On récupère les données du candidat</h2>";
+
+        // On récupère les informations de la proposition
+        $candidat = $this->searchcandidatFromContrat($cle_proposition);
+
+        echo "<h2>On enregistre les logs</h2>";
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Refus d'une proposition", 
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " refuse la proposition d'embauche au poste de " . 
+            forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_proposition)['Cle_Postes'])['Intitule_Postes'])
+        );
+
+        echo "<h2>Logs enregistrés</h2>";
+    }
+
     /// Méthode construisant une nouvelle proposition d'embauche et l'inscrivant dans la base de données
-    public function createPropositions($cle, $propositions) {
+    public function createPropositions(&$cle, &$propositions) {
         try {
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
@@ -309,7 +351,6 @@ class CandidatsModel extends Model {
 
             // On génère le contrat
             $contrat = Contrat::makeContrat($propositions);
-            $infos_contrat = $contrat->exportToSQL();
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
@@ -318,9 +359,18 @@ class CandidatsModel extends Model {
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
-
+   
         // On enregistre le contrat 
-        $this->inscriptContrats($infos_contrat);
+        $this->inscriptContrats($contrat->exportToSQL());
+        unset($contrat);
+
+        // On enregistre les logs
+        $candidat = $this->searchcandidat($cle);
+        $this-> writeLogs(
+            $_SESSION['user_cle'],
+            "Nouvelle proposition",
+            "Nouvelle proposition de contrat pour " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " au poste de " . forms_manip::nameFormat($this->searchPoste($propositions['cle poste'])['Intitule_Postes'])
+        );
     }
     /// Méthode construisant une nouvelle proposition d'embauche depuis une candidature et l'inscrivant dans la base de données
     public function createPropositionsFromCandidature($cle_candidature, &$propositions=[], &$cle_candidat) {
@@ -350,23 +400,14 @@ class CandidatsModel extends Model {
     /// Méthode construisant nouveau contrat et l'inscrivant dans la base de données
     public function createContrats($cle_candidats, &$contrat=[]) {
         try {
-            echo "<h1>On génère un contrat</h1>";
-            echo "<h2>On prérapare les données</h2>";
-
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
-
-            echo "<h3>L'instant actuel</h3>";
-            var_dump($instant);
 
             // On ajoute la date de signature
             $contrat['signature'] = Instants::currentInstants()->getdate();
 
             // On récupère les informations relatives au poste
             $poste = $this->searchPoste($contrat['poste']);
-
-            echo "<h3>Informations relatives au poste</h3>";
-            var_dump($poste);
 
             // On ajoute la clé candidat
             $contrat['cle candidat'] = $cle_candidats;
@@ -382,39 +423,23 @@ class CandidatsModel extends Model {
             // On ajoute la clé de type de contrat
             $contrat['cle type'] = isset($contrat['type']) && is_numeric($contrat['type']) ? $contrat['type'] : $this->searchTypeContrat($contrat['type_de_contrat'])['Id_Types_de_contrats'];
 
-            echo "<h3>Liste des information du contrat</h3>";
-            var_dump($contrat);
-
             // On génère le contrat
             $contrat = Contrat::makeContrat($contrat);
-
-            echo "<h3>Le contrat</h3>";
-            var_dump($contrat);
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
 
-        echo "<h2>On inscrit la proposition</h2>";
-
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
 
-        echo "<h2>On inscrit le contrat</h2>";
-
         // On enregistre le contrat 
         $this->inscriptContrats($contrat->exportToSQL());
 
-        echo "<h2>On inscrit les logs</h2>";
-
-        var_dump($contrat->getCleCandidats());
-
-
-        
         // On enregistre les logs
         $candidat = $this->searchcandidat($contrat->getCleCandidats());
-
+        unset($contrat);
         $this->writeLogs(
             $_SESSION['user_cle'], 
             "Nouveau contrat", 
@@ -1123,8 +1148,6 @@ class CandidatsModel extends Model {
     }
     /// Méthode protégée vérifiant qu'une mission est dans la base de données
     protected function verifyMission($cle_service, $cle_poste) {
-        echo "On recherche la mission<br>";
-
         // On initialise la requête 
         $request = "SELECT * FROM Missions WHERE Cle_Services = :service AND Cle_Postes = :poste";
         $params = [
@@ -1141,8 +1164,6 @@ class CandidatsModel extends Model {
             // On inscrit la mission
             $this->inscriptMission($cle_service, $cle_poste);
         }
-
-        else echo "Mission trouvée<br>";
     }
 
     public function makeUpdatecandidat($cle_candidat, &$candidat) {
