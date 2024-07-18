@@ -5,6 +5,7 @@ require_once(CLASSE.DS.'Instants.php');
 require_once(CLASSE.DS.'Candidats.php');
 
 class CandidaturesModel extends Model {
+    /// Méthode publique retourant la liste des candidatures 
     public function getCandidatures() {
         // On initialise la requête
         $request = "SELECT 
@@ -28,6 +29,7 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
+    /// Métohod epublique retournant la liste des aides
     public function getAides() {
         // On inititalise la requête
         $request = "SELECT Id_Aides_au_recrutement, Intitule_Aides_au_recrutement FROM aides_au_recrutement";
@@ -36,6 +38,7 @@ class CandidaturesModel extends Model {
         return $this->get_request($request, [], false, true);
     }
 
+    /// Méthode publique vérifiant l'intégrité d'un candidat avant son inscription en base
     public function verify_candidat(&$candidat=[], $diplomes=[], $aide, $visite_medicale) {
         // On vérifie l'intégrité des données
         try {
@@ -92,6 +95,7 @@ class CandidaturesModel extends Model {
         $_SESSION['aide']     = $aide;
     }
 
+    /// Méthode publique générant un candidat et inscrivant les logs
     public function createCandidat(&$candidat, $diplomes=[], $aide) {
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
@@ -117,6 +121,7 @@ class CandidaturesModel extends Model {
             "Inscription du candidat " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
         );
     }
+    /// Méthode publique générant une nouvelle aide
     public function createAide($aide) {
         // On initialise la requête
         $request = "INSERT INTO Aides_au_recrutement (Intitule_Aides_au_recrutement) VALUES (:intitule)";
@@ -126,7 +131,7 @@ class CandidaturesModel extends Model {
         $this->post_request($request, $params);
     }
 
-
+    /// Méthode publique inscrivant une candidature et les logs
     public function inscriptCandidature(&$candidat, $candidatures=[]) {
         // On iscrit la candidature 
         try {
@@ -199,6 +204,7 @@ class CandidaturesModel extends Model {
         );
     }
 
+    /// Méthode publique récupérant un candidat de la base de données depuis son nom et son prénom
     public function searchCandidat($nom, $prenom, $email=null, $telephone=null) {
         if($email != null) {
             // On récupère le candidats

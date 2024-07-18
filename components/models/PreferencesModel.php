@@ -7,8 +7,6 @@ require_once(CLASSE.DS.'Utilisateurs.php');
 require_once(COMPONENTS.DS.'Passwordgenerator.php');
 
 class PreferencesModel extends Model {
-
-
     /// Méthode publique récupérant la liste des Utilisateurs
     public function getUtilisateurs() {
         // On initialise la requête 

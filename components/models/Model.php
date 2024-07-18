@@ -355,22 +355,24 @@ abstract class Model {
     }
     /// Méthode protégée recherchant un poste dans la base de données
     protected function searchPoste($poste) {
-        // On initialise la requête
-        if(is_numeric($poste)) {
-            $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
-            $params = ["Id" => $poste];
+        try {
+            // On initialise la requête
+            if(is_numeric($poste)) {
+                $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
+                $params = ["Id" => $poste];
 
-        } elseif(is_string($poste)) {
-            $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
-            $params = ["Intitule" => $poste];
-        } else 
-            throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
+            } elseif(is_string($poste)) {
+                $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
+                $params = ["Intitule" => $poste];
+            } else 
+                throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
+
+        } catch (Exception $e) {
+            forms_manip::error_alert($e);
+        }
 
         // On lance la requête
-        $result = $this->get_request($request, $params, true, true);
-
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request, $params, true, true);
     }
     /// Méthode protégée recherchant un service dans la base de données 
     protected function searchService($service) {
@@ -495,7 +497,7 @@ abstract class Model {
                 "instant_id" => $cle_instant,
                 'description' => $description
             ];
-
+            
             $this->post_request($request, $params);
 
         } else {
@@ -509,6 +511,11 @@ abstract class Model {
 
             $this->post_request($request, $params);
         }
+
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramètres</h3>";
+        var_dump($params);
     }
 
     /// Méthode protégée inscrivant une Candidat dans la base de données

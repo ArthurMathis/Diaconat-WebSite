@@ -350,36 +350,76 @@ class CandidatsModel extends Model {
     /// Méthode construisant nouveau contrat et l'inscrivant dans la base de données
     public function createContrats($cle_candidats, &$contrat=[]) {
         try {
+            echo "<h1>On génère un contrat</h1>";
+            echo "<h2>On prérapare les données</h2>";
+
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
+
+            echo "<h3>L'instant actuel</h3>";
+            var_dump($instant);
+
+            // On ajoute la date de signature
             $contrat['signature'] = Instants::currentInstants()->getdate();
+
+            // On récupère les informations relatives au poste
+            $poste = $this->searchPoste($contrat['poste']);
+
+            echo "<h3>Informations relatives au poste</h3>";
+            var_dump($poste);
 
             // On ajoute la clé candidat
             $contrat['cle candidat'] = $cle_candidats;
+            unset($cle_candidat);
             // On ajoute la clé instant
             $contrat['cle instant'] = $instant;
+            unset($instant);
             // On ajoute la clé poste
-            $contrat['cle poste'] = is_numeric($contrat['poste']) ? $contrat['poste'] : $this->searchPoste($contrat['poste'])['Id_Postes'];;
+            // $contrat['cle poste'] = is_numeric($contrat['poste']) ? $contrat['poste'] : $this->searchPoste($contrat['poste'])['Id_Postes'];
+            $contrat['cle poste'] = $poste['Id_Postes'];
             // On ajoute la clé service
             $contrat['cle service'] = is_numeric($contrat['service']) ? $contrat['service'] : $this->searchService($contrat['service'])['Id_Services'];
             // On ajoute la clé de type de contrat
             $contrat['cle type'] = isset($contrat['type']) && is_numeric($contrat['type']) ? $contrat['type'] : $this->searchTypeContrat($contrat['type_de_contrat'])['Id_Types_de_contrats'];
 
+            echo "<h3>Liste des information du contrat</h3>";
+            var_dump($contrat);
+
             // On génère le contrat
             $contrat = Contrat::makeContrat($contrat);
-            $infos_contrat = $contrat->exportToSQL();
+
+            echo "<h3>Le contrat</h3>";
+            var_dump($contrat);
         
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
 
+        echo "<h2>On inscrit la proposition</h2>";
+
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
 
+        echo "<h2>On inscrit le contrat</h2>";
 
         // On enregistre le contrat 
-        $this->inscriptContrats($infos_contrat);
+        $this->inscriptContrats($contrat->exportToSQL());
+
+        echo "<h2>On inscrit les logs</h2>";
+
+        var_dump($contrat->getCleCandidats());
+
+
+        
+        // On enregistre les logs
+        $candidat = $this->searchcandidat($contrat->getCleCandidats());
+
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Nouveau contrat", 
+            "Nouveau contrat de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " au poste de " . $poste['Intitule_Postes']
+        );
     }
     public function createRendezVous($cle_candidat, &$rendezvous=[]) {
         try {
@@ -1161,5 +1201,18 @@ class CandidatsModel extends Model {
             $this->inscriptAvoir_droit_a($cle_candidat, $candidat['aide']);
         
         unset($candidat);
+    }
+
+    /// Méthode protégée recherchant un candidat dans la base de données
+    private function searchcandidat(&$cle_candidat) {
+        if(empty($cle_candidat) || !is_numeric($cle_candidat)) 
+            throw new Exception('Erreur lors de la recherche du candidat. La clé candidat doit être un nombre entier positif !');
+
+        // On initialise la requête
+        $request = "SELECT * FROM Candidats WHERE Id_Candidats = :cle";
+        $params = ['cle' => $cle_candidat];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
     }
 }
