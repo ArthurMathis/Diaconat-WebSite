@@ -308,18 +308,11 @@ class CandidatsModel extends Model {
     }
     /// Méthode publique refusant une proposition et inscrivant les logs
     public function rejectProposition(&$cle_proposition) {
-        echo "<h1>On enregistre le refus de la proposition</h1>";
-        echo "<h2>On implément le statut de la proposition</h2>";
-
         // On implémente le statut de la proposition
-        $this->setPropositionStatut($cle_proposition);        
-
-        echo "<h2>On récupère les données du candidat</h2>";
+        $this->setPropositionStatut($cle_proposition);       
 
         // On récupère les informations de la proposition
         $candidat = $this->searchcandidatFromContrat($cle_proposition);
-
-        echo "<h2>On enregistre les logs</h2>";
 
         // On enregistre les logs
         $this->writeLogs(
@@ -328,8 +321,6 @@ class CandidatsModel extends Model {
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " refuse la proposition d'embauche au poste de " . 
             forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_proposition)['Cle_Postes'])['Intitule_Postes'])
         );
-
-        echo "<h2>Logs enregistrés</h2>";
     }
 
     /// Méthode construisant une nouvelle proposition d'embauche et l'inscrivant dans la base de données
@@ -449,11 +440,10 @@ class CandidatsModel extends Model {
     public function createRendezVous($cle_candidat, &$rendezvous=[]) {
         try {
             // On génère l'instant
-            $rendezvous['date'] = $this->inscriptInstants($rendezvous['date'], $rendezvous['time'])['Id_Instants'];
-            unset($rendezvous['time']);
+            $rendezvous['instant'] = $this->inscriptInstants($rendezvous['date'], $rendezvous['time'])['Id_Instants'];
 
             // On récupère l'établissement
-            $rendezvous['etablissement'] = $this->searchEtablissement($rendezvous['etablissement'])['Id_Etablissements'];
+            $rendezvous['cle etablissement'] = $this->searchEtablissement($rendezvous['etablissement'])['Id_Etablissements'];
 
             // On récupère la clé de l'utilisateur
             $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUser($rendezvous['recrruteur'])['Id_Utilisateurs'];
@@ -462,10 +452,16 @@ class CandidatsModel extends Model {
             forms_manip::error_alert($e);
         }
 
-        echo "<br>Candidat: ";
-        var_dump($cle_candidat);
+        $this->inscriptAvoir_rendez_vous_avec($rendezvous['recruteur'], $cle_candidat, $rendezvous['cle etablissement'], $rendezvous['instant']);
 
-        $this->inscriptAvoir_rendez_vous_avec($rendezvous['recruteur'], $cle_candidat, $rendezvous['etablissement'], $rendezvous['date']);
+        // On enregistre les logs
+        $candidat = $this->searchcandidat($cle_candidat);
+        $this->writeLogs(
+            $_SESSION['user_cle'], 
+            "Nouveau rendez-vous", 
+            "Nouveau rendez-vous, le " . $rendezvous['date'] . " à " . $rendezvous['time'] . " avec " . 
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . ", à " . forms_manip::nameFormat($rendezvous['etablissement'])
+        );
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données

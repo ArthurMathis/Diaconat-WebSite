@@ -11,7 +11,7 @@ class PreferencesController extends Controller {
 
     /// Méthode publique retournant la page de préférences
     public function display() {
-        $items=[];
+        $items = $this->Model->getProfil($_SESSION['user_cle']);
         return $this->View->getContent($items);
     }
     /// Méthode publique retournant la pge de modification du mot de passe

@@ -79,6 +79,10 @@ setColor(candidatures, [
         class: 'candidat'
     },
     {
+        content: 'Nouveau rendez-vous',
+        class: 'candidat'
+    },
+    {
         content: 'Nouvel utilisateur', 
         class: 'utilisateur'
     },
@@ -100,6 +104,11 @@ setColor(candidatures, [
     },
     {
         content: "Démission", 
+        class: 'demission'
+    }
+    ,
+    {
+        content: "Annulation rendez-vous", 
         class: 'demission'
     }
 ], 0);

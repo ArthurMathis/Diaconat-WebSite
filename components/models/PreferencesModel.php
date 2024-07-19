@@ -7,6 +7,83 @@ require_once(CLASSE.DS.'Utilisateurs.php');
 require_once(COMPONENTS.DS.'Passwordgenerator.php');
 
 class PreferencesModel extends Model {
+    /// Méthode publique retournant les informations du l'utilisateur actuelk
+    public function getProfil(&$cle_utilisateur):array {
+        // On récupère les informations de l'utilisateur
+        try {
+            // On initialise la requête
+            $request = "SELECT 
+            Nom_Utilisateurs AS Nom,
+            Prenom_Utilisateurs AS Prénom, 
+            Intitule_Role AS Role, 
+            Email_Utilisateurs AS Email,
+            LENGTH(MotDePasse_Utilisateurs) AS 'mot de passe'
+
+            FROM Utilisateurs AS u
+            INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role
+            
+            WHERE u.Id_Utilisateurs = :cle";
+            $params = ['cle' => $cle_utilisateur];
+
+            // On implémente les données
+            $infos = ['utilisateur' => $this->get_request($request, $params)[0]];
+
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+
+
+        // On récupère l'historique de connexions de l'utilisateur
+        try {
+            // On initialise la requête
+            $request = "SELECT
+            Intitule_Types AS Action,
+            Jour_Instants AS Date,
+            Heure_Instants AS Heure
+
+            FROM Actions AS a
+            INNER JOIN Types AS t ON a.Cle_Types = t.Id_Types
+            INNER JOIN Instants AS i ON a.Cle_Instants = i.Id_Instants
+
+            WHERE t.Intitule_Types IN ('Connexion', 'Déconnexion')
+            AND a.Cle_Utilisateurs = :cle
+            ORDER BY Date DESC, Heure DESC";
+
+            // On implémente les données
+            $infos['connexions'] = $this->get_request($request, $params);;
+
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+        
+
+        // On récupère l'historique d'actions de l'utilisateur
+        try {
+            // On initialise la requête
+            $request = "SELECT
+            Intitule_Types AS Action,
+            Jour_Instants AS Date,
+            Heure_Instants AS Heure
+
+            FROM Actions AS a
+            INNER JOIN Types AS t ON a.Cle_Types = t.Id_Types
+            INNER JOIN Instants AS i ON a.Cle_Instants = i.Id_Instants
+
+            WHERE t.Intitule_Types NOT IN ('Connexion', 'Déconnexion')
+            AND a.Cle_Utilisateurs = :cle
+            ORDER BY Date DESC, Heure_Instants DESC";
+
+            // On implémente les données
+            $infos['actions'] = $this->get_request($request, $params);
+
+        } catch(Exception $e) {
+            forms_manip::error_alert($e);
+        }
+     
+        // On retourne les données
+        return $infos;
+    }
+
     /// Méthode publique récupérant la liste des Utilisateurs
     public function getUtilisateurs() {
         // On initialise la requête 

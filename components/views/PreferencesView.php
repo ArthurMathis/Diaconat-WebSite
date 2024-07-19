@@ -13,6 +13,9 @@ class PreferencesView extends View {
 
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
+        echo '<main>';
+        include(MY_ITEMS.DS.'profil_user.php');
+        echo '</amin>';
         echo '</content>';
 
         // On ajoute le pied de page  

@@ -15,8 +15,14 @@ session_start();
 // On récupère les infos de connexion à la base de données
 env_start();
 
-if(isset($_GET['login'])) {
+if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
+    header('Location: index.php?preferences=edit-password');
+
+} elseif(isset($_GET['login'])) {
+    // On déclare le controller de connexions
     $login = new LoginController();
+
+    // On sélectionne l'action
     switch($_GET['login']) {
         // On connecte l'utilisateur     
         case 'connexion' : 
@@ -26,11 +32,10 @@ if(isset($_GET['login'])) {
                 $motdepasse = $_POST["motdepasse"];
                 
                 // On vérifie leur intégrité
-                if(empty($identifiant)) {
+                if(empty($identifiant)) 
                     throw new Exception("Le champs identifiant doit être rempli !");
-                } elseif(empty($motdepasse)) {
-                    throw new Exception("Le champs mot de passe doit être rempli !");
-                } 
+                elseif(empty($motdepasse)) 
+                    throw new Exception("Le champs mot de passe doit être rempli !"); 
     
             // On récupère et retourne les éventuelles erreurs    
             } catch(Exception $e){
@@ -50,19 +55,14 @@ if(isset($_GET['login'])) {
             break;  
 
         // On déconnecte l'utilisateur    
-        case 'deconnexion' : 
+        case 'deconnexion' :
             $login->closeSession();
             break;
 
         // On retourne le formulaire de connexion
         case 'get_connexion' :
             $login->displayLogin(); 
-            break;
-
-        // On retourne le formulaire d'inscription
-        case 'get_inscription' : 
-            $login->displaySignin();
-            break;    
+            break;   
 
         default : 
             $c->displayLogin();
@@ -70,33 +70,43 @@ if(isset($_GET['login'])) {
     }
 
 } elseif(isset($_GET['candidatures'])) {
+    // On déclare le controller de candidatures
     $candidatures = new CandidaturesController();
+
+    // On sélectionne l'action
     switch($_GET['candidatures']) {
+        // On affiche la page liste des candidatures
         case 'home' :
             $candidatures->dispayCandidatures();
             break; 
 
+        // On affiche le formulaire 
         case 'saisie-nouveau-candidat' : 
             $candidatures->displaySaisieCandidat();
             break;
 
+        // On affiche le formulaire d'inscription d'un candidat    
         case 'saisie-candidat' :   
             $candidatures->displayRechercheCandidat();
             break; 
             
+        // On affiche le formulaire d'inscription d'une candidature    
         case 'saisie-candidature' : 
             $candidatures->displaySaisieCandidature();
             break;
 
+        // On inscrit un nouveau candidat    
         case 'inscription-candidat' :
-            // On récupère le contenu des champs
-            $nom            = forms_manip::nameFormat($_POST["nom"]);
-            $prenom         = forms_manip::nameFormat($_POST["prenom"]);
-            $email          = $_POST["email"];
-            $telephone      = forms_manip::numberFormat($_POST["telephone"]);
-            $adresse        = $_POST["adresse"];
-            $ville          = forms_manip::nameFormat($_POST["ville"]);
-            $code_postal    = $_POST['code-postal'];
+            // On récupère le contenu du formulaire d'inscription
+            $candidat = [
+                'nom' => forms_manip::nameFormat($_POST["nom"]), 
+                'prenom' => forms_manip::nameFormat($_POST["prenom"]), 
+                'email' => $_POST["email"], 
+                'telephone' => forms_manip::numberFormat($_POST["telephone"]), 
+                'adresse' => $_POST["adresse"],
+                'ville' => forms_manip::nameFormat($_POST["ville"]), 
+                'code_postal' => $_POST['code-postal']
+            ];
             $diplomes = [
                 $_POST["diplome-1"], 
                 $_POST["diplome-2"], 
@@ -105,163 +115,181 @@ if(isset($_GET['login'])) {
             $aide               = $_POST["aide"];
             $visite_medicale    = $_POST["visite_medicale"];
             
+            // On vérifie l'intégrité des données
             try {
-                if(empty($nom)) {
+                if(empty($candidat['nom'])) {
                     throw new Exception("Le champs nom doit être rempli par une chaine de caractères !");
-                } elseif(empty($prenom)) {
+                } elseif(empty($candidat['prenom'])) {
                     throw new Exception("Le champs prenom doit être rempli par une chaine de caractères !");
-                } elseif(empty($email)) {
+                } elseif(empty($candidat['email'])) {
                     throw new Exception("Le champs email doit être rempli par une chaine de caractères !");
-                } elseif(empty($adresse)) {
+                } elseif(empty($candidat['adresse'])) {
                     throw new Exception("Le champs adresse doit être rempli par une chaine de caractères !");
-                } elseif(empty($ville)) {
+                } elseif(empty($candidat['ville'])) {
                     throw new Exception("Le champs ville doit être rempli par une chaine de caractères !");
-                } elseif(empty($code_postal)) {
+                } elseif(empty($candidat['code_postal'])) {
                     throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
                 } 
             
+            // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
                 forms_manip::error_alert($e->getMessage());
             }
 
+            // On test l'intégrité des diplômes
             foreach($diplomes as $d) 
                 if(strlen($d) > 128) 
                     forms_manip::error_alert("Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
 
-            $candidat = [
-                'nom' => $nom, 
-                'prenom' => $prenom, 
-                'email' => $email, 
-                'telephone' => $telephone, 
-                'adresse' => $adresse,
-                'ville' => $ville, 
-                'code_postal' => $code_postal
-            ];
-
+            // On génère le candidat        
             $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale == 'true' ? true : false);
             break;
 
-        case 'recherche-candidat' : 
-            // On récupère le contenu des champs
-            $nom            = forms_manip::nameFormat($_POST["nom"]);
-            $prenom         = forms_manip::nameFormat($_POST["prenom"]);
-            $email          = $_POST["email"];
-            $telephone      = forms_manip::numberFormat($_POST["telephone"]);
 
-            try {
-                if(empty($nom))
-                    throw new Exception("Le champs nom doit être rempli !");
-                elseif(empty($prenom))
-                    throw new Exception("Le champs prenom doit être rempli !");
-                elseif(empty($email))
-                    throw new Exception("Le champs email doit être rempli !");
-                elseif(empty($telephone))
-                    throw new Exception("Le champs telephone doit être rempli !");
-                    
-            } catch(Exception $e) {
-                forms_manip::error_alert($e->getMessage());
-            }
+        // case 'recherche-candidat' : 
+        //     // On récupère le contenu des champs
+        //     $nom            = forms_manip::nameFormat($_POST["nom"]);
+        //     $prenom         = forms_manip::nameFormat($_POST["prenom"]);
+        //     $email          = $_POST["email"];
+        //     $telephone      = forms_manip::numberFormat($_POST["telephone"]);
+        // 
+        //     try {
+        //         if(empty($nom))
+        //             throw new Exception("Le champs nom doit être rempli !");
+        //         elseif(empty($prenom))
+        //             throw new Exception("Le champs prenom doit être rempli !");
+        //         elseif(empty($email))
+        //             throw new Exception("Le champs email doit être rempli !");
+        //         elseif(empty($telephone))
+        //             throw new Exception("Le champs telephone doit être rempli !");
+        //             
+        //     } catch(Exception $e) {
+        //         forms_manip::error_alert($e->getMessage());
+        //     }
+        // 
+        //     $candidatures->findCandidat($nom, $prenom, $email, $telephone);
+        // 
+        //     break;
 
-            $candidatures->findCandidat($nom, $prenom, $email, $telephone);
-
-            break;
-
+        // On inscrit une nouvelle candidature
         case 'inscription-candidature' :
             // On récupère le contenu des champs
-            $poste          = forms_manip::nameFormat($_POST["poste"]);
-            $service        = $_POST["service"];
-            $type_contrat   = $_POST["type_de_contrat"];
-            $disponibilite  = $_POST["disponibilite"];
-            $source         = forms_manip::nameFormat($_POST["source"]);
+            $candidature = [
+                'poste'             => forms_manip::nameFormat($_POST["poste"]), 
+                'service'           => $_POST["service"], 
+                'type de contrat'   => $_POST["type_de_contrat"],
+                'disponibilite'     => $_POST["disponibilite"], 
+                'source'            => forms_manip::nameFormat($_POST["source"])
+            ];
 
+            // On vérifie l'intégrité des données  
             try {
-                if(empty($poste)) {
+                if(empty($candidature['poste'])) 
                     throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
-                } elseif(empty($disponibilite)) {
+                elseif(empty($candidature['disponibilite'])) 
                     throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
-                } elseif(empty($source)) {
+                elseif(empty($candidature['source'])) 
                     throw new Exception("Le champs source doit être rempli par une chaine de caractères");
-                }
 
+            // On récupère les éventuelles erreurs
             } catch(Exception $e) {
                 forms_manip::error_alert($e->getMessage());
             }
-            
-            $candidature = [
-                'poste' => $poste, 
-                'service' => $service, 
-                'type de contrat' => $type_contrat,
-                'disponibilite' => $disponibilite, 
-                'source' => $source
-            ];
 
             // On récupère le candidat
             $candidat = $_SESSION['candidat'];
             $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
             $aide = isset($_SESSION['aide']) && !empty($_SESSION['aide']) ? $_SESSION['aide'] : null;
 
+            // On génère la candidature
             $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide);
+
+            // Libérer la mémoire !!
             break;
     
+        // On renvoie à la page d'accueil    
         default : 
             $candidatures->dispayCandidatures();
             break;
     }
 
 } elseif(isset($_GET['candidats'])) {
+    // On déclare le controller de candidats
     $candidats = new CandidatController();
 
+    // On vérifie s'il s'agit d'une clé de candidat
     if(is_numeric($_GET['candidats'])) 
         $candidats->displayCandidat($_GET['candidats']);
 
+    // Sinon, on sélectionne l'action
     else try { 
         switch($_GET['candidats']) {
+            // On affiche la liste des candidats
             case 'home':
                 $candidats->displayContent();
                 break;
 
+            // On retourne le formulaire d'ajout d'une candidature    
             case 'saisie-candidatures': 
+                // On vérifie la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieCandidature($_GET['cle_candidat']);
+                // On signale l'erreur    
                 else 
                     throw new Exception("La clé candidat n'a pas pu être réceptionnée");
                 break;
             
+            // On retourne le formulaire d'ajout d'une proposition d'embauche    
             case 'saisie-propositions' :
+                // On vérifie la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieProposition($_GET['cle_candidat']);
+                // On signale l'erreur  
                 else 
                     throw new Exception("La clé candidat n'a pas pu être réceptionnée");
                 break;
 
+            // On retourne le fomulaire d'ajout d'un contrat    
             case 'saisie-contrats':
-                if(isset($_GET['cle_candidat']))
+                // On vérifie la présence de la clé candidat
+                if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieContrats($_GET['cle_candidat']);
+                // On signale l'erreur 
                 else 
                     throw new Exception("La clé candidat n'a pas pu être récupérée !");
                 break;
 
+            // On retourne le formulaire d'ajout d'une proposition dans le cas où elle se construit à partir d'une candidature    
             case 'saisie-propositions-from-candidature':
+                // On vérifie la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
                     $candidats->getSaisiePropositionFromCandidature($_GET['cle_candidature']);
+                // On signale l'erreur 
                 else 
                     throw new Exception("La clé n'a pas pu être détectée !");
                 break;
 
+            // On retounre le formulaire d'ajout d'une proposition dans le cas pù elle se construit à partir d'une candidature sans service
             case 'saisie-propositions-from-empty-candidature':
+                // On vérifie la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
                     $candidats->getSaisiePropositionFromEmptyCandidature($_GET['cle_candidature']);
+                // On signale l'erreur
                 else 
                     throw new Exception("La clé n'a pas pu être détectée !");
                 break;    
 
+            // On affiche le formulaire d'ajout de rendez-vous    
             case 'saisie-rendez-vous':
+                // On vérifie la présence
                 if(isset($_GET['cle_candidat']))
                     $candidats->getSaisieRendezVous($_GET['cle_candidat']);
+                // On signale 
                 else 
                     throw new Exception("La clé candidat n'a pas pu être récupérée !");
                 break;    
             
+            // On inscrit une proposition
             case 'inscript-propositions':
                 // On récupère les données du formulaire
                 $infos = [
@@ -271,6 +299,7 @@ if(isset($_GET['login'])) {
                     'date debut' => $_POST['date_debut'],
                 ];
 
+                // On vérifie l'intégrité des données
                 try {
                     if(empty($infos['poste']))
                         throw new Exception("Le champs poste doit être rempli !");
@@ -281,6 +310,7 @@ if(isset($_GET['login'])) {
                     elseif(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
 
+                // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
@@ -297,23 +327,29 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
+                // On test la présence de la clé candidat    
                 if(isset($_GET['cle_candidat'])) 
                     $candidats->createProposition($_GET['cle_candidat'], $infos);
+                // On signale l'erreur
                 else 
                     throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 
                 break; 
 
+            // On inscrit une proposition construite à partir d'une candidature 
             case 'inscript-propositions-from-candidatures':
+                // On récupère les informations
                 try {
                     // On récupère les données du formulaire
                     $infos = [
                         'date debut' => $_POST['date_debut']
                     ];
 
+                    // On vérifie l'intégrité des données
                     if(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
 
+                // On récupère l'éventuelle erreur        
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
@@ -330,13 +366,16 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
-                // On récupère la clé candidature
+                // On test la présence de la clé candidature
                 if(isset($_GET['cle_candidature'])) 
+                    // On récupère la clé candidature    
                     $candidats->createPropositionFromCandidature($_GET['cle_candidature'], $infos);
+                // On signale l'erreur
                 else 
                     throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 break;    
 
+            // On inscrit une proposition construite à partir d'une candidature sans service    
             case 'inscript-propositions-from-empty-candidatures':
                 try {
                     // On récupère les données du formulaire
@@ -345,11 +384,13 @@ if(isset($_GET['login'])) {
                         'date debut' => $_POST['date_debut']
                     ];
 
+                    // ON vérifie l'intégrité des données
                     if(empty($infos['service']))
                         throw new Exception("Le champs service doit être rempli !");
                     elseif(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
 
+                // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
@@ -366,27 +407,35 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
-                // On récupère la clé candidature
+                // On test la présence de la clé candidature
                 if(isset($_GET['cle_candidature'])) 
                     $candidats->createPropositionFromEmptyCandidature($_GET['cle_candidature'], $infos);
+                // On signale l'erreur
                 else 
                     throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
                 break;       
 
+            // On refuse une candidature    
             case 'reject-candidatures':
+                // On test la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && !empty($_GET['cle_candidature']))
                     $candidats->rejectCandidature($_GET['cle_candidature']);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
                 break;  
                
+            // On refuse une proposition    
             case 'reject-propositions':
+                // On test la présence de la clé contrat
                 if(isset($_GET['cle_proposition']))
                     $candidats->rejectProposition($_GET['cle_proposition']);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
                 break; 
 
+            // On construit un contrat    
             case 'inscript-contrats':
                 // On récupère les données du formulaire
                 $infos = [
@@ -396,6 +445,7 @@ if(isset($_GET['login'])) {
                     'date debut' => $_POST['date_debut']
                 ];
 
+                // On vérifie l'intégrité des données
                 try {
                     if(empty($infos['poste']))
                         throw new Exception("Le champs poste doit être rempli !");
@@ -406,6 +456,7 @@ if(isset($_GET['login'])) {
                     elseif(empty($infos['date debut']))
                         throw new Exception('Le champs date de début doit être rempli !');
 
+                // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
@@ -422,19 +473,25 @@ if(isset($_GET['login'])) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
+                // On test la présence de la clé candidat    
                 if(isset($_GET['cle_candidat']))
                     $candidats->createContrat($_GET['cle_candidat'], $infos);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible d'inscrire le contrat. La clé candidat est inrouvale !");
                 break;    
 
+            // On construit un contrat depuis une proposition    
             case 'inscript-contrats-from-proposition':
+                // On test la présence de la clé contrat
                 if(isset($_GET['cle_proposition']))
                     $candidats->acceptProposition($_GET['cle_proposition']);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible d'inscrire le contrat, clé de contrat est introuvable !");
                 break; 
 
+            // On construit un rendez-vous    
             case 'inscript-rendez-vous':
                 // On récupère le formulaire
                 $infos = [
@@ -444,6 +501,7 @@ if(isset($_GET['login'])) {
                     'time' => $_POST['time']
                 ];
 
+                // On vérifie l'intégrité des données
                 try {
                     if(empty($infos['recruteur']))
                         throw new Exception("Le champs recruteur doit être rempli !");
@@ -454,39 +512,52 @@ if(isset($_GET['login'])) {
                     elseif(empty($infos['time']))
                         throw new Exception("Le champs horaire doit être rempli !");
 
+                // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
 
+                // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->createRendezVous($_GET['cle_candidat'], $infos);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible d'inscrire le contrat. La clé candidat est inrouvale !");
 
                 break;   
                 
+            // On ajoute une démission à un contrat
             case 'demission':
+                // On test la présence de la clé contrat
                 if(isset($_GET['cle_contrat']))
                     $candidats->demissioneContrat($_GET['cle_contrat']);
+                // On sigale l'erreur
                 else 
                     throw new Exception("Impossible de renseigner la démission, clé de contrat est introuvable !");
                 break; 
                 
+            // On affiche le formulaire de mise-à-jour de la notation d'unn candidat    
             case 'edit-notation':
+                // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->getEditNotation($_GET['cle_candidat']);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;  
-
+            // On affiche le formulaire de mise-à-jour ds données d'un cadidat
             case 'edit-candidat':
+                // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->getEditCandidat($_GET['cle_candidat']);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;  
-                
+            
+            // On met-à-jour la notation d'un candidat
             case 'update-notation':
+                // On vé'rifie l'intégrité des données
                 try {
                     $notation = [
                         'notation' => max($_POST['notation']),
@@ -495,17 +566,23 @@ if(isset($_GET['login'])) {
                         'c' => isset($_POST['c']) ? 1 : 0,
                         'description' => $_POST['description']
                     ];
+
+                // On récupère les éventuelles erreurs    
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
 
+                // On tets la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->updateNotation($_GET['cle_candidat'], $notation);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;  
                 
+            // On met-à-jour les données d'un candidat
             case 'update-candidat':
+                // On récupère les donnnées du formulaire
                 try {
                     $candidat = [
                         'nom' => forms_manip::nameFormat($_POST['nom']),
@@ -523,59 +600,82 @@ if(isset($_GET['login'])) {
                         'aide' => $_POST['aide']
                     ];
 
+                // On récupère les éventuelles erreurs
                 } catch(Exception $e) {
                     forms_manip::error_alert($e);
                 }
 
+                // On tets la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->updateCandidat($_GET['cle_candidat'], $candidat);
+                // On signale l'erreur
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                break;  
+                
+            // On annule un rendez-vous    
+            case 'delete-rendez-vous': 
+                // à compléter
                 break;    
             
+            // L'action n'a pas pu être identifiée    
             default: 
                 throw new Exception("L'action n'a pas pu être identifiée !");
         } 
+
+    // On récupère les éventuelles erreurs    
     } catch(Exception $e) {
         forms_manip::error_alert($e);
     } 
 
 
 } elseif(isset($_GET['preferences'])) {
+    // On déclare le controller de préférences
     $preferences = new PreferencesController();
 
+    // On sélectionne l'action
     switch($_GET['preferences']) {
+        // On affiche la page d'accueil
         case 'home':
             $preferences->display(); 
-            break;
+            break;    
 
+        // On affiche le formulaire de mise-à-jour du mot de passe    
         case 'edit-password':
             $preferences->displayEdit();
             break; 
             
+        // On met-à-jour le mot de passe de l'utilisateur    
         case 'update-password':
+            // On vérifie l'intégrité des données du formulaire
             try {
                 if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
                     throw new Exception('Erreur lors de la mise à jour du mot de passe. Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
                 elseif($_POST['new-password'] != $_POST['confirmation'])
                     throw new Exception('Erreur lors de la mise à jour du mot de passe. Le nouveau mot de passe et sa confirmation doivent être identiques !');
 
+            // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
                 forms_manip::error_alert($e);
             }
 
+            // On met-à-jour le mot de passe
             $preferences->updatePassword($_POST['password'], $_POST['new-password']);
             break;    
-            
+   
+        // On affiche la liste des utilisateurs
         case 'liste-utilisateurs':
             $preferences->displayUtilisateurs();
             break;
 
+        // On affiche le formulaire d'ajout d'utilisateurs
         case 'saisie-utilisateur':
             $preferences->displaySaisieUtilisateur();
             break;    
 
+        // On inscrit un nouvel utilisateur
         case 'inscription-utilisateur':
+            // On récupère les données du formulaire
             try {
                 $infos = [
                     'identifiant' => $_POST['identifiant'],
@@ -599,57 +699,71 @@ if(isset($_GET['login'])) {
                 elseif(empty($infos['role']))
                     throw new Exception("Erreur lors de la récupération des données. Le champs role doit être rempli.");
 
+            // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
                 forms_manip::error_alert($e);
             }
 
+            // On génère le nouvel utilisateur
             $preferences->createUtilisateur($infos);
             break;    
 
+        // On affiche la liste des nouveaux utilisateurs
         case 'liste-nouveaux-utilisateurs':
             $preferences->displayNouveauxUtilisateurs();
             break;    
             
+        // On affiche l'historique de connexions des utilisateurs
         case 'connexion-historique':
             $preferences->displayConnexionHistorique();
             break;  
             
+        // On affiche l'historique d'actions des utilisateurs
         case 'action-historique':
             $preferences->displayActionHistorique();
             break;    
 
+        // On affiche la liste des postes de la fondation    
         case 'liste-postes':
             echo 'liste des postes';
             break;
 
+        // On affiche la liste des services de la fondation
         case 'liste-services':
             echo 'liste des services';
             break;
             
+        // On affiche la liste des établissements de la fondation
         case 'liste-etablissements':
             echo 'listes des établissements';
             break;
             
+        // On affiche la listes des pôles de la fondation
         case 'liste-poles':
             echo 'listes des pôles';
             break;
             
+        // On affiche la liste des diplômes    
+        case 'diplome': 
+            echo 'Diplômes';
+            break;
+            
+        // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    
         case 'autres':
             echo 'autres';
             break;    
 
-        default : 
-            $_GET['preferences'] = 'home';
-            $preferences->display();
-            break;
+        default: 
+            throw new Exception("L'action n'a pas pu être identifiée !");
     }
 
 } elseif(isset($_SESSION['user_cle'])) {
+    // On affiche la page d'accueil du site
     $home = new HomeController();
     $home->displayHome();
-    echo "<script>console.log(\"Connecté en tant que " . $_SESSION['user_identifiant'] . "\");</script>";
 
 } else {
+    // On affiche le formulaire de connexion
     $c = new LoginController();
     $c->displayLogin();
 }
