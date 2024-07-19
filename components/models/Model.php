@@ -668,12 +668,17 @@ abstract class Model {
     public function updatePassword(&$password) {
         // On initialise la requête
         $request = "UPDATE Utilisateurs
-        SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = true
+        SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = false
         WHERE Id_Utilisateurs = :cle";
         $params = [
             'cle' => $_SESSION['user_cle'],
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
+
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramètres</h3>";
+        var_dump($params);
         
         // On lance la requête
         $this->post_request($request, $params);
@@ -717,7 +722,7 @@ abstract class Model {
         $this->post_request($request, $params);
     }
 
-
+    // MÉTHODE À RENOMMER //
     public function createDiplome($diplome) {
         // On initialise la requête
         $request = "INSERT INTO Diplomes (Intitule_Diplomes) VALUES (:intitule)";

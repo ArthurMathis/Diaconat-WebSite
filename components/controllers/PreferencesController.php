@@ -52,7 +52,9 @@ class PreferencesController extends Controller {
         var_dump($password);
         echo "<h3>Nouveau mot de passe</h3>";
         var_dump($new_password);
+        // On vérifie que le mot de passe saisi est le bon 
         if($this->Model->verify_password($password)) {
+            // On met-à-jour le mot de passe
             $this->Model->updatePassword($new_password);
             header('Location: index.php');
 

@@ -8,7 +8,7 @@ class InvalideUtilisateurExceptions extends Exception {
 
 class Utilisateurs {
     /// Attributs privés de la classe
-    private $cle, $identifiant, $nom, $prenom, $email, $motdepasse, $etablissement, $role;
+    private $cle, $identifiant, $nom, $prenom, $email, $motdepasse, $etablissement, $role, $first_log=false;
 
     /// Constructeur de la classe
     public function __construct($identifiant, $nom, $prenom, $email, $motdepasse, $etablissement, $role) {
@@ -51,6 +51,7 @@ class Utilisateurs {
     public function getMotdepasse(){ return $this->motdepasse; }
     public function getEtablissement(){ return $this->etablissement; }
     public function getRole(){ return $this->role; }
+    public function getFirstLog() { return $this->first_log; }
 
 
     /// Setters
@@ -144,6 +145,7 @@ class Utilisateurs {
         // On implémente
         else $this->cle = $cle;
     }
+    public function setFirstLog() { $this->first_log = true; }
 
     /// Méthode retournant l'item sous forme d'un tableau associatif
     public function exportToArray(): array {
