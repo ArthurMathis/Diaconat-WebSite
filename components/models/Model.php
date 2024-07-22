@@ -118,9 +118,9 @@ abstract class Model {
                 return $result;
     
         } catch(Exception $e){
-            forms_manip::error_alert($e->getMessage());
+            forms_manip::error_alert($e);
         } catch(PDOException $e){
-            forms_manip::error_alert($e->getMessage());
+            forms_manip::error_alert($e);
         } 
 
         return null;
@@ -141,7 +141,7 @@ abstract class Model {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            forms_manip::error_alert($e->getMessage());
+            forms_manip::error_alert($e);
         } 
     
         // On retourne le résultat
@@ -152,6 +152,15 @@ abstract class Model {
 
     // METHODES DE RECHERCHE DANS LA BASE DE DONNEES //
 
+    /// Méthode protégée recherchant un instant dans la base de données
+    protected function searchInstant($cle_instant) {
+        // On initialise la requête
+        $request = "SELECT * FROM Instants WHERE Id_Instants = :cle";
+        $params = ['cle' => $cle_instant];
+
+        // On récupère le résultat
+        return $this->get_request($request, $params, true, true);
+    }
     /// Méthode protégée recherchant un etablissement dans la base de données
     protected function searchEtablissement($etablissement) {
         if(is_numeric($etablissement)) 
@@ -717,6 +726,40 @@ abstract class Model {
             'code_postal' => $candidat['code_postal'],
             'cle' => $cle_candidat
         ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+
+
+    // METHODE DE SUPPRESSION //
+
+    /// Méthode protégée supprimant un rendez-vous de la base de données
+    protected function deleteRendezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
+        // On initialise la requête
+        $request = "DELETE FROM Avoir_rendez_vous_avec
+        WHERE Cle_Candidats = :candidat
+        AND Cle_Utilisateurs = :utilisateur
+        AND Cle_Instants = :instant";
+        $params = [
+            'candidat' => $cle_candidat,
+            'utilisateur' => $cle_utilisateur,
+            'instant' => $cle_instant
+        ];
+
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramèters</h3>";
+        var_dump($params);
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// Méthode protégée supprimant un instant de la base de données
+    protected function deleteInstant($cle_instant) {
+        // On initialise la requête
+        $request = "DELETE FROM Instants WHERE Id_Instants = :cle";
+        $params = ['cle' => $cle_instant];
 
         // On lance la requête
         $this->post_request($request, $params);

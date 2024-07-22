@@ -47,7 +47,7 @@ class HomeModel extends Model {
         return $this->get_request($request);
     }
     /// Méthode publique récupérant les rendez-vous
-    public function getreductRendezVous() {
+    public function getReductRendezVous() {
         // On initialise la requête
         $request = "SELECT 
         Nom_Candidats AS Nom, 
@@ -63,6 +63,6 @@ class HomeModel extends Model {
         $params = ['cle' => $_SESSION['user_cle']];
 
         // On lance la requête
-        $this->get_request($request, $params);
+        return $this->get_request($request, $params);
     }
 }

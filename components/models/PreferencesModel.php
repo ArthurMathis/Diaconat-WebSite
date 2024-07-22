@@ -230,4 +230,13 @@ class PreferencesModel extends Model {
 
         return $res;
     }
+
+    public function updatePasswordLogs($cle_utilisateur) {
+        // On enregistre les logs
+        $this->writeLogs(
+            $cle_utilisateur,
+            "Modification de mot de passe",
+            strtoupper($_SESSION['user_nom']) . " " . forms_manip::nameFormat($_SESSION['user_prenom']) . " a mis-à-jour son mot de passe"
+        );
+    }
 }

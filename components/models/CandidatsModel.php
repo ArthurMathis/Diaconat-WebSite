@@ -184,7 +184,11 @@ class CandidatsModel extends Model {
         Jour_Instants AS date,
         Heure_Instants AS heure,
         Intitule_Etablissements AS etablissement,
-        Compte_rendu_Avoir_rendez_vous_avec AS description
+        Compte_rendu_Avoir_rendez_vous_avec AS description,
+
+        Id_Utilisateurs AS cle_utilisateur,
+        Cle_Candidats AS cle_candidat,
+        Id_Instants AS cle_instant
 
         FROM  avoir_rendez_vous_avec AS rdv
         INNER JOIN utilisateurs AS u ON rdv.Cle_Utilisateurs = u.Id_Utilisateurs
@@ -1157,6 +1161,29 @@ class CandidatsModel extends Model {
             "Démission",
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a démissioné de son travail de " . forms_manip::nameFormat($this->searchPoste($this->searchContrat($cle)['Cle_Postes'])['Intitule_Postes'])
         );
+    }
+    /// Méthode supprimant un rendez-vous
+    public function annulationRendezVous($cle_utilisateur, $cle_candidat, $cle_instant) {
+        // On supprime le rendez-vous
+        $this->deleteRendezVous($cle_candidat, $cle_utilisateur, $cle_instant);
+        unset($cle_utilisateur);
+
+        // On récupère les informations du rendez-vous
+        $candidat = $this->searchCandidat($cle_candidat);
+        unset($cle_candidat);
+        $instant = $this->searchInstant($cle_instant);
+        
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Annulation rendez-vous",
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a annulé son rendez-vous du " . $instant['Jour_Instants'] . " à " . $instant['Heure_Instants']
+        );
+        unset($candidat);
+        unset($instant);
+
+        // On suprime l'instant du rendez-vous
+        $this->deleteInstant($cle_instant);
     }
     /// Méthode protégée vérifiant qu'une mission est dans la base de données
     protected function verifyMission($cle_service, $cle_poste) {

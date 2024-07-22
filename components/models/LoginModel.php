@@ -12,6 +12,8 @@ class LoginModel extends Model {
         // On récupère les données de l'utilisateur
         $_SESSION['user_cle']           = $user->getCle();
         $_SESSION['user_identifiant']   = $user->getIdentifiant();
+        $_SESSION['user_nom']           = $user->getNom();
+        $_SESSION['user_prenom']        = $user->getPrenom();
         $_SESSION['user_email']         = $user->getEmail();
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();

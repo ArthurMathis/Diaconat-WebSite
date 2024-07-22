@@ -36,6 +36,7 @@ define('PAGES_STYLES', STYLESHEET.DS.'pages');
 // Les scripts
 define('JAVASCRIPT','layouts/assets/scripts/');
 
+
 // On charge le contenu du fichier .env
 function env_start() {
     $env = parse_ini_file('.env');

@@ -20,17 +20,8 @@ class HomeController extends Controller {
             ],
             [
                 'titre' => 'Rendez-vous programmés', 
-                'content' => $this->Model->getreductRendezVous(), 
+                'content' => $this->Model->getReductRendezVous(), 
                 'nb_item_max' => 6,
-                'link_add' => null,
-                'link_consult' => null
-            ],
-            [
-                'titre' => 'Offres en cours', 
-                'content' => [
-                    ["En développement" => "Fonctionnalité indisponible, pour le moment. Le site est encore en développement"]
-                ], 
-                'nb_item_max' => 2,
                 'link_add' => null,
                 'link_consult' => null
             ]

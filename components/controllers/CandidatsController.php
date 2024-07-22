@@ -135,9 +135,16 @@ class CandidatController extends Controller {
         $this->Model->updateNotation($cle_candidat, $notation);
         header('Location: index.php?candidats=' . $cle_candidat);
     }
-    /// Méthod publique mettant à jour le profil d'un candidat
+    /// Méthode publique mettant à jour le profil d'un candidat
     public function updateCandidat($cle_candidat, &$candidat=[]) {
         $this->Model->makeUpdateCandidat($cle_candidat, $candidat);
+        header('Location: index.php?candidats=' . $cle_candidat);
+    }
+
+
+    /// Méthode publique annulant un rendez-vous
+    public function annulationRendezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
+        $this->Model->annulationRendezVous($cle_utilisateur, $cle_candidat, $cle_instant);
         header('Location: index.php?candidats=' . $cle_candidat);
     }
 }

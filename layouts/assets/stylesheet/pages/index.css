@@ -31,7 +31,7 @@ aside {
   gap: calc(var(--gap) * 2);
 
   width: 35%;
-  min-width: 540px;
+  min-width: 600px;
 
   padding: var(--padding) var(--padding) var(--gap) var(--margin);
 

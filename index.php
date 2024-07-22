@@ -608,7 +608,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 }
 
                 // On tets la présence de la clé candidat
-                if(isset($_GET['cle_candidat']))
+                if(isset($_GET['cle_candidat']) && !empty($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->updateCandidat($_GET['cle_candidat'], $candidat);
                 // On signale l'erreur
                 else 
@@ -617,7 +617,22 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On annule un rendez-vous    
             case 'delete-rendez-vous': 
-                // à compléter
+                // On vérifie l'intégrité des données
+                try {
+                    if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé candidat doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_utilisateur']) || empty($_GET['cle_utilisateur']) || !is_numeric($_GET['cle_utilisateur']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé utilisateur doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_instant']) || empty($_GET['cle_instant']) || !is_numeric($_GET['cle_instant']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé instanbt doit être un nombre entier positif !");
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert($e);
+                }
+
+                // On annule le rendez-vous
+                $candidats->annulationRendezVous($_GET['cle_candidat'], $_GET['cle_utilisateur'], $_GET['cle_instant']);
                 break;    
             
             // L'action n'a pas pu être identifiée    
