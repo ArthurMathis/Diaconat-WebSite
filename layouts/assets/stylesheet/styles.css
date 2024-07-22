@@ -830,16 +830,3 @@ button:is(:hover, :focus),
 .bulles .boutons .fleche span::after {
   transform: translateY(calc(-50% + 1px)) rotate(-45deg);
 }
-
-/*
-#main-liste .table-wrapper table tbody tr {
-  visibility: hidden;
-}
-#main-liste .table-wrapper table tbody tr.visible {
-  visibility: visible;
-}*/
-
-/*# sourceMappingURL=styles.css.map */
-
-
-/******** RESPONSIVE ********/

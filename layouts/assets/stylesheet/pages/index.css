@@ -29,9 +29,12 @@ aside {
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
+
   width: 35%;
+  min-width: 540px;
+
   padding: var(--padding) var(--padding) var(--gap) var(--margin);
+
   overflow-y: scroll;
 }
 
-/*# sourceMappingURL=index.css.map */

@@ -45,3 +45,24 @@ entete.forEach((item, index) => {
 // On ajoute la Liste dynamique //
 
 const liste = new Liste("main-liste");
+
+
+console.log(candidatures);
+console.log(entete);
+console.log(window.innerWidth)
+const sizes = [
+    {
+        width: 1700,
+        indexs: [3]
+    }, 
+    {
+        width: 1400,
+        indexs: [4]
+    },
+    {
+        width: 1200,
+        indexs: [5]
+    }
+];
+window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };
+responsive(window.innerWidth, entete, candidatures, sizes);

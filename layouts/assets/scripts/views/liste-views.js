@@ -45,6 +45,91 @@ function montreMenu(item) { item.classList.add('active'); }
  */
 function cacheMenu(item) { item.classList.remove('active'); }
 
+
+function showHeader(items, index) {
+    // On affiche la case
+    Array.from(items).forEach((cell, i) => {
+        if (i == index) 
+            cell.style.display = '';
+    });
+}
+function hideHeader(items, index) {
+    // On cache la case
+    Array.from(items).forEach((cell, i) => {
+        if (i == index) 
+            cell.style.display = 'none';
+    });
+}
+/**
+ * @brief Fonction montrant une colonne du tableau
+ * @param {*} items Le tableau 
+ * @param {*} index La colonne
+ */
+function showColumn(items, index) {
+    console.log('On affiche les éléments de la colonne index');
+    console.log(items);
+
+    // On fait défiler les lignes du tableau 
+    Array.from(items).forEach(row => {
+        // On fait défiler les cases de la ligne
+        Array.from(row.cells).forEach((cell, i) => {
+            // On affiche la case
+            if (i == index) 
+                cell.style.display = '';
+        });
+    }); 
+}
+/**
+ * @brief Fonction cachant une colonne du tableau
+ * @param {*} items Le tableau 
+ * @param {*} index La colonne à masquer
+ */
+function hideColumn(items, index) {
+    console.log('On efface les éléments de la colonne index');
+    console.log(items);
+
+    // On fait défiler les lignes du tableau 
+    Array.from(items).forEach(row => {
+        // On fait défiler les cases de la ligne
+        Array.from(row.cells).forEach((cell, i) => {
+            // On cache la case
+            if (i == index) 
+                cell.style.display = 'none';
+        });
+    });
+}
+/**
+ * @brief Fonction cachant ou affichant les colonnes du tableau html selon le besoin du responsive
+ * @param {*} width La largeur de la fenêtre
+ * @param {*} entete L'entête du tableau 
+ * @param {*} items Le contenu du tableau
+ * @param {*} sizes La liste des indexs
+ */    
+function responsive(width, entete, items, sizes) {
+    console.log('On gère le responsive du tableau');
+    console.log('Données : ');
+    console.log(items);
+    console.log('Dimensions : ');
+    console.log(sizes);
+    console.log('Largeur de la page : ');
+    console.log(width);
+
+    sizes.forEach(size => {
+        if (width <= size.width) {
+            size.indexs.forEach(index => { 
+                hideHeader(entete, index);
+                hideColumn(items, index); 
+            });
+        } else {
+            size.indexs.forEach(index => { 
+                showHeader(entete, index);
+                showColumn(items, index); 
+            });
+        }
+    });
+}
+
+
 /**
  * @brief Fonction construisant un tablea selon une entete et un contenu
  * @param {*} entete L'entête
