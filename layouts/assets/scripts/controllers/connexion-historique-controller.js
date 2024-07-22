@@ -263,3 +263,21 @@ menu_button.addEventListener('click', () => {
     cacheMenu(filtrer_menu);
     cacheMenu(rechercher_menu);
 });
+
+
+const sizes = [
+    {
+        width: 1260,
+        indexs: [5]
+    }, 
+    {
+        width: 1140,
+        indexs: [4]
+    },
+    {
+        width: 1020,
+        indexs: [1]
+    }
+];
+window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };
+responsive(window.innerWidth, entete, candidatures, sizes);

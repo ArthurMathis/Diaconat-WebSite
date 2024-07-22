@@ -661,6 +661,7 @@ button:is(:hover, :focus),
   height: 50px;
   padding: 0 var(--gap);
   text-align: left;
+  text-wrap: nowrap;
 }
 
 .table-wrapper table tbody th {

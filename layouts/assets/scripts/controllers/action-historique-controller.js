@@ -283,3 +283,13 @@ menu_button.addEventListener('click', () => {
     cacheMenu(filtrer_menu);
     cacheMenu(rechercher_menu);
 });
+
+
+const sizes = [
+    {
+        width: 1760,
+        indexs: [3]
+    }
+];
+window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };
+responsive(window.innerWidth, entete, candidatures, sizes);

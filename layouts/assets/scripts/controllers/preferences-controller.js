@@ -255,3 +255,17 @@ menu_button.addEventListener('click', () => {
     cacheMenu(filtrer_menu);
     cacheMenu(rechercher_menu);
 });
+
+
+const sizes = [
+    {
+        width: 1380,
+        indexs: [3]
+    }, 
+    {
+        width: 1140,
+        indexs: [4]
+    }
+];
+window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };
+responsive(window.innerWidth, entete, candidatures, sizes);
