@@ -46,10 +46,6 @@ entete.forEach((item, index) => {
 
 const liste = new Liste("main-liste");
 
-
-console.log(candidatures);
-console.log(entete);
-console.log(window.innerWidth)
 const sizes = [
     {
         width: 1700,

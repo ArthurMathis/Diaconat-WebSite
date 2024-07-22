@@ -66,9 +66,6 @@ function hideHeader(items, index) {
  * @param {*} index La colonne
  */
 function showColumn(items, index) {
-    console.log('On affiche les éléments de la colonne index');
-    console.log(items);
-
     // On fait défiler les lignes du tableau 
     Array.from(items).forEach(row => {
         // On fait défiler les cases de la ligne
@@ -85,9 +82,6 @@ function showColumn(items, index) {
  * @param {*} index La colonne à masquer
  */
 function hideColumn(items, index) {
-    console.log('On efface les éléments de la colonne index');
-    console.log(items);
-
     // On fait défiler les lignes du tableau 
     Array.from(items).forEach(row => {
         // On fait défiler les cases de la ligne
@@ -106,14 +100,6 @@ function hideColumn(items, index) {
  * @param {*} sizes La liste des indexs
  */    
 function responsive(width, entete, items, sizes) {
-    console.log('On gère le responsive du tableau');
-    console.log('Données : ');
-    console.log(items);
-    console.log('Dimensions : ');
-    console.log(sizes);
-    console.log('Largeur de la page : ');
-    console.log(width);
-
     sizes.forEach(size => {
         if (width <= size.width) {
             size.indexs.forEach(index => { 
