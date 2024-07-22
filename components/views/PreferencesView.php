@@ -13,13 +13,27 @@ class PreferencesView extends View {
 
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
-        echo '<main>';
-        include(MY_ITEMS.DS.'profil_user.php');
-        echo '</amin>';
+        echo '<main id="profil-user">';
+        $this->getProfil($items);
+        $this->getUtilisateurHistorique($items);
+        echo '</main>';
         echo '</content>';
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
+    }
+    /// Méthode privée retournant leprofil de l'utilisateur
+    private function getProfil(&$items=[]) {
+        echo "<div class='left'>";
+        include(MY_ITEMS.DS.'profil_user.php');
+        echo "</div>";
+    }
+    /// Méthode privée retournant la page d'historique d'un utilisateur
+    private function getUtilisateurHistorique(&$items=[]) {
+        echo "<div class='right'>"; 
+        $this->getBulles("Historique d'actions", $items['actions'], 8, null, null);
+        $this->getBulles("Historique de connexions", $items['connexions'], 4, null, null);
+        echo "</div>";
     }
     /// Méthod epublique retournant la page de modification du mot de passe
     public function getEditpassword() {

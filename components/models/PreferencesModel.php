@@ -17,7 +17,7 @@ class PreferencesModel extends Model {
             Prenom_Utilisateurs AS Prénom, 
             Intitule_Role AS Role, 
             Email_Utilisateurs AS Email,
-            LENGTH(MotDePasse_Utilisateurs) AS 'mot de passe'
+            LENGTH(MotDePasse_Utilisateurs) AS 'Mot de passe'
 
             FROM Utilisateurs AS u
             INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role

@@ -1,18 +1,18 @@
 <article class="bulles">
     <h2><?= $titre; ?></h2>
     <?php if(!empty($items)): $size = count($items); ?>
-        <p><?= $size;?> nb items</p>
+        <p><?= $size;?> items</p>
         <?php $keys = array_keys($items[0]); ?>
         <div class="bulle-container">
             <div class="table-wrapper">
                 <table>
                     <thead>
-                    <tr>
-                        <?php foreach($keys as $key): if($key != 'Cle') :?>
-                            <th><?= $key ?></th>
-                            <?php endif ?>
-                        <?php endforeach ?>   
-                    </tr>
+                        <tr>
+                            <?php foreach($keys as $key): if($key != 'Cle') :?>
+                                <th><?= $key ?></th>
+                                <?php endif ?>
+                            <?php endforeach ?>   
+                        </tr>
                     </thead>
                     <tbody>
                         <?php if($size > 0): ?>

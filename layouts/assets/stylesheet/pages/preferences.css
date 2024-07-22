@@ -3,7 +3,7 @@ body {
     height: 100vh;
     overflow: hidden;
 
-    background: linear-gradient(175deg, var(--white), 75%, var(--light-blue));
+    background: linear-gradient(195deg, var(--white), 75%, var(--light-blue));
 }
 
 body > content {
@@ -22,6 +22,7 @@ body > content > aside {
     gap: var(--gap);
 
     width: 20%;
+    min-width: 380px;
     height: 100%;
 
     padding: var(--padding) var(--gap);
@@ -70,7 +71,7 @@ body > content > aside content a {
     font-family: "Roboto";
 }
 body > content > aside content a.selected,
-body > content > aside content a:hover {
+body > content > aside content a:is(:hover, :focus) {
     position: relative;
     font-family: "Roboto Bold";
 }
@@ -130,4 +131,58 @@ body > content > main .options_barre {
 }
 #liste-utilisateurs .liste_items .table-wrapper table tbody tr.invite th:first-of-type::before {
     background-color: var(--refusee);
+}
+
+#profil-user {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding);
+
+    width: 100%;
+    height: calc(100vh - 8em);
+
+    padding: 0 var(--padding) var(--padding);
+
+    overflow-y: scroll;
+}
+#profil-user .left,
+#profil-user .right  {
+    width: max(560px, calc(50% - 1.5em));
+    padding-bottom: var(--gap);
+} 
+#profil-user .left {
+    height: fit-content;
+}
+#profil-user .right {
+    display: flex;
+    flex-direction: column;
+    gap: calc(2 * var(--gap));
+
+    height: auto;
+}
+#profil-user .left > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+
+    width: 100%; 
+    height: fit-content;
+
+    padding: var(--padding);
+
+    border-radius: 60px;
+    box-shadow: var(--small-bulle-shadow);
+    background-color: var(--white);
+}
+#profil-user .left > div content div {
+    display: flex;
+    min-width: 100%;
+}
+#profil-user .left > div content div p:first-of-type {
+    width: 25%;
+}
+#profil-user .left > div footer {
+    display: flex;
+    justify-content: end;
+    align-items: end;
 }
