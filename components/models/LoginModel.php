@@ -15,6 +15,7 @@ class LoginModel extends Model {
         $_SESSION['user_email']         = $user->getEmail();
         $_SESSION['user_motdepasse']    = $user->getMotdepasse();
         $_SESSION['user_role']          = $user->getRole();
+        $_SESSION['first log in']       = $user->getFirstLog();
 
         // On enregistre les logs
         $this->writeLogs($_SESSION['user_cle'], "Connexion");
@@ -57,6 +58,8 @@ class LoginModel extends Model {
                         $users[$i]['Cle_Roles']
                     );
                     $user->setcle($users[$i]['Id_Utilisateurs']);
+                    if($users[$i]['MotDePasseTemp_Utilisateurs'])
+                        $user->setFirstLog();
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {

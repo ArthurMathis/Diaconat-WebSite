@@ -16,8 +16,19 @@ session_start();
 env_start();
 
 if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
-    header('Location: index.php?preferences=edit-password');
+    // // On déclare le controller de préférences
+    // $preferences = new PreferencesController();
+    // 
+    // // On libère la mémoire
+    // unset($_SESSION['first log in']);
+    // 
+    // // On retourne la page de modification de mot de passe
+    // $preferences->displayEdit();
 
+    // On libère la mémoire
+    unset($_SESSION['first log in']);
+    header('Location: index.php?preferences=edit-password');
+    
 } elseif(isset($_GET['login'])) {
     // On déclare le controller de connexions
     $login = new LoginController();
