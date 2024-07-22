@@ -452,6 +452,7 @@ class CandidatsModel extends Model {
             // On récupère la clé de l'utilisateur
             $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUser($rendezvous['recrruteur'])['Id_Utilisateurs'];
 
+        // On récupère les éventuelles erreurs    
         } catch(Exception $e) {
             forms_manip::error_alert($e);
         }
@@ -463,8 +464,7 @@ class CandidatsModel extends Model {
         $this->writeLogs(
             $_SESSION['user_cle'], 
             "Nouveau rendez-vous", 
-            "Nouveau rendez-vous, le " . $rendezvous['date'] . " à " . $rendezvous['time'] . " avec " . 
-            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . ", à " . forms_manip::nameFormat($rendezvous['etablissement'])
+            "Nouveau rendez-vous avec " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . ", le " . $rendezvous['date']
         );
     }
 
@@ -1177,7 +1177,7 @@ class CandidatsModel extends Model {
         $this->writeLogs(
             $_SESSION['user_cle'],
             "Annulation rendez-vous",
-            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a annulé son rendez-vous du " . $instant['Jour_Instants'] . " à " . $instant['Heure_Instants']
+            strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a annulé son rendez-vous du " . $instant['Jour_Instants']
         );
         unset($candidat);
         unset($instant);
@@ -1263,8 +1263,33 @@ class CandidatsModel extends Model {
         unset($candidat);
     }
 
+    /// Méthode publique enregistrant les logs de la mise-à-jour de la notation d'un candidat
+    public function updateNotationLogs($cle_candidat) {
+        // On récupère les informations du candidat
+        $candidat = $this->searchcandidat($cle_candidat);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Mise-à-jour notation",
+            "Mise-à-jour de la notation de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
+        );
+    }
+    /// Méthode publique enregistrant les logs de la mise-à-jour d'un candidat
+    public function updateCandidatLogs($cle_candidat) {
+        // On récupère les informations du candidat
+        $candidat = $this->searchcandidat($cle_candidat);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Mise-à-jour candidat",
+            "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
+        );
+    }
+
     /// Méthode protégée recherchant un candidat dans la base de données
-    private function searchcandidat(&$cle_candidat) {
+    private function searchcandidat($cle_candidat) {
         if(empty($cle_candidat) || !is_numeric($cle_candidat)) 
             throw new Exception('Erreur lors de la recherche du candidat. La clé candidat doit être un nombre entier positif !');
 

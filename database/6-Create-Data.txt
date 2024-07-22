@@ -121,6 +121,8 @@ INSERT INTO types (Intitule_Types) VALUES
     ('Connexion'), 
     ('Déconnexion'),
     ('Mise-à-jour mot de passe'),
+    ('Mise-à-jour notation'),
+    ('Mise-à-jour candidat'),
     ('Nouvel utilisateur'),
     ('Nouveau candidat'), 
     ('Nouvelle candidature'),
@@ -129,7 +131,6 @@ INSERT INTO types (Intitule_Types) VALUES
     ('Refus d\'une proposition'),
     ('Nouveaucontrat'),
     ('Nouveau rendez-vous'),
-    ('Refus d\'un contrat'),
     ('Démission'),
     ('Annulation rendez-vous')
 ;

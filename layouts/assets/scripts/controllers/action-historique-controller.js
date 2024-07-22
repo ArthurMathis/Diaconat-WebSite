@@ -87,7 +87,15 @@ setColor(candidatures, [
         class: 'utilisateur'
     },
     {
-        content: 'Modification de mot de passe', 
+        content: 'Mise-à-jour mot de passe', 
+        class: 'utilisateur'
+    },
+    {
+        content: 'Mise-à-jour notation', 
+        class: 'utilisateur'
+    },
+    {
+        content: 'Mise-à-jour candidat', 
         class: 'utilisateur'
     },
     {

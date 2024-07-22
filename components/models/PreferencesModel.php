@@ -186,19 +186,24 @@ class PreferencesModel extends Model {
     /// Méthode publique générant un nouvel Utilisateur
     public function createUser(&$infos=[]) {
         // On récupère l'établissement
-        $temp = $this->searchEtablissement($infos['etablissement']);
-        $infos['etablissement'] = $temp['Id_Etablissements'];
-        // On vide la mémoire temporaire
-        unset($temp);
+        $infos['etablissement'] = $this->searchEtablissement($infos['etablissement'])['Id_Etablissements'];
 
         // On génère un mot de passe
         $infos['mot de passe'] = PasswordGenerator::random_password($infos['nom'], $infos['prenom']);
 
         // On crée l'utilisateur
         $user = Utilisateurs::makeUtilisateurs($infos);
+        unset($infos);
 
         // On inscrit l'Utilisateur
-        $this->inscriptUtilisateurs($user->exportToSQL());        
+        $this->inscriptUtilisateurs($user->exportToSQL());  
+        
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouvel utilisateur",
+            "Création du compte de " . strtoupper($user->getNom()) . " " . forms_manip::nameFormat($user->getPrenom()) 
+        );
     }
     /// Méthode publique vérifiant le mot de passe de l'utilisateur
     public function verify_password(&$password) {
@@ -231,11 +236,11 @@ class PreferencesModel extends Model {
         return $res;
     }
 
-    public function updatePasswordLogs($cle_utilisateur) {
+    public function updatePasswordLogs() {
         // On enregistre les logs
         $this->writeLogs(
-            $cle_utilisateur,
-            "Modification de mot de passe",
+            $_SESSION['user_cle'],
+            "Mise-à-jour mot de passe",
             strtoupper($_SESSION['user_nom']) . " " . forms_manip::nameFormat($_SESSION['user_prenom']) . " a mis-à-jour son mot de passe"
         );
     }

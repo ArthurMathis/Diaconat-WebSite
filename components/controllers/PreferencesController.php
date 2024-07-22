@@ -51,7 +51,7 @@ class PreferencesController extends Controller {
         if($this->Model->verify_password($password)) {
             // On met-à-jour le mot de passe
             $this->Model->updatePassword($new_password);
-            $this->Model->updatePasswordLogs($_SESSION['user_cle']);
+            $this->Model->updatePasswordLogs();
             header('Location: index.php');
 
         } else 
