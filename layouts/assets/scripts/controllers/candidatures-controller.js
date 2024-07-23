@@ -285,12 +285,20 @@ menu_button.addEventListener('click', () => {
 
 const sizes = [ 
     {
-        width: 1400,
+        width: 1580,
         indexs: [4]
     },
     {
         width: 1200,
         indexs: [5]
+    },
+    {
+        width: 1120,
+        indexs : [7]
+    },
+    {
+        width: 920,
+        indexs: [6]
     }
 ];
 window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };

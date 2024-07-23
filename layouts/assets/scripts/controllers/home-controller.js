@@ -52,12 +52,16 @@ const sizes = [
         indexs: [3]
     }, 
     {
-        width: 1400,
+        width: 1540,
         indexs: [4]
     },
     {
-        width: 1200,
+        width: 1380,
         indexs: [5]
+    },
+    {
+        width: 1240,
+        indexs: [0]
     }
 ];
 window.onresize = function() { responsive(window.innerWidth, entete, candidatures, sizes) };

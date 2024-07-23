@@ -178,6 +178,10 @@ body > content > main .options_barre {
     display: flex;
     min-width: 100%;
 }
+#profil-user .left > div content div h2,
+#profil-user .left > div content div p {
+    margin-bottom: 3px;
+}
 #profil-user .left > div content div p:first-of-type {
     width: 25%;
 }
