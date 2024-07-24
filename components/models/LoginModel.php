@@ -25,7 +25,8 @@ class LoginModel extends Model {
     }
     /// Méthode publique déconnectant un utilisateur de l'application 
     public function deconnectUser() {
-        $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
+        if(isset($_SESSION['user_cle']) && !empty($_SESSION['user-cle']))
+            $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
         session_destroy();
     }
 
