@@ -74,7 +74,7 @@ class PreferencesController extends Controller {
             header('Location: index.php');
 
         } else 
-            forms_manip::error_alert("Erreur lors de la mise à jour du mot de passe. L'ancien mot de passe ne correspond pas !");
+            forms_manip::error_alert("Erreur lors de la mise à jour du mot de passe", "L'ancien mot de passe ne correspond pas !");
     }
 
     /// Méthode publique générant un nouvel utilisateur

@@ -1,14 +1,15 @@
 <?php
 
 class forms_manip {
-    public static function error_alert($msg) {
-        if(empty($msg))
-            $msg = "Une erreur est survenue";
-        elseif($msg instanceof Exception)    
-            $msg = $msg->getMessage();
+    /// Méthode publique et statique affichant une alerte d'erreur
+    public static function error_alert($infos=[]) {
+        if(!isset($infos['icon']) || empty($infos['icon']))
+            $infos['icon'] = "error";
 
-        echo "<script>window.history.back(); alert(\"" . $msg . "\");</script>";
-        exit;
+        if(!isset($infos['button']))
+            $infos['button'] =  true;
+
+        alert_manipulation::alert($infos);
     }
     
     public static function nameFormat($str): string {

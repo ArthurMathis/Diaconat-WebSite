@@ -5,6 +5,7 @@ require_once(CLASSE.DS.'Utilisateurs.php');
 require_once(CLASSE.DS.'Instants.php');
 
 class LoginModel extends Model {
+    /// Méthode publique connectant un utilisateur à l'application
     public function connectUser($identifiant, $motdepasse) {
         // On cherche l'utilisateur dans la base de données
         $user = $this->verifyUser($identifiant, $motdepasse);
@@ -22,15 +23,13 @@ class LoginModel extends Model {
         // On enregistre les logs
         $this->writeLogs($_SESSION['user_cle'], "Connexion");
     }
-
+    /// Méthode publique déconnectant un utilisateur de l'application 
     public function deconnectUser() {
         $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
         session_destroy();
     }
 
-
-    // METHODES DE MANIPULATIONS DES UTILISATEURS //
-
+    /// Méthode privée recherchant parmis les utilisateurs de la base de données les informations de l'utilisateur actuel
     private function verifyUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
         $request = "SELECT * FROM Utilisateurs WHERE Identifiant_Utilisateurs = :nom";
@@ -65,7 +64,11 @@ class LoginModel extends Model {
 
                 // On récupère les éventuelles erreurs 
                 } catch(InvalideUtilisateurExceptions $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur d'identification",
+                        'msg' => $e
+                    ]);
+                    // forms_manip::error_alert("Erreur d'identification", $e);
                 }
 
                 // On retourne notre utilisateur, la connexion est validée
@@ -76,6 +79,6 @@ class LoginModel extends Model {
         }
         // Utilisateur introuvé, on signale l'erreur
         if($i == $size) 
-            throw new Exception("Aucun utilisateur correspondant");
+            throw new Exception("Identifiant ou mot de passe incorrect !");
     }
 }

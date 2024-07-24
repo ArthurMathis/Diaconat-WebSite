@@ -34,7 +34,7 @@
   --padding: 3em;
   --small-radius: 15px;
   --radius: 30px;
-  --big-radius: 85px;
+  --big-radius: 60px;
   --nav-barre-size: 6em;
   --liste-shadow: -9px 4px 34.4px 7px #0000003B;
   --bulle-shadow: -1px 8px 15px 7px rgba(0, 0, 0, 0.05);
@@ -444,6 +444,28 @@ button:is(:hover, :focus),
 }
 .circle_button.reverse_color:is(:hover, :focus) {
   box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.25);
+}
+
+
+/******** Notifications ********/
+.notification {
+  padding: var(--margin) var(--gap);
+
+  border-radius: var(--radius);
+  background-color: var(--white);
+  box-shadow: var(--bulle-shadow);
+}
+.notification-title {
+  color: var(--blue);
+  font-size: var(--font-size-medium);
+  font-family: "Roboto Medium";
+}
+.notification-content {
+  margin: 0;
+
+  color: var(--black);
+  font-size: var(--font-size-standart);
+  font-family: "Roboto", sans-serif;
 }
 
 /******** BARRE DE NAVIGATION ********/

@@ -50,7 +50,7 @@ abstract class Model {
             $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
 
         } catch (Exception $e) {
-            forms_manip::error_alert($e);
+            forms_manip::error_alert("Erreur lors de l'enregistrement des logs", $e);
         }
     }
 
@@ -105,9 +105,16 @@ abstract class Model {
                 return $result;
     
         } catch(Exception $e){
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => 'Erreur lors de la requête à la base de données',
+                'msg' => $e
+            ]);
+            // forms_manip::error_alert("Erreur lors de la requête à la base de données", $e);
         } catch(PDOException $e){
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => 'Erreur lors de la requête à la base de données',
+                'msg' => $e
+            ]);
         } 
 
         return null;
@@ -128,7 +135,7 @@ abstract class Model {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            forms_manip::error_alert($e);
+            forms_manip::error_alert("Erreur lors de la requêt à la base de données", $e);
         } 
     
         // On retourne le résultat
@@ -364,21 +371,16 @@ abstract class Model {
     }
     /// Méthode protégée recherchant un poste dans la base de données
     protected function searchPoste($poste) {
-        try {
-            // On initialise la requête
-            if(is_numeric($poste)) {
-                $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
-                $params = ["Id" => $poste];
-
-            } elseif(is_string($poste)) {
-                $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
-                $params = ["Intitule" => $poste];
-            } else 
-                throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
-
-        } catch (Exception $e) {
-            forms_manip::error_alert($e);
-        }
+        // On initialise la requête
+        if(is_numeric($poste)) {
+            $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
+            $params = ["Id" => $poste];
+            
+        } elseif(is_string($poste)) {
+            $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
+            $params = ["Intitule" => $poste];
+        } else 
+            throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
 
         // On lance la requête
         return $this->get_request($request, $params, true, true);
@@ -510,7 +512,6 @@ abstract class Model {
             throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
 
         else if(!empty($description)) {
-            echo "<h3>On enregistre l'action</h3>";
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants, Description_Actions) VALUES (:user_id, :type_id, :instant_id, :description)";
             $params = [
@@ -523,7 +524,6 @@ abstract class Model {
             $this->post_request($request, $params);
 
         } else {
-            echo "<h3>On enregistre l'action</h3>";
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
             $params = [
@@ -534,11 +534,6 @@ abstract class Model {
 
             $this->post_request($request, $params);
         }
-
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramètres</h3>";
-        var_dump($params);
     }
 
     /// Méthode protégée inscrivant une Candidat dans la base de données

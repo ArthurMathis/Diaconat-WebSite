@@ -21,20 +21,14 @@ class LoginController extends Controller {
     /// Méthode publique connectant un utilisateur à l'application
     public function checkIdentification($identifiant, $motdepasse) {
         $this->Model->connectUser($identifiant, $motdepasse);
-        header('Location: index.php');
-        exit;
-    }
-    /// Méthode publique inscrivant un utilisateur à l'application
-    public function createIdentification($infos) {
-        // $this->Model->firstConnectUser($infos);
-        $this->Model->createUser($infos);
-        header('Location: index.php');
-        exit;
+        alert_manipulation::alert([
+            'title' => 'Bienvene ' . strtoupper($_SESSION['user_nom']) . ' ' . forms_manip::nameFormat($_SESSION['user_prenom']),
+            'msg' => 'Connexion réussie'
+        ]);
     }
     /// Méthode publique déconnectant un utilisateur à l'application
     public function closeSession() {
         $this->Model->deconnectUser();
         header('Location: index.php');
-        exit;
     }
 }

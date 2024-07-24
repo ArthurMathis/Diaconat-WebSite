@@ -15,6 +15,8 @@ session_start();
 // On récupère les infos de connexion à la base de données
 env_start();
 
+include(COMMON.DS.'entete.php');
+
 if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On libère la mémoire
     unset($_SESSION['first log in']);
@@ -28,6 +30,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     switch($_GET['login']) {
         // On connecte l'utilisateur     
         case 'connexion' : 
+            $erreur = "Erreur d'identification";
             try {
                 // On récupère les données saisies
                 $identifiant = $_POST["identifiant"];
@@ -41,7 +44,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     
             // On récupère et retourne les éventuelles erreurs    
             } catch(Exception $e){
-                forms_manip::error_alert($e->getMessage());
+                forms_manip::error_alert([
+                    'title' => $erreur,
+                    'msg' => $e
+                ]);
             }
 
             try {
@@ -50,7 +56,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
-                forms_manip::error_alert($e->getMessage());
+                forms_manip::error_alert([
+                    'title' => $erreur,
+                    'msg' => $e
+                ]);
             }
 
             // On sort de la boucle swicth
@@ -135,43 +144,17 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
-                forms_manip::error_alert($e->getMessage());
+                forms_manip::error_alert("Erreur lors de l'inscription du candidat", $e);
             }
 
             // On test l'intégrité des diplômes
             foreach($diplomes as $d) 
                 if(strlen($d) > 128) 
-                    forms_manip::error_alert("Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
+                    forms_manip::error_alert("Erreur lors de l'inscription du candidat", "Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
 
             // On génère le candidat        
             $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale == 'true' ? true : false);
             break;
-
-
-        // case 'recherche-candidat' : 
-        //     // On récupère le contenu des champs
-        //     $nom            = forms_manip::nameFormat($_POST["nom"]);
-        //     $prenom         = forms_manip::nameFormat($_POST["prenom"]);
-        //     $email          = $_POST["email"];
-        //     $telephone      = forms_manip::numberFormat($_POST["telephone"]);
-        // 
-        //     try {
-        //         if(empty($nom))
-        //             throw new Exception("Le champs nom doit être rempli !");
-        //         elseif(empty($prenom))
-        //             throw new Exception("Le champs prenom doit être rempli !");
-        //         elseif(empty($email))
-        //             throw new Exception("Le champs email doit être rempli !");
-        //         elseif(empty($telephone))
-        //             throw new Exception("Le champs telephone doit être rempli !");
-        //             
-        //     } catch(Exception $e) {
-        //         forms_manip::error_alert($e->getMessage());
-        //     }
-        // 
-        //     $candidatures->findCandidat($nom, $prenom, $email, $telephone);
-        // 
-        //     break;
 
         // On inscrit une nouvelle candidature
         case 'inscription-candidature' :
@@ -195,7 +178,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs
             } catch(Exception $e) {
-                forms_manip::error_alert($e->getMessage());
+                forms_manip::error_alert("Erreur lors de l'inscription de la candidature", $e);
             }
 
             // On récupère le candidat
@@ -314,7 +297,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
                 }
 
                 // On ajoute les champs optionnel
@@ -334,7 +317,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createProposition($_GET['cle_candidat'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+                    throw new Exception("Clé candidat introuvable !");
                 
                 break; 
 
@@ -353,7 +336,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère l'éventuelle erreur        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
                 }
 
                 // On ajoute les champs optionnel
@@ -374,7 +357,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createPropositionFromCandidature($_GET['cle_candidature'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+                    throw new Exception("Clé candidat introuvable !");
                 break;    
 
             // On inscrit une proposition construite à partir d'une candidature sans service    
@@ -394,7 +377,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
                 }
 
                 // On ajoute les champs optionnel
@@ -414,7 +397,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createPropositionFromEmptyCandidature($_GET['cle_candidature'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Une erreur s'est produite. Clé candidat introuvable !");
+                    throw new Exception("Clé candidat introuvable !");
                 break;       
 
             // On refuse une candidature    
@@ -424,7 +407,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->rejectCandidature($_GET['cle_candidature']);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible de refuser la candidature, clé de candidature est introuvable !");
+                    throw new Exception("Clé de candidature est introuvable !");
                 break;  
                
             // On refuse une proposition    
@@ -434,7 +417,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->rejectProposition($_GET['cle_proposition']);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible de refuser la proposition, clé de proposition est introuvable !");
+                    throw new Exception("Clé de proposition est introuvable !");
                 break; 
 
             // On construit un contrat    
@@ -460,7 +443,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de l'inscription du contrat", $e);
                 }
 
                 // On ajoute les champs optionnel
@@ -480,7 +463,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createContrat($_GET['cle_candidat'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible d'inscrire le contrat. La clé candidat est inrouvale !");
+                    throw new Exception("La clé candidat est inrouvale !");
                 break;    
 
             // On construit un contrat depuis une proposition    
@@ -490,7 +473,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->acceptProposition($_GET['cle_proposition']);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible d'inscrire le contrat, clé de contrat est introuvable !");
+                    throw new Exception("La clé de contrat est introuvable !");
                 break; 
 
             // On construit un rendez-vous    
@@ -516,7 +499,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de l'inscriptionn du rendez-vous", $e);
                 }
 
                 // On test la présence de la clé candidat
@@ -524,7 +507,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createRendezVous($_GET['cle_candidat'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible d'inscrire le contrat. La clé candidat est inrouvale !");
+                    throw new Exception("La clé candidat est inrouvale !");
 
                 break;   
                 
@@ -535,7 +518,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->demissioneContrat($_GET['cle_contrat']);
                 // On sigale l'erreur
                 else 
-                    throw new Exception("Impossible de renseigner la démission, clé de contrat est introuvable !");
+                    throw new Exception("La clé de contrat est introuvable !");
                 break; 
                 
             // On affiche le formulaire de mise-à-jour de la notation d'unn candidat    
@@ -545,7 +528,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->getEditNotation($_GET['cle_candidat']);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                    throw new Exception("La clé candidat est introuvable !");
                 break;  
             // On affiche le formulaire de mise-à-jour ds données d'un cadidat
             case 'edit-candidat':
@@ -554,7 +537,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->getEditCandidat($_GET['cle_candidat']);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                    throw new Exception("La clé candidat est introuvable !");
                 break;  
             
             // On met-à-jour la notation d'un candidat
@@ -571,7 +554,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs    
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de la mise-à-jour du candidat", $e);
                 }
 
                 // On tets la présence de la clé candidat
@@ -579,7 +562,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->updateNotation($_GET['cle_candidat'], $notation);
                 // On signale l'erreur
                 else 
-                    throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
+                    throw new Exception("La clé candidat est introuvable !");
                 break;  
                 
             // On met-à-jour les données d'un candidat
@@ -604,7 +587,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de la mise-à-jour du candidat", $e);
                 }
 
                 // On tets la présence de la clé candidat
@@ -628,7 +611,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert($e);
+                    forms_manip::error_alert("Erreur lors de la suppression du rendez-vous", $e);
                 }
 
                 // On annule le rendez-vous
@@ -642,7 +625,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
     // On récupère les éventuelles erreurs    
     } catch(Exception $e) {
-        forms_manip::error_alert($e);
+        forms_manip::error_alert("Erreur lors de la redirection de la page", $e);
     } 
 
 
@@ -673,7 +656,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert("Erreur lors de la mise-à-jour du mot de passe", $e);
             }
 
             // On met-à-jour le mot de passe
@@ -718,7 +701,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert("Erreur lors de l'incription du nouvel utilisateur", $e);
             }
 
             // On génère le nouvel utilisateur
@@ -765,7 +748,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Erreur lors de l'inscription du poste. Le champs description doit être rempli !");
 
             } catch(Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert("Erreur lors de l'inscription du nouveau poste", $e);
             }
 
             $preferences->createPoste($infos);
@@ -791,7 +774,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Les champs service est établissements doivent être remplis !");
 
             } catch (Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert("Erreur lors de l'inscription dunnouveau service", $e);
             }
 
             $preferences->createService($service, $etablissement);
@@ -831,3 +814,5 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     $c = new LoginController();
     $c->displayLogin();
 }
+
+include(COMMON.DS.'footer.php');

@@ -74,7 +74,6 @@ rechercher.addEventListener('click', () => {
         champs_date = null;
         champs_infos = null;
 
-
         // On cache le formulaire
         cacheMenu(rechercher_menu);
 
