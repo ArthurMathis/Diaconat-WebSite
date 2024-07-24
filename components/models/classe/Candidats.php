@@ -156,7 +156,7 @@ class Candidat {
             "ville" => $this->getVille(),
             "code_postal" => $this->getCodePostal(),
             "disponibilite" => $this->getDisponibilite(),
-            "visite" => $this->getVisite_medicale()
+            "visite" => $this->getVisite_medicale() ? 1 : 0
         ];
     }
     public function exportToSQL_update() {

@@ -119,7 +119,7 @@ class CandidaturesModel extends Model {
         // On enregistre les logs
         $this->writeLogs(
             $_SESSION['user_cle'], 
-            "Inscription candidat", 
+            "Nouveau candidat", 
             "Inscription du candidat " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
         );
     }

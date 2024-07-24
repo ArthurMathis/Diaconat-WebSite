@@ -618,10 +618,6 @@ abstract class Model {
     }
     /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
     protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide) {
-        // On vérifie l'intégrité des données
-        if(empty($cle_candidat) || empty($cle_aide) || !is_numeric($cle_aide)) 
-            throw new Exception("Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé d'aide sont nécessaires");        
-
         // On initialise la requête
         $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
         $params = [

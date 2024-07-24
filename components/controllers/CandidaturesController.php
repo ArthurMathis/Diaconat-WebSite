@@ -82,7 +82,7 @@ class CandidaturesController extends Controller {
                 // On ajoute la clé de Candidats
                 $candidat->setCle($search['Id_Candidats']);
         }
-        
+
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
         
