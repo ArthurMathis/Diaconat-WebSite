@@ -11,6 +11,7 @@
             </div>
         </div>
     </nav>
+
     <section id="menu">
         <main>
             <div>
@@ -29,9 +30,9 @@
                 
     <script src="layouts\assets\scripts\views\entete.js"></script>
 <?php else: ?>    
-    <nav class="form-barre">
+    <nav class="form-barre" id="barre-de-navigation">
         <img id="illustration_bulle" src="layouts/assets/img/bulle.svg">
-        <h1>Ypopsi</h1> 
+        <h1>Ypopsi</h1>
         <div class="section-logo">
             <a class="LignesHover" href="index.php">
                 <img  src="layouts\assets\img\logo\home.svg" alt="Logo de la page d'accueil, représenté par une maison">

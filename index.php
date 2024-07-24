@@ -305,12 +305,21 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             // On inscrit une proposition
             case 'inscript-propositions':
                 // On récupère les données du formulaire
-                $infos = [
-                    'poste' => $_POST['poste'],
-                    'service' => $_POST['service'],
-                    'type_de_contrat' => $_POST['type_contrat'],
-                    'date debut' => $_POST['date_debut'],
-                ];
+                try {
+                    $infos = [
+                        'poste' => $_POST['poste'],
+                        'service' => $_POST['service'],
+                        'type_de_contrat' => $_POST['type_contrat'],
+                        'date debut' => $_POST['date_debut'],
+                    ];
+
+                // On récupère les éventuelles erreurs     
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la proposition",
+                        'msg' => $e
+                    ]);
+                }
 
                 // On vérifie l'intégrité des données
                 try {
@@ -325,7 +334,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la proposition",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On ajoute les champs optionnel
@@ -364,7 +376,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère l'éventuelle erreur        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la proposition",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On ajoute les champs optionnel
@@ -405,7 +420,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de l'inscription de la proposition", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la proposition",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On ajoute les champs optionnel
@@ -471,7 +489,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de l'inscription du contrat", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du contrat",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On ajoute les champs optionnel
@@ -527,7 +548,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de l'inscriptionn du rendez-vous", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du rendez-vous",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On test la présence de la clé candidat
@@ -582,7 +606,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs    
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de la mise-à-jour du candidat", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de la mise-à-jour du candidat",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On tets la présence de la clé candidat
@@ -615,7 +642,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de la mise-à-jour du candidat", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de la mise-à-jour du candidat",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On tets la présence de la clé candidat
@@ -639,7 +669,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
-                    forms_manip::error_alert("Erreur lors de la suppression du rendez-vous", $e);
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de la suppression du rendez-vous",
+                        'msg' => $e
+                    ]);
                 }
 
                 // On annule le rendez-vous
@@ -653,7 +686,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
     // On récupère les éventuelles erreurs    
     } catch(Exception $e) {
-        forms_manip::error_alert("Erreur lors de la redirection de la page", $e);
+        forms_manip::error_alert([
+            'title' => "Erreur lors de la redirection de la page",
+            'msg' => $e
+        ]);
     } 
 
 
