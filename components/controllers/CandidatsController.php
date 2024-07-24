@@ -69,34 +69,58 @@ class CandidatController extends Controller {
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectCandidature($cle) {
         // On refuse la candidature
-        // $this->Model->setCandidatureStatut('Refusée', $cle);
         $this->Model->rejectCandidature($cle);
-        header('Location: index.php?candidats=' . $this->Model->searchCandidatFromCandidature($cle)['Id_Candidats']);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'La candidature a été rejettée',
+            'direction' => 'index.php?candidats=' . $this->Model->searchCandidatFromCandidature($cle)['Id_Candidats']
+        ]);
+        // header('Location: index.php?candidats=' . $this->Model->searchCandidatFromCandidature($cle)['Id_Candidats']);
     }
 
     /// Méthode publique donnant le statut acceptée à une candidature
     public function acceptProposition($cle) {
         // Ajouter la signature
         $this->Model->addSignature($cle);
-        header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'La proposition a été acceptée',
+            'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
+        ]);
+        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectProposition($cle) {
         // $this->Model->setPropositionStatut($cle);
         $this->Model->rejectProposition($cle);
-        header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'La proposition a été rejettée',
+            'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
+        ]);
+        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
     /// Méthode publique ajoutant une demissione à un contrat
     public function demissioneContrat($cle) {
         $this->Model->addDemission($cle);
-        header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'Le candidat a démissioné de son contrat',
+            'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
+        ]);
+        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
 
 
     /// Méthode publique générant une proposition et l'inscrivant dans la base de donnés
     public function createProposition($cle, $propositions) {
         $this->Model->createPropositions($cle, $propositions);
-        header('Location: index.php?candidats=' . $cle);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'Le proposition a été générée',
+            'direction' => 'index.php?candidats=' . $cle
+        ]);
+        // header('Location: index.php?candidats=' . $cle);
     }
     /// Méthode publique préparant les données d'une candidature pour la génération d'une porposition d'embauche 
     public function createPropositionFromCandidature($cle_candidature, $propositions=[]) {
@@ -121,32 +145,57 @@ class CandidatController extends Controller {
         $this->acceptCandidature($cle_candidature);
     }
     /// Méthode publique inscrivant un contrat dans la base de données
-    public function createContrat($cle_candidats, &$contrats=[]) {
-        $this->Model->createContrats($cle_candidats, $contrats);
-        header('Location: index.php?candidats=' . $cle_candidats);
+    public function createContrat($cle_candidat, &$contrats=[]) {
+        $this->Model->createContrats($cle_candidat, $contrats);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'Le contrat a été générée',
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
+        // header('Location: index.php?candidats=' . $cle_candidats);
     }
     public function createRendezVous($cle_candidat, &$rendezvous=[]) {
         $this->Model->createRendezVous($cle_candidat, $rendezvous);
-        header('Location: index.php?candidats=' . $cle_candidat);
+        alert_manipulation::alert([
+            'title' => 'Action enregistrée',
+            'msg' => 'Le rendez-vous a été générée',
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
+        // header('Location: index.php?candidats=' . $cle_candidat);
     }
 
-    /// Méthode epublique mettant à jour la notation d'un candidat
+    /// Méthode publique mettant à jour la notation d'un candidat
     public function updateNotation($cle_candidat, &$notation=[]) {
         $this->Model->updateNotation($cle_candidat, $notation);
         $this->Model->updateNotationLogs($cle_candidat);
-        header('Location: index.php?candidats=' . $cle_candidat);
+        // header('Location: index.php?candidats=' . $cle_candidat);
+        alert_manipulation::alert([
+            'title' => "Candidat mise-à-jour",
+            'msg' => "Vous avez mis-à-jour la notation du candidat",
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
     }
     /// Méthode publique mettant à jour le profil d'un candidat
     public function updateCandidat($cle_candidat, &$candidat=[]) {
         $this->Model->makeUpdateCandidat($cle_candidat, $candidat);
         $this->Model->updateCandidatLogs($cle_candidat);
-        header('Location: index.php?candidats=' . $cle_candidat);
+        // header('Location: index.php?candidats=' . $cle_candidat);
+        alert_manipulation::alert([
+            'title' => "Candidat mise-à-jour",
+            'msg' => "Vous avez mis-à-jour les données personnelles du candidat",
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
     }
 
 
     /// Méthode publique annulant un rendez-vous
     public function annulationRendezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
         $this->Model->annulationRendezVous($cle_utilisateur, $cle_candidat, $cle_instant);
-        header('Location: index.php?candidats=' . $cle_candidat);
+        // header('Location: index.php?candidats=' . $cle_candidat);
+        alert_manipulation::alert([
+            'title' => "Rendez-vous annulé",
+            'msg' => "Vous avez annulé le rendez-vous du candidat",
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
     }
 }

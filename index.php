@@ -720,7 +720,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
-                forms_manip::error_alert("Erreur lors de la mise-à-jour du mot de passe", $e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de la mise-à-jour du mot de passe", 
+                    'msg' => $e
+                ]);
             }
 
             // On met-à-jour le mot de passe
@@ -765,7 +768,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
-                forms_manip::error_alert("Erreur lors de l'incription du nouvel utilisateur", $e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'incription du nouvel utilisateur", 
+                    'msg' => $e
+            ]);
             }
 
             // On génère le nouvel utilisateur
@@ -812,7 +818,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Erreur lors de l'inscription du poste. Le champs description doit être rempli !");
 
             } catch(Exception $e) {
-                forms_manip::error_alert("Erreur lors de l'inscription du nouveau poste", $e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription du nouveau poste", 
+                    'msg' => $e
+                ]);
             }
 
             $preferences->createPoste($infos);
@@ -838,7 +847,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Les champs service est établissements doivent être remplis !");
 
             } catch (Exception $e) {
-                forms_manip::error_alert("Erreur lors de l'inscription dunnouveau service", $e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription dunnouveau service",
+                    'msg' => $e
+                ]);
             }
 
             $preferences->createService($service, $etablissement);

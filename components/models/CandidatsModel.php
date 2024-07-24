@@ -90,9 +90,7 @@ class CandidatsModel extends Model {
         ];
 
         // On lance la requête
-        $result = $this->get_request($request, $params);
-    
-        return $result[0];
+        return $this->get_request($request, $params)[0];
     }
     /// Méthode privée retournant la liste des diplômes obetnus par un candidat 
     private function getDiplomes($index) {
@@ -348,7 +346,11 @@ class CandidatsModel extends Model {
             $contrat = Contrat::makeContrat($propositions);
         
         } catch(Exception $e) {
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => "Erreur lors de l'inscription de la proposition",
+                'msg' => $e
+            ]);
+            // forms_manip::error_alert($e);
         }
         
         // On inscrit la proposition
@@ -422,7 +424,10 @@ class CandidatsModel extends Model {
             $contrat = Contrat::makeContrat($contrat);
         
         } catch(Exception $e) {
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => "Erreur lors de l'inscription du contrat",
+                'msg' => $e
+            ]);
         }
 
         // On inscrit la proposition
@@ -450,11 +455,14 @@ class CandidatsModel extends Model {
             $rendezvous['cle etablissement'] = $this->searchEtablissement($rendezvous['etablissement'])['Id_Etablissements'];
 
             // On récupère la clé de l'utilisateur
-            $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUser($rendezvous['recrruteur'])['Id_Utilisateurs'];
+            $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUserFromUsername($rendezvous['recruteur'])['Id_Utilisateurs'];
 
         // On récupère les éventuelles erreurs    
         } catch(Exception $e) {
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => "Erreur lors de l'inscription du rendez-vous",
+                'msg' => $e
+            ]);
         }
 
         $this->inscriptAvoir_rendez_vous_avec($rendezvous['recruteur'], $cle_candidat, $rendezvous['cle etablissement'], $rendezvous['instant']);
@@ -1217,7 +1225,10 @@ class CandidatsModel extends Model {
             unset($candidat['code-postal']);
 
         } catch(InvalideCandidatExceptions $e) {
-            forms_manip::error_alert($e);
+            forms_manip::error_alert([
+                'title' => "Erreur lors de la mise-à-jour du candidat",
+                'msg' => $e
+            ]);
         }
 
         // On met à jour le candidat

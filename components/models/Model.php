@@ -50,7 +50,10 @@ abstract class Model {
             $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
 
         } catch (Exception $e) {
-            forms_manip::error_alert("Erreur lors de l'enregistrement des logs", $e);
+            forms_manip::error_alert([
+                'title' => "Erreur lors de l'enregistrement des logs",
+                'msg' => $e
+            ]);
         }
     }
 
@@ -135,7 +138,10 @@ abstract class Model {
     
         // On vérifie qu'il n'y a pas eu d'erreur lors de l'éxécution de la requête    
         } catch(PDOException $e){
-            forms_manip::error_alert("Erreur lors de la requêt à la base de données", $e);
+            forms_manip::error_alert([
+                'title' => 'Erreur lors de la requête à la base de données',
+                'msg' => $e
+            ]);
         } 
     
         // On retourne le résultat
@@ -195,20 +201,17 @@ abstract class Model {
     }
     /// Méthode protégée recherchant un type d'action dans la base de donnés
     protected function serachAction_type($action) {
-        if($action == null) {
+        if($action == null) 
             throw new Exception("Données éronnées. La clé action ou son intitulé sont nécessaires pour rechercher une action !");
-            return;
 
-        } elseif(is_int($action)) 
+        elseif(is_int($action)) 
             $request = "SELECT * FROM types WHERE Id_Types = :action";
 
         elseif(is_string($action))
             $request = "SELECT * FROM types WHERE Intitule_Types = :action";
 
-        else {
-            throw new Exception('Type invlide. La clé action (int) ou son intitulé (string) sont nécessaires pour rechercher une action !');
-            return;
-        }    
+        else 
+            throw new Exception('Type invlide. La clé action (int) ou son intitulé (string) sont nécessaires pour rechercher une action !');   
 
         $params = [ "action" => $action ];
 
@@ -223,9 +226,9 @@ abstract class Model {
         // On recherche l'Utilisateur via sont identifiant    
         elseif(is_int($user)) {
             // On initialise la requêre
-            $request = "SELECT * FROM Candidats WHERE Id_Candidats = :candidat";
+            $request = "SELECT * FROM Utilisateurs WHERE Id_Utilisateurs = :user";
             $params = [
-                'candidat' => $user
+                'user' => $user
             ];
     
             // On lance la requête
@@ -234,9 +237,9 @@ abstract class Model {
         // On recherche l'utilisateur via son nom      
         } elseif(is_string($user)) {
             // On initialise la requête 
-            $request = "SELECT * FROM Candidats WHERE Nom_Candidats = :candidat";
+            $request = "SELECT * FROM Utilisateurs WHERE Nom_Utilisateurs = :user";
             $params = [
-                'candidat' => $user
+                'user' => $user
             ];
 
             // On lance la requête
@@ -245,6 +248,20 @@ abstract class Model {
         // Sinon    
         } else 
             throw new Exception("Le type n'a pas pu être reconnu. Le nom (string) ou l'identifiant (int) de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
+    }
+    /// Méthode protégée recherchant un utilisateur depuis son nom d'utilisateur
+    protected function searchUserFromUsername($user) {
+        if(empty($user) || !is_string($user))
+            throw new Exception("Erreur lors de la récupération du nom d'utilisateur");
+
+        // On initialise la requête 
+        $request = "SELECT * FROM Utilisateurs WHERE Identifiant_Utilisateurs = :user";
+        $params = [
+            'user' => $user
+        ];
+
+        // On lance la requête
+        return $this->get_request($request, $params, false, true);
     }
 
     /// Méthode protégée recherchant une candidature dans la base de données
@@ -485,6 +502,7 @@ abstract class Model {
 
         // On récupère l'id de mon instant 
         $request = "SELECT * FROM Instants WHERE Jour_Instants = :jour AND Heure_Instants = :heure";
+
         return $this->get_request($request, $params, true, true);
     }
     /// Méthode protégée inscrivant un Utilisateurs dans la base de données
@@ -751,11 +769,6 @@ abstract class Model {
             'utilisateur' => $cle_utilisateur,
             'instant' => $cle_instant
         ];
-
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramèters</h3>";
-        var_dump($params);
 
         // On lance la requête
         $this->post_request($request, $params);

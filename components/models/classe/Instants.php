@@ -65,6 +65,7 @@ class Instants {
         // On crée un nouvel objet Instants avec la date et l'heure actuelles
         return new Instants($date, $heure);
     }
+    
     public function exportToSQL(): array {
         return [
             "jour" => $this->getdate(), 

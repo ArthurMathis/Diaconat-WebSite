@@ -193,6 +193,7 @@ class CandidaturesModel extends Model {
             try {
                 if(empty($service)) 
                     throw new Exception('Service introuvable');
+                
             } catch(Exception $e) {
                 forms_manip::error_alert([
                     'title' => "Erreur lors de l'inscription de la candidature",

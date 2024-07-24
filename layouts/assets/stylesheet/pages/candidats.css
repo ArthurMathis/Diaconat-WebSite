@@ -113,6 +113,9 @@ aside section > div {
 aside section > div > p:first-of-type {
     font-family: 'Roboto Bold';
 }
+aside section > div > p:not(:first-of-type) {
+    text-align: end;
+}
 aside section > div > div {
     max-width: 75%;
     text-align: right;

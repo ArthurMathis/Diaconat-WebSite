@@ -14,14 +14,17 @@
 
     <section id="menu">
         <main>
-            <div>
+            <header>
                 <h1>Ypopsi</h1>
-                <h2 class="LignesHover">Close</h2>
-            </div>
+                <div id="bouton-close-menu" class="LignesHover"><img src="layouts\assets\img\logo\white-close.svg" alt="Logo de fermeture du menu, représenté par une croix"></div>
+            </header>
             <content>
-                <?php foreach($liste_menu as $item): ?>
+            <?php foreach($liste_menu as $item): ?>
+                <article>
                     <a href="<?=$item["action"] ?>"><?=$item["intitule"] ?></a>
-                <?php endforeach ?>
+                    <img src="<?= $item["logo"] ?>">
+                </article>
+            <?php endforeach ?>
             </content>
             <img src="layouts/assets/img/coeur.png" alt="Illustration de coeur">
             <img src="layouts/assets/img/main.png" alt="Illustration de main">
