@@ -23,7 +23,8 @@ class LoginController extends Controller {
         $this->Model->connectUser($identifiant, $motdepasse);
         alert_manipulation::alert([
             'title' => 'Bienvene ' . strtoupper($_SESSION['user_nom']) . ' ' . forms_manip::nameFormat($_SESSION['user_prenom']),
-            'msg' => 'Connexion réussie'
+            'msg' => 'Connexion réussie',
+            'direction' => 'index.php'
         ]);
     }
     /// Méthode publique déconnectant un utilisateur à l'application

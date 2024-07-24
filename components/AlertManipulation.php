@@ -17,4 +17,10 @@ class alert_manipulation {
         // On lance l'alerte    
         include(COMMON.DS.'alert.php');
     }
+
+    static public function alertWithoutHTML($infos=[]) {
+        include(COMMON.DS.'entete.php');
+        alert_manipulation::alert($infos);
+        include(COMMON.DS.'footer.php');
+    }
 }
