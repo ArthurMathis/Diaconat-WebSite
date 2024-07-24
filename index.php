@@ -714,9 +714,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             // On vérifie l'intégrité des données du formulaire
             try {
                 if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
-                    throw new Exception('Erreur lors de la mise à jour du mot de passe. Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
+                    throw new Exception('Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
                 elseif($_POST['new-password'] != $_POST['confirmation'])
-                    throw new Exception('Erreur lors de la mise à jour du mot de passe. Le nouveau mot de passe et sa confirmation doivent être identiques !');
+                    throw new Exception('Le nouveau mot de passe et sa confirmation doivent être identiques !');
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
@@ -754,17 +754,17 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 ];
                 
                 if(empty($infos['identifiant']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs identifiant doit être rempli.");
+                    throw new Exception("Le champs identifiant doit être rempli.");
                 elseif(empty($infos['nom']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs nom doit être rempli.");
+                    throw new Exception("Le champs nom doit être rempli.");
                 elseif(empty($infos['prenom']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs prenom doit être rempli.");
+                    throw new Exception("Le champs prenom doit être rempli.");
                 elseif(empty($infos['email']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs email doit être rempli.");
+                    throw new Exception("Le champs email doit être rempli.");
                     elseif(empty($infos['etablissement']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs étabissement doit être rempli.");
+                    throw new Exception("Le champs étabissement doit être rempli.");
                 elseif(empty($infos['role']))
-                    throw new Exception("Erreur lors de la récupération des données. Le champs role doit être rempli.");
+                    throw new Exception("Le champs role doit être rempli.");
 
             // On récupère les éventuelles erreurs        
             } catch(Exception $e) {
@@ -813,9 +813,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 ];
                 
                 if(empty($infos['poste']))
-                    throw new Exception("Erreur lors de l'inscription du poste. Le champs poste doit être rempli !");
+                    throw new Exception("Le champs poste doit être rempli !");
                 if(empty($infos['description']))
-                    throw new Exception("Erreur lors de l'inscription du poste. Le champs description doit être rempli !");
+                    throw new Exception("Le champs description doit être rempli !");
 
             } catch(Exception $e) {
                 forms_manip::error_alert([
