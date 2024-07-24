@@ -1,6 +1,7 @@
 <?php 
 
 require_once('define.php');
+require_once(COMPONENTS.DS.'AlertManipulation.php');
 require_once(COMPONENTS.DS.'forms_manip.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
@@ -777,7 +778,24 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
         // On affiche le formulaire d'ajout de service
         case 'saisie-service': 
+            $preferences->displaySaisieService();
             break;
+
+        // On inscrit un nouveau service
+        case 'inscription-service':
+            try {
+                $service = $_POST['service'];
+                $etablissement = $_POST['etablissement'];
+      
+                if(empty($service) || empty($etablissement))
+                    throw new Exception("Les champs service est établissements doivent être remplis !");
+
+            } catch (Exception $e) {
+                forms_manip::error_alert($e);
+            }
+
+            $preferences->createService($service, $etablissement);
+            break;   
             
         // On affiche la liste des établissements de la fondation
         case 'liste-etablissements':

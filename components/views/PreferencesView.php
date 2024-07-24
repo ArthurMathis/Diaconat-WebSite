@@ -266,13 +266,28 @@ class PreferencesView extends View {
     /// Méthode publique retournant la vue saisie poste
     public function getSaisiePoste() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'small-form.css']);
+        $this->generateCommonHeader('Diaconat - Inscription poste', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription-poste.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la vue saisie poste
+    public function getSaisieService() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'inscription-service.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

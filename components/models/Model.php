@@ -658,7 +658,7 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// méthode protégée inscrivant un poste à la base de données
+    /// Méthode protégée inscrivant un poste dans la base de données
     protected function inscriptPoste(&$poste, &$description) {
         // On initialise la requête
         $request = "INSERT INTO Postes (Intitule_Postes, Description_Postes) VALUES (:poste, :description)";
@@ -670,7 +670,18 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
+    /// Méthode protégée inscrivant un service dans la base de données
+    protected function inscriptService(&$service, $cle_etablissement) {
+        // On initialise la requête 
+        $request = "INSERT INTO Services (Intitule_Services, Cle_Etablissements) VALUES (:service, :etablissement)";
+        $params = [
+            'service' => $service,
+            'etablissement' => $cle_etablissement
+        ];
 
+        // On lance
+        $this->post_request($request, $params);
+    }
 
     /// Méthode publique mettant à jour le mot de passe d'un utilisateur
     public function updatePassword(&$password) {

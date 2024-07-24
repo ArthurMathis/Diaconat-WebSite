@@ -244,6 +244,21 @@ class PreferencesModel extends Model {
             "Ajout du poste " . $infos['poste'] . " à la base de données"
         );
     }
+    /// Méthode publique générant un nouveau service
+    public function createService(&$service, &$etablissement) {
+        // On récupère l'établissement
+        $etablissement = $this->searchEtablissement($etablissement);
+
+        // On inscrit le service
+        $this->inscriptService($service, $etablissement['Id_Etablissements']);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouveau service",
+            "Ajout du service " . $service . " dans l'établissement " . $etablissement['Intitule_Etablissements']
+        );
+    }
     /// Méthode publique vérifiant le mot de passe de l'utilisateur
     public function verify_password(&$password) {
         echo "<h2>On récupère les informations</h2>";

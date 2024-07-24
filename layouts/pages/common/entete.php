@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $name ?></title>
+    <title><?php if(isset($name) && !empty($name)) echo $name; else echo 'Diaconat - Ypopsi'; ?></title>
 
     <!-- Inclusion des feuilles de style -->
     <link rel="stylesheet" href="layouts\assets\stylesheet\styles.css">
@@ -14,5 +14,8 @@
         }
     }
     ?>
+
+    <!-- Bibliothèque JS pour la gestion des notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>

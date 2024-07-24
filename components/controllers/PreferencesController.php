@@ -59,6 +59,10 @@ class PreferencesController extends Controller {
     public function displaySaisiePoste() {
         return $this->View->getSaisiePoste();
     }
+    /// Méthode publique retournant le formulaire de saisie d'un nouveau service
+    public function displaySaisieService() {
+        return $this->View->getSaisieService();
+    }
 
     /// Méthode publique mettant à jour le mot de passe de l'utilisateur actuel
     public function updatePassword(&$password, &$new_password) {
@@ -84,7 +88,7 @@ class PreferencesController extends Controller {
 
         header("Location: index.php?preferences=liste-nouveaux-utilisateurs");
     }
-    /// Mthode publique générant un nouveau poste
+    /// Méthode publique générant un nouveau poste
     public function createPoste(&$infos=[]) {
         // On vérifie l'intégrité des données
         if(empty($infos)) 
@@ -93,5 +97,11 @@ class PreferencesController extends Controller {
         // On génère le nouveua poste
         else $this->Model->createPoste($infos);
         header('Location: index.php?preferences=liste-postes');
+    }
+    /// Méthode publique générant un nouveau service
+    public function createService(&$service, &$etablissement) {
+        // On génère le nouveua poste
+        $this->Model->createService($service, $etablissement);
+        header('Location: index.php?preferences=liste-services');
     }
 }

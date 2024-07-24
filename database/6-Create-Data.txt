@@ -133,7 +133,8 @@ INSERT INTO types (Intitule_Types) VALUES
     ('Nouveau rendez-vous'),
     ('Démission'),
     ('Annulation rendez-vous'), 
-    ('Nouveau poste')
+    ('Nouveau poste'),
+    ('Nouveau service')
 ;
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES
