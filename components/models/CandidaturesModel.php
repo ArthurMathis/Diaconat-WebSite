@@ -53,7 +53,9 @@ class CandidaturesModel extends Model {
             );
         
         } catch(InvalideCandidatExceptions $e) {
-            forms_manip::error_alert($e->getMessage());
+            forms_manip::error_alert([
+                'msg' => $e
+            ]);
         }
 
 
@@ -173,7 +175,10 @@ class CandidaturesModel extends Model {
             $this->post_request($request, $params);
 
         } catch (Exception $e) {
-            forms_manip::error_alert($e->getMessage());
+            forms_manip::error_alert([
+                'title' => "Erreur lors de l'inscription de la candidature",
+                'msg' => $e
+            ]);
         }
 
         // On inscript la demande de service
@@ -187,9 +192,12 @@ class CandidaturesModel extends Model {
             // On vérifie l'intégrité des données
             try {
                 if(empty($service)) 
-                                throw new Exception('Service introuvable');
+                    throw new Exception('Service introuvable');
             } catch(Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription de la candidature",
+                    'msg' => $e
+                ]);
             }
             
             // On inscrit la demande

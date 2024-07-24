@@ -7,6 +7,10 @@ class alert_manipulation {
             $infos['msg'] = $infos['msg']->getMessage();
 
         // On vérifie l'intégrité du titre
+        if(!isset($infos['title']))    
+        $infos['title'] =  "Une erreur est survenue...";
+
+        // On vérifie l'intégrité du titre
         if(empty($infos['icon']) || !is_string($infos['icon']))
             $infos['icon'] = 'success';
 
@@ -16,11 +20,6 @@ class alert_manipulation {
 
         // On lance l'alerte    
         include(COMMON.DS.'alert.php');
-    }
-
-    static public function alertWithoutHTML($infos=[]) {
-        include(COMMON.DS.'entete.php');
-        alert_manipulation::alert($infos);
-        include(COMMON.DS.'footer.php');
+        exit;
     }
 }

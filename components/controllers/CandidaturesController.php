@@ -23,9 +23,6 @@ class CandidaturesController extends Controller {
     public function displaySaisieCandidature() {
         return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat");
     }
-    // public function displaySaisieProposition() {
-    //     return $this->View->getSaisieProposition("Ypopsi - Nouvelle proposition");
-    // }
 
     public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {
         // On contruit le nouveau candidat
@@ -68,8 +65,12 @@ class CandidaturesController extends Controller {
             // On test la présence du candidat dans la base de données
             try {
                 $search = $this->Model->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
+
             } catch(Exception $e) {
-                forms_manip::error_alert($e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription de la candidature",
+                    'msg' => $e
+                ]);
             }
             
             if(empty($search)) {
@@ -86,6 +87,10 @@ class CandidaturesController extends Controller {
         $this->Model->inscriptCandidature($candidat, $candidature);
         
         // On redirige la page
-        header("Location: index.php?candidats=" . $candidat->getCle());
+        alert_manipulation::alert([
+            'title' => 'Candidat inscript !',
+            'msg' => strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom()) . " a bien été inscrit(e).",
+            'direction' => "index.php?=" . $candidat->getCle()
+        ]);
     }
 }

@@ -107,27 +107,36 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             break;
 
         // On inscrit un nouveau candidat    
-        case 'inscription-candidat' :
-            // On récupère le contenu du formulaire d'inscription
-            $candidat = [
-                'nom' => forms_manip::nameFormat($_POST["nom"]), 
-                'prenom' => forms_manip::nameFormat($_POST["prenom"]), 
-                'email' => $_POST["email"], 
-                'telephone' => forms_manip::numberFormat($_POST["telephone"]), 
-                'adresse' => $_POST["adresse"],
-                'ville' => forms_manip::nameFormat($_POST["ville"]), 
-                'code_postal' => $_POST['code-postal']
-            ];
-            $diplomes = [
-                $_POST["diplome-1"], 
-                $_POST["diplome-2"], 
-                $_POST["diplome-3"]
-            ];
-            $aide               = $_POST["aide"];
-            $visite_medicale    = $_POST["visite_medicale"];
-            
-            // On vérifie l'intégrité des données
+        case 'inscription-candidat' :     
+            // On récupère les données du formulaire
             try {
+                // On récupère le contenu du formulaire d'inscription
+                $candidat = [
+                    'nom' => forms_manip::nameFormat($_POST["nom"]), 
+                    'prenom' => forms_manip::nameFormat($_POST["prenom"]), 
+                    'email' => $_POST["email"], 
+                    'telephone' => forms_manip::numberFormat($_POST["telephone"]), 
+                    'adresse' => $_POST["adresse"],
+                    'ville' => forms_manip::nameFormat($_POST["ville"]), 
+                    'code_postal' => $_POST['code-postal']
+                ];
+                $diplomes = [
+                    $_POST["diplome-1"], 
+                    $_POST["diplome-2"], 
+                    $_POST["diplome-3"]
+                ];
+                $aide               = $_POST["aide"];
+                $visite_medicale    = $_POST["visite_medicale"];
+
+            } catch(Exception $e) {
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription du candidat",
+                    'msg' => $e
+                ]);
+            }
+
+            // On vérifie l'intégrité des données
+            try {    
                 if(empty($candidat['nom'])) {
                     throw new Exception("Le champs nom doit être rempli par une chaine de caractères !");
                 } elseif(empty($candidat['prenom'])) {
@@ -144,13 +153,19 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
-                forms_manip::error_alert("Erreur lors de l'inscription du candidat", $e);
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription du candidat",
+                    'msg' => $e
+                ]);
             }
 
             // On test l'intégrité des diplômes
             foreach($diplomes as $d) 
                 if(strlen($d) > 128) 
-                    forms_manip::error_alert("Erreur lors de l'inscription du candidat", "Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères.");
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription du candidat",
+                    'msg' => "Le diplome" . $d ." est trop volumineux. Veuillez réécrire son intitulé en max 128 caractères."
+                ]);
 
             // On génère le candidat        
             $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale == 'true' ? true : false);
@@ -158,14 +173,24 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
         // On inscrit une nouvelle candidature
         case 'inscription-candidature' :
-            // On récupère le contenu des champs
-            $candidature = [
-                'poste'             => forms_manip::nameFormat($_POST["poste"]), 
-                'service'           => $_POST["service"], 
-                'type de contrat'   => $_POST["type_de_contrat"],
-                'disponibilite'     => $_POST["disponibilite"], 
-                'source'            => forms_manip::nameFormat($_POST["source"])
-            ];
+            // On récupère les données du formulaire
+            try { 
+                // On récupère le contenu des champs
+                $candidature = [
+                    'poste'             => forms_manip::nameFormat($_POST["poste"]), 
+                    'service'           => $_POST["service"], 
+                    'type de contrat'   => $_POST["type_de_contrat"],
+                    'disponibilite'     => $_POST["disponibilite"], 
+                    'source'            => forms_manip::nameFormat($_POST["source"])
+                ];
+
+            // On récupère les éventuelles erreurs    
+            } catch(Exception $e) {
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription de la candidature",
+                    'msg' => $e
+                ]);
+            }
 
             // On vérifie l'intégrité des données  
             try {
@@ -177,10 +202,13 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Le champs source doit être rempli par une chaine de caractères");
 
             // On récupère les éventuelles erreurs
-            } catch(Exception $e) {
-                forms_manip::error_alert("Erreur lors de l'inscription de la candidature", $e);
+            }  catch(Exception $e) {
+                forms_manip::error_alert([
+                    'title' => "Erreur lors de l'inscription de la candidature",
+                    'msg' => $e
+                ]);
             }
-
+            
             // On récupère le candidat
             $candidat = $_SESSION['candidat'];
             $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
