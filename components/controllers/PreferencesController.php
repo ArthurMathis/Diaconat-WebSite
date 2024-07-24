@@ -44,6 +44,11 @@ class PreferencesController extends Controller {
         $poste = $this->Model->getPostes();
         return $this->View->getPostesContent($poste);
     }
+    /// Méthode publique retournant la page Services
+    public function displayServices() {
+        $poste = $this->Model->getServices();
+        return $this->View->getServicesContent($poste);
+    }
 
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
     public function displaySaisieUtilisateur() {

@@ -772,7 +772,11 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
         // On affiche la liste des services de la fondation
         case 'liste-services':
-            echo 'liste des services';
+            $preferences->displayServices();
+            break;
+
+        // On affiche le formulaire d'ajout de service
+        case 'saisie-service': 
             break;
             
         // On affiche la liste des établissements de la fondation

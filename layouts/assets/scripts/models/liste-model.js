@@ -177,12 +177,20 @@ function recupChampsDate(champs=[], criteres=[]) {
 function filtrerPar(item, index, critere) {
     // On vérifie l'intégrité de l'index
     if (index < 0 || index >= item.cells.length) 
-        throw new Error("Impossible d'appliquer le filtre. Indice de invalide !");
+        throw new Error("Impossible d'appliquer le filtre. Indice de colonne invalide !");
 
-    console.log('On compare : ' + item.cells[index].textContent.trim() + ' avec ' + critere);
 
     // On retourne le résultat du filtre
-    return item.cells[index].textContent.trim() === critere;
+    return item.cells[index].textContent
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .startsWith(
+                critere.normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase()
+            );
 }
 /**
  * @brief Fonction permettant de filtrer un tableau selon un filtre à plusieurs critères

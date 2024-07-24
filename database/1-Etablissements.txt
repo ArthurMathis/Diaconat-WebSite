@@ -20,7 +20,7 @@ CREATE TABLE Etablissements (
 -- On génère la table Services contenant les différents services des Etablissemnts de la Fondation --
 CREATE TABLE Services (
     Id_Services INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Intitule_Services VARCHAR(64) NOT NULL UNIQUE,
+    Intitule_Services VARCHAR(64) NOT NULL,
 
     Cle_Etablissements INTEGER NOT NULL,
 

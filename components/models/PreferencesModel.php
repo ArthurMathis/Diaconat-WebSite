@@ -193,6 +193,22 @@ class PreferencesModel extends Model {
         
         return $this->get_request($request);
     }
+    /// Méthode publique retournant les services de la base de données
+    public function getServices() {
+        // On initialise la requête
+        $request = "SELECT 
+        Intitule_Services AS Service,
+        Intitule_Etablissements AS Etablissement
+
+        FROM Services AS s
+        
+        INNER JOIN Etablissements AS e ON s.cle_Etablissements = e.Id_Etablissements
+        
+        ORDER BY Service, Etablissement";
+        
+        // On lance la requête
+        return $this->get_request($request);
+    }
 
     /// Méthode publique générant un nouvel Utilisateur
     public function createUser(&$infos=[]) {

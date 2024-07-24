@@ -186,7 +186,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des postes
-    public function getPostesContent($items=[]) {
+    public function getPostesContent(&$items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -200,7 +200,7 @@ class PreferencesView extends View {
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
         include BARRES.DS.'poste_barre.php';
-        $this->getListesItems("Historique d'actions", $items, null, "main-liste");
+        $this->getListesItems("Postes", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
 
@@ -210,6 +210,37 @@ class PreferencesView extends View {
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/poste-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la liste des services
+    public function getServicesContent(&$items=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'service_barre.php';
+        $this->getListesItems("Services", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/service-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
 
