@@ -140,7 +140,6 @@ textarea {
   border-radius: var(--margin);
   background-color: var(--white);
 
-
   will-change: box-shadow;
   transition: box-shadow ease 150ms;
 

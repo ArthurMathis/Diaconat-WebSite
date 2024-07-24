@@ -6,7 +6,6 @@ require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');
 require_once(CONTROLLERS.DS.'CandidatsController.php');
-require_once(CONTROLLERS.DS.'UtilisateursController.php');
 require_once(CONTROLLERS.DS.'PreferencesController.php');
 
 // On démarre la session de l'utilisateur
@@ -742,7 +741,33 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
         // On affiche la liste des postes de la fondation    
         case 'liste-postes':
-            echo 'liste des postes';
+            $preferences->displayPostes();
+            break;
+
+        // On affiche le formulaire d'ajout de poste    
+        case 'saisie-poste':
+            $preferences->displaySaisiePoste();
+            break;    
+
+        // On inscrit un nouveau poste
+        case 'inscription-poste':
+            // On récupère les informations du formulaire
+            try {
+                $infos = [
+                    'poste' => $_POST['poste'],
+                    'description' => $_POST['description']
+                ];
+                
+                if(empty($infos['poste']))
+                    throw new Exception("Erreur lors de l'inscription du poste. Le champs poste doit être rempli !");
+                if(empty($infos['description']))
+                    throw new Exception("Erreur lors de l'inscription du poste. Le champs description doit être rempli !");
+
+            } catch(Exception $e) {
+                forms_manip::error_alert($e);
+            }
+
+            $preferences->createPoste($infos);
             break;
 
         // On affiche la liste des services de la fondation

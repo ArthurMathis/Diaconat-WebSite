@@ -182,6 +182,17 @@ class PreferencesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
+    /// Méthode publique retournant les postes de la base de données
+    public function getPostes() {
+        // On initialise la requête
+        $request = "SELECT 
+        Intitule_Postes AS Poste,
+        Description_Postes AS Description
+
+        FROM Postes";
+        
+        return $this->get_request($request);
+    }
 
     /// Méthode publique générant un nouvel Utilisateur
     public function createUser(&$infos=[]) {
@@ -203,6 +214,18 @@ class PreferencesModel extends Model {
             $_SESSION['user_cle'],
             "Nouvel utilisateur",
             "Création du compte de " . strtoupper($user->getNom()) . " " . forms_manip::nameFormat($user->getPrenom()) 
+        );
+    }
+    /// Méthode publique générant un nouveau poste
+    public function createPoste(&$infos=[]) {
+        // On inscrit le nouveau poste
+        $this->inscriptPoste($infos['poste'], $infos['description']);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouveau poste",
+            "Ajout du poste " . $infos['poste'] . " à la base de données"
         );
     }
     /// Méthode publique vérifiant le mot de passe de l'utilisateur
@@ -236,6 +259,7 @@ class PreferencesModel extends Model {
         return $res;
     }
 
+    /// Méthode publique enregistrant les mise-à-jour de mots de passe dans les logs
     public function updatePasswordLogs() {
         // On enregistre les logs
         $this->writeLogs(

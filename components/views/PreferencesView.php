@@ -185,6 +185,37 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+    /// Méthode publique retournant la liste des postes
+    public function getPostesContent($items=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'poste_barre.php';
+        $this->getListesItems("Historique d'actions", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/poste-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
 
     /// Méthode publique retournant la vue saisie utilisateur
     public function getSaisieUtilisateur(&$role) {
@@ -196,6 +227,21 @@ class PreferencesView extends View {
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription-utilisateur.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la vue saisie poste
+    public function getSaisiePoste() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'inscription-poste.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

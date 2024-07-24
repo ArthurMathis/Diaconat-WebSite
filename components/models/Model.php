@@ -39,28 +39,15 @@ abstract class Model {
     }
     /// Méthode privée inscrivant les actions dans la base de données
     protected function writeLogs(&$user_cle, $action, $description=null) {
-        echo "<h3>Lancement de la fonction d'enregistrement des logs</h3>";
         try {
-            echo "<h3>On récupère le type de l'action</h3>";
-
             // On récupère le type d'action
             $action_type = $this->serachAction_type($action);
-
-            echo "<h4>Action</h4>";
-            var_dump($action_type);
 
             // On génère l'instant actuel (date et heure actuelles)
             $instant_id = $this->inscriptInstants();
 
-            echo "<h4>Instant</h4>";
-            var_dump($instant_id);
-
-            echo "<h3>On inscrit l'action</h3>";
-
             // On ajoute l'action à la base de données
             $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
-
-            echo "<h3>Action inscrite</h3>";
 
         } catch (Exception $e) {
             forms_manip::error_alert($e);
@@ -666,6 +653,18 @@ abstract class Model {
             ":cle_candidats" => $cle_candidat, 
             ":cle_etablissements" => $cle_etablissement, 
             ":cle_instants" => $cle_instants
+        ];
+
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /// méthode protégée inscrivant un poste à la base de données
+    protected function inscriptPoste(&$poste, &$description) {
+        // On initialise la requête
+        $request = "INSERT INTO Postes (Intitule_Postes, Description_Postes) VALUES (:poste, :description)";
+        $params = [
+            "poste" => $poste,
+            "description" => $description
         ];
 
         // On lance la requête

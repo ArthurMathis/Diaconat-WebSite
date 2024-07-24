@@ -335,12 +335,7 @@ function trierSelonString(item1=[], item2=[], index) {
     const s2 = item2.cells[index].textContent.trim().toLowerCase();
 
     // On compare
-    if(s1 < s2)
-        return -1;
-    if(s2 < s1)
-        return 1;
-    else 
-        return 0;
+    return s1.localeCompare(s2, 'fr', {sensitivity: 'base'});
 }
 /**
  * @brief Fonction permettant de réaliser le tri entre des dates

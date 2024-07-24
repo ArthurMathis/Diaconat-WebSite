@@ -23,4 +23,11 @@ form button {
   margin-top: var(--gap);
 }
 
+textarea {
+  width: 100%;
+  height: 160px;
+
+  border: none;
+}
+
 /*# sourceMappingURL=connexion.css.map */
