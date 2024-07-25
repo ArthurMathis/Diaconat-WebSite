@@ -247,7 +247,7 @@ class PreferencesModel extends Model {
         $infos['etablissement'] = $this->searchEtablissement($infos['etablissement'])['Id_Etablissements'];
 
         // On génère un mot de passe
-        $infos['mot de passe'] = PasswordGenerator::random_password($infos['nom'], $infos['prenom']);
+        // $infos['mot de passe'] = PasswordGenerator::random_password($infos['nom'], $infos['prenom']);
 
         // On crée l'utilisateur
         $user = Utilisateurs::makeUtilisateurs($infos);

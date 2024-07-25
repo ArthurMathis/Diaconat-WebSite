@@ -1,4 +1,4 @@
-<form class="big-form" method="post" action="index.php?preferences=inscription-utilisateur">
+<form class="big-form" method="post" action="index.php?preferences=get-inscription-utilisateur">
     <div class="form-container">
         <section>
             <h2>Informations personnelles</h2>

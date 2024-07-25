@@ -48,7 +48,7 @@ const liste = new Liste("main-liste");
 
 const sizes = [
     {
-        width: 1900,
+        width: 1920,
         indexs: [3]
     }, 
     {

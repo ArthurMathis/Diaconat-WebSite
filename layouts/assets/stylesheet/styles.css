@@ -392,6 +392,16 @@ button:is(:hover, :focus),
 .action_button:is(:hover, :focus) {
   box-shadow: var(--button-shadow);
 }
+button.cancel_button,
+.action_button.cancel_button {
+  color: var(--white);
+  border: var(--refusee);
+  background-color: var(--refusee);
+}
+button.cancel_button:is(:hover, :focus), 
+.action_button.cancel_button:is(:hover, :focus) {
+  box-shadow: 0 0 0 5px rgba(254, 0, 0, 0.2);
+}
 
 .user-link {
   position: absolute;

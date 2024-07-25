@@ -118,6 +118,10 @@ INSERT INTO Roles (Intitule_Role) VALUES
 ;
 -- On insère les types d'actions des Utilisateurs --
 INSERT INTO types (Intitule_Types) VALUES 
+    -- Connexions --
+    ('Connexion'),
+    ('Déconnexion'), 
+
     -- Utilisateurs --
     ('Nouvel utilisateur'),
     ('Mise-à-jour utilisateur'), 

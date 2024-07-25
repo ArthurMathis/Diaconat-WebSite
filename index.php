@@ -740,8 +740,46 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $preferences->displaySaisieUtilisateur();
             break;    
 
-            // On inscrit un nouvel utilisateur
-            case 'inscription-utilisateur':
+            // // On inscrit un nouvel utilisateur
+            // case 'inscription-utilisateur':
+            //     // On récupère les données du formulaire
+            //     try {
+            //         $infos = [
+            //             'identifiant' => $_POST['identifiant'],
+            //             'nom' => $_POST['nom'],
+            //             'prenom' => $_POST['prenom'],
+            //             'email' => $_POST['email'],
+            //             'etablissement' => $_POST['etablissement'],
+            //             'role' => $_POST['role']
+            //         ];
+            //         
+            //         if(empty($infos['identifiant']))
+            //             throw new Exception("Le champs identifiant doit être rempli.");
+            //         elseif(empty($infos['nom']))
+            //             throw new Exception("Le champs nom doit être rempli.");
+            //         elseif(empty($infos['prenom']))
+            //             throw new Exception("Le champs prenom doit être rempli.");
+            //         elseif(empty($infos['email']))
+            //             throw new Exception("Le champs email doit être rempli.");
+            //             elseif(empty($infos['etablissement']))
+            //             throw new Exception("Le champs étabissement doit être rempli.");
+            //         elseif(empty($infos['role']))
+            //             throw new Exception("Le champs role doit être rempli.");
+            // 
+            //     // On récupère les éventuelles erreurs        
+            //     } catch(Exception $e) {
+            //         forms_manip::error_alert([
+            //             'title' => "Erreur lors de l'incription du nouvel utilisateur", 
+            //             'msg' => $e
+            //         ]);
+            //     }
+            // 
+            //     // On génère le nouvel utilisateur
+            //     $preferences->createUtilisateur($infos);
+            //     break;  
+
+            // On prépare l'inscritpion du nouvel utilisateur
+            case 'get-inscription-utilisateur':
             // On récupère les données du formulaire
             try {
                 $infos = [
@@ -761,7 +799,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     throw new Exception("Le champs prenom doit être rempli.");
                 elseif(empty($infos['email']))
                     throw new Exception("Le champs email doit être rempli.");
-                    elseif(empty($infos['etablissement']))
+                elseif(empty($infos['etablissement']))
                     throw new Exception("Le champs étabissement doit être rempli.");
                 elseif(empty($infos['role']))
                     throw new Exception("Le champs role doit être rempli.");
@@ -774,9 +812,54 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 ]);
             }
 
-            // On génère le nouvel utilisateur
-            $preferences->createUtilisateur($infos);
-            break;    
+            // ON génère le mot de passe de l'utilisateur
+            $infos['mot de passe'] = PasswordGenerator::random_password();
+            $_SESSION['new user data'] = $infos;
+            alert_manipulation::alert([
+                'title' => "Information importante",
+                'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <b> ". $infos['mot de passe'] . "</b> .<br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
+                'direction' => 'index.php?preferences=inscription-utilisateur',
+                'confirm' => true
+            ]);
+            break;  
+            
+            // On inscrit un nouvel utilisateur
+            case 'inscription-utilisateur':
+                // On vérifie l'intégrité des données
+                try {
+                    if(isset($_SESSION['new user data']) && !empty($_SESSION['new user data'])) {
+                        $infos = $_SESSION['new user data'];
+                        unset($_SESSION['new user data']);
+                    } else 
+                        throw new Exception('Erreur lors de la récupération des informations du candidat, des informations sont manquantes.');
+                    
+                    if(empty($infos['identifiant']))
+                        throw new Exception("Le champs identifiant doit être rempli.");
+                    elseif(empty($infos['nom']))
+                        throw new Exception("Le champs nom doit être rempli.");
+                    elseif(empty($infos['prenom']))
+                        throw new Exception("Le champs prenom doit être rempli.");
+                    elseif(empty($infos['email']))
+                        throw new Exception("Le champs email doit être rempli.");
+                    elseif(empty($infos['etablissement']))
+                        throw new Exception("Le champs étabissement doit être rempli.");
+                    elseif(empty($infos['role']))
+                        throw new Exception("Le champs role doit être rempli.");
+                    elseif(empty($infos['mot de passe']))
+                        throw new Exception("Mot de passe introuvable.");
+    
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'incription du nouvel utilisateur", 
+                        'msg' => $e,
+                        'direction' => "index.php?preferences=saisie-utilisateur"
+                    ]);
+                } 
+
+                // On génère le nouvel utilisateur
+                $preferences->createUtilisateur($infos);
+                break;
 
             // On affiche la liste des nouveaux utilisateurs
             case 'liste-nouveaux-utilisateurs':
