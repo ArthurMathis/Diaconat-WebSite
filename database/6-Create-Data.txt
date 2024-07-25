@@ -127,14 +127,15 @@ INSERT INTO types (Intitule_Types) VALUES
     ('Nouveau candidat'), 
     ('Nouvelle candidature'),
     ('Refus d\'une candidature'),
-    ('Nouvelleproposition'),
+    ('Nouvelle proposition'),
     ('Refus d\'une proposition'),
-    ('Nouveaucontrat'),
+    ('Nouveau contrat'),
     ('Nouveau rendez-vous'),
     ('Démission'),
     ('Annulation rendez-vous'), 
     ('Nouveau poste'),
-    ('Nouveau service')
+    ('Nouveau service'),
+    ('Nouvel établissement') 
 ;
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES

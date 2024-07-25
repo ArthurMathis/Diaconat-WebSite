@@ -68,6 +68,10 @@ class PreferencesController extends Controller {
     public function displaySaisieService() {
         return $this->View->getSaisieService();
     }
+    /// Méthode publique retournant le formulaire de saisie d'un nouvel établissement
+    public function displaySaisieEtablissement() {
+        return $this->View->getSaisieEtablissement();
+    }
 
     /// Méthode publique mettant à jour le mot de passe de l'utilisateur actuel
     public function updatePassword(&$password, &$new_password) {
@@ -76,7 +80,11 @@ class PreferencesController extends Controller {
             // On met-à-jour le mot de passe
             $this->Model->updatePassword($new_password);
             $this->Model->updatePasswordLogs();
-            header('Location: index.php');
+            alert_manipulation::alert([
+                'title' => 'Opération réussie',
+                'msg' => "Votre mot de passe a bien été modifié !",
+                'direction' => 'index.php'
+            ]);
 
         } else 
             forms_manip::error_alert("Erreur lors de la mise à jour du mot de passe", "L'ancien mot de passe ne correspond pas !");
@@ -91,7 +99,11 @@ class PreferencesController extends Controller {
         // On génère le nouvel utilisateur    
         else $this->Model->createUser($infos);
 
-        header("Location: index.php?preferences=liste-nouveaux-utilisateurs");
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "Nouvel utilisateur enregistré !",
+            'direction' => 'index.php?preferences=liste-nouveaux-utilisateurs'
+        ]);
     }
     /// Méthode publique générant un nouveau poste
     public function createPoste(&$infos=[]) {
@@ -101,12 +113,30 @@ class PreferencesController extends Controller {
 
         // On génère le nouveua poste
         else $this->Model->createPoste($infos);
-        header('Location: index.php?preferences=liste-postes');
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "Nouveau poste enregistré !",
+            'direction' => 'index.php?preferences=liste-postes'
+        ]);
     }
     /// Méthode publique générant un nouveau service
     public function createService(&$service, &$etablissement) {
-        // On génère le nouveua poste
+        // On génère le nouveau poste
         $this->Model->createService($service, $etablissement);
-        header('Location: index.php?preferences=liste-services');
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "Nouveau service enregistré !",
+            'direction' => 'index.php?preferences=liste-services'
+        ]);
+    }
+    /// Méthode publique générant un nouvel établissement
+    public function createEtablissement(&$infos=[]) {
+        // On génère le nouvel établissement
+        $this->Model->createEtablissement($infos);
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "Nouveau établissement enregistré !",
+            'direction' => 'index.php?preferences=liste-etablissements'
+        ]);
     }
 }

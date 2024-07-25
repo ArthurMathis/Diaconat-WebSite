@@ -848,7 +848,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             } catch (Exception $e) {
                 forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription dunnouveau service",
+                    'title' => "Erreur lors de l'inscription du nouveau service",
                     'msg' => $e
                 ]);
             }
@@ -859,6 +859,53 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             // On affiche la liste des établissements de la fondation
             case 'liste-etablissements':
                 $preferences->displayEtablissements();
+                break;
+
+            // On affiche le formulaire d'ajout d'établissement
+            case 'saisie-etablissement':
+                $preferences->displaySaisieEtablissement();
+                break;  
+                
+            // On inscrit un nouvel établissement
+            case 'inscription-etablissement':
+                // On récupère les données du formulaire
+                try {
+                    $infos = [
+                        'intitule' => $_POST['intitule'],
+                        'adresse' =>$_POST['adresse'],
+                        'ville' => $_POST['ville'],
+                        'code postal' => $_POST['code-postal'],
+                        'pole' => $_POST['pole']
+                    ];
+
+                } catch (Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de l'établissement",
+                        'msg' => $e
+                    ]);
+                }
+
+                // On vérifie l'intégrité des données
+                try {
+                    if(empty($infos['intitule']))
+                        throw new Exception('Le champs intitulé doit être rempli !');
+                    elseif(empty($infos['adresse']))
+                        throw new Exception('Le champs adresse doit être rempli !');
+                    elseif(empty($infos['ville']))
+                        throw new Exception('Le champs ville doit être rempli !');
+                    elseif(empty($infos['code postal']))
+                        throw new Exception('Le champs code postal doit être rempli !');
+                    elseif(empty($infos['pole']))
+                        throw new Exception('Le champs pôle doit être rempli !');
+
+                } catch (Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de l'établissement",
+                        'msg' => $e
+                    ]);
+                }
+
+                $preferences->createEtablissement($infos);
                 break;
 
             // On affiche la listes des pôles de la fondation

@@ -179,6 +179,25 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
+    /// Méthode protégée recherchant un pôle dans la base de données
+    protected function searchPole($pole) {
+        if(is_numeric($pole)) {
+            $request = "SELECT * FROM Poles WHERE Id_Poles = :cle";
+            $params = [
+                'cle' => $pole
+            ];
+        
+        } elseif(is_string($pole)) {
+            $request = "SELECT * FROM Poles WHERE Intitule_Poles = :intitule";
+            $params = [
+                'intitule' => $pole
+            ];
+            
+        } else 
+            throw new Exception("paramètre invalide");
+
+        return $this->get_request($request, $params, true, true);    
+    }
     /// Méthode protégée recherchant un role dans la base de données
     protected function searchRole($role): array {
         // On initialise la requête
@@ -691,6 +710,22 @@ abstract class Model {
         // On lance
         $this->post_request($request, $params);
     }
+    /// Méthode protégée inscrivant un nouvel établissement dans la base de données
+    protected function inscriptEtablissement(&$infos=[]) {
+        // On initialise la requête 
+        $request = "INSERT INTO Etablissements (Intitule_Etablissements, Adresse_Etablissements, Ville_Etablissements, CodePostal_Etablissements, Cle_Poles) 
+        VALUES (:intitule, :adresse, :ville, :code, :pole)";
+        $params = [
+            'intitule' => $infos['intitule'],
+            'adresse' => $infos['adresse'],
+            'ville' => $infos['ville'],
+            'code' => $infos['code postal'],
+            'pole' => $infos['pole']
+        ];
+
+        // On lance
+        $this->post_request($request, $params);
+    }
 
     /// Méthode publique mettant à jour le mot de passe d'un utilisateur
     public function updatePassword(&$password) {
@@ -702,11 +737,6 @@ abstract class Model {
             'cle' => $_SESSION['user_cle'],
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
-
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramètres</h3>";
-        var_dump($params);
         
         // On lance la requête
         $this->post_request($request, $params);

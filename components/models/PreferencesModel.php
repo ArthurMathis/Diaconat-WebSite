@@ -275,35 +275,31 @@ class PreferencesModel extends Model {
             "Ajout du service " . $service . " dans l'établissement " . $etablissement['Intitule_Etablissements']
         );
     }
+    /// Méthode publique générant un nouvel établissement
+    public function createEtablissement(&$infos=[]) {
+        // On récupère le pôle
+        $infos['pole'] = $this->searchPole($infos['pole'])['Id_Poles'];
+
+        // On inscrit l'établissement
+        $this->inscriptEtablissement($infos);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouvel établissement",
+            "Ajout de l'établissement " . $infos['intitule']
+        );
+    }
     /// Méthode publique vérifiant le mot de passe de l'utilisateur
     public function verify_password(&$password) {
-        echo "<h2>On récupère les informations</h2>";
         // On initialise la requête
         $request = "SELECT * FROM Utilisateurs WHERE Id_Utilisateurs = :cle";
         $params = ['cle' => $_SESSION['user_cle']];
 
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramètres</h3>";
-        var_dump($params);
-
-
         $user = $this->get_request($request, $params, 1, 1)[0];
 
-        echo "<h3>Le résultat</h3>";
-        var_dump($user);
-
-        echo "<h2>On compare les mots de passe</h2>";
-        echo "<h3>Ancien mot de passe</h3>";
-        var_dump($password);
-
         // On compare les mots de passe
-        $res = password_verify($password, $user['MotDePasse_Utilisateurs']);
-
-        echo "<h3>Le test</h3>";
-        var_dump($res);
-
-        return $res;
+        return password_verify($password, $user['MotDePasse_Utilisateurs']);
     }
 
     /// Méthode publique enregistrant les mise-à-jour de mots de passe dans les logs

@@ -263,7 +263,7 @@ class PreferencesView extends View {
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
         include BARRES.DS.'etablissements_barre.php';
-        $this->getListesItems("Services", $items, null, "main-liste");
+        $this->getListesItems("Etablissements", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
 
@@ -295,7 +295,7 @@ class PreferencesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
-    /// Méthode publique retournant la vue saisie poste
+    /// Méthode publique retournant la vue saisie d'une poste
     public function getSaisiePoste() {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription poste', [FORMS_STYLES.DS.'small-form.css']);
@@ -310,7 +310,7 @@ class PreferencesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
-    /// Méthode publique retournant la vue saisie poste
+    /// Méthode publique retournant la vue saisie d'un service
     public function getSaisieService() {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
@@ -320,6 +320,21 @@ class PreferencesView extends View {
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription-service.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode pubique retournant la vue de siasise d'un établissement
+    public function getSaisieEtablissement() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Diaconat - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'inscription-etablissements.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
