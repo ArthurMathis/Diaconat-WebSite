@@ -40,7 +40,10 @@
 .candidatures-menu content {
     display: flex;
     justify-content: left;
+    flex-wrap: wrap;
     gap: var(--margin);
+
+
     width: 100%;
 }
 .candidatures-menu section {

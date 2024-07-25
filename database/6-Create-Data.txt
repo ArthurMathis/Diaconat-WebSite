@@ -118,25 +118,35 @@ INSERT INTO Roles (Intitule_Role) VALUES
 ;
 -- On insère les types d'actions des Utilisateurs --
 INSERT INTO types (Intitule_Types) VALUES 
-    ('Connexion'), 
-    ('Déconnexion'),
-    ('Mise-à-jour mot de passe'),
-    ('Mise-à-jour notation'),
-    ('Mise-à-jour candidat'),
+    -- Utilisateurs --
     ('Nouvel utilisateur'),
-    ('Nouveau candidat'), 
-    ('Nouvelle candidature'),
-    ('Refus d\'une candidature'),
-    ('Nouvelle proposition'),
-    ('Refus d\'une proposition'),
-    ('Nouveau contrat'),
-    ('Nouveau rendez-vous'),
-    ('Démission'),
+    ('Mise-à-jour utilisateur'), 
+    ('Mise-à-jour mot de passe'), 
+    ('Réinitialisation mot de passe'), 
+    ('Mise-à-jour rôle'), 
+
+    -- candidats --
+    ('Nouveau candidat'),
+    ('Nouveau rendez-vous'), 
     ('Annulation rendez-vous'), 
-    ('Nouveau poste'),
-    ('Nouveau service'),
-    ('Nouvel établissement') ,
-    ('Nouveau pôle')
+    ('Mise-à-jour candidat'), 
+    ('Mise-à-jour notation'), 
+    ('Mise-à-jour rendez-vous'),
+
+    -- Candidatures -- 
+    ('Nouvelle candidature'), 
+    ('Nouvelle proposition'), 
+    ('Nouveau contrat'), 
+    ('Refus candidature'), 
+    ('Refus proposition'), 
+    ('Démission'), 
+    
+    -- Fondation --
+    ('Nouveau pôle'), 
+    ('Nouvel établissement'), 
+    ('Nouveau service'), 
+    ('Nouveau poste'), 
+    ('Nouveau diplome')
 ;
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES

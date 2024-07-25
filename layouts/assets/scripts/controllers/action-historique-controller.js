@@ -62,28 +62,13 @@ const filtrer_menu = document.getElementById('filtrer-menu');
 
 // On ajoute les codes couleurs
 setColor(candidatures, [
-    {
-        content: 'Nouveau candidat', 
-        class: 'candidat'
-    },
-    {
-        content: 'Nouvelle candidature', 
-        class: 'candidat'
-    },
-    {
-        content: 'Nouvelle proposition', 
-        class: 'candidat'
-    },
-    {
-        content: 'Nouveau contrat', 
-        class: 'candidat'
-    },
-    {
-        content: 'Nouveau rendez-vous',
-        class: 'candidat'
-    },
+    // Utilisateur
     {
         content: 'Nouvel utilisateur', 
+        class: 'utilisateur'
+    },
+    {
+        content: 'Mise-à-jour utilisateur', 
         class: 'utilisateur'
     },
     {
@@ -91,34 +76,84 @@ setColor(candidatures, [
         class: 'utilisateur'
     },
     {
-        content: 'Mise-à-jour notation', 
+        content: 'Réinitialisation mot de passe', 
         class: 'utilisateur'
+    },
+    {
+        content: 'Mise-à-jour rôle', 
+        class: 'utilisateur'
+    },
+    // candidat
+    {
+        content: 'Nouveau candidat', 
+        class: 'candidat'
+    },
+    {
+        content: 'Nouveau rendez-vous', 
+        class: 'candidat'
+    },
+    {
+        content: 'Annulation rendez-vous', 
+        class: 'candidat'
     },
     {
         content: 'Mise-à-jour candidat', 
-        class: 'utilisateur'
+        class: 'candidat'
     },
     {
-        content: "Refus d'une candidature", 
-        class: 'refus'
+        content: 'Mise-à-jour notation', 
+        class: 'candidat'
     },
     {
-        content: "Refus d'une proposition", 
-        class: 'refus'
+        content: 'Mise-à-jour rendez-vous', 
+        class: 'candidat'
+    },
+    // Candidature
+    {
+        content: 'Nouvelle candidature', 
+        class: 'candidature'
     },
     {
-        content: "Refus d'un contrat", 
-        class: 'refus'
+        content: 'Nouvelle proposition', 
+        class: 'candidature'
     },
     {
-        content: "Démission", 
-        class: 'demission'
-    }
-    ,
+        content: 'Nouveau contrat', 
+        class: 'candidature'
+    },
     {
-        content: "Annulation rendez-vous", 
-        class: 'demission'
-    }
+        content: 'Refus candidature', 
+        class: 'candidature'
+    },
+    {
+        content: 'Refus proposition', 
+        class: 'candidature'
+    },
+    {
+        content: 'Démission', 
+        class: 'candidature'
+    },
+    // Fondation
+    {
+        content: 'Nouveau pôle', 
+        class: 'fondation'
+    },
+    {
+        content: 'Nouvel établissement', 
+        class: 'fondation'
+    },
+    {
+        content: 'Nouveau service', 
+        class: 'fondation'
+    },
+    {
+        content: 'Nouveau poste', 
+        class: 'fondation'
+    },
+    {
+        content: 'Nouveau diplome', 
+        class: 'fondation'
+    }    
 ], 0);
 
 
@@ -146,15 +181,8 @@ filtrer.addEventListener('click', () => {
     } else {
         // On récupère les champs du formulaire
         const champs_action = {
-            champs: Array.from(document.getElementById('action_input').querySelectorAll('input')),
+            champs: Array.from(document.querySelectorAll('.action_statut input')),
             index: 0
-        };
-        const champs_date = {
-            index: 2,
-            champs : [
-                document.getElementById('filtre-date-max'),
-                document.getElementById('filtre-date-min')
-            ]
         };
 
         // On recupère le bouton de recherche
@@ -169,7 +197,6 @@ filtrer.addEventListener('click', () => {
             try {
                 let criteres = [];
                 recupCheckbox(champs_action, criteres);
-                recupChampsDate(champs_date, criteres);
 
                 // On vérifie la présence de critères
                 if(criteres.length === 0) {
@@ -232,6 +259,13 @@ rechercher.addEventListener('click', () => {
                 index: 1
             }
         ];
+        const champs_date = {
+            index: 2,
+            champs : [
+                document.getElementById('filtre-date-max'),
+                document.getElementById('filtre-date-min')
+            ]
+        };
 
         // On recupère le bouton de recherche
         const bouton = document.getElementById('lancer-recherche');
@@ -244,6 +278,7 @@ rechercher.addEventListener('click', () => {
             // On récupère la liste de critères
             let criteres = [];
             recupChamps(champs_infos, criteres);
+            recupChampsDate(champs_date, criteres);
 
             // On vérifie la présence de critères
             if(criteres.length === 0) {

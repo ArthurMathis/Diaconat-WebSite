@@ -15,15 +15,15 @@
     border-radius: var(--font-size-small);
     transform: translateY(-50%);
 }
-.liste_items .table-wrapper table tbody tr.demission th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.candidat th:first-of-type::before {
     background-color: var(--nontraitee);
 }
 .liste_items .table-wrapper table tbody tr.utilisateur th:first-of-type::before {
     background-color: var(--enattente);
 }
-.liste_items .table-wrapper table tbody tr.candidat th:first-of-type::before {
+.liste_items .table-wrapper table tbody tr.candidature th:first-of-type::before {
     background-color: var(--acceptee);
 }
-.liste_items .table-wrapper table tbody tr.refus th:first-of-type::before{
+.liste_items .table-wrapper table tbody tr.fondation th:first-of-type::before{
     background-color: var(--refusee);
 }
