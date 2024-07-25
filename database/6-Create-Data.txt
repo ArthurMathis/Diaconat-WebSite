@@ -143,8 +143,8 @@ INSERT INTO types (Intitule_Types) VALUES
     
     -- Fondation --
     ('Nouveau pôle'), 
-    ('Nouvel établissement'), 
     ('Nouveau service'), 
+    ('Nouvel établissement'), 
     ('Nouveau poste'), 
     ('Nouveau diplome')
 ;

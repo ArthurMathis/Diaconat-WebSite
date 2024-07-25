@@ -120,7 +120,6 @@ class CandidatController extends Controller {
             'msg' => 'Le proposition a été générée',
             'direction' => 'index.php?candidats=' . $cle
         ]);
-        // header('Location: index.php?candidats=' . $cle);
     }
     /// Méthode publique préparant les données d'une candidature pour la génération d'une porposition d'embauche 
     public function createPropositionFromCandidature($cle_candidature, $propositions=[]) {

@@ -303,7 +303,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $this->writeLogs(
             $_SESSION['user_cle'], 
-            "Refus d'une candidature", 
+            "Refus candidature", 
             "Refus de la candidature de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . 
             " au poste de " . forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_candidature)['Cle_Postes'])['Intitule_Postes'])
         );
@@ -319,7 +319,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $this->writeLogs(
             $_SESSION['user_cle'], 
-            "Refus d'une proposition", 
+            "Refus proposition", 
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " refuse la proposition d'embauche au poste de " . 
             forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_proposition)['Cle_Postes'])['Intitule_Postes'])
         );
@@ -350,7 +350,6 @@ class CandidatsModel extends Model {
                 'title' => "Erreur lors de l'inscription de la proposition",
                 'msg' => $e
             ]);
-            // forms_manip::error_alert($e);
         }
         
         // On inscrit la proposition
@@ -413,7 +412,6 @@ class CandidatsModel extends Model {
             $contrat['cle instant'] = $instant;
             unset($instant);
             // On ajoute la clé poste
-            // $contrat['cle poste'] = is_numeric($contrat['poste']) ? $contrat['poste'] : $this->searchPoste($contrat['poste'])['Id_Postes'];
             $contrat['cle poste'] = $poste['Id_Postes'];
             // On ajoute la clé service
             $contrat['cle service'] = is_numeric($contrat['service']) ? $contrat['service'] : $this->searchService($contrat['service'])['Id_Services'];
@@ -1207,7 +1205,6 @@ class CandidatsModel extends Model {
 
         // On test la présence de la mission
         if(empty($mission)) {
-            echo "On inscript la mission<br>";
             // On inscrit la mission
             $this->inscriptMission($cle_service, $cle_poste);
         }

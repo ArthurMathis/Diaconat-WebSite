@@ -90,7 +90,7 @@ class CandidaturesController extends Controller {
         alert_manipulation::alert([
             'title' => 'Candidat inscript !',
             'msg' => strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom()) . " a bien été inscrit(e).",
-            'direction' => "index.php?=" . $candidat->getCle()
+            'direction' => "index.php?candidats=" . $candidat->getCle()
         ]);
     }
 }

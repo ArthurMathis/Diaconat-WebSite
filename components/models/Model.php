@@ -650,8 +650,7 @@ abstract class Model {
     /// Méthode protégée inscrivant un Proposer_a dans la base de données
     protected function inscriptProposer_a($cle_candidat, $cle_instant) {
         // On initialise la requête
-        $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) 
-        VALUES (:candidat, :instant)";
+        $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) VALUES (:candidat, :instant)";
         $params = [
             'candidat' => $cle_candidat,
             'instant' => $cle_instant
