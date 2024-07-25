@@ -279,6 +279,36 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
+    public function getPolesContent(&$items=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste pôles', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'poles_barre.php';
+        $this->getListesItems("Pôles", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/pole-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
 
     /// Méthode publique retournant la vue saisie utilisateur
     public function getSaisieUtilisateur(&$role) {
@@ -335,6 +365,21 @@ class PreferencesView extends View {
 
         // On ajoute le formulaire de'inscription
         include FORMULAIRES.DS.'inscription-etablissements.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
+    /// Méthode pubique retournant la vue de siasise d'un établissement
+    public function getSaisiePole() {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Diaconat - Inscription pôle', [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateFormMenu();
+
+        // On ajoute le formulaire de'inscription
+        include FORMULAIRES.DS.'inscription-pole.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

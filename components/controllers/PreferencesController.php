@@ -51,8 +51,13 @@ class PreferencesController extends Controller {
     }
     /// Méthode publique retournant la page Etablissements
     public function displayEtablissements() {
-        $etablissements = $this->Model->getetablissements();
+        $etablissements = $this->Model->getEtablissements();
         return $this->View->getEtablissementsContent($etablissements);
+    }
+    /// Méthode publique retournant la page Pôles
+    public function displayPoles() {
+        $pole = $this->Model->getPoles();
+        return $this->View->getPolesContent($pole);
     }
 
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
@@ -71,6 +76,10 @@ class PreferencesController extends Controller {
     /// Méthode publique retournant le formulaire de saisie d'un nouvel établissement
     public function displaySaisieEtablissement() {
         return $this->View->getSaisieEtablissement();
+    }
+    /// Méthode publique retournant le formulaire de saisie d'un nouveau pole
+    public function displaySaisiePole() {
+        return $this->View->getSaisiePole();
     }
 
     /// Méthode publique mettant à jour le mot de passe de l'utilisateur actuel
@@ -137,6 +146,16 @@ class PreferencesController extends Controller {
             'title' => 'Opération réussie',
             'msg' => "Nouveau établissement enregistré !",
             'direction' => 'index.php?preferences=liste-etablissements'
+        ]);
+    }
+    /// Méthode publique générant un nouveau pôle
+    public function createPole(&$intitule, &$description) {
+        // On génère le nouvel établissement
+        $this->Model->createPole($intitule, $description);
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "Nouveau pôle enregistré !",
+            'direction' => 'index.php?preferences=liste-poles'
         ]);
     }
 }

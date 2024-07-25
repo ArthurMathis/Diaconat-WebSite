@@ -31,6 +31,7 @@
             <a <?php if($_GET['preferences'] == "liste-services") echo 'class="selected"'; ?> href="index.php?preferences=liste-services">Services</a>
             <a <?php if($_GET['preferences'] == "liste-etablissements") echo 'class="selected"'; ?> href="index.php?preferences=liste-etablissements">Etablissements</a>
             <a <?php if($_GET['preferences'] == "liste-poles") echo 'class="selected"'; ?> href="index.php?preferences=liste-poles">Pôles</a>
+            <a <?php if($_GET['preferences'] == "liste-diplomes") echo 'class="selected"'; ?> href="index.php?preferences=liste-diplomes">Diplômes</a>
             <a <?php if($_GET['preferences'] == "autres") echo 'class="selected"'; ?> href="index.php?preferences=autres">Autres</a>
         </content>
     </article>

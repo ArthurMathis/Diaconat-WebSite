@@ -910,13 +910,57 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la listes des pôles de la fondation
             case 'liste-poles':
-                echo 'listes des pôles';
+                $preferences->displayPoles();
                 break;
 
+            // On affiche le formulaire d'ajout d'un pôle
+            case 'saisie-pole':
+                $preferences->displaySaisiePole();
+                break;
+                
+            // On inscrit un nouveau pôle
+            case 'inscription-pole':
+                // On récupère les données du formulaire
+                try {
+                    $intitule = $_POST['intitule'];
+                    $desc = $_POST['description'];
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du pôle",
+                        'msg' => $e
+                    ]);
+                }
+
+                // On vérifie l'intégrité des données
+                try {
+                    if(empty($intitule))
+                        throw new Exception("Le champs intitulé doit être rempli !");
+                    elseif(empty($desc))
+                        throw new Exception("Le champs description doit être rempli !");
+
+                } catch(Exception $e) {  
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du pôle",
+                        'msg' => $e
+                    ]);
+                }
+
+                // On inscrit le pôle
+                $preferences->createPole($intitule, $desc);
+                break;    
+
             // On affiche la liste des diplômes    
-            case 'diplome': 
+            case 'liste-diplomes': 
                 echo 'Diplômes';
                 break;
+                
+            // On affiche le formulaire d'ajout d'un diplome
+            case 'saisie-diplome':
+                break;
+                
+            // On inscrit un nouveau diplome
+            case 'inscript-diplome':
+                break;    
 
             // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    
             case 'autres':

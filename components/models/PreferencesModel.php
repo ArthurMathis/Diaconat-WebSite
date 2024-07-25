@@ -225,6 +225,21 @@ class PreferencesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
+    /// Méthode publique retournant les pôles de la base de données
+    public function getPoles() {
+        // On initialise la requête
+        $request = "SELECT 
+        Intitule_Poles AS Intitulé,
+        Description_Poles AS Description,
+        COUNT(e.Id_Etablissements) AS `Nombre d'établissements`
+
+        FROM Poles AS p
+        LEFT JOIN Etablissements AS e ON e.Cle_Poles = p.Id_Poles
+        GROUP BY p.Id_Poles, p.Intitule_Poles, p.Description_Poles";
+
+        // On lance la requête
+        return $this->get_request($request);
+    }
 
     /// Méthode publique générant un nouvel Utilisateur
     public function createUser(&$infos=[]) {
@@ -288,6 +303,18 @@ class PreferencesModel extends Model {
             $_SESSION['user_cle'],
             "Nouvel établissement",
             "Ajout de l'établissement " . $infos['intitule']
+        );
+    }
+    /// Méthode publique générant un nouveau pôle
+    public function createPole(&$intitule, &$description) {
+        // On inscrit le pôle
+        $this->inscriptPole($intitule, $description);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Nouveau pôle",
+            "Ajout du pôle " . $intitule
         );
     }
     /// Méthode publique vérifiant le mot de passe de l'utilisateur

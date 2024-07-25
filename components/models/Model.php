@@ -726,6 +726,18 @@ abstract class Model {
         // On lance
         $this->post_request($request, $params);
     }
+    /// Méthode protégée inscrivant un nouveau pôle dans la base de données
+    protected function inscriptPole(&$intitule, &$description) {
+        // On initialise la requête 
+        $request = "INSERT INTO Poles (Intitule_Poles, Description_Poles) VALUES (:intitule, :desc)";
+        $params = [
+            'intitule' => $intitule,
+            'desc' => $description
+        ];
+
+        // On lance
+        $this->post_request($request, $params);
+    }
 
     /// Méthode publique mettant à jour le mot de passe d'un utilisateur
     public function updatePassword(&$password) {
