@@ -9,7 +9,9 @@ CREATE TABLE Poles (
 CREATE TABLE Etablissements (
     Id_Etablissements INTEGER AUTO_INCREMENT PRIMARY KEY,
     Intitule_Etablissements VARCHAR(64) NOT NULL UNIQUE,
-    Adresse_Etablissements VARCHAR(256) UNIQUE,
+    Adresse_Etablissements VARCHAR(256),
+    Ville_Etablissements VARCHAR(64),
+    CodePostal_Etablissements INTEGER,
     Description_Etablissements TEXT, 
 
     Cle_Poles INTEGER NOT NULL,

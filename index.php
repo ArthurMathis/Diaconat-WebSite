@@ -687,7 +687,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On récupère les éventuelles erreurs    
     } catch(Exception $e) {
         forms_manip::error_alert([
-            'title' => "Erreur lors de la redirection de la page",
             'msg' => $e
         ]);
     } 
@@ -698,19 +697,20 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     $preferences = new PreferencesController();
 
     // On sélectionne l'action
-    switch($_GET['preferences']) {
-        // On affiche la page d'accueil
-        case 'home':
+    try {
+        switch($_GET['preferences']) {
+            // On affiche la page d'accueil
+            case 'home':
             $preferences->display(); 
             break;    
 
-        // On affiche le formulaire de mise-à-jour du mot de passe    
-        case 'edit-password':
+            // On affiche le formulaire de mise-à-jour du mot de passe    
+            case 'edit-password':
             $preferences->displayEdit();
             break; 
             
-        // On met-à-jour le mot de passe de l'utilisateur    
-        case 'update-password':
+            // On met-à-jour le mot de passe de l'utilisateur    
+            case 'update-password':
             // On vérifie l'intégrité des données du formulaire
             try {
                 if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
@@ -730,18 +730,18 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $preferences->updatePassword($_POST['password'], $_POST['new-password']);
             break;    
    
-        // On affiche la liste des utilisateurs
-        case 'liste-utilisateurs':
+            // On affiche la liste des utilisateurs
+            case 'liste-utilisateurs':
             $preferences->displayUtilisateurs();
             break;
 
-        // On affiche le formulaire d'ajout d'utilisateurs
-        case 'saisie-utilisateur':
+            // On affiche le formulaire d'ajout d'utilisateurs
+            case 'saisie-utilisateur':
             $preferences->displaySaisieUtilisateur();
             break;    
 
-        // On inscrit un nouvel utilisateur
-        case 'inscription-utilisateur':
+            // On inscrit un nouvel utilisateur
+            case 'inscription-utilisateur':
             // On récupère les données du formulaire
             try {
                 $infos = [
@@ -771,40 +771,40 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 forms_manip::error_alert([
                     'title' => "Erreur lors de l'incription du nouvel utilisateur", 
                     'msg' => $e
-            ]);
+                ]);
             }
 
             // On génère le nouvel utilisateur
             $preferences->createUtilisateur($infos);
             break;    
 
-        // On affiche la liste des nouveaux utilisateurs
-        case 'liste-nouveaux-utilisateurs':
+            // On affiche la liste des nouveaux utilisateurs
+            case 'liste-nouveaux-utilisateurs':
             $preferences->displayNouveauxUtilisateurs();
             break;    
             
-        // On affiche l'historique de connexions des utilisateurs
-        case 'connexion-historique':
+            // On affiche l'historique de connexions des utilisateurs
+            case 'connexion-historique':
             $preferences->displayConnexionHistorique();
             break;  
             
-        // On affiche l'historique d'actions des utilisateurs
-        case 'action-historique':
+            // On affiche l'historique d'actions des utilisateurs
+            case 'action-historique':
             $preferences->displayActionHistorique();
             break;    
 
-        // On affiche la liste des postes de la fondation    
-        case 'liste-postes':
+            // On affiche la liste des postes de la fondation    
+            case 'liste-postes':
             $preferences->displayPostes();
             break;
 
-        // On affiche le formulaire d'ajout de poste    
-        case 'saisie-poste':
+            // On affiche le formulaire d'ajout de poste    
+            case 'saisie-poste':
             $preferences->displaySaisiePoste();
             break;    
 
-        // On inscrit un nouveau poste
-        case 'inscription-poste':
+            // On inscrit un nouveau poste
+            case 'inscription-poste':
             // On récupère les informations du formulaire
             try {
                 $infos = [
@@ -827,18 +827,18 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $preferences->createPoste($infos);
             break;
 
-        // On affiche la liste des services de la fondation
-        case 'liste-services':
+            // On affiche la liste des services de la fondation
+            case 'liste-services':
             $preferences->displayServices();
             break;
 
-        // On affiche le formulaire d'ajout de service
-        case 'saisie-service': 
+            // On affiche le formulaire d'ajout de service
+            case 'saisie-service': 
             $preferences->displaySaisieService();
             break;
 
-        // On inscrit un nouveau service
-        case 'inscription-service':
+            // On inscrit un nouveau service
+            case 'inscription-service':
             try {
                 $service = $_POST['service'];
                 $etablissement = $_POST['etablissement'];
@@ -856,28 +856,33 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $preferences->createService($service, $etablissement);
             break;   
             
-        // On affiche la liste des établissements de la fondation
-        case 'liste-etablissements':
-            echo 'listes des établissements';
-            break;
-            
-        // On affiche la listes des pôles de la fondation
-        case 'liste-poles':
-            echo 'listes des pôles';
-            break;
-            
-        // On affiche la liste des diplômes    
-        case 'diplome': 
-            echo 'Diplômes';
-            break;
-            
-        // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    
-        case 'autres':
-            echo 'autres';
-            break;    
+            // On affiche la liste des établissements de la fondation
+            case 'liste-etablissements':
+                $preferences->displayEtablissements();
+                break;
 
-        default: 
+            // On affiche la listes des pôles de la fondation
+            case 'liste-poles':
+                echo 'listes des pôles';
+                break;
+
+            // On affiche la liste des diplômes    
+            case 'diplome': 
+                echo 'Diplômes';
+                break;
+
+            // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    
+            case 'autres':
+                echo 'autres';
+                break;    
+
+            default: 
             throw new Exception("L'action n'a pas pu être identifiée !");
+        }
+    } catch(Exception $e) {
+        forms_manip::error_alert([
+            'msg' => $e
+        ]);
     }
 
 } elseif(isset($_SESSION['user_cle'])) {

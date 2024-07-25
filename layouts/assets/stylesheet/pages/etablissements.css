@@ -1,0 +1,27 @@
+ 
+.liste_items .table-wrapper table th:nth-of-type(5) {
+    padding-left: var(--padding);
+}
+.liste_items .table-wrapper table th:nth-of-type(5)::before {
+    content: "";
+    position: absolute;
+    left: var(--margin);
+    top: 50%;
+  
+    display: block;
+    width: var(--font-size-small);
+    height: var(--font-size-small);
+    z-index: 0;
+    
+    border-radius: var(--font-size-small);
+    transform: translateY(-50%);
+}
+.liste_items .table-wrapper table tbody tr.pspdsa th:nth-of-type(5)::before {
+    background-color: var(--enattente);
+}
+.liste_items .table-wrapper table tbody tr.pspdca th:nth-of-type(5)::before {
+    background-color: var(--nontraitee);
+}
+.liste_items .table-wrapper table tbody tr.pspdna th:nth-of-type(5)::before {
+    background-color: var(--acceptee);
+}

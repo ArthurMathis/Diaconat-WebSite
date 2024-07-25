@@ -49,6 +49,11 @@ class PreferencesController extends Controller {
         $poste = $this->Model->getServices();
         return $this->View->getServicesContent($poste);
     }
+    /// Méthode publique retournant la page Etablissements
+    public function displayEtablissements() {
+        $etablissements = $this->Model->getetablissements();
+        return $this->View->getEtablissementsContent($etablissements);
+    }
 
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
     public function displaySaisieUtilisateur() {

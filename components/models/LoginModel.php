@@ -69,7 +69,6 @@ class LoginModel extends Model {
                         'title' => "Erreur d'identification",
                         'msg' => $e
                     ]);
-                    // forms_manip::error_alert("Erreur d'identification", $e);
                 }
 
                 // On retourne notre utilisateur, la connexion est validée

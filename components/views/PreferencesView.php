@@ -188,7 +188,7 @@ class PreferencesView extends View {
     /// Méthode publique retournant la liste des postes
     public function getPostesContent(&$items=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+        $this->generateCommonHeader('Ypopsi - Liste postes', [
             PAGES_STYLES.DS.'preferences.css', 
             PAGES_STYLES.DS.'liste-page.css'
         ]);
@@ -199,7 +199,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'poste_barre.php';
+        include BARRES.DS.'postes_barre.php';
         $this->getListesItems("Postes", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -219,7 +219,7 @@ class PreferencesView extends View {
     /// Méthode publique retournant la liste des services
     public function getServicesContent(&$items=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
+        $this->generateCommonHeader('Ypopsi - Liste services', [
             PAGES_STYLES.DS.'preferences.css', 
             PAGES_STYLES.DS.'liste-page.css'
         ]);
@@ -230,7 +230,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'service_barre.php';
+        include BARRES.DS.'services_barre.php';
         $this->getListesItems("Services", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -241,6 +241,38 @@ class PreferencesView extends View {
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/service-controller.js'
+        ];
+        include(SCRIPTS.DS.'import-scripts.php');
+
+        // On ajoute le pied de page  
+        $this->generateCommonFooter();
+    }
+    /// Méthode publique retournant la liste des établissements
+    public function getEtablissementsContent(&$items=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader('Ypopsi - Liste établissements', [
+            PAGES_STYLES.DS.'preferences.css', 
+            PAGES_STYLES.DS.'liste-page.css',
+           PAGES_STYLES.DS.'etablissements.css'
+        ]);
+
+        // On ajoute les barres de navigation
+        $this->generateMenu();
+
+        echo '<content>';
+        include(MY_ITEMS.DS.'preferences.php');
+        echo '<main id="historique">';
+        include BARRES.DS.'etablissements_barre.php';
+        $this->getListesItems("Services", $items, null, "main-liste");
+        echo '</main>';
+        echo '</content>';
+
+        // On importe les scripts JavaScript
+        $scripts = [
+            'views/liste-views.js',
+            'models/liste-model.js',
+            'models/objects/Liste.js',
+            'controllers/etablissement-controller.js'
         ];
         include(SCRIPTS.DS.'import-scripts.php');
 
