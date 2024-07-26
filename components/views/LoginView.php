@@ -8,7 +8,7 @@ class LoginView extends View {
         $this->generateCommonHeader('Diaconat - Connexion', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true, false, false);
 
         // On ajoute le formulaire de connexion
         include FORMULAIRES.DS.'connexion.php';

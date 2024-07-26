@@ -1,10 +1,15 @@
-<nav class="nav-barre" id="barre-de-navigation">
+<?php if($form): ?>
+    <nav class="form-barre" id="barre-de-navigation">
+        <img id="illustration_bulle" src="layouts/assets/img/bulle.svg">
+<?php else: ?>
+    <nav class="nav-barre" id="barre-de-navigation">
+<?php endif ?>            
     <h1>Ypopsi</h1>
     <div class="section-logo">
-        <a class="LignesHover" href="index.php">
+        <a class="LignesHover" href="index.php" <?php if($home == false) :?>style="display: none"<?php endif; ?>>
             <img  src="layouts\assets\img\logo\home.svg" alt="Logo de la page d'accueil, représenté par une maison">
         </a>
-        <div id="bouton-menu" class="LignesHover">
+        <div id="bouton-menu" class="LignesHover"<?php if($menu == false): ?>style="display: none"<?php endif; ?>>
             <img  class="LignesHover"src="layouts\assets\img\logo\menu.svg" alt="Logo du menu, représenté par un burger">
         </div>
     </div>

@@ -286,7 +286,7 @@ class CandidatsView extends View {
         [FORMS_STYLES.DS.'small-form.css', FORMS_STYLES.DS.'edit-notation.css']);
 
         // On ajoute les barres de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de connexion
         include EDIT_FORM.DS.'notation.php';
@@ -306,7 +306,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader('Ypopsi - Modification de ' . forms_manip::majusculeFormat($item['candidat']['nom']) . ' ' . $item['candidat']['prenom'], [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute les barres de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de connexion
         include EDIT_FORM.DS.'candidat.php';
@@ -323,7 +323,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
         
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'proposition.php';
@@ -338,7 +338,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'proposition-from-candidature.php';
@@ -353,7 +353,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'proposition-from-empty-candidature.php';
@@ -368,7 +368,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'contrats.php';
@@ -383,7 +383,7 @@ class CandidatsView extends View {
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu(true);
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'rendez-vous.php';

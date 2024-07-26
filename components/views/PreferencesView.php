@@ -319,7 +319,7 @@ class PreferencesView extends View {
         $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'utilisateur.php';
@@ -334,7 +334,7 @@ class PreferencesView extends View {
         $this->generateCommonHeader('Diaconat - Inscription poste', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'poste.php';
@@ -349,7 +349,7 @@ class PreferencesView extends View {
         $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'service.php';
@@ -364,7 +364,7 @@ class PreferencesView extends View {
         $this->generateCommonHeader('Diaconat - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'etablissements.php';
@@ -379,7 +379,7 @@ class PreferencesView extends View {
         $this->generateCommonHeader('Diaconat - Inscription pôle', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
-        $this->generateFormMenu();
+        $this->generateMenu(true);
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'pole.php';
