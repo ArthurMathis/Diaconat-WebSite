@@ -1,24 +1,20 @@
 <form class="big-form" method="post" action="index.php?candidats=inscript-contrats&cle_candidat=<?= $cle_candidat; ?>">
     <div class="form-container">
+        <h3>Saisissez les informations du contrat</h3>
         <section>
-            <h2>Emploi</h2>
+            <p>Informations du poste</p>
             <input type="text" id="poste" name="poste" placeholder="Poste">
             <input type="text" id="service" name="service" placeholder="Services">
             <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats">
         </section>
         <section>
-            <h2>Durée du contrat</h2>
-            <div class="input-container">
-                <label for="date_debut">Date de début</label>
-                <input type="date" name="date_debut" id="date_debut">
-            </div>
-            <div class="input-container">
-                <label for="date_fin">Date de fin</label>
-                <input type="date" name="date_fin" id="date_fin">
-            </div>
+            <label for="date_debut">Date de début</label>
+            <input type="date" name="date_debut" id="date_debut">
+            <label for="date_fin">Date de fin</label>
+            <input type="date" name="date_fin" id="date_fin">
         </section>
         <section>
-            <h2>Horaires et rémunérations</h2>
+            <p>Horaires et rémunérations</p>
             <input type="number" id="salaire_mensuel" name="salaire_mensuel" placeholder="salaire mensuel">
             <input type="number" id="taux_horaire_hebdomadaire" name="taux_horaire_hebdomadaire" placeholder="taux horaire hebdomadaire">
             <div class="checkbox-liste">

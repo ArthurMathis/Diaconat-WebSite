@@ -1,7 +1,10 @@
 <form method="post" action="index.php?candidats=inscript-rendez-vous&cle_candidat=<?= $cle_candidat; ?>">
     <h3>Saissisez les informations du rendez-vous</h3>
-    <input type="text" id="recruteur" name="recruteur" placeholder="Recruteur">
-    <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
+    <section>
+        <input type="text" id="recruteur" name="recruteur" placeholder="Recruteur">
+        <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
+    </section>
+    
     <div class="double-items">
         <div class="input-container" style="width: 55%">
             <label for="date">Date</label>

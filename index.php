@@ -15,7 +15,7 @@ session_start();
 // On récupère les infos de connexion à la base de données
 env_start();
 
-include(COMMON.DS.'entete.php');
+// include(COMMON.DS.'entete.php');
 
 if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On libère la mémoire
@@ -1038,4 +1038,4 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     $c->displayLogin();
 }
 
-include(COMMON.DS.'footer.php');
+// include(COMMON.DS.'footer.php');

@@ -4,6 +4,33 @@ body {
     overflow: hidden;
 }
 
+.big-form {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+  
+    height: 85dvh;
+    padding: var(--padding) 0;
+  
+    border-radius: var(--big-radius) var(--big-radius) 0 0;
+  
+    transform: translateX(-50%);
+}
+  .big-form section {
+    padding: 0 var(--padding);
+  }
+  .big-form .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: var(--padding);
+  
+    padding-bottom: var(--gap);
+  
+    overflow-y: scroll;
+  }
+
 form {
     width: 860px;
 }

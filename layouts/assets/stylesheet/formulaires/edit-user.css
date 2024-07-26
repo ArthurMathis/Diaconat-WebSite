@@ -30,6 +30,9 @@ form h3 {
     margin-top: var(--margin);
     color: var(--black);
 }
+form p {
+    color: var(--black);
+}
 form section {
     display: flex;
     flex-direction: column;

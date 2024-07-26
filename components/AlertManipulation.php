@@ -22,8 +22,10 @@ class alert_manipulation {
             $infos['text button'] = "Compris";
 
 
-        // On lance l'alerte    
+        // On lance l'alerte   
+        include(COMMON.DS.'entete.php');
         include(COMMON.DS.'alert.php');
+        include(COMMON.DS.'footer.php');
         exit;
     }
 }
