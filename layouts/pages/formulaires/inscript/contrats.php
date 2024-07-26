@@ -7,11 +7,15 @@
             <input type="text" id="service" name="service" placeholder="Services">
             <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats">
         </section>
-        <section>
-            <label for="date_debut">Date de début</label>
-            <input type="date" name="date_debut" id="date_debut">
-            <label for="date_fin">Date de fin</label>
-            <input type="date" name="date_fin" id="date_fin">
+        <section class="double-items">
+            <div class="input-container">
+                <label for="date_debut">Date de début</label>
+                <input type="date" name="date_debut" id="date_debut">
+            </div>
+            <div class="input-container">
+                <label for="date_fin">Date de fin</label>
+                <input type="date" name="date_fin" id="date_fin">
+            </div>  
         </section>
         <section>
             <p>Horaires et rémunérations</p>

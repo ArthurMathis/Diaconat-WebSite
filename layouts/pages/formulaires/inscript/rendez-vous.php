@@ -6,15 +6,15 @@
         <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
     </section>
     
-    <div class="double-items">
-        <div class="input-container" style="width: 55%">
+    <section class="double-items">
+        <div class="input-container">
             <label for="date">Date</label>
             <input type="date" name="date" id="date">
         </div>
-        <div class="input-container" style="width: 45%">
+        <div class="input-container">
             <label for="time">Horaire</label>
             <input type="time" name="time" id="time">
         </div>
-    </div>
+    </section>
     <button type="submit" value="new_user">Enregistrer</button>
 </form>

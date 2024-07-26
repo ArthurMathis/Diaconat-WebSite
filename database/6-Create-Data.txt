@@ -172,7 +172,7 @@ INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Ema
 ;
 
 INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats, Notations_Candidats,Descriptions_Candidats, A_Candidats, B_Candidats, C_Candidats) VALUES
-    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', TRUE, '3', "Elément dynamique et motivé. S'exprime bien, à conseiller !", TRUE, FALSE, TRUE)
+    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', TRUE, '3', "Recommandé !", TRUE, FALSE, TRUE)
 ;
 
 

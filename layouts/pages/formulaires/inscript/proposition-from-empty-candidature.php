@@ -1,4 +1,4 @@
-<form class="small-form" method="post" action="index.php?candidats=inscript-propositions-from-candidatures&cle_candidature=<?= $cle_candidature; ?>">
+<form class="small-form" method="post" action="index.php?candidats=inscript-propositions-from-empty-candidatures&cle_candidature=<?= $cle_candidature; ?>">
     <h3>Saissisez les informations de la proposition</h3>
     <section>
             <p>Service et établissement</p>
