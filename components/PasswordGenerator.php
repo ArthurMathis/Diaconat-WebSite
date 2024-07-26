@@ -5,7 +5,7 @@ class PasswordGenerator {
     static public $majuscule = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     static public $minuscule = 'abcdefghijklmnopqrstuvwxyz';
     static public $chiffres = '0123456789';
-    static public $special = '!@#$%&*()_+-={}[]:;,.?~';
+    static public $special = '!@-_?';
 
     public static function random_password(): string {
         $all = PasswordGenerator::$majuscule .PasswordGenerator::$minuscule . PasswordGenerator::$chiffres;
@@ -18,7 +18,7 @@ class PasswordGenerator {
         $password .= PasswordGenerator::$special[rand(0, strlen(PasswordGenerator::$special) - 1)];
 
         // Ajouter des caractères aléatoires jusqu'à atteindre la longueur minimale de 8
-        for ($i = 4; $i <= 12; $i++) {
+        for ($i = 4; $i <= 8; $i++) {
             $password .= $all[rand(0, strlen($all) - 1)];
         }
 
@@ -27,13 +27,4 @@ class PasswordGenerator {
 
         return $password;
     }
-    // public static function random_password(&$name, &$first_name): ?string {
-    //     if(!is_string($name) || !is_string($first_name)) {
-    //         throw new Exception('Erreur lors de la génération du mot de passe standart. Le nom et le prénom doivent être des chaines de caractères !');
-    //         return null;
-    //     }
-    //     
-    //     $temp = str_split($first_name, 1);
-    //     return strtoupper(str_split($name, 1)[0]) . strtolower($temp[0]) . strtolower($temp[1]) . strtolower($temp[2]) . '-123';
-    // }
 }
