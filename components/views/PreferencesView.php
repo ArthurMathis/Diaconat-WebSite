@@ -52,7 +52,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main>';
-        include(EDIT_FORM.DS.'user.php');
+        include(EDIT_FORM.DS.'mot-de-passe.php');
         echo '</amin>';
         echo '</content>';
 

@@ -31,7 +31,7 @@ aside {
 
     padding: var(--padding);
 
-    border-radius: 0 var(--big-radius) 0 0;
+    border-radius: 0 var(--extra-radius) 0 0;
     background-color: var(--blue);
 }
 aside * {

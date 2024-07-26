@@ -1,14 +1,15 @@
 <form class="big-form" method="post" action="index.php?preferences=get-inscription-utilisateur">
     <div class="form-container">
+        <h3>Saissiez les informations du nouvel utilisateurs</h3>
         <section>
-            <h2>Informations personnelles</h2>
+            <p>Informations personnelles</p>
             <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
             <input type="text" id="nom" name="nom" placeholder="Nom">
             <input type="text" id="prenom" name="prenom" placeholder="Prénom">
             <input type="text" id="email" name="email" placeholder="Adresse mail">
         </section>
         <section>
-            <h2>Statut</h2>
+            <p>Statut</p>
             <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
             <select name="role">
                 <?php foreach($role as $r): ?>

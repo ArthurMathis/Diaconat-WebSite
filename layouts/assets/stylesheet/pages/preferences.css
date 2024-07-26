@@ -27,7 +27,7 @@ body > content > aside {
 
     padding: var(--padding) var(--gap);
 
-    border-radius: 0 85px 0 0;
+    border-radius: 0 var(--extra-radius) 0 0;
     background-color: var(--blue);
 }
 body > content > aside article {
@@ -170,7 +170,7 @@ body > content > main .options_barre {
 
     padding: var(--padding);
 
-    border-radius: 60px;
+    border-radius: var(--big-radius);
     box-shadow: var(--small-bulle-shadow);
     background-color: var(--white);
 }
