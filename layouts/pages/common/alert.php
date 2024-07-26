@@ -31,25 +31,12 @@
             <?php endif; ?>    
         });
     </script>
-
-    <style>
-        .custom-actions {
-            display: flex;
-            justify-content: center;
-            gap: 10px; 
-            flex-direction: row-reverse; 
-        }
-
-        b {
-            font-family: "Roboto Bold";
-        }
-    </style>
 <?php else: ?>
     <?php if(isset($infos['button'])): ?>
     <script>
         Swal.fire({
             title: "<?= $infos['title']; ?>",
-            text: "<?= $infos['msg']; ?>",
+            html: "<?= $infos['msg']; ?>",
             icon: "<?= $infos['icon']; ?>",
             backdrop: false,
             customClass: {
@@ -72,7 +59,7 @@
     <script>
         Swal.fire({
             title: "<?= $infos['title']; ?>",
-            text: "<?= $infos['msg']; ?>",
+            html: "<?= $infos['msg']; ?>",
             icon: "<?= $infos['icon']; ?>",
             backdrop: false,
             showConfirmButton: false,
@@ -95,3 +82,16 @@
     </script>
     <?php endif; ?>
 <?php endif; ?>
+
+<style>
+    .custom-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px; 
+        flex-direction: row-reverse; 
+    }
+
+    b {
+        font-family: "Roboto Bold";
+    }
+</style>

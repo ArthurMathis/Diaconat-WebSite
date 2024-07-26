@@ -2,6 +2,9 @@
 
 require_once('View.php');
 
+/**
+ * @brief Class générant les pages du menu préférences
+ */
 class PreferencesView extends View {
     /// Méthode publique retournant la page principale du menu préférences
     public function getContent($items=[]) {
@@ -49,7 +52,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main>';
-        include(FORMULAIRES.DS.'edit-user.php');
+        include(EDIT_FORM.DS.'user.php');
         echo '</amin>';
         echo '</content>';
 
@@ -84,7 +87,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/preferences-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -116,7 +119,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/nouveaux-utilisateurs-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -148,7 +151,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/connexion-historique-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -180,7 +183,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/action-historique-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -211,7 +214,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/poste-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -242,7 +245,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/service-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -274,7 +277,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/etablissement-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -304,7 +307,7 @@ class PreferencesView extends View {
             'models/objects/Liste.js',
             'controllers/pole-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -319,7 +322,7 @@ class PreferencesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription-utilisateur.php';
+        include INSCRIPT_FORM.DS.'utilisateur.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -334,7 +337,7 @@ class PreferencesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription-poste.php';
+        include INSCRIPT_FORM.DS.'poste.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -349,7 +352,7 @@ class PreferencesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription-service.php';
+        include INSCRIPT_FORM.DS.'service.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -364,7 +367,7 @@ class PreferencesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription-etablissements.php';
+        include INSCRIPT_FORM.DS.'etablissements.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -379,7 +382,7 @@ class PreferencesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription-pole.php';
+        include INSCRIPT_FORM.DS.'pole.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

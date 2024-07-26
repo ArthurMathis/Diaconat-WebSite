@@ -24,7 +24,7 @@ class CandidaturesView extends View {
             'models/objects/Liste.js',
             'controllers/candidatures-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -39,19 +39,8 @@ class CandidaturesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription_candidats.php';
+        include INSCRIPT_FORM.DS.'candidats.php';
         include FORMULAIRES.DS.'waves.php';
-
-        // On ajoute le pied de page
-        $this->generateCommonFooter();
-    }
-    /// Méthode publique retournant le formulaire de recherche d'un candidat
-    public function getRechercheCandidatContent($title) {
-        // On ajoute l'entete de page
-        $this->generateCommonHeader($title, [FORMS_STYLES.DS.'saisie-candidatures.css']);
-
-        // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'recherche_candidats.php';
 
         // On ajoute le pied de page
         $this->generateCommonFooter();
@@ -65,7 +54,7 @@ class CandidaturesView extends View {
         $this->generateFormMenu();
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'inscription_candidatures.php';
+        include INSCRIPT_FORM.DS.'candidatures.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page

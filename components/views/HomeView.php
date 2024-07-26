@@ -24,7 +24,7 @@ class HomeView extends View {
             'models/liste-model.js',
             'controllers/home-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();

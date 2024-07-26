@@ -45,7 +45,7 @@ class View {
     }
 
 
-    public function generateCommonHeader($name=null, $cssFiles = []) {
+    public function generateCommonHeader($name=null, $cssFiles=[]) {
         include COMMON.DS.'entete.php';
     }
     public function generateCommonFooter() {

@@ -21,8 +21,9 @@ define('PAGES', LAYOUTS.DS.'pages');
 define('BARRES', PAGES.DS.'barres');
 define('COMMON', PAGES.DS.'common');
 define('FORMULAIRES', PAGES.DS.'formulaires');
+define('EDIT_FORM', FORMULAIRES.DS.'edit');
+define('INSCRIPT_FORM', FORMULAIRES.DS.'inscript');
 define('MY_ITEMS', PAGES.DS.'my items');
-define('SCRIPTS', PAGES.DS.'import scripts');
 
 // Les sources
 define('STYLESHEET', ASSETS.DS.'stylesheet');

@@ -250,7 +250,7 @@ class CandidatsView extends View {
         $scripts = [
             'views/candidats-view.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // include(SCRIPTS.DS.'import-candidats.php');
 
@@ -274,7 +274,7 @@ class CandidatsView extends View {
             'models/objects/Liste.js',
             'controllers/candidats-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -289,14 +289,14 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de connexion
-        include FORMULAIRES.DS.'edit-notation.php';
+        include EDIT_FORM.DS.'notation.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On importe les scripts JavaScript
         $scripts = [
             'controllers/edit-notation-controller.js'
         ];
-        include(SCRIPTS.DS.'import-scripts.php');
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page  
         $this->generateCommonFooter();
@@ -309,7 +309,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de connexion
-        include FORMULAIRES.DS.'edit-candidat.php';
+        include EDIT_FORM.DS.'candidat.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page  
@@ -326,7 +326,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
         
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'proposition.php';
+        include INSCRIPT_FORM.DS.'proposition.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -341,7 +341,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'proposition_from_candidature.php';
+        include INSCRIPT_FORM.DS.'proposition-from-candidature.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -356,7 +356,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'proposition_from_empty_candidature.php';
+        include INSCRIPT_FORM.DS.'proposition-from-empty-candidature.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -371,7 +371,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'contrats.php';
+        include INSCRIPT_FORM.DS.'contrats.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
@@ -386,7 +386,7 @@ class CandidatsView extends View {
         $this->generateFormMenu(true);
 
         // On ajoute le formulaire de'inscription
-        include FORMULAIRES.DS.'rendez_vous.php';
+        include INSCRIPT_FORM.DS.'rendez-vous.php';
         include FORMULAIRES.DS.'waves.php';
 
         // On ajoute le pied de page
