@@ -7,8 +7,8 @@
             backdrop: false,
             focusConfirm: false,
             showCancelButton: true,
-            cancelButtonText: <?php echo isset($infos['deleteButton']) ? $infos['deleteButton'] : '"Annuler"'; ?>,
-            confirmButtonText: <?php echo isset($infos['confirmButton']) ? $infos['confirmButton'] : '"Confirmer"'; ?>,
+            cancelButtonText: '<?php echo isset($infos['deleteButton']) ? $infos['deleteButton'] : 'Annuler'; ?>',
+            confirmButtonText: '<?php echo isset($infos['confirmButton']) ? $infos['confirmButton'] : 'Confirmer'; ?>',
             customClass: {
                 popup: 'notification',
                 title: 'notification-title',

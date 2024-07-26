@@ -20,7 +20,17 @@ include(COMMON.DS.'entete.php');
 if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On libère la mémoire
     unset($_SESSION['first log in']);
-    header('Location: index.php?preferences=edit-password');
+    // header('Location: index.php?preferences=edit-password');
+    alert_manipulation::alert([
+        'title' => "Information importante",
+        'msg' => "<p>Bienvenu, c'est votre première connexion !</p><p>Vous devez <b>modifier votre mot de passe</b> au plus vite. Vous pouvez choisir de le faire dés à présent ou à votre prochaine connexion.</p>",
+        'icon' => 'info',
+        'confirm' => true,
+        'direction' => 'index.php?preferences=edit-password',
+        'back' => 'index.php',
+        'deleteButton' => 'la prochaine fois',
+        'confirmButton' => 'le changer'
+    ]);
     
 } elseif(isset($_GET['login'])) {
     // On déclare le controller de connexions
@@ -701,127 +711,89 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
         switch($_GET['preferences']) {
             // On affiche la page d'accueil
             case 'home':
-            $preferences->display(); 
-            break;    
+                $preferences->display(); 
+                break;    
 
             // On affiche le formulaire de mise-à-jour du mot de passe    
             case 'edit-password':
-            $preferences->displayEdit();
-            break; 
+                $preferences->displayEdit();
+                break; 
             
             // On met-à-jour le mot de passe de l'utilisateur    
             case 'update-password':
-            // On vérifie l'intégrité des données du formulaire
-            try {
-                if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
-                    throw new Exception('Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
-                elseif($_POST['new-password'] != $_POST['confirmation'])
-                    throw new Exception('Le nouveau mot de passe et sa confirmation doivent être identiques !');
+                // On vérifie l'intégrité des données du formulaire
+                try {
+                    if(empty($_POST['password']) || empty($_POST['new-password']) || empty($_POST['confirmation']))
+                        throw new Exception('Tous les champs doivent être rempli pour mettre le mot de passe à jour !');
+                    elseif($_POST['new-password'] != $_POST['confirmation'])
+                        throw new Exception('Le nouveau mot de passe et sa confirmation doivent être identiques !');
 
-            // On récupère les éventuelles erreurs        
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de la mise-à-jour du mot de passe", 
-                    'msg' => $e
-                ]);
-            }
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de la mise-à-jour du mot de passe", 
+                        'msg' => $e
+                    ]);
+                }
 
-            // On met-à-jour le mot de passe
-            $preferences->updatePassword($_POST['password'], $_POST['new-password']);
-            break;    
+                // On met-à-jour le mot de passe
+                $preferences->updatePassword($_POST['password'], $_POST['new-password']);
+                break;    
    
             // On affiche la liste des utilisateurs
             case 'liste-utilisateurs':
-            $preferences->displayUtilisateurs();
-            break;
+                $preferences->displayUtilisateurs();
+                break;
 
             // On affiche le formulaire d'ajout d'utilisateurs
             case 'saisie-utilisateur':
-            $preferences->displaySaisieUtilisateur();
-            break;    
-
-            // // On inscrit un nouvel utilisateur
-            // case 'inscription-utilisateur':
-            //     // On récupère les données du formulaire
-            //     try {
-            //         $infos = [
-            //             'identifiant' => $_POST['identifiant'],
-            //             'nom' => $_POST['nom'],
-            //             'prenom' => $_POST['prenom'],
-            //             'email' => $_POST['email'],
-            //             'etablissement' => $_POST['etablissement'],
-            //             'role' => $_POST['role']
-            //         ];
-            //         
-            //         if(empty($infos['identifiant']))
-            //             throw new Exception("Le champs identifiant doit être rempli.");
-            //         elseif(empty($infos['nom']))
-            //             throw new Exception("Le champs nom doit être rempli.");
-            //         elseif(empty($infos['prenom']))
-            //             throw new Exception("Le champs prenom doit être rempli.");
-            //         elseif(empty($infos['email']))
-            //             throw new Exception("Le champs email doit être rempli.");
-            //             elseif(empty($infos['etablissement']))
-            //             throw new Exception("Le champs étabissement doit être rempli.");
-            //         elseif(empty($infos['role']))
-            //             throw new Exception("Le champs role doit être rempli.");
-            // 
-            //     // On récupère les éventuelles erreurs        
-            //     } catch(Exception $e) {
-            //         forms_manip::error_alert([
-            //             'title' => "Erreur lors de l'incription du nouvel utilisateur", 
-            //             'msg' => $e
-            //         ]);
-            //     }
-            // 
-            //     // On génère le nouvel utilisateur
-            //     $preferences->createUtilisateur($infos);
-            //     break;  
+                $preferences->displaySaisieUtilisateur();
+                break;     
 
             // On prépare l'inscritpion du nouvel utilisateur
             case 'get-inscription-utilisateur':
-            // On récupère les données du formulaire
-            try {
-                $infos = [
-                    'identifiant' => $_POST['identifiant'],
-                    'nom' => $_POST['nom'],
-                    'prenom' => $_POST['prenom'],
-                    'email' => $_POST['email'],
-                    'etablissement' => $_POST['etablissement'],
-                    'role' => $_POST['role']
-                ];
-                
-                if(empty($infos['identifiant']))
-                    throw new Exception("Le champs identifiant doit être rempli.");
-                elseif(empty($infos['nom']))
-                    throw new Exception("Le champs nom doit être rempli.");
-                elseif(empty($infos['prenom']))
-                    throw new Exception("Le champs prenom doit être rempli.");
-                elseif(empty($infos['email']))
-                    throw new Exception("Le champs email doit être rempli.");
-                elseif(empty($infos['etablissement']))
-                    throw new Exception("Le champs étabissement doit être rempli.");
-                elseif(empty($infos['role']))
-                    throw new Exception("Le champs role doit être rempli.");
+                // On récupère les données du formulaire
+                try {
+                    $infos = [
+                        'identifiant' => $_POST['identifiant'],
+                        'nom' => $_POST['nom'],
+                        'prenom' => $_POST['prenom'],
+                        'email' => $_POST['email'],
+                        'etablissement' => $_POST['etablissement'],
+                        'role' => $_POST['role']
+                    ];
 
-            // On récupère les éventuelles erreurs        
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'incription du nouvel utilisateur", 
-                    'msg' => $e
+                    if(empty($infos['identifiant']))
+                        throw new Exception("Le champs identifiant doit être rempli.");
+                    elseif(empty($infos['nom']))
+                        throw new Exception("Le champs nom doit être rempli.");
+                    elseif(empty($infos['prenom']))
+                        throw new Exception("Le champs prenom doit être rempli.");
+                    elseif(empty($infos['email']))
+                        throw new Exception("Le champs email doit être rempli.");
+                    elseif(empty($infos['etablissement']))
+                        throw new Exception("Le champs étabissement doit être rempli.");
+                    elseif(empty($infos['role']))
+                        throw new Exception("Le champs role doit être rempli.");
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'incription du nouvel utilisateur", 
+                        'msg' => $e
+                    ]);
+                }
+
+                // ON génère le mot de passe de l'utilisateur
+                $infos['mot de passe'] = PasswordGenerator::random_password();
+                $_SESSION['new user data'] = $infos;
+                alert_manipulation::alert([
+                    'title' => "Information importante",
+                    'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <b> ". $infos['mot de passe'] . "</b> .<br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
+                    'direction' => 'index.php?preferences=inscription-utilisateur',
+                    'confirm' => true
                 ]);
-            }
-
-            // ON génère le mot de passe de l'utilisateur
-            $infos['mot de passe'] = PasswordGenerator::random_password();
-            $_SESSION['new user data'] = $infos;
-            alert_manipulation::alert([
-                'title' => "Information importante",
-                'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <b> ". $infos['mot de passe'] . "</b> .<br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
-                'direction' => 'index.php?preferences=inscription-utilisateur',
-                'confirm' => true
-            ]);
-            break;  
+                break;  
             
             // On inscrit un nouvel utilisateur
             case 'inscription-utilisateur':
@@ -863,81 +835,81 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la liste des nouveaux utilisateurs
             case 'liste-nouveaux-utilisateurs':
-            $preferences->displayNouveauxUtilisateurs();
-            break;    
+                $preferences->displayNouveauxUtilisateurs();
+                break;    
             
             // On affiche l'historique de connexions des utilisateurs
             case 'connexion-historique':
-            $preferences->displayConnexionHistorique();
-            break;  
+                $preferences->displayConnexionHistorique();
+                break;  
             
             // On affiche l'historique d'actions des utilisateurs
             case 'action-historique':
-            $preferences->displayActionHistorique();
-            break;    
+                $preferences->displayActionHistorique();
+                break;    
 
             // On affiche la liste des postes de la fondation    
             case 'liste-postes':
-            $preferences->displayPostes();
-            break;
+                $preferences->displayPostes();
+                break;
 
             // On affiche le formulaire d'ajout de poste    
             case 'saisie-poste':
-            $preferences->displaySaisiePoste();
-            break;    
+                $preferences->displaySaisiePoste();
+                break;    
 
             // On inscrit un nouveau poste
             case 'inscription-poste':
-            // On récupère les informations du formulaire
-            try {
-                $infos = [
-                    'poste' => $_POST['poste'],
-                    'description' => $_POST['description']
-                ];
-                
-                if(empty($infos['poste']))
-                    throw new Exception("Le champs poste doit être rempli !");
-                if(empty($infos['description']))
-                    throw new Exception("Le champs description doit être rempli !");
+                // On récupère les informations du formulaire
+                try {
+                    $infos = [
+                        'poste' => $_POST['poste'],
+                        'description' => $_POST['description']
+                    ];
 
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription du nouveau poste", 
-                    'msg' => $e
-                ]);
-            }
+                    if(empty($infos['poste']))
+                        throw new Exception("Le champs poste doit être rempli !");
+                    if(empty($infos['description']))
+                        throw new Exception("Le champs description doit être rempli !");
 
-            $preferences->createPoste($infos);
-            break;
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du nouveau poste", 
+                        'msg' => $e
+                    ]);
+                }
+
+                $preferences->createPoste($infos);
+                break;
 
             // On affiche la liste des services de la fondation
             case 'liste-services':
-            $preferences->displayServices();
-            break;
+                $preferences->displayServices();
+                break;
 
             // On affiche le formulaire d'ajout de service
             case 'saisie-service': 
-            $preferences->displaySaisieService();
-            break;
+                $preferences->displaySaisieService();
+                break;
 
             // On inscrit un nouveau service
             case 'inscription-service':
-            try {
-                $service = $_POST['service'];
-                $etablissement = $_POST['etablissement'];
-      
-                if(empty($service) || empty($etablissement))
-                    throw new Exception("Les champs service est établissements doivent être remplis !");
+                try {
+                    $service = $_POST['service'];
+                    $etablissement = $_POST['etablissement'];
+                
+                    if(empty($service) || empty($etablissement))
+                        throw new Exception("Les champs service est établissements doivent être remplis !");
 
-            } catch (Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription du nouveau service",
-                    'msg' => $e
-                ]);
-            }
+                } catch (Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du nouveau service",
+                        'msg' => $e
+                    ]);
+                }
 
-            $preferences->createService($service, $etablissement);
-            break;   
+                $preferences->createService($service, $etablissement);
+                break;   
             
             // On affiche la liste des établissements de la fondation
             case 'liste-etablissements':
