@@ -59,34 +59,34 @@ class CandidaturesModel extends Model {
         }
 
 
-        if($diplomes != null) {
-            // On récupère la liste des diplomes
-            $temp = [];
-
-            foreach($diplomes as $obj) {
-                echo "On recherche " . $obj . "<br>";
-                // Si un diplome est saisi
-                if(!empty($obj) && strlen($obj) > 0) {
-                    // On recherche dans la base de données
-                    $search = $this->searchDiplome($obj);
-
-                    if(empty($search)) {
-                        // On ajoute le nouveau diplome à la base de données
-                        $this->createDiplome($obj);
-
-                        // On récupère le diplome
-                        $search = $this->searchDiplome($obj);
-                    }
-
-                    $temp[] = $search;
-                }
-            }
-
-            // On gère la mémoire allouée
-            unset($diplomes);
-            $diplomes = $temp;
-            unset($temp);
-        }
+        // if($diplomes != null) {
+        //     // On récupère la liste des diplomes
+        //     $temp = [];
+        // 
+        //     foreach($diplomes as $obj) {
+        //         echo "On recherche " . $obj . "<br>";
+        //         // Si un diplome est saisi
+        //         if(!empty($obj) && strlen($obj) > 0) {
+        //             // On recherche dans la base de données
+        //             $search = $this->searchDiplome($obj);
+        // 
+        //             if(empty($search)) {
+        //                 // On ajoute le nouveau diplome à la base de données
+        //                 $this->createDiplome($obj);
+        // 
+        //                 // On récupère le diplome
+        //                 $search = $this->searchDiplome($obj);
+        //             }
+        // 
+        //             $temp[] = $search;
+        //         }
+        //     }
+        // 
+        //     // On gère la mémoire allouée
+        //     unset($diplomes);
+        //     $diplomes = $temp;
+        //     unset($temp);
+        // }
 
         // On ajoute la visite médical
         $candidat->setVisite($visite_medicale);

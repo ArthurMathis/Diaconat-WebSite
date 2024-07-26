@@ -265,28 +265,7 @@ form .checkbox-liste .checkbox-item label {
   
   text-wrap: nowrap;
 }
-/*
-.form-container > section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: calc(var(--gap) * 2 / 3);
 
-  width: 100%;
-  height: fit-content;
-
-  padding: 0 var(--padding);
-}
-  */
-  /*
-form .LignesHover, form a {
-  font-family: "Roboto";
-  color: var(--white);
-}
-form .LignesHover::after, form a::after {
-  background-color: var(--white);
-}
-  */
 #waves {
   position: fixed;
   bottom: 0;
@@ -446,6 +425,7 @@ button.cancel_button:is(:hover, :focus),
 }
 .circle_button.reverse_color {
   border: 2px solid var(--white);
+  background-color: transparent;
 }
 .circle_button img {
   width: calc(var(--margin) * 3 / 2);
@@ -458,6 +438,26 @@ button.cancel_button:is(:hover, :focus),
   box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.25);
 }
 
+.form_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: var(--padding);
+
+  border: 2px solid var(--white);
+  border-radius: var(--small-radius);
+  background-color: var(--white);
+
+  box-shadow: none;
+  will-change: box-shadow;
+  transition: 150ms ease box-shadow;
+}
+.form_button:is(:hover, :focus) {
+  background-color: var(--white);
+  box-shadow: 0 0 0 5px rgba(254, 254, 254, 0.25);
+}
 
 /******** Notifications ********/
 .notification {

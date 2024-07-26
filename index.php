@@ -126,11 +126,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     'ville' => forms_manip::nameFormat($_POST["ville"]), 
                     'code_postal' => $_POST['code-postal']
                 ];
-                $diplomes = [
-                    $_POST["diplome-1"], 
-                    $_POST["diplome-2"], 
-                    $_POST["diplome-3"]
-                ];
+                $diplomes = $_POST["diplomes"];
                 $aide               = $_POST["aide"];
                 $visite_medicale    = $_POST["visite_medicale"];
 
@@ -785,7 +781,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 $_SESSION['new user data'] = $infos;
                 alert_manipulation::alert([
                     'title' => "Information importante",
-                    'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <b> ". $infos['mot de passe'] . "</b> .<br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
+                    'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <br><b> ". $infos['mot de passe'] . "</b><br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
                     'direction' => 'index.php?preferences=inscription-utilisateur',
                     'confirm' => true
                 ]);

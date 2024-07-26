@@ -5,7 +5,7 @@ class PasswordGenerator {
     static public $majuscule = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     static public $minuscule = 'abcdefghijklmnopqrstuvwxyz';
     static public $chiffres = '0123456789';
-    static public $special = '!@-_?';
+    static public $special = '!@-_?#';
 
     public static function random_password(): string {
         $all = PasswordGenerator::$majuscule .PasswordGenerator::$minuscule . PasswordGenerator::$chiffres;
