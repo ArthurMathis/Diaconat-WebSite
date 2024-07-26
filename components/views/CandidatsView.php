@@ -263,7 +263,7 @@ class CandidatsView extends View {
 
         // On ajoute les barres de navigation
         $this->generateMenu();
-        include BARRES.DS.'liste_candidats_barre.php';
+        include BARRES.DS.'liste-candidats.php';
 
         $this->getListesItems($titre, $items, null, 'main-liste');
 

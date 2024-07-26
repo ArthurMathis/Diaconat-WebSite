@@ -6,10 +6,10 @@ class View {
 
     /// Constructeur de la classe
     public function __construct() {
-        $this->menu = $this->makeMenuListe(null);
+        $this->menu = $this->makeMenuListe();
     }
     /// Méthode privée générant la liste d'onglet duu menu selon le rôle de l'utilisateur
-    private function makeMenuListe($role) {
+    private function makeMenuListe() {
         return [
             [
                 "intitule" => "Accueil",

@@ -75,7 +75,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="liste-utilisateurs">';
-        include BARRES.DS.'utilisateurs_barre.php';
+        include BARRES.DS.'utilisateurs.php';
         $this->getListesItems("Utilisateurs", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -107,7 +107,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="liste-utilisateurs">';
-        include BARRES.DS.'nouveaux_utilisateurs_barre.php';
+        include BARRES.DS.'nouveaux-utilisateurs.php';
         $this->getListesItems("Utilisateurs", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -139,7 +139,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'connexion_historique_barre.php';
+        include BARRES.DS.'connexion-historique.php';
         $this->getListesItems("Historique de connexions", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -171,7 +171,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'action_historique_barre.php';
+        include BARRES.DS.'action-historique.php';
         $this->getListesItems("Historique d'actions", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -202,7 +202,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'postes_barre.php';
+        include BARRES.DS.'postes.php';
         $this->getListesItems("Postes", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -233,7 +233,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'services_barre.php';
+        include BARRES.DS.'services.php';
         $this->getListesItems("Services", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -265,7 +265,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'etablissements_barre.php';
+        include BARRES.DS.'etablissements.php';
         $this->getListesItems("Etablissements", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
@@ -295,7 +295,7 @@ class PreferencesView extends View {
         echo '<content>';
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="historique">';
-        include BARRES.DS.'poles_barre.php';
+        include BARRES.DS.'poles.php';
         $this->getListesItems("Pôles", $items, null, "main-liste");
         echo '</main>';
         echo '</content>';
