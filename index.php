@@ -24,7 +24,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     alert_manipulation::alert([
         'title' => "Information importante",
         'msg' => "<p>Bienvenu, c'est votre première connexion !</p><p>Vous devez <b>modifier votre mot de passe</b> au plus vite. Vous pouvez choisir de le faire dés à présent ou à votre prochaine connexion.</p>",
-        'icon' => 'info',
+        'icon' => 'warning',
         'confirm' => true,
         'direction' => 'index.php?preferences=edit-password',
         'back' => 'index.php',

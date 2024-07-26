@@ -25,9 +25,22 @@ class LoginModel extends Model {
     }
     /// Méthode publique déconnectant un utilisateur de l'application 
     public function deconnectUser() {
-        if(isset($_SESSION['user_cle']) && !empty($_SESSION['user-cle']))
-            $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
-        session_destroy();
+        try {
+            // On enregistre les logs
+            if(isset($_SESSION['user_cle']) && !empty($_SESSION['user_cle']))
+                $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
+            else 
+                throw new Exception("Inscription des logs impossible. Les données de l'utilisateur sont introuvables...");
+
+            // On détruit la session    
+            session_destroy();
+    
+        } catch(Exception $e) {
+            forms_manip::error_alert([
+                'msg' => $e,
+                'direction' => 'index.php'
+            ]);
+        }
     }
 
     /// Méthode privée recherchant parmis les utilisateurs de la base de données les informations de l'utilisateur actuel

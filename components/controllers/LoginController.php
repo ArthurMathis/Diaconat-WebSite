@@ -30,6 +30,11 @@ class LoginController extends Controller {
     /// Méthode publique déconnectant un utilisateur à l'application
     public function closeSession() {
         $this->Model->deconnectUser();
-        header('Location: index.php');
+        alert_manipulation::alert([
+            'title' => 'Déconnexion réussie',
+            'msg' => 'A bientot !',
+            'direction' => 'index.php'
+        ]);
+        // header('Location: index.php');
     }
 }
