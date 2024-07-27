@@ -3,7 +3,13 @@
     <section>
         <p>Informations relatives à la fondation</p>
         <input type="text" id="intitule" name="intitule" placeholder="Intitulé">
-        <input type="text" id="pole" name="pole" placeholder="Pôle">
+        <select id="pole" name="pole">
+            <?php foreach($poles as $c): ?>
+                <option value="<?= $c['Intitulé']; ?>">
+                    <?= $c['Intitulé']; ?>
+                </option>
+            <?php endforeach ?>    
+        </select>
     </section>
     <section>
         <p>Localisation</p>

@@ -314,12 +314,17 @@ class PreferencesView extends View {
     }
 
     /// Méthode publique retournant la vue saisie utilisateur
-    public function getSaisieUtilisateur(&$role) {
+    public function getSaisieUtilisateur(&$role, &$etablissements=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'utilisateur.php';
@@ -344,12 +349,17 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la vue saisie d'un service
-    public function getSaisieService() {
+    public function getSaisieService(&$etablissements=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'service.php';
@@ -359,7 +369,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode pubique retournant la vue de siasise d'un établissement
-    public function getSaisieEtablissement() {
+    public function getSaisieEtablissement(&$poles=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
 
@@ -373,7 +383,7 @@ class PreferencesView extends View {
         // On ajoute le pied de page
         $this->generateCommonFooter();
     }
-    /// Méthode pubique retournant la vue de siasise d'un établissement
+    /// Méthode pubique retournant la vue de siasie d'un établissement
     public function getSaisiePole() {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription pôle', [FORMS_STYLES.DS.'small-form.css']);

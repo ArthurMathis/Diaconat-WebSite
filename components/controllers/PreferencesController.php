@@ -26,8 +26,9 @@ class PreferencesController extends Controller {
     }
     /// Méthode publique retournant la page de nouvels utilisateurs
     public function displayNouveauxUtilisateurs() {
-        $items = $this->Model->getNouveauxUtilisateurs();
-        return $this->View->getNouveauxUtilisateursContent($items);
+        return $this->View->getNouveauxUtilisateursContent(
+            $this->Model->getNouveauxUtilisateurs()
+        );
     }
     /// Méthode publique retournant la page Historique
     public function displayConnexionHistorique() {
@@ -62,8 +63,10 @@ class PreferencesController extends Controller {
 
     /// Méthode publique retournant le formulaire d'inscription d'un utilisateur
     public function displaySaisieUtilisateur() {
-        $role = $this->Model->getRoles();
-        return $this->View->getSaisieUtilisateur($role);
+        return $this->View->getSaisieUtilisateur(
+            $this->Model->getRoles(),
+            $this->Model->getAutoCompletEtablissements()
+        );
     }
     /// Méthode publique retournant le formulaire de saisie d'un nouveau poste
     public function displaySaisiePoste() {
@@ -71,11 +74,15 @@ class PreferencesController extends Controller {
     }
     /// Méthode publique retournant le formulaire de saisie d'un nouveau service
     public function displaySaisieService() {
-        return $this->View->getSaisieService();
+        return $this->View->getSaisieService(
+            $this->Model->getAutoCompletEtablissements()
+        );
     }
     /// Méthode publique retournant le formulaire de saisie d'un nouvel établissement
     public function displaySaisieEtablissement() {
-        return $this->View->getSaisieEtablissement();
+        return $this->View->getSaisieEtablissement(
+            $this->Model->getPoles()
+        );
     }
     /// Méthode publique retournant le formulaire de saisie d'un nouveau pole
     public function displaySaisiePole() {

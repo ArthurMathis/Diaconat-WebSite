@@ -3,9 +3,18 @@
         <h3>Saisissez les informations du contrat</h3>
         <section>
             <p>Informations du poste</p>
-            <input type="text" id="poste" name="poste" placeholder="Poste">
-            <input type="text" id="service" name="service" placeholder="Services">
-            <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats">
+            <div class="autocomplete">
+                <input type="text" id="poste" name="poste" placeholder="Poste" autocomplete="off">
+                <article></article>
+            </div>
+            <div class="autocomplete">
+                <input type="text" id="service" name="service" placeholder="Services" autocomplete="off">
+                <article></article>
+            </div>
+            <div class="autocomplete">
+                <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats" autocomplete="off">
+                <article></article>
+            </div>
         </section>
         <section class="double-items">
             <div class="input-container">
@@ -37,3 +46,34 @@
         </section>
     </div>
 </form>
+
+
+<script>
+    console.log('On lance la récupération des tableaux PHP.');
+
+    // On récupère la liste des postes depuis PHP
+    const postes = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Postes'];
+    }, $poste)); ?>;
+    console.log(postes);
+
+    // On récupère la liste des services depuis PHP
+    const services = <?php echo json_encode(array_map(function($c) { 
+        return $c['Intitule_Services']; 
+    }, $service)); ?>;
+    console.log(services);
+
+    // On récupère la liste des types de contrat depuis PHP
+    const typeContrat = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Types_de_contrats'];
+    }, $typeContrat)); ?>;
+    console.log(typeContrat);
+
+    // On récupère la liste 
+    console.log('Récupération des ressources terminées.');
+
+    console.log('Mise en place des AutoComplet');
+    new AutoComplete(document.getElementById('poste'), postes);
+    new AutoComplete(document.getElementById('service'), services);
+    new AutoComplete(document.getElementById('type_contrat'), typeContrat);
+</script>

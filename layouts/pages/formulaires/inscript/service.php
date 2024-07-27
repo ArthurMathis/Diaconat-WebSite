@@ -3,7 +3,27 @@
     <section>
         <p>Informations relatives à la fondation</p>
         <input type="text" id="service" name="service" placeholder="Service">
-        <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
+        <div class="autocomplete">
+            <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
+            <article></article>
+        </div>
     </section>
     <button type="submit" class="submit_button" value="new_user">Valider</button>
 </form>
+
+<script>
+    console.log('On lance la récupération des tableaux PHP.');  
+
+    // On récupère la liste des établissements depuis PHP
+    const etablissements = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Etablissements'];
+    }, $etablissements)); ?>;
+    console.log(etablissements);    
+
+    // On récupère la liste 
+    console.log('Récupération des ressources terminées.');
+
+    console.log('Mise en place des AutoComplet');
+    new AutoComplete(document.getElementById('etablissement'), etablissements);
+
+</script>

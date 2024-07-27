@@ -3,9 +3,18 @@
     <h3>Saissisez les informations de la proposition</h3>
         <section>
                 <p>Service et établissement</p>
-                <input type="text" id="poste" name="poste" placeholder="Poste">
-                <input type="text" id="service" name="service" placeholder="Services">
-                <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrats">
+                <div class="autocomplete">
+                    <input type="text" id="poste" name="poste" placeholder="Poste" autocomplete="off">
+                    <article></article>
+                </div>
+                <div class="autocomplete">
+                    <input type="text" id="service" name="service" placeholder="Services" autocomplete="off">
+                    <article></article>
+                </div>
+                <div class="autocomplete">
+                    <input type="text" id="type_contrat" name="type_contrat" placeholder="Type de contrat" autocomplete="off">
+                    <article></article>
+                </div>
             </section>
         <section class="double-items">
             <div class="input-container">
@@ -37,3 +46,52 @@
         </section>
     </div>
 </form>
+
+<script>
+    console.log('On lance la récupération des tableaux PHP.');  
+
+    // On récupère la liste des postes depuis PHP
+    const postes = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Postes'];
+    }, $poste)); ?>;
+    console.log(postes);    
+
+    // On récupère la liste des services depuis PHP
+    const services = <?php echo json_encode(array_map(function($c) { 
+        return $c['Intitule_Services']; 
+    }, $service)); ?>;
+    console.log(services);  
+
+    // On récupère la liste des types de contrat depuis PHP
+    const typeContrat = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Types_de_contrats'];
+    }, $typeContrat)); ?>;
+    console.log(typeContrat);
+
+    // On récupère la liste 
+    console.log('Récupération des ressources terminées.');
+
+    console.log('Mise en place des AutoComplet');
+    new AutoComplete(document.getElementById('poste'), postes);
+    new AutoComplete(document.getElementById('service'), services);
+    new AutoComplete(document.getElementById('type_contrat'), typeContrat);
+
+    // On ajuste le nombre de formulaire de date
+    const inputTypeContrat = document.getElementById('type_contrat');
+    const inputDateFin = document.getElementById('date fin').parentElement;
+    console.log(inputDateFin);
+
+    // Fonction pour vérifier le type de contrat et ajuster l'affichage de la date de fin
+    const checkContratType = () => {
+        if (inputTypeContrat.value.trim().toUpperCase() === 'CDI') {
+            inputDateFin.style.display = 'none';
+        } else {
+            inputDateFin.style.display = 'block';
+        }
+    };
+
+    // Écouteurs d'événements sur l'input type_contrat pour détecter les changements de valeur
+    inputTypeContrat.addEventListener('input', checkContratType);
+    // Écouteur d'événement pour capturer la sélection d'une option d'autocomplétion
+    inputTypeContrat.addEventListener('AutoCompleteSelect', checkContratType);
+</script>

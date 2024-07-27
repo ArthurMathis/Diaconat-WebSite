@@ -2,7 +2,10 @@
     <h3>Saissisez les informations de la proposition</h3>
     <section>
             <p>Service et établissement</p>
-            <input type="text" id="service" name="service" placeholder="Services">
+            <div class="autocomplete">
+            <input type="text" id="service" name="service" placeholder="Services" autocomplete="off">
+                <article></article>
+            </div>
         </section>
     <section class="double-items">
         <div class="input-container">
@@ -33,3 +36,19 @@
         <button type="submit" class="submit_button" value="new_user">Inscrire</button>
     </section>
 </form>
+
+<script>
+    console.log('On lance la récupération des tableaux PHP.'); 
+
+    // On récupère la liste des services depuis PHP
+    const services = <?php echo json_encode(array_map(function($c) { 
+        return $c['Intitule_Services']; 
+    }, $service)); ?>;
+    console.log(services);  
+
+    // On récupère la liste 
+    console.log('Récupération des ressources terminées.');
+
+    console.log('Mise en place des AutoComplet');
+    new AutoComplete(document.getElementById('service'), services);
+</script>

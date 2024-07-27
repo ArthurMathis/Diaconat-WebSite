@@ -55,6 +55,7 @@
                     item.innerHTML = suggestion;
                     item.addEventListener('click', () => {
                         this.inputElement.value = suggestion;
+                        this.inputElement.dispatchEvent(new Event('AutoCompleteSelect'));
                         this.closeAllLists();
                     });
                     console.log(item);
@@ -87,30 +88,6 @@
             if (e.target !== this.inputElement) 
                 this.closeAllLists();
         });
-    }
-
-    /**
-     * @function addActive
-     * @description Ajoute la classe 'autocomplete-active' à un élément de la liste de suggestions.
-     * @param {HTMLCollection} items - Collection des éléments de la liste de suggestions.
-     */
-    addActive(items) {
-        if (!items) return false;
-        this.removeActive(items);
-        if (this.currentFocus >= items.length) this.currentFocus = 0;
-        if (this.currentFocus < 0) this.currentFocus = items.length - 1;
-        items[this.currentFocus].classList.add('autocomplete-active');
-    }
-
-    /**
-     * @function removeActive
-     * @description Supprime la classe 'autocomplete-active' de tous les éléments de la liste de suggestions.
-     * @param {HTMLCollection} items - Collection des éléments de la liste de suggestions.
-     */
-    removeActive(items) {
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.remove('autocomplete-active');
-        }
     }
 
     /**

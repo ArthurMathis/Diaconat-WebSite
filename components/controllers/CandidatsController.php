@@ -31,25 +31,49 @@ class CandidatController extends Controller {
     }
     /// Méthode publique affichant le formulaire de saisie d'une proposition
     public function getSaisieProposition($cle_candidat) {
-        return $this->View->getContentProposition("Ypopsi - Nouvelle proposition", $cle_candidat);
+        return $this->View->getContentProposition(
+            "Ypopsi - Nouvelle proposition", 
+            $cle_candidat,
+            $this->Model->getAutoCompPostes(),
+            $this->Model->getAutoCompServices(),
+            $this->Model->getAutoCompTypesContrat()
+        );
     }
     /// Méthode publique affichant le formulaire de saisie d'une proposition depuis une candidature
     public function getSaisiePropositionFromCandidature($cle_candidature) {
-        $type_candidature = $this->Model->getTypeContrat($cle_candidature);
-        return $this->View->getContentPropositionFromCandidatures("Ypopsi - Nouvelle proposition", $cle_candidature, $type_candidature);
+        return $this->View->getContentPropositionFromCandidatures(
+            "Ypopsi - Nouvelle proposition", 
+            $cle_candidature, 
+            $this->Model->getTypeContrat($cle_candidature)
+        );
     }
     /// Méthode publique affichant le formulaire de saisie d'une proposition depuis une candidature vide
     public function getSaisiePropositionFromEmptyCandidature($cle_candidature) {
-        $type_candidature = $this->Model->getTypeContrat($cle_candidature);
-        return $this->View->getContentPropositionFromEmptyCandidatures("Ypopsi - Nouvelle proposition", $cle_candidature, $type_candidature);
+        return $this->View->getContentPropositionFromEmptyCandidatures(
+            "Ypopsi - Nouvelle proposition depuis une candidature", 
+            $cle_candidature, 
+            $this->Model->getTypeContrat($cle_candidature),
+            $this->Model->getAutoCompServices()
+        );
     }
     /// Méthode publique affichant le formulaire de saisie d'un contrat
     public function getSaisieContrats($cle_candidat) {
-        return $this->View->getContentContrats("Ypopsi - Nouveau contrat", $cle_candidat);
+        return $this->View->getContentContrats(
+            "Ypopsi - Nouveau contrat", 
+            $cle_candidat,
+            $this->Model->getAutoCompPostes(),
+            $this->Model->getAutoCompServices(),
+            $this->Model->getAutoCompTypesContrat()
+        );
     }
     /// Méthode publique affichant le formulaire de saisie d'un rendez-cous
     public function getSaisieRendezVous($cle_candidat) {
-        return $this->View->GetContentRendezVous("Nouveau rendez-vous", $cle_candidat);
+        return $this->View->GetContentRendezVous(
+            "Nouveau rendez-vous", 
+            $cle_candidat, 
+            $this->Model->getAutoCompletUtilisateurs(),
+            $this->Model->getAutoCompletEtablissements()
+        );
     }
     /// Méthode publique affichant le formulaire d'édition d'une notation
     public function getEditNotation($cle_candidat) {
@@ -75,7 +99,6 @@ class CandidatController extends Controller {
             'msg' => 'La candidature a été rejettée',
             'direction' => 'index.php?candidats=' . $this->Model->searchCandidatFromCandidature($cle)['Id_Candidats']
         ]);
-        // header('Location: index.php?candidats=' . $this->Model->searchCandidatFromCandidature($cle)['Id_Candidats']);
     }
 
     /// Méthode publique donnant le statut acceptée à une candidature
@@ -87,7 +110,6 @@ class CandidatController extends Controller {
             'msg' => 'La proposition a été acceptée',
             'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
         ]);
-        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
     /// Méthode publique donnant le statut refusée à une candidature
     public function rejectProposition($cle) {
@@ -98,7 +120,6 @@ class CandidatController extends Controller {
             'msg' => 'La proposition a été rejettée',
             'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
         ]);
-        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
     /// Méthode publique ajoutant une demissione à un contrat
     public function demissioneContrat($cle) {
@@ -108,7 +129,6 @@ class CandidatController extends Controller {
             'msg' => 'Le candidat a démissioné de son contrat',
             'direction' => 'index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']
         ]);
-        // header('Location: index.php?candidats=' . $this->Model->searchcandidatFromContrat($cle)['Id_Candidats']);
     }
 
 
@@ -151,7 +171,6 @@ class CandidatController extends Controller {
             'msg' => 'Le contrat a été générée',
             'direction' => 'index.php?candidats=' . $cle_candidat
         ]);
-        // header('Location: index.php?candidats=' . $cle_candidats);
     }
     public function createRendezVous($cle_candidat, &$rendezvous=[]) {
         $this->Model->createRendezVous($cle_candidat, $rendezvous);
@@ -160,7 +179,6 @@ class CandidatController extends Controller {
             'msg' => 'Le rendez-vous a été générée',
             'direction' => 'index.php?candidats=' . $cle_candidat
         ]);
-        // header('Location: index.php?candidats=' . $cle_candidat);
     }
 
     /// Méthode publique mettant à jour la notation d'un candidat
@@ -178,7 +196,6 @@ class CandidatController extends Controller {
     public function updateCandidat($cle_candidat, &$candidat=[]) {
         $this->Model->makeUpdateCandidat($cle_candidat, $candidat);
         $this->Model->updateCandidatLogs($cle_candidat);
-        // header('Location: index.php?candidats=' . $cle_candidat);
         alert_manipulation::alert([
             'title' => "Candidat mise-à-jour",
             'msg' => "Vous avez mis-à-jour les données personnelles du candidat",
@@ -186,11 +203,9 @@ class CandidatController extends Controller {
         ]);
     }
 
-
     /// Méthode publique annulant un rendez-vous
     public function annulationRendezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
         $this->Model->annulationRendezVous($cle_utilisateur, $cle_candidat, $cle_instant);
-        // header('Location: index.php?candidats=' . $cle_candidat);
         alert_manipulation::alert([
             'title' => "Rendez-vous annulé",
             'msg' => "Vous avez annulé le rendez-vous du candidat",

@@ -58,9 +58,43 @@ abstract class Model {
     }
 
 
-
     // METHODES DE REQUETES A LA BASE DE DONNEES //
     
+    /// Méthode publique retournant la liste des postes pour l'autocomplétion
+    public function getAutoCompPostes() {
+        // On inititalise la requête
+        $request = "SELECT Intitule_Postes FROM Postes ORDER BY Intitule_Postes";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des services pour l'autocomplétion
+    public function getAutoCompServices() {
+        // On inititalise la requête
+        $request = "SELECT Intitule_Services FROM Services ORDER BY Intitule_Services";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
+    public function getAutoCompTypesContrat() {
+        // On initialise la requête
+        $request = "SELECT Intitule_Types_de_contrats FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des sources pour l'autocomplétion
+    public function getAutoCompSources() {
+        // On initialise la requête
+        $request = "SELECT Intitule_Sources FROM Sources ORDER BY Intitule_Sources";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+
+
+
     /// Méthode privée permettant de vérifier les paramètres fournis au fonction de requêtes
     private function test_data_request(&$request, &$params): bool {
         // On déclare une variable tampon
@@ -146,6 +180,25 @@ abstract class Model {
     
         // On retourne le résultat
         return $res;
+    }
+
+
+
+    /// Méthode publique retournant la liste des utilisateurs pour l'autocomp
+    public function getAutoCompletUtilisateurs() {
+        // On initialise la requête
+        $request = "SELECT Identifiant_Utilisateurs FROM Utilisateurs ORDER BY Identifiant_Utilisateurs";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des établissements pour l'autocomp
+    public function getAutoCompletEtablissements() {
+        // On initialise la requête
+        $request = "SELECT Intitule_Etablissements FROM Etablissements ORDER BY Intitule_Etablissements";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
     }
 
 

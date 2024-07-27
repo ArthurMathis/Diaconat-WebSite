@@ -42,17 +42,6 @@
             <button class="form_button" type="button" onClick="" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
-            <!--<input type="Date" id="visite medicale" name="visite medicale">-->
-            <!--<div class="checkbox-liste">
-                <div class="checkbox-item">
-                    <label for="visite_medicale_true">Visite en règle</label>
-                    <input type="radio" id="visite_medicale_true" name="visite_medicale" value="true"/>
-                </div>
-                <div class="checkbox-item">
-                    <label for="visite_medicale_false">Visible obselète</label>
-                    <input type="radio" id="visite_medicale_false" name="visite_medicale" value="false" checked/>
-                </div>
-            </div>-->
         </section>
         <section class="buttons_actions">
             <button type="submit" class="submit_button" value="new_user">Inscrire</button>

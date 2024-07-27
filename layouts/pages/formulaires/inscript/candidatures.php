@@ -2,39 +2,32 @@
     <h3>Saisissez les informations de la candidature</h3>
     <section>
         <p>Emploi</p>
-        <!--<input type="text" id="poste" name="poste" placeholder="Poste">-->
         <div class="autocomplete">
-            <input type="text" id="poste" name="poste" placeholder="Poste">
+            <input type="text" id="poste" name="poste" placeholder="Poste" autocomplete="off">
             <article></article>
         </div>
         <div class="autocomplete">
-            <input type="text" id="service" name="service" placeholder="Services">
+            <input type="text" id="service" name="service" placeholder="Services" autocomplete="off">
             <article></article>
         </div>
     </section>
     <section>
         <p>Infos</p>
         <div class="autocomplete">
-            <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat">
+            <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat" autocomplete="off">
             <article></article>
         </div>
+        <input type="Date" id="disponibilite" name="disponibilite"
         <div class="autocomplete">
-            <input type="Date" id="disponibilite" name="disponibilite"> 
+            <input type="text" id="source" name="source" placeholder="Sources" autocomplete="off">
             <article></article>
         </div>
-        <div class="autocomplete">
-            <input type="text" id="source" name="source" placeholder="Sources">
-            <article></article>
-        </div>
-        <!--<input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat">
-        <input type="Date" id="disponibilite" name="disponibilite">
-        <input type="text" id="source" name="source" placeholder="Sources">-->
     </section>
     <button type="submit" class="submit_button" value="new_user">Valider</button>
 </form>
 
 <script>
-    console.log('On lance la récupération du tableau de postes PHP.');
+    console.log('On lance la récupération des tableaux PHP.');
 
     // On récupère la liste des postes depuis PHP
     const postes = <?php echo json_encode(array_map(function($c) {
@@ -43,8 +36,8 @@
     console.log(postes);
 
     // On récupère la liste des services depuis PHP
-    const services = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Services'];
+    const services = <?php echo json_encode(array_map(function($c) { 
+        return $c['Intitule_Services']; 
     }, $service)); ?>;
     console.log(services);
 

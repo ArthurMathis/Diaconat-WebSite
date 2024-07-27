@@ -318,12 +318,17 @@ class CandidatsView extends View {
 
 
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
-    public function getContentProposition($title, $cle_candidat) {
+    public function getContentProposition($title, $cle_candidat, &$poste=[], &$service=[], &$typeContrat=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
         
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'proposition.php';
@@ -348,9 +353,14 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'une proposition selon une candidature sans service
-    public function getContentPropositionFromEmptyCandidatures($title, $cle_candidature, $statut_candidature) {
+    public function getContentPropositionFromEmptyCandidatures($title, $cle_candidature, $statut_candidature, &$service=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
@@ -363,12 +373,17 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'un contrat
-    public function getContentContrats($title, $cle_candidat) {
+    public function getContentContrats($title, $cle_candidat, &$poste=[], &$service=[], &$typeContrat=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'contrats.php';
@@ -378,12 +393,17 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant le formulaire d'ajout d'un contrat
-    public function GetContentRendezVous($title, $cle_candidat) {
+    public function GetContentRendezVous($title, &$cle_candidat, &$utilisateur=[], &$etablissement=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'rendez-vous.php';

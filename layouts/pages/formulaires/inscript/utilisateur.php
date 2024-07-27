@@ -10,7 +10,10 @@
         </section>
         <section>
             <p>Statut</p>
-            <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement">
+            <div class="autocomplete">
+                <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement" autocomplete="off">
+                <article></article>
+            </div>
             <select name="role">
                 <?php foreach($role as $r): ?>
                     <option value="<?= $r['id']; ?>">
@@ -24,3 +27,20 @@
         </section>
     </div>
 </form>
+
+<script>
+    console.log('On lance la récupération des tableaux PHP.');  
+
+    // On récupère la liste des établissements depuis PHP
+    const etablissements = <?php echo json_encode(array_map(function($c) {
+        return $c['Intitule_Etablissements'];
+    }, $etablissements)); ?>;
+    console.log(etablissements);    
+
+    // On récupère la liste 
+    console.log('Récupération des ressources terminées.');
+
+    console.log('Mise en place des AutoComplet');
+    new AutoComplete(document.getElementById('etablissement'), etablissements);
+
+</script>

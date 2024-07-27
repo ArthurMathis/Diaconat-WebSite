@@ -226,7 +226,7 @@ main section .rendez_vous_bulle {
 
     padding: calc(var(--gap) * 2 / 3);
 
-    border-radius: var(--margin);
+    border-radius: var(--radius);
     border: 2px solid var(--light-grey);
     background-color: var(--white);
     box-shadow: var(--small-bulle-shadow);

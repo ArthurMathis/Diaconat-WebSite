@@ -24,10 +24,10 @@ class CandidaturesController extends Controller {
     public function displaySaisieCandidature() {
         return $this->View->getSaisieCandidatureContent(
             "Ypopsi - Recherche d'un candidat", 
-            $this->Model->getPostes(),
-            $this->Model->getServices(),
-            $this->Model->getTypesContrat(),
-            $this->Model->getSources()
+            $this->Model->getAutoCompPostes(),
+            $this->Model->getAutoCompServices(),
+            $this->Model->getAutoCompTypesContrat(),
+            $this->Model->getAutoCompSources()
         );
     }
 
