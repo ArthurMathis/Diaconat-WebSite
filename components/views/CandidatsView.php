@@ -269,7 +269,7 @@ class CandidatsView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/candidats-controller.js'

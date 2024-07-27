@@ -158,21 +158,21 @@ INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Uti
 ;
 
 -- On insère les candidats --
-INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats) VALUES
-    ('Dupont', 'Jean', '01.23.45.67.89', 'jean.dupont@example.com', '123 Rue de la République', 'Paris', '75001', '2024-06-01', TRUE),
-    ('Martin', 'Lucie', '09.87.65.43.21', 'lucie.martin@example.com', '456 Avenue des Champs-Élysées', 'Paris', '75008', '2024-06-02', FALSE),
-    ('Bernard', 'Marie', '07.65.43.21.89', 'marie.bernard@example.com', '789 Boulevard Saint-Germain', 'Paris', '75006', '2024-06-03', TRUE),
-    ('Petit', 'Paul', '06.54.32.19.87', 'paul.petit@example.com', '321 Rue de Rivoli', 'Paris', '75004', '2024-06-04', FALSE),
-    ('Simon', 'Nathan', '01.23.45.68.00', 'nathan.simon@example.com', '1010 Rue Royale', 'Montpellier', '34000', '2024-06-19', FALSE),
-    ('Leclerc', 'Sophie', '01.23.45.68.01', 'sophie.leclerc@example.com', '111 Rue de la Liberté', 'Lyon', '69002', '2024-06-20', TRUE),
-    ('Thomas', 'Pierre', '01.23.45.68.02', 'pierre.thomas@example.com', '222 Avenue de la Gare', 'Marseille', '13002', '2024-06-21', FALSE),
-    ('Adam', 'Louise', '01.23.45.68.13', 'louise.adam@example.com', '333 Avenue de la Rivière', 'Marseille', '13003', '2024-07-02', TRUE),
-    ('Martin', 'Eva', '01.23.45.68.15', 'eva.martin@example.com', '555 Rue de la Plage', 'Lille', '59002', '2024-07-04', TRUE),
-    ('Andre', 'Tom', '01.23.45.68.30', 'tom.andre@example.com', '1010 Boulevard de la Pluie', 'Toulouse', '31003', '2024-07-19', FALSE)
+INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats) VALUES
+    ('Dupont', 'Jean', '01.23.45.67.89', 'jean.dupont@example.com', '123 Rue de la République', 'Paris', '75001', '2024-06-01'),
+    ('Martin', 'Lucie', '09.87.65.43.21', 'lucie.martin@example.com', '456 Avenue des Champs-Élysées', 'Paris', '75008', '2024-06-02'),
+    ('Bernard', 'Marie', '07.65.43.21.89', 'marie.bernard@example.com', '789 Boulevard Saint-Germain', 'Paris', '75006', '2024-06-03'),
+    ('Petit', 'Paul', '06.54.32.19.87', 'paul.petit@example.com', '321 Rue de Rivoli', 'Paris', '75004', '2024-06-04'),
+    ('Simon', 'Nathan', '01.23.45.68.00', 'nathan.simon@example.com', '1010 Rue Royale', 'Montpellier', '34000', '2024-06-19'),
+    ('Leclerc', 'Sophie', '01.23.45.68.01', 'sophie.leclerc@example.com', '111 Rue de la Liberté', 'Lyon', '69002', '2024-06-20'),
+    ('Thomas', 'Pierre', '01.23.45.68.02', 'pierre.thomas@example.com', '222 Avenue de la Gare', 'Marseille', '13002', '2024-06-21'),
+    ('Adam', 'Louise', '01.23.45.68.13', 'louise.adam@example.com', '333 Avenue de la Rivière', 'Marseille', '13003', '2024-07-02'),
+    ('Martin', 'Eva', '01.23.45.68.15', 'eva.martin@example.com', '555 Rue de la Plage', 'Lille', '59002', '2024-07-04'),
+    ('Andre', 'Tom', '01.23.45.68.30', 'tom.andre@example.com', '1010 Boulevard de la Pluie', 'Toulouse', '31003', '2024-07-19')
 ;
 
-INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats, Notations_Candidats,Descriptions_Candidats, A_Candidats, B_Candidats, C_Candidats) VALUES
-    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', TRUE, '3', "Recommandé !", TRUE, FALSE, TRUE)
+INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, Notations_Candidats,Descriptions_Candidats, A_Candidats, B_Candidats, C_Candidats) VALUES
+    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', '4', "Recommandé !", TRUE, FALSE, TRUE)
 ;
 
 

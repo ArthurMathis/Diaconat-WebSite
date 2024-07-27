@@ -29,10 +29,18 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
-    /// Métohod epublique retournant la liste des aides
+    /// Métohode publique retournant la liste des aides
     public function getAides() {
         // On inititalise la requête
-        $request = "SELECT Id_Aides_au_recrutement, Intitule_Aides_au_recrutement FROM aides_au_recrutement";
+        $request = "SELECT * FROM aides_au_recrutement";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des postes
+    public function getPostes() {
+        // On inititalise la requête
+        $request = "SELECT * FROM Postes ORDER BY Intitule_Postes";
         
         // On lance la requête
         return $this->get_request($request, [], false, true);

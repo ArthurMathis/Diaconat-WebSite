@@ -273,6 +273,38 @@ form .checkbox-liste .checkbox-item label {
   z-index: -1;
 }
 
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+.autocomplete-items {
+  position: absolute;
+  left: 0;
+  top: 100%;
+
+  width: 100%;
+  height: fit-content;
+  max-height: 200px;
+  z-index: 1;
+
+  border-radius: var(--small-radius);
+  background-color: white;
+
+  overflow-y: auto;
+}
+
+.autocomplete-items > div {
+  padding: var(--margin);
+
+  color: #d8d8d8;
+
+  will-change: color;
+  transition: color ease 150ms;
+}
+.autocomplete-items > div:is(:hover, :focus) {
+  color: var(--black);
+}
+
 /******** Animations ********/
 @keyframes slide-in-right {
   from {
@@ -523,7 +555,7 @@ button.cancel_button:is(:hover, :focus),
   top: 0;
   left: 0;
   
-  max-height: 28dvh;
+  max-height: 28vh;
   z-index: -1;
 }
 .nav-barre h3,

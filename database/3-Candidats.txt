@@ -10,7 +10,7 @@ CREATE TABLE Candidats (
     CodePostal_Candidats VARCHAR(5), 
 
     Disponibilite_Candidats DATE NOT NULL,
-    VisiteMedicale_Candidats BOOLEAN NOT NULL, 
+    VisiteMedicale_Candidats DATE, 
 
     Notations_Candidats INTEGER, 
     Descriptions_Candidats TEXT, 

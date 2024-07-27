@@ -82,7 +82,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/preferences-controller.js'
@@ -114,7 +114,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/nouveaux-utilisateurs-controller.js'
@@ -146,7 +146,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/connexion-historique-controller.js'
@@ -178,7 +178,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/action-historique-controller.js'
@@ -209,7 +209,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/poste-controller.js'
@@ -240,7 +240,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/service-controller.js'
@@ -272,7 +272,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/etablissement-controller.js'
@@ -302,7 +302,7 @@ class PreferencesView extends View {
 
         // On importe les scripts JavaScript
         $scripts = [
-            'views/liste-views.js',
+            'views/liste-view.js',
             'models/liste-model.js',
             'models/objects/Liste.js',
             'controllers/pole-controller.js'

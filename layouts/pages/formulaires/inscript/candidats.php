@@ -33,13 +33,16 @@
                     </option>
                 <?php endforeach ?>    
             </select>-->
-            <button class="form_button" type="button" onClick="" style="margin-left: auto">
+            <button class="form_button" type="button" onClick="addAideField()" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
         </section>
         <section>
             <p>Date d'expiration de la visite médicale</p>
-            <input type="Date" id="visite medicale" name="visite medicale">
+            <button class="form_button" type="button" onClick="" style="margin-left: auto">
+                <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
+            </button>
+            <!--<input type="Date" id="visite medicale" name="visite medicale">-->
             <!--<div class="checkbox-liste">
                 <div class="checkbox-item">
                     <label for="visite_medicale_true">Visite en règle</label>

@@ -15,13 +15,15 @@ class CandidaturesController extends Controller {
     }
     public function displaySaisieCandidat() {
         $aide = $this->Model->getAides();
+        $diplomes = [];
         return $this->View->getSaisieCandidatContent('Ypopsi - Nouveau candidat', $aide);
     }
     public function displayRechercheCandidat() {
         return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
     }
     public function displaySaisieCandidature() {
-        return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat");
+        $poste = $this->Model->getPostes();
+        return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat", $poste);
     }
 
     public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {

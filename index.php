@@ -15,17 +15,16 @@ session_start();
 // On récupère les infos de connexion à la base de données
 env_start();
 
-// include(COMMON.DS.'entete.php');
-
 if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On libère la mémoire
     unset($_SESSION['first log in']);
     // header('Location: index.php?preferences=edit-password');
     alert_manipulation::alert([
         'title' => "Information importante",
-        'msg' => "<p>Bienvenu, c'est votre première connexion !</p><p>Vous devez <b>modifier votre mot de passe</b> au plus vite. Vous pouvez choisir de le faire dés à présent ou à votre prochaine connexion.</p>",
+        'msg' => "<p>Bienvenu, c'est votre première connexion !</p><p>Vous devez <b>modifier votre mot de passe</b> au plus vite.</p>",
         'icon' => 'warning',
-        'direction' => 'index.php?preferences=edit-password'
+        'direction' => 'index.php?preferences=edit-password',
+        'button' => true
     ]);
     
 } elseif(isset($_GET['login'])) {
@@ -118,15 +117,15 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             try {
                 // On récupère le contenu du formulaire d'inscription
                 $candidat = [
-                    'nom' => forms_manip::nameFormat($_POST["nom"]), 
-                    'prenom' => forms_manip::nameFormat($_POST["prenom"]), 
-                    'email' => $_POST["email"], 
-                    'telephone' => forms_manip::numberFormat($_POST["telephone"]), 
-                    'adresse' => $_POST["adresse"],
-                    'ville' => forms_manip::nameFormat($_POST["ville"]), 
-                    'code_postal' => $_POST['code-postal']
+                    'nom'           => forms_manip::nameFormat($_POST["nom"]), 
+                    'prenom'        => forms_manip::nameFormat($_POST["prenom"]), 
+                    'email'         => $_POST["email"], 
+                    'telephone'     => forms_manip::numberFormat($_POST["telephone"]), 
+                    'adresse'       => $_POST["adresse"],
+                    'ville'         => forms_manip::nameFormat($_POST["ville"]), 
+                    'code_postal'   => $_POST['code-postal']
                 ];
-                $diplomes = $_POST["diplomes"];
+                $diplomes           = $_POST["diplomes"];
                 $aide               = $_POST["aide"];
                 $visite_medicale    = $_POST["visite_medicale"];
 
@@ -1033,5 +1032,3 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     $c = new LoginController();
     $c->displayLogin();
 }
-
-// include(COMMON.DS.'footer.php');

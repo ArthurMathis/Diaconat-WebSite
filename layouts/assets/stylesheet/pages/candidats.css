@@ -368,7 +368,7 @@ main section .candidatures_bulle article p.non-traitee::before {
 .grid .notation_bulle {
     padding: calc(var(--gap) * 4 / 3) var(--gap);
 
-    border-radius: 45px;
+    border-radius: var(--radius);
     border: 2px solid var(--light-grey);
     background-color: var(--white);
     box-shadow: var(--small-bulle-shadow);
