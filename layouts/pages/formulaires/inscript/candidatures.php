@@ -5,15 +5,30 @@
         <!--<input type="text" id="poste" name="poste" placeholder="Poste">-->
         <div class="autocomplete">
             <input type="text" id="poste" name="poste" placeholder="Poste">
-                <article></article>
-            </div>
-        <input type="text" id="service" name="service" placeholder="Services">
+            <article></article>
+        </div>
+        <div class="autocomplete">
+            <input type="text" id="service" name="service" placeholder="Services">
+            <article></article>
+        </div>
     </section>
     <section>
         <p>Infos</p>
-        <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat">
+        <div class="autocomplete">
+            <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat">
+            <article></article>
+        </div>
+        <div class="autocomplete">
+            <input type="Date" id="disponibilite" name="disponibilite"> 
+            <article></article>
+        </div>
+        <div class="autocomplete">
+            <input type="text" id="source" name="source" placeholder="Sources">
+            <article></article>
+        </div>
+        <!--<input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat">
         <input type="Date" id="disponibilite" name="disponibilite">
-        <input type="text" id="source" name="source" placeholder="Sources">
+        <input type="text" id="source" name="source" placeholder="Sources">-->
     </section>
     <button type="submit" class="submit_button" value="new_user">Valider</button>
 </form>
@@ -48,5 +63,9 @@
     // On récupère la liste 
     console.log('Récupération des ressources terminées.');
 
+    console.log('Mise en place des AutoComplet');
     new AutoComplete(document.getElementById('poste'), postes);
+    new AutoComplete(document.getElementById('service'), services);
+    new AutoComplete(document.getElementById('type_de_contrat'), typeContrat);
+    new AutoComplete(document.getElementById('source'), source);
 </script>

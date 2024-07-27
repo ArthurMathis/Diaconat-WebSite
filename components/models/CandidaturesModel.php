@@ -40,7 +40,7 @@ class CandidaturesModel extends Model {
     /// Méthode publique retournant la liste des postes pour l'autocomplétion
     public function getPostes() {
         // On inititalise la requête
-        $request = "SELECT * FROM Postes ORDER BY Intitule_Postes";
+        $request = "SELECT Intitule_Postes FROM Postes ORDER BY Intitule_Postes";
         
         // On lance la requête
         return $this->get_request($request, [], false, true);
@@ -48,7 +48,7 @@ class CandidaturesModel extends Model {
     /// Méthode publique retournant la liste des services pour l'autocomplétion
     public function getServices() {
         // On initialise la requête
-        $request = "SELECT * FROM Services ORDER BY Intitule_Services";
+        $request = "SELECT Intitule_Services FROM Services ORDER BY Intitule_Services";
 
         // On lance la requête
         return $this->get_request($request, [], false, true);
@@ -56,7 +56,7 @@ class CandidaturesModel extends Model {
     /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
     public function getTypesContrat() {
         // On initialise la requête
-        $request = "SELECT * FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
+        $request = "SELECT Intitule_Types_de_contrats FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
 
         // On lance la requête
         return $this->get_request($request, [], false, true);
@@ -64,7 +64,7 @@ class CandidaturesModel extends Model {
     /// Méthode publique retournant la liste des sources pour l'autocomplétion
     public function getSources() {
         // On initialise la requête
-        $request = "SELECT * FROM Sources ORDER BY Intitule_Sources";
+        $request = "SELECT Intitule_Sources FROM Sources ORDER BY Intitule_Sources";
 
         // On lance la requête
         return $this->get_request($request, [], false, true);
