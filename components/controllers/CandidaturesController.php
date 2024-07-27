@@ -22,8 +22,13 @@ class CandidaturesController extends Controller {
         return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
     }
     public function displaySaisieCandidature() {
-        $poste = $this->Model->getPostes();
-        return $this->View->getSaisieCandidatureContent("Ypopsi - Recherche d'un candidat", $poste);
+        return $this->View->getSaisieCandidatureContent(
+            "Ypopsi - Recherche d'un candidat", 
+            $this->Model->getPostes(),
+            $this->Model->getServices(),
+            $this->Model->getTypesContrat(),
+            $this->Model->getSources()
+        );
     }
 
     public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {

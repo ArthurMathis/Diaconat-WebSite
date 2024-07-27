@@ -29,7 +29,7 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
-    /// Métohode publique retournant la liste des aides
+    /// Métohode publique retournant la liste des aides pour l'autocomplétion
     public function getAides() {
         // On inititalise la requête
         $request = "SELECT * FROM aides_au_recrutement";
@@ -37,11 +37,35 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des postes
+    /// Méthode publique retournant la liste des postes pour l'autocomplétion
     public function getPostes() {
         // On inititalise la requête
         $request = "SELECT * FROM Postes ORDER BY Intitule_Postes";
         
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des services pour l'autocomplétion
+    public function getServices() {
+        // On initialise la requête
+        $request = "SELECT * FROM Services ORDER BY Intitule_Services";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
+    public function getTypesContrat() {
+        // On initialise la requête
+        $request = "SELECT * FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des sources pour l'autocomplétion
+    public function getSources() {
+        // On initialise la requête
+        $request = "SELECT * FROM Sources ORDER BY Intitule_Sources";
+
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
