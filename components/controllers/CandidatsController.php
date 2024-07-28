@@ -77,13 +77,24 @@ class CandidatController extends Controller {
     }
     /// Méthode publique affichant le formulaire d'édition d'une notation
     public function getEditNotation($cle_candidat) {
-        $item = $this->Model->getCandidats($cle_candidat);
-        return $this->View->getEditNotation($item);
+        return $this->View->getEditNotation(
+            $this->Model->getCandidats($cle_candidat)
+        );
     }
     /// Méthode publique affichant le formulaire d'édition d'un candidat
     public function getEditCandidat($cle_candidat) {
-        $item = $this->Model->getEditContent($cle_candidat);
-        return $this->View->getEditCandidat($item);
+        return $this->View->getEditCandidat(
+            $this->Model->getEditCandidatContent($cle_candidat)
+        );
+    }
+    /// Méthode publique affichant le formulaire d'édition d'un rendez-vous
+    public function getEditRensezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
+        return $this->View->getEditRendezVous(
+            $cle_candidat, 
+            $cle_utilisateur, 
+            $cle_instant,
+            $this->Model->getEditRendezVousContent($cle_candidat, $cle_utilisateur, $cle_instant)
+        );
     }
 
     /// Méthode publique donnant le statut acceptée à une candidature
@@ -147,10 +158,10 @@ class CandidatController extends Controller {
         // On récupère les données du futur contrat
         $this->Model->createPropositionsFromCandidature($cle_candidature, $propositions, $cle_candidat);
         
-        // On génère la proposition
-        $this->createProposition($cle_candidat, $propositions);
         // On assigne le nouveau statut à la candidature
         $this->acceptCandidature($cle_candidature);
+        // On génère la proposition
+        $this->createProposition($cle_candidat, $propositions);
     }
     /// Méthode publique préparant les données d'une candidature pour la génération d'une porposition d'embauche
     public function createPropositionFromEmptyCandidature($cle_candidature, $propositions=[]) {
@@ -158,10 +169,10 @@ class CandidatController extends Controller {
         // On récupère les données du futur contrat
         $this->Model->createPropositionsFromEmptyCandidature($cle_candidature, $propositions, $cle_candidat);
         
-        // On génère la proposition
-        $this->createProposition($cle_candidat, $propositions);
         // On assigne le nouveau statut à la candidature
         $this->acceptCandidature($cle_candidature);
+        // On génère la proposition
+        $this->createProposition($cle_candidat, $propositions);
     }
     /// Méthode publique inscrivant un contrat dans la base de données
     public function createContrat($cle_candidat, &$contrats=[]) {
@@ -194,11 +205,31 @@ class CandidatController extends Controller {
     }
     /// Méthode publique mettant à jour le profil d'un candidat
     public function updateCandidat($cle_candidat, &$candidat=[]) {
+        // On met à jour le candidat
         $this->Model->makeUpdateCandidat($cle_candidat, $candidat);
+
+        // On enregistre les logs
         $this->Model->updateCandidatLogs($cle_candidat);
+
+        // On redirige la page
         alert_manipulation::alert([
             'title' => "Candidat mise-à-jour",
             'msg' => "Vous avez mis-à-jour les données personnelles du candidat",
+            'direction' => 'index.php?candidats=' . $cle_candidat
+        ]);
+    }
+    /// Méthode publique mettant à jour un rendez-vous
+    public function updateRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, &$rdv=[]) {
+        // On met à jour le candidat
+        $this->Model->updateRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, $rdv);
+
+        // On enregistre les logs
+        $this->Model->updateRendezVousLogs($cle_candidat);
+
+        // On redirige la page
+        alert_manipulation::alert([
+            'title' => "Rendez-vous mise-à-jour",
+            'msg' => "Vous avez mis-à-jour le rendez-vous du candidat",
             'direction' => 'index.php?candidats=' . $cle_candidat
         ]);
     }

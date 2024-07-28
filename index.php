@@ -353,13 +353,22 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 if(isset($_POST['travail_wk']))
                     $infos['travail nuit'] = true;
 
-                // On test la présence de la clé candidat    
-                if(isset($_GET['cle_candidat'])) 
-                    $candidats->createProposition($_GET['cle_candidat'], $infos);
-                // On signale l'erreur
-                else 
-                    throw new Exception("Clé candidat introuvable !");
-                
+               try {
+                    // On test la présence de la clé candidat    
+                    if(isset($_GET['cle_candidat'])) 
+                        $candidats->createProposition($_GET['cle_candidat'], $infos);
+                    // On signale l'erreur
+                    else 
+                        throw new Exception("Clé candidat introuvable !");
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la proposition",
+                        'msg' => $e
+                    ]);
+                }
+
                 break; 
 
             // On inscrit une proposition construite à partir d'une candidature 
@@ -546,16 +555,18 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                         throw new Exception("Le champs date doit être rempli !");
                     elseif(empty($infos['time']))
                         throw new Exception("Le champs horaire doit être rempli !");
-                    else {
-                        $rdv_i = new Instants($infos['date'], $infos['time']);
-                        if($rdv_i->getDate() < Instants::currentInstants()->getDate())
-                            throw new Exception("La date du rendez-vous est antérieure à aujourd'hui.");
-                    }
+                    // else {
+                    //     // L'instant du rendez-vous
+                    //     $rdv_i = new Instants($infos['date'], $infos['time']);
+                    //     // L'instant actuel
+                    //     $cur_i = Instants::currentInstants();
+                    //     if($rdv_i->getDate() < $cur_i->getDate() || ($rdv_i->getDate() == $cur_i->getDate() && $rdv_i->getHeure() < $cur_i->getHeure()))
+                    //         throw new Exception("La date du rendez-vous est antérieure à aujourd'hui.");
+                    // }
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {
                     forms_manip::error_alert([
-                        'title' => "Erreur lors de l'inscription du rendez-vous",
                         'msg' => $e
                     ]);
                 }
@@ -588,7 +599,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 else 
                     throw new Exception("La clé candidat est introuvable !");
                 break;  
-            // On affiche le formulaire de mise-à-jour ds données d'un cadidat
+            // On affiche le formulaire de mise-à-jour des données d'un cadidat
             case 'edit-candidat':
                 // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
@@ -596,7 +607,28 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 // On signale l'erreur
                 else 
                     throw new Exception("La clé candidat est introuvable !");
-                break;  
+                break; 
+                
+            // On affiche le formulaire de mise-à-jour d'un rendez-vous 
+            case 'edit-rendez-vous':
+                // On vérifie l'intégrité des données
+                try {
+                    if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé candidat doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_utilisateur']) || empty($_GET['cle_utilisateur']) || !is_numeric($_GET['cle_utilisateur']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé utilisateur doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_instant']) || empty($_GET['cle_instant']) || !is_numeric($_GET['cle_instant']))
+                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé instanbt doit être un nombre entier positif !");
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'msg' => $e
+                    ]);
+                }
+
+                $candidats->getEditRensezVous($_GET['cle_candidat'], $_GET['cle_utilisateur'], $_GET['cle_instant']);
+                break;    
             
             // On met-à-jour la notation d'un candidat
             case 'update-notation':
@@ -649,29 +681,83 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 // On récupère les éventuelles erreurs
                 } catch(Exception $e) {
                     forms_manip::error_alert([
-                        'title' => "Erreur lors de la mise-à-jour du candidat",
                         'msg' => $e
                     ]);
                 }
 
-                // On tets la présence de la clé candidat
+                // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && !empty($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->updateCandidat($_GET['cle_candidat'], $candidat);
                 // On signale l'erreur
                 else 
                     throw new Exception("Impossible de modifier la notation du candidat, clé candidat est introuvable !");
                 break;  
+
+            // On met-à-jour un rendez-vous    
+            case 'update-rendez-vous':
+                // On vérifie l'intégrité des données
+                try {
+                    if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
+                        throw new Exception("La clé candidat doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_utilisateur']) || empty($_GET['cle_utilisateur']) || !is_numeric($_GET['cle_utilisateur']))
+                        throw new Exception("La clé utilisateur doit être un nombre entier positif !");
+                    elseif(!isset($_GET['cle_instant']) || empty($_GET['cle_instant']) || !is_numeric($_GET['cle_instant']))
+                        throw new Exception("La clé instant doit être un nombre entier positif !");
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'msg' => $e
+                    ]);
+                }
+
+                // On récupère le formulaire
+                $rdv = [
+                    'recruteur' => $_POST['recruteur'],
+                    'etablissement' => $_POST['etablissement'],
+                    'date' => $_POST['date'],
+                    'time' => $_POST['time']
+                ];
+
+                // On vérifie l'intégrité des données
+                try {
+                    if(empty($rdv['recruteur']))
+                        throw new Exception("Le champs recruteur doit être rempli !");
+                    elseif(empty($rdv['etablissement']))
+                        throw new Exception("Le champs etablissement doit être rempli !");
+                    elseif(empty($rdv['date']))
+                        throw new Exception("Le champs date doit être rempli !");
+                    elseif(empty($rdv['time']))
+                        throw new Exception("Le champs horaire doit être rempli !");
+                    else {
+                        // L'instant du rendez-vous
+                        $rdv_i = new Instants($rdv['date'], $rdv['time']);
+                        // L'instant actuel
+                        $cur_i = Instants::currentInstants();
+                        if($rdv_i->getDate() < $cur_i->getDate() || ($rdv_i->getDate() == $cur_i->getDate() && $rdv_i->getHeure() < $cur_i->getHeure()))
+                            throw new Exception("La date du rendez-vous est antérieure à aujourd'hui.");
+                    }
+
+                // On récupère les éventuelles erreurs        
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'msg' => $e
+                    ]);
+                }
+
+                $candidats->updateRendezVous($_GET['cle_candidat'], $_GET['cle_utilisateur'], $_GET['cle_instant'], $rdv);
+                break;
                 
             // On annule un rendez-vous    
             case 'delete-rendez-vous': 
                 // On vérifie l'intégrité des données
                 try {
                     if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
-                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé candidat doit être un nombre entier positif !");
+                        throw new Exception("La clé candidat doit être un nombre entier positif !");
                     elseif(!isset($_GET['cle_utilisateur']) || empty($_GET['cle_utilisateur']) || !is_numeric($_GET['cle_utilisateur']))
-                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé utilisateur doit être un nombre entier positif !");
+                        throw new Exception("La clé utilisateur doit être un nombre entier positif !");
                     elseif(!isset($_GET['cle_instant']) || empty($_GET['cle_instant']) || !is_numeric($_GET['cle_instant']))
-                        throw new Exception("Erreur lors de l'annulation du rendez-vous. La clé instanbt doit être un nombre entier positif !");
+                        throw new Exception("La clé instant doit être un nombre entier positif !");
 
                 // On récupère les éventuelles erreurs        
                 } catch(Exception $e) {

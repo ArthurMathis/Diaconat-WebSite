@@ -31,8 +31,8 @@ class CandidatsModel extends Model {
         // On retourne la liste
         return $temp;
     }
-    /// Méthode publique récupérant les données à metttre à jour dans la base de données
-    public function getEditContent($index) {
+    /// Méthode publique récupérant les données d'un candidat pour sa mise-à-jour
+    public function getEditCandidatContent($index) {
         // On vérifie l'intégrité des données
         if(!is_numeric($index))
             throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
@@ -45,7 +45,33 @@ class CandidatsModel extends Model {
             'aide' => $this->get_request("SELECT Id_Aides_au_recrutement AS id, Intitule_Aides_au_recrutement AS intitule FROM Aides_au_recrutement", [])
         ];
     }
+    /// Méthode publique retournant les donnnées d'un rendez-vous pour sa mise-à-jour
+    public function getEditRendezVousContent($cle_candidat, $cle_utilisateur, $cle_instant) {
+        if(empty($cle_candidat) || empty($cle_utilisateur) || empty($cle_instant))
+            throw new Exception("La récupération des données du rendez-vous nécessite la présence de la clé candidat, utilisateur et instant.");
 
+        // On initialise la requête
+        $request = "SELECT 
+        Identifiant_Utilisateurs AS Recruteur,
+        Intitule_Etablissements AS Etablissement,
+        Jour_Instants AS Date,
+        Heure_Instants AS Horaire
+
+        FROM Avoir_rendez_vous_avec AS rdv
+        INNER JOIN Utilisateurs AS u ON rdv.Cle_Utilisateurs = u.Id_Utilisateurs
+        INNER JOIN Instants AS i ON rdv.Cle_Instants = i.Id_Instants
+        INNER JOIN Etablissements AS e ON rdv.Cle_Etablissements =e.Id_Etablissements
+        
+        WHERE rdv.Cle_Candidats = :candidat AND rdv.Cle_Utilisateurs = :utilisateur AND rdv.Cle_Instants = :instant";
+        $params = [
+            'candidat' => $cle_candidat,
+            'utilisateur' => $cle_utilisateur,
+            'instant' => $cle_instant
+        ];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
     /// Méthode publique retournant la fiche profil d'un candidat
     public function getContentCandidat($index) {
         // On vérifie l'intégrité des données
@@ -351,7 +377,7 @@ class CandidatsModel extends Model {
                 'msg' => $e
             ]);
         }
-        
+
         // On inscrit la proposition
         $this->inscriptProposer_a($contrat->getCleCandidats(), $contrat->getCleInstants());
         $this->verifyMission($contrat->getCleServices(), $contrat->getClePostes());
@@ -475,9 +501,9 @@ class CandidatsModel extends Model {
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données
-    protected function inscriptContrats($contrats=[]) {
+    protected function inscriptContrats(&$contrats=[]) {
         // Requête avec date de fin de contrat
-        if(isset($contrat['date fin'])) {
+        if(isset($contrats['date fin'])) {
             // Requête avec salaire
             if(isset($contrats['salaire'])) {
                 // Requête avec travail de nuit
@@ -701,6 +727,7 @@ class CandidatsModel extends Model {
                         "date_debut" => $contrats['date debut'],
                         "date_fin" => $contrats['date fin'],
                         "travail_nuit" => $contrats['travail nuit'],
+                        "nb_heures" => $contrats['nb heures'],
                         "signature" => $contrats['signature'],
                         "cle_candidat" => $contrats['cle candidat'],
                         "cle_instant" => $contrats['cle instant'],
@@ -1210,7 +1237,7 @@ class CandidatsModel extends Model {
         }
     }
 
-    public function makeUpdatecandidat($cle_candidat, &$candidat) {
+    public function makeUpdatecandidat($cle_candidat, $candidat) {
         try {
             $c = new Candidat($candidat['nom'], $candidat['prenom'], $candidat['email'], $candidat['telephone'], $candidat['adresse'], $candidat['ville'], $candidat['code-postal']);
             unset($candidat['nom']);
@@ -1293,6 +1320,18 @@ class CandidatsModel extends Model {
             $_SESSION['user_cle'],
             "Mise-à-jour candidat",
             "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
+        );
+    }
+    /// Méthode publique enregistrant les logs de la mise-à-jour d'un rendez-vous
+    public function updateRendezVousLogs($cle_candidat) {
+        // On récupère les informations du candidat
+        $candidat = $this->searchcandidat($cle_candidat);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Mise-à-jour rendez-vous",
+            "Mise-à-jour du rendez-vous de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
         );
     }
 

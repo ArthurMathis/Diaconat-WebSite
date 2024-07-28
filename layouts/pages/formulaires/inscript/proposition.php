@@ -18,12 +18,12 @@
             </section>
         <section class="double-items">
             <div class="input-container">
-                <label for="date debut">Date de début</label>
-                <input type="date" name="date debut" id="date debut">
+                <label for="date_debut">Date de début</label>
+                <input type="date" name="date_debut" id="date_debut" min="<?php echo Instants::currentInstants()->getDate(); ?>">
             </div>
             <div class="input-container">
-                <label for="date fin">Date de fin</label>
-                <input type="date" name="date fin" id="date fin">
+                <label for="date_fin">Date de fin</label>
+                <input type="date" name="date_fin" id="date_fin">
             </div>
         </section>
         <section>
@@ -48,46 +48,29 @@
 </form>
 
 <script>
-    console.log('On lance la récupération des tableaux PHP.');  
-
-    // On récupère la liste des postes depuis PHP
-    const postes = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Postes'];
-    }, $poste)); ?>;
-    console.log(postes);    
-
-    // On récupère la liste des services depuis PHP
-    const services = <?php echo json_encode(array_map(function($c) { 
-        return $c['Intitule_Services']; 
-    }, $service)); ?>;
-    console.log(services);  
-
-    // On récupère la liste des types de contrat depuis PHP
-    const typeContrat = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Types_de_contrats'];
-    }, $typeContrat)); ?>;
-    console.log(typeContrat);
-
-    // On récupère la liste 
-    console.log('Récupération des ressources terminées.');
-
-    console.log('Mise en place des AutoComplet');
+    // On récupère les données depuis PHP
+    const postes = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Postes']; }, $poste)); ?>;
+    const services = <?php echo json_encode(array_map(function($c) {  return $c['Intitule_Services'];  }, $service)); ?>;
+    const typeContrat = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Types_de_contrats']; }, $typeContrat)); ?>;
+    // On prépare les AutoCompletes
     new AutoComplete(document.getElementById('poste'), postes);
     new AutoComplete(document.getElementById('service'), services);
     new AutoComplete(document.getElementById('type_contrat'), typeContrat);
 
+
+    // On ajuste la sélection de date
+    setMinDateFin('date_debut', 'date_fin');
+
     // On ajuste le nombre de formulaire de date
     const inputTypeContrat = document.getElementById('type_contrat');
-    const inputDateFin = document.getElementById('date fin').parentElement;
-    console.log(inputDateFin);
+    const inputDateFin = document.getElementById('date_fin').parentElement;
 
     // Fonction pour vérifier le type de contrat et ajuster l'affichage de la date de fin
     const checkContratType = () => {
-        if (inputTypeContrat.value.trim().toUpperCase() === 'CDI') {
+        if (inputTypeContrat.value.trim().toUpperCase() === 'CDI') 
             inputDateFin.style.display = 'none';
-        } else {
-            inputDateFin.style.display = 'block';
-        }
+        else 
+            inputDateFin.style.display = 'block';  
     };
 
     // Écouteurs d'événements sur l'input type_contrat pour détecter les changements de valeur

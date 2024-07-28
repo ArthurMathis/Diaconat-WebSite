@@ -843,6 +843,30 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
+    /// Méthode publique mettant à jour le rendez-vous d'un candidat
+    public function updateRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, &$rdv=[]) {
+        // On met-à-jour l'utilisateur
+        $request = "UPDATE Avoir_rendez_vous_avec
+        SET Cle_utilisateurs = :user, Cle_Etablissements = :etablissement
+        WHERE Cle_Candidats = :candidat AND Cle_utilisateurs = :utilisateur AND Cle_Instants = :instant";
+        $params = [
+            'user' => $this->searchUserFromUsername($rdv['recruteur'])[0]['Id_Utilisateurs'],
+            'etablissement' => $this->searchEtablissement($rdv['etablissement'])['Id_Etablissements'],
+            'candidat' => $cle_candidat,
+            'utilisateur' => $cle_utilisateur,
+            'instant' => $cle_instant 
+        ];
+        $this->post_request($request, $params);
+
+        // On met-à-jour la date et l'heure
+        $request = "UPDATE Instants
+        SET Jour_Instants = :date, Heure_Instants = :time";
+        $params = [
+            'date' => $rdv['date'],
+            'time' => $rdv['time']
+        ];
+        $this->post_request($request, $params);
+    }
 
 
     // METHODE DE SUPPRESSION //

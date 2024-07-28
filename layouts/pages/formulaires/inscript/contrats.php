@@ -19,7 +19,7 @@
         <section class="double-items">
             <div class="input-container">
                 <label for="date_debut">Date de début</label>
-                <input type="date" name="date_debut" id="date_debut">
+                <input type="date" name="date_debut" id="date_debut" min="<?php echo Instants::currentInstants()->getDate(); ?>">
             </div>
             <div class="input-container">
                 <label for="date_fin">Date de fin</label>
@@ -49,31 +49,15 @@
 
 
 <script>
-    console.log('On lance la récupération des tableaux PHP.');
-
-    // On récupère la liste des postes depuis PHP
-    const postes = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Postes'];
-    }, $poste)); ?>;
-    console.log(postes);
-
-    // On récupère la liste des services depuis PHP
-    const services = <?php echo json_encode(array_map(function($c) { 
-        return $c['Intitule_Services']; 
-    }, $service)); ?>;
-    console.log(services);
-
-    // On récupère la liste des types de contrat depuis PHP
-    const typeContrat = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Types_de_contrats'];
-    }, $typeContrat)); ?>;
-    console.log(typeContrat);
-
-    // On récupère la liste 
-    console.log('Récupération des ressources terminées.');
-
-    console.log('Mise en place des AutoComplet');
+    // On récupère les données depuis PHP
+    const postes = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Postes']; }, $poste)); ?>;
+    const services = <?php echo json_encode(array_map(function($c) {  return $c['Intitule_Services'];  }, $service)); ?>;
+    const typeContrat = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Types_de_contrats']; }, $typeContrat)); ?>;
+    // On prépare les AutoCompletes
     new AutoComplete(document.getElementById('poste'), postes);
     new AutoComplete(document.getElementById('service'), services);
     new AutoComplete(document.getElementById('type_contrat'), typeContrat);
+
+    // On ajuste la sélection de date
+    setMinDateFin('date_debut', 'date_fin');
 </script>

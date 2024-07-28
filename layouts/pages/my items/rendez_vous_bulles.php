@@ -27,7 +27,7 @@
         <a class="circle_button" href="index.php?candidats=delete-rendez-vous&cle_candidat=<?= $item['cle_candidat']; ?>&cle_utilisateur=<?= $item['cle_utilisateur']; ?>&cle_instant=<?= $item['cle_instant']; ?>">
             <img src="layouts\assets\img\logo\white-trash.svg" alt="Logo de suppression du rendez-vous, représenté par une poubelle">
         </a>
-        <a class="circle_button" href="">
+        <a class="circle_button" href="index.php?candidats=edit-rendez-vous&cle_candidat=<?= $item['cle_candidat']; ?>&cle_utilisateur=<?= $item['cle_utilisateur']; ?>&cle_instant=<?= $item['cle_instant']; ?>">
             <img src="layouts\assets\img\logo\white-edit.svg" alt="Logo de modification du rendez-vous, représenté par un carnet et un stylo">
         </a>
     </footer>

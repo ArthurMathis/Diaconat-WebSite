@@ -10,7 +10,7 @@
     <section class="double-items">
         <div class="input-container">
             <label for="date debut">Date de début</label>
-            <input type="date" name="date debut" id="date debut">
+            <input type="date" name="date debut" id="date debut" min="<?php echo Instants::currentInstants()->getDate(); ?>">
         </div>
         <div class="input-container">
             <label for="date fin">Date de fin</label>
@@ -38,17 +38,11 @@
 </form>
 
 <script>
-    console.log('On lance la récupération des tableaux PHP.'); 
-
-    // On récupère la liste des services depuis PHP
-    const services = <?php echo json_encode(array_map(function($c) { 
-        return $c['Intitule_Services']; 
-    }, $service)); ?>;
-    console.log(services);  
-
-    // On récupère la liste 
-    console.log('Récupération des ressources terminées.');
-
-    console.log('Mise en place des AutoComplet');
+    // On récupère les données depuis PHP
+    const services = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Services'];  }, $service)); ?>;
+    // On prépare l'AutoComplete
     new AutoComplete(document.getElementById('service'), services);
+
+    // On ajuste la sélection de date
+    setMinDateFin('date debut', 'date fin');
 </script>

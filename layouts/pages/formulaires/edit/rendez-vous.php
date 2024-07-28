@@ -1,24 +1,24 @@
-<form method="post" action="index.php?candidats=inscript-rendez-vous&cle_candidat=<?= $cle_candidat; ?>">
+<form method="post" action="index.php?candidats=update-rendez-vous&cle_candidat=<?= $cle_candidat; ?>&cle_utilisateur=<?= $cle_utilisateur; ?>&cle_instant=<?= $cle_instant; ?>">
     <h3>Saissisez les informations du rendez-vous</h3>
     <section>
         <p>Entretien</p>
         <div class="autocomplete">
-            <input type="text" id="recruteur" name="recruteur" placeholder="Recruteur" autocomplete="off">
+            <input type="text" id="recruteur" name="recruteur" placeholder="Recruteur" autocomplete="off" value="<?= $item['Recruteur']; ?>">
             <article></article>
         </div>
         <div class="autocomplete">
-            <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement" autocomplete="off">
+            <input type="text" id="etablissement" name="etablissement" placeholder="Etablissement" autocomplete="off" value="<?= $item['Etablissement']; ?>">
             <article></article>
         </div>
     </section>
     <section class="double-items">
         <div class="input-container">
             <label for="date">Date</label>
-            <input type="date" name="date" id="date" min="<?php echo Instants::currentInstants()->getDate(); ?>">
+            <input type="date" name="date" id="date" value="<?= $item['Date']; ?>" min="<?php echo Instants::currentInstants()->getDate(); ?>">
         </div>
         <div class="input-container">
             <label for="time">Horaire</label>
-            <input type="time" name="time" id="time">
+            <input type="time" name="time" id="time" value="<?= $item['Horaire']; ?>">
         </div>
     </section>
     <button type="submit" value="new_user">Enregistrer</button>

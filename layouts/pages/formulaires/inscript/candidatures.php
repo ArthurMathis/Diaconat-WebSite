@@ -17,7 +17,7 @@
             <input type="text" id="type_de_contrat" name="type_de_contrat" placeholder="Type de contrat" autocomplete="off">
             <article></article>
         </div>
-        <input type="Date" id="disponibilite" name="disponibilite"
+        <input type="Date" id="disponibilite" name="disponibilite" min="<?php echo Instants::currentInstants()->getDate(); ?>">
         <div class="autocomplete">
             <input type="text" id="source" name="source" placeholder="Sources" autocomplete="off">
             <article></article>

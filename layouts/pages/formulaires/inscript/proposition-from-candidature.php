@@ -2,12 +2,12 @@
     <h3>Saissisez les informations de la proposition</h3>
     <section class="double-items">
         <div class="input-container">
-            <label for="date debut">Date de début</label>
-            <input type="date" name="date debut" id="date debut">
+            <label for="date_debut">Date de début</label>
+            <input type="date" name="date_debut" id="date_debut" min="<?php echo Instants::currentInstants()->getDate(); ?>">
         </div>
         <div class="input-container" <?php if($statut_candidature == "CDI") echo 'style="display: none"'; ?>>
-            <label for="date fin">Date de fin</label>
-            <input type="date" name="date fin" id="date fin">
+            <label for="date_fin">Date de fin</label>
+            <input type="date" name="date_fin" id="date_fin">
         </div>
     </section>
     <section>
@@ -29,3 +29,8 @@
         <button type="submit" class="submit_button" value="new_user">Inscrire</button>
     </section>
 </form>
+
+<script>
+    // On ajuste la sélection de date
+    setMinDateFin('date_debut', 'date_fin');
+</script>
