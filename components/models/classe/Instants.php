@@ -68,7 +68,7 @@ class Instants {
     
     public function exportToSQL(): array {
         return [
-            "jour" => $this->getdate(), 
+            "jour" => $this->getDate(), 
             "heure" => $this->getHeure()
         ];
     }
