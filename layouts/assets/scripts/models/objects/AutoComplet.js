@@ -1,7 +1,7 @@
- /**
-         * @class AutoComplete
-         * @classdesc Classe permettant de créer un champ d'auto-complétion.
-         */
+/**
+ * @class AutoComplete
+ * @classdesc Classe permettant de créer un champ d'auto-complétion.
+ */
  class AutoComplete {
     /**
      * @constructor
@@ -20,35 +20,25 @@
      * @description Initialise l'auto-complétion en ajoutant les écouteurs d'événements nécessaires.
      */
     createAutoComplete() {
-        console.log('On récupère les éléments graphiques');
         const parentDiv = this.inputElement.parentNode;
-        console.log(parentDiv);
         const suggestionBox = parentDiv.querySelector('article');
-        console.log(suggestionBox);
 
-        console.log('On lance la détection de saisie')
         this.inputElement.addEventListener('input', () => {
-            console.log('Saisie détectée');
             // On efface l'ancienne liste
             this.closeAllLists();
 
             // Si le champs est vide on s'arrête
             if (!this.inputElement.value) return;
 
-            console.log('On filtre la liste de suggestions')
             // On génère le tableau de suggestions selon la saisie de l'utilisateur
             const filteredSuggestions = this.suggestions.filter(suggestion =>
                 suggestion.toLowerCase().trim().startsWith(this.inputElement.value.toLowerCase().trim())
             );
-            console.log(filteredSuggestions);
 
-            console.log('On manipule graphiquement les suggestions')
             // On test la présence de résultat
             if (filteredSuggestions.length > 0) {
                 suggestionBox.classList.add('autocomplete-items');
-                console.log(suggestionBox);
 
-                console.log('On ajoute les suggestions');
                 // On génère les items de suggestion
                 filteredSuggestions.forEach(suggestion => {
                     const item = document.createElement('div');
@@ -58,10 +48,8 @@
                         this.inputElement.dispatchEvent(new Event('AutoCompleteSelect'));
                         this.closeAllLists();
                     });
-                    console.log(item);
                     suggestionBox.appendChild(item);
                 });
-                console.log(suggestionBox);
             }
                 
         });

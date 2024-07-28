@@ -182,6 +182,40 @@ INSERT INTO Aides_au_recrutement (Intitule_Aides_au_recrutement) VALUES
     ("Prime de cooptation")
 ;
 
+INSERT INTO Diplomes (Intitule_Diplomes, Description_Diplomes) VALUES 
+    ('Baccalauréat Général Scientifique', 'Diplôme de fin d\'études secondaires, filière scientifique'),
+    ('Baccalauréat Général Littéraire', 'Diplôme de fin d\'études secondaires, filière littéraire'),
+    ('Baccalauréat Général Économique et Social', 'Diplôme de fin d\'études secondaires, filière économique et sociale'),
+    ('Baccalauréat Technologique STI2D', 'Diplôme de fin d\'études secondaires, sciences et technologies de l\'industrie et du développement durable'),
+    ('Baccalauréat Technologique STMG', 'Diplôme de fin d\'études secondaires, sciences et technologies du management et de la gestion'),
+    ('Baccalauréat Technologique ST2S', 'Diplôme de fin d\'études secondaires, sciences et technologies de la santé et du social'),
+    ('Baccalauréat Professionnel Commerce', 'Diplôme de fin d\'études secondaires, filière professionnelle commerce'),
+    ('Baccalauréat Professionnel Informatique', 'Diplôme de fin d\'études secondaires, filière professionnelle informatique'),
+    ('Baccalauréat Professionnel Hôtellerie', 'Diplôme de fin d\'études secondaires, filière professionnelle hôtellerie'),
+    ('Licence en Médecine', 'Diplôme universitaire de premier cycle en médecine'),
+    ('Licence en Gestion', 'Diplôme universitaire de premier cycle en gestion'),
+    ('Licence en Informatique', 'Diplôme universitaire de premier cycle en informatique'),
+    ('Licence en Droit', 'Diplôme universitaire de premier cycle en droit'),
+    ('Licence en Psychologie', 'Diplôme universitaire de premier cycle en psychologie'),
+    ('Licence en Sciences de l\'Éducation', 'Diplôme universitaire de premier cycle en sciences de l\'éducation'),
+    ('Master en Médecine', 'Diplôme universitaire de deuxième cycle en médecine'),
+    ('Master en Gestion des Ressources Humaines', 'Diplôme universitaire de deuxième cycle en gestion des ressources humaines'),
+    ('Master en Informatique', 'Diplôme universitaire de deuxième cycle en informatique'),
+    ('Master en Droit des Affaires', 'Diplôme universitaire de deuxième cycle en droit des affaires'),
+    ('Master en Psychologie Clinique', 'Diplôme universitaire de deuxième cycle en psychologie clinique'),
+    ('Doctorat en Médecine', 'Diplôme universitaire de troisième cycle en médecine'),
+    ('Doctorat en Gestion', 'Diplôme universitaire de troisième cycle en gestion'),
+    ('Doctorat en Informatique', 'Diplôme universitaire de troisième cycle en informatique'),
+    ('Doctorat en Droit', 'Diplôme universitaire de troisième cycle en droit'),
+    ('Doctorat en Psychologie', 'Diplôme universitaire de troisième cycle en psychologie'),
+    ('DUT Informatique', 'Diplôme universitaire de technologie en informatique'),
+    ('DUT Gestion des Entreprises et des Administrations', 'Diplôme universitaire de technologie en gestion des entreprises et des administrations'),
+    ('DUT Génie Biologique', 'Diplôme universitaire de technologie en génie biologique'),
+    ('DUT Techniques de Commercialisation', 'Diplôme universitaire de technologie en techniques de commercialisation'),
+    ('BTS Services Informatiques aux Organisations', 'Brevet de technicien supérieur en services informatiques aux organisations')
+;
+ 
+
 -- On insère les sources --
 INSERT INTO sources (Intitule_Sources) VALUES 
 	('Hellowork'), 

@@ -16,28 +16,20 @@
                 <input type="number" id="code-postal" name="code-postal" placeholder="Code postal">
             </div>
         </section>
-        <section class="imp-section">
+        <section id='diplome-section' class="imp-section">
             <p>Diplômes</p>
-            <!--<input type="text" id="diplome-1" name="diplomes[]" placeholder="Diplome">-->
+            <!--<input type="text" id="diplome" name="diplomes[]" placeholder="Diplome">-->
             <button class="form_button" type="button" onClick="" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
         </section>
-        <section class="imp-section">
+        <section id='aide-section' class="imp-section">
             <p>Aides au recrutement</p>
-            <!--<select name="aide">
-                <option value="">Aide</option>
-                <?php foreach($aide as $c): ?>
-                    <option value="<?= $c['Id_Aides_au_recrutement']; ?>">
-                        <?= $c['Intitule_Aides_au_recrutement']; ?>
-                    </option>
-                <?php endforeach ?>    
-            </select>-->
-            <button class="form_button" type="button" onClick="addAideField()" style="margin-left: auto">
+            <button class="form_button" type="button" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
         </section>
-        <section>
+        <section id='visite-section' class="imp-section">
             <p>Date d'expiration de la visite médicale</p>
             <button class="form_button" type="button" onClick="" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
@@ -48,3 +40,9 @@
         </section>
     </div> 
 </form>
+
+<script>
+    const diplome = new implementInput('diplome', 'diplome-section', 'autocomplete', <?= count($diplome); ?>, <?= json_encode($diplome); ?>);
+    const aide = new implementInput('aide', 'aide-section', 'liste', <?= count($aide); ?>, <?= json_encode($aide); ?>);
+    const visiteMedicale = new implementInput('visite_medicale', 'visite-section', 'date', 1, []);
+</script>

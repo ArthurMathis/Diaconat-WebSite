@@ -15,7 +15,7 @@
                 content: 'notification-content',
                 confirmButton: 'action_button reverse_color',
                 cancelButton: 'action_button cancel_button',
-                 actions: 'custom-actions'
+                actions: 'custom-actions'
             }
         }).then((result) => {
             // SI l'utilisateur confirme

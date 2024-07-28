@@ -31,21 +31,22 @@ class CandidaturesView extends View {
     }
 
     /// Méthode publique retournant le formulaire de saisie d'un candidat
-    public function getSaisieCandidatContent($title, &$aide=[]) {
+    public function getSaisieCandidatContent($title, &$diplome=[], &$aide=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
 
+        $scripts = [
+            'models/objects/AutoComplet.js',
+            'views/form-view.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
+
         // On ajoute le formulaire de'inscription
         include INSCRIPT_FORM.DS.'candidats.php';
         include FORMULAIRES.DS.'waves.php';
-
-        $scripts = [
-            'models/objects/AutoComplet.js'
-        ];
-        include(COMMON.DS.'import-scripts.php');
 
         // On ajoute le pied de page
         $this->generateCommonFooter();

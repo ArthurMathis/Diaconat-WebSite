@@ -32,8 +32,23 @@ class CandidaturesModel extends Model {
     /// Métohode publique retournant la liste des aides pour l'autocomplétion
     public function getAides() {
         // On inititalise la requête
-        $request = "SELECT * FROM aides_au_recrutement";
+        $request = "SELECT 
+        Id_Aides_au_recrutement AS id,
+        Intitule_Aides_au_recrutement AS text
+
+        FROM aides_au_recrutement";
         
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode public retournant la liste des diplomes pour l'autocomplétion
+    public function getDiplomes() {
+        // On initialise la requête
+        $request = "SELECT
+        Intitule_Diplomes AS text
+        
+        FROM Diplomes";
+
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }

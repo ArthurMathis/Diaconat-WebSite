@@ -14,9 +14,11 @@ class CandidaturesController extends Controller {
         return $this->View->getContent("Candidatures", $items);
     }
     public function displaySaisieCandidat() {
-        $aide = $this->Model->getAides();
-        $diplomes = [];
-        return $this->View->getSaisieCandidatContent('Ypopsi - Nouveau candidat', $aide);
+        return $this->View->getSaisieCandidatContent(
+            'Ypopsi - Nouveau candidat', 
+            $this->Model->getDiplomes(),
+            $this->Model->getAides()
+        );
     }
     public function displayRechercheCandidat() {
         return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
