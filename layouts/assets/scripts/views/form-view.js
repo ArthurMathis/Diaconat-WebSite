@@ -60,7 +60,7 @@ class implementInput {
                     content: 'notification-content',
                     confirmButton: 'action_button reverse_color',
                     cancelButton: 'action_button cancel_button',
-                    actions: 'custom-actions'
+                    actions: 'notification-actions'
                 }
             }).then((result) => {
                 if (result.isConfirmed) 

@@ -31,7 +31,7 @@ class CandidaturesView extends View {
     }
 
     /// Méthode publique retournant le formulaire de saisie d'un candidat
-    public function getSaisieCandidatContent($title, &$diplome=[], &$aide=[]) {
+    public function getSaisieCandidatContent($title, $diplome=[], $aide=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 

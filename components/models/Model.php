@@ -633,6 +633,12 @@ abstract class Model {
                     Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
                     VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
         
+        echo "<h2>Le candidat</h2>";
+        echo "<h3>La requête</h3>";
+        var_dump($request);
+        echo "<h3>Les paramètres</h3>";
+        var_dump($candidat->exportToSQL());
+
         // On lance  requête
         $this->post_request($request, $candidat->exportToSQL());
     }

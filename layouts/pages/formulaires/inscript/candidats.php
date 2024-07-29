@@ -18,8 +18,7 @@
         </section>
         <section id='diplome-section' class="imp-section">
             <p>Diplômes</p>
-            <!--<input type="text" id="diplome" name="diplomes[]" placeholder="Diplome">-->
-            <button class="form_button" type="button" onClick="" style="margin-left: auto">
+            <button class="form_button" type="button" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
         </section>
@@ -31,7 +30,7 @@
         </section>
         <section id='visite-section' class="imp-section">
             <p>Date d'expiration de la visite médicale</p>
-            <button class="form_button" type="button" onClick="" style="margin-left: auto">
+            <button class="form_button" type="button" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
         </section>

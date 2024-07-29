@@ -139,10 +139,14 @@ class Candidat {
         // On implémente
         else $this->disponibilite = $disponibilite;
     }
-    public function setVisite($visite=true) {
-        if(!is_bool($visite))
-            throw new InvalideCandidatExceptions("La visite médicale d'un candidat doit être un booléen !");
-
+    public function setVisite($visite) {
+        // On vérifie l'intégrité des données
+        if(empty($visite))
+            throw new InvalideCandidatExceptions("La visite médicale d'un candidat doit être remplie !");
+        elseif(!Instants::isDate($visite))
+            throw new InvalideCandidatExceptions("La visite médicale d'un candidat doit être une date !");
+        
+        // On implémente
         else $this->visite_medicale = $visite;
     }
 

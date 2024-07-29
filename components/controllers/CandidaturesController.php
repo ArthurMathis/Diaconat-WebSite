@@ -33,7 +33,8 @@ class CandidaturesController extends Controller {
         );
     }
 
-    public function checkCandidat($candidat=[], $diplomes=[], $aide, $visite_medicale) {
+    /// Méthode publique vérifiant les données d'un candidat avant la redirection vers le formulaire de saisie de candidature
+    public function checkCandidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale) {
         // On contruit le nouveau candidat
         $this->Model->verify_candidat($candidat, $diplomes, $aide, $visite_medicale);
         // On redirige la page
@@ -66,10 +67,13 @@ class CandidaturesController extends Controller {
         header('Location: index.php?candidatures=saisie-candidature');
     }
 
-    public function createCandidature($candidat, $candidature=[], $diplomes=[], $aide) {
+    public function createCandidature($candidat, &$candidature=[], &$diplomes=[], &$aide=[]) {
+        echo "<h2>On génère la candidat</h2>";
+        echo "<h3>On ajoute la disponibilité du candidat</h3>";
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
+        echo "<h3>On recherche la clé du candidat</h3>";
         if($candidat->getCle() === null) {
             // On test la présence du candidat dans la base de données
             try {
@@ -91,7 +95,10 @@ class CandidaturesController extends Controller {
                 // On ajoute la clé de Candidats
                 $candidat->setCle($search['Id_Candidats']);
         }
+        var_dump($candidat->getCle());
 
+        echo "<h3>Le candidat</h3>";
+        var_dump($candidat);
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
         

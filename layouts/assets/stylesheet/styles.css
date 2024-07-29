@@ -510,6 +510,16 @@ button.cancel_button:is(:hover, :focus),
   font-size: var(--font-size-standart);
   font-family: "Roboto", sans-serif;
 }
+.notification-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px; 
+  flex-direction: row-reverse; 
+}
+
+.notification b {
+  font-family: "Roboto Bold";
+}
 
 /******** BARRE DE NAVIGATION ********/
 .nav-barre,

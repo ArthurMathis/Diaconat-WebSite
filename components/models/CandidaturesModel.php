@@ -54,7 +54,9 @@ class CandidaturesModel extends Model {
     }
 
     /// Méthode publique vérifiant l'intégrité d'un candidat avant son inscription en base
-    public function verify_candidat(&$candidat=[], $diplomes=[], $aide, $visite_medicale) {
+    public function verify_candidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale) {
+        var_dump($visite_medicale);
+        echo "<h2>On génère le candidat</h2>";
         // On vérifie l'intégrité des données
         try {
             $candidat = new Candidat(
@@ -72,7 +74,6 @@ class CandidaturesModel extends Model {
                 'msg' => $e
             ]);
         }
-
 
         // if($diplomes != null) {
         //     // On récupère la liste des diplomes
@@ -104,18 +105,33 @@ class CandidaturesModel extends Model {
         // }
 
         // On ajoute la visite médical
-        $candidat->setVisite($visite_medicale);
+        if(!empty($visite_medicale))
+            $candidat->setVisite($visite_medicale);
+
+        var_dump($candidat);    
 
         // On enregistre les données dans la session
         $_SESSION['candidat'] = $candidat;
         $_SESSION['diplomes'] = $diplomes;
         $_SESSION['aide']     = $aide;
+
+        echo "<h3>On inscrit les données en session</h3>";
+        echo "<h4>Le candidat</h4>";
+        var_dump($_SESSION['candidat']);
+        echo "<h4>Les diplomes</h4>";
+        var_dump($_SESSION['diplomes']);
+        echo "<h4>Les aides</h4>";
+        var_dump($_SESSION['aide']);
+
     }
 
     /// Méthode publique générant un candidat et inscrivant les logs
-    public function createCandidat(&$candidat, $diplomes=[], $aide) {
+    public function createCandidat(&$candidat, $diplomes=[], $aide=[]) {
+        echo "<h1>On enregistre le candidat</h1>";
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
+
+        echo "<h2>On récupère la clé candidat</h2>";
 
         // On récupère l'Id du candidat
         $search = $this->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
@@ -123,13 +139,23 @@ class CandidaturesModel extends Model {
         // On ajoute la clé de Candidats
         $candidat->setCle($search['Id_Candidats']);
 
+        var_dump($candidat->getCle());
+
+        echo "<h2>On enregistre les diplômes</h2>";
+        echo "<h3>La liste de diplômes</h3>";
+        var_dump($diplomes); 
+        echo '<br>';
+
         // On enregistre les diplomes
-        if(!empty($diplomes)) foreach($diplomes as $item) 
-            $this->inscriptDiplome($candidat->getCle(), $item['Id_Diplomes']);
+        if(!empty($diplomes)) foreach($diplomes as $item) {
+            var_dump($item);
+            echo '<br>';
+            $this->inscriptDiplome($candidat->getCle(), $this->searchDiplome($item)['Id_Diplomes']);
+        }
 
         // On enregistre les aides
-        if($aide != null) 
-            $this->inscriptAvoir_droit_a($candidat->getCle(), $aide);
+        if($aide != null) foreach($aide as $item)
+            $this->inscriptAvoir_droit_a($candidat->getCle(), $item);
 
         // On enregistre les logs
         $this->writeLogs(
@@ -150,6 +176,7 @@ class CandidaturesModel extends Model {
 
     /// Méthode publique inscrivant une candidature et les logs
     public function inscriptCandidature(&$candidat, $candidatures=[]) {
+        echo "<h1>On enregistre la candidature</h1>";
         // On iscrit la candidature 
         try {
             // On inscrit l'instant 
@@ -185,6 +212,12 @@ class CandidaturesModel extends Model {
                 "poste" => $poste,
                 "contrat" => $contrat
             ];
+
+            echo "<h2>La candidature</h2>";
+            echo "<h3>La requête</h3>";
+            var_dump($request);
+            echo "<h3>Les paramètres</h3>";
+            var_dump($params);
         
             // On ajoute la base de données
             $this->post_request($request, $params);
