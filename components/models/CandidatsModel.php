@@ -38,11 +38,14 @@ class CandidatsModel extends Model {
             throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
 
         $candidats = $this->getCandidats($index);
-        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+        array_push($candidats, ['diplomes' => $this->getCandidatDiplomes($index)]);
+        array_push($candidats, ['aides' => $this->getCandidatAides($index)]);
 
         return [
             'candidat' => $candidats,
-            'aide' => $this->get_request("SELECT Id_Aides_au_recrutement AS id, Intitule_Aides_au_recrutement AS intitule FROM Aides_au_recrutement", [])
+            'coopteur' => $this->searchCoopteur($index, 3), // 3 est l'id de la prime de cooptation... Corriger le code
+            'aide' => $this->getAides(),
+            'diplome' => $this->getDiplomes()
         ];
     }
     /// Méthode publique retournant les donnnées d'un rendez-vous pour sa mise-à-jour
@@ -79,11 +82,11 @@ class CandidatsModel extends Model {
             throw new Exception("L'index n'est pas valide. Veullez saisir un entier !");
 
         $candidats = $this->getCandidats($index);
-        array_push($candidats, ['diplomes' => $this->getDiplomes($index)]);
+        array_push($candidats, ['diplomes' => $this->getCandidatDiplomes($index)]);
 
         return [
             'candidat' => $candidats,
-            'aide' => $this->getAides($index),
+            'aide' => $this->getCandidatAides($index),
             'candidatures' => $this->getCandidatures($index),
             'contrats' => $this->getContrats($index),
             'rendez-vous' => $this->getRendezVous($index)
@@ -119,7 +122,7 @@ class CandidatsModel extends Model {
         return $this->get_request($request, $params)[0];
     }
     /// Méthode privée retournant la liste des diplômes obetnus par un candidat 
-    private function getDiplomes($index) {
+    private function getCandidatDiplomes($index) {
         // On initialise la requête
         $request = "SELECT Intitule_Diplomes
 
@@ -229,7 +232,7 @@ class CandidatsModel extends Model {
     }
 
     /// Méthode privée retournant la liste des aides au recrutement
-    private function getAides($index) {
+    private function getCandidatAides($index) {
         // On initialise la requête
         $request = "SELECT 
         Intitule_Aides_au_recrutement AS intitule 
@@ -242,6 +245,23 @@ class CandidatsModel extends Model {
         $result = $this->get_request($request);
     
         return empty($result) ? null : $result[0];
+    }
+    private function searchCoopteur($cle_candidat, $cle_prime) {
+        // On initialise la requête
+        $request = "SELECT 
+        CONCAT(c.Nom_Candidats, ' ', c.Prenom_Candidats) AS text
+
+        FROM Avoir_droit_a AS a
+        INNER JOIN Candidats AS c ON a.Cle_Coopteur = c.Id_Candidats
+        
+        WHERE a.Cle_Candidats = :cle AND a.Cle_Aides_au_recrutement = :prime";
+        $params = [
+            'cle' => $cle_candidat,
+            'prime' => $cle_prime
+        ];
+
+        // On lance la requête
+        return $this->get_request($request, $params, true, false);
     }
     public function getTypeContrat($cle_candidature) {
         $candidature = $this->searchCandidature($cle_candidature);
@@ -1256,45 +1276,27 @@ class CandidatsModel extends Model {
         }
 
         // On met à jour le candidat
-        $this->updateCandidat($cle_candidat, $c->exportToSQL_update());
+        $this->updateCandidat($cle_candidat, $c->exportToSQL_update()); //
         unset($c);
 
         // On supprime les diplomes du candidat
         $request = "DELETE FROM Obtenir WHERE Cle_Candidats = :cle";
         $params = ['cle' => $cle_candidat];
-
-        // On lance la requête
         $this->post_request($request, $params);
 
         // On récupère la liste des diplomes
-        for($i = 0; $i < count($candidat['diplome']); $i++) {
-            if(!empty($candidat['diplome'][$i]) && 0 < strlen($candidat['diplome'][$i])) {
-                $temp = $this->searchDiplome($candidat['diplome'][$i]);
-
-                if(empty($temp)) {
-                    // On ajoute le nouveau diplome à la base de données
-                    $this->createDiplome($candidat['diplome'][$i]);
-
-                    // On récupère le diplome
-                    $temp = $this->searchDiplome($candidat['diplome'][$i]);
-                }
-
-                unset($candidat['diplome'][$i]);
-                $this->inscriptDiplome($cle_candidat, $temp['Id_Diplomes']);
-            }
-        }
+        for($i = 0; $i < count($candidat['diplome']); $i++) 
+            $this->inscriptDiplome($cle_candidat, $this->searchDiplome($candidat['diplome'][$i])['Id_Diplomes']);
         unset($candidat['diplome']);
 
         // On supprime l'aide du candidat
         $request = "DELETE FROM Avoir_droit_a WHERE Cle_Candidats = :cle";
         $params = ['cle' => $cle_candidat];
-
-        // On lance la requête
         $this->post_request($request, $params);
 
-        if($candidat['aide']) 
-            $this->inscriptAvoir_droit_a($cle_candidat, $candidat['aide']);
-        
+        // On enregistre les aides
+        if($candidat['aide'] != null) foreach($candidat['aide'] as $item) 
+            $this->inscriptAvoir_droit_a($cle_candidat, $item, $item == 3 ? $candidat['coopteur'] : null);    
         unset($candidat);
     }
 

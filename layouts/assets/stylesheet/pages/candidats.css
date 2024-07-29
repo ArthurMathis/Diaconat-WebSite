@@ -76,6 +76,7 @@ aside header div {
 }
 aside header div p {
     font-family: "Roboto Bold";
+    text-align: right;
 }
 aside section {
     display: flex;

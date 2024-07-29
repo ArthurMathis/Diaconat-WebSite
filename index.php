@@ -669,12 +669,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                         'adresse' => $_POST['adresse'], 
                         'ville' => forms_manip::nameFormat($_POST['ville']), 
                         'code-postal' => $_POST['code-postal'], 
-                        'diplome' => [
-                            $_POST["diplome-1"], 
-                            $_POST["diplome-2"], 
-                            $_POST["diplome-3"]
-                        ], 
-                        'aide' => $_POST['aide']
+                        'diplome' => isset($_POST["diplome"]) ? $_POST["diplome"] : null,
+                        'aide' => isset($_POST["aide"]) ? $_POST["aide"] : null,
+                        'coopteur' => isset($_POST["coopteur"]) ? $_POST['coopteur'][0] : null,
+                        'visite medicale' => isset($_POST["visite_medicale"][0]) ? $_POST["visite_medicale"][0] : null
                     ];
 
                 // On récupère les éventuelles erreurs

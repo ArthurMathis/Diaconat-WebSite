@@ -212,7 +212,29 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, []);
     }
-    
+    /// Métohode publique retournant la liste des aides pour l'autocomplétion
+    public function getAides() {
+        // On inititalise la requête
+        $request = "SELECT 
+        Id_Aides_au_recrutement AS id,
+        Intitule_Aides_au_recrutement AS text
+
+        FROM aides_au_recrutement";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode public retournant la liste des diplomes pour l'autocomplétion
+    public function getDiplomes() {
+        // On initialise la requête
+        $request = "SELECT
+        Intitule_Diplomes AS text
+        
+        FROM Diplomes";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
 
 
 
@@ -640,13 +662,20 @@ abstract class Model {
     }
 
     /// Méthode protégée inscrivant une Candidat dans la base de données
-    protected function inscriptCandidat($candidat) {
+    protected function inscriptCandidat(&$candidat) {
         // On initialise la requête
-        $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
-                    Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
-                    VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
+        if($candidat->getVisite_medicale()) 
+            $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
+                Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, VisiteMedicale_Candidats)
+                VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite, :visite)";
+
+        else 
+            $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
+                Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats)
+                VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite)";
         
         echo "<h2>Le candidat</h2>";
+        var_dump($candidat);
         echo "<h3>La requête</h3>";
         var_dump($request);
         echo "<h3>Les paramètres</h3>";

@@ -66,8 +66,6 @@ class CandidaturesController extends Controller {
     }
 
     public function createCandidature($candidat, &$candidature=[], &$diplomes=[], &$aide=[], $coopteur) {
-        echo "<h2>On génère la candidat</h2>";
-        echo "<h3>On ajoute la disponibilité du candidat</h3>";
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
@@ -83,6 +81,8 @@ class CandidaturesController extends Controller {
                     'msg' => $e
                 ]);
             }
+
+            echo 'Nouveau candidat';
             
             if(empty($search)) {
                 // On ajoute le candidat à la base de données
@@ -93,14 +93,9 @@ class CandidaturesController extends Controller {
                 // On ajoute la clé de Candidats
                 $candidat->setCle($search['Id_Candidats']);
         }
-        var_dump($candidat->getCle());
 
-        echo "<h3>Le candidat</h3>";
-        var_dump($candidat);
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
-        
-        exit;
         // On redirige la page
         alert_manipulation::alert([
             'title' => 'Candidat inscript !',

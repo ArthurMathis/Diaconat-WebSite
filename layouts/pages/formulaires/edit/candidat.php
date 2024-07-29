@@ -16,38 +16,48 @@
                 <input type="number" id="code-postal" name="code-postal" placeholder="Code postal" value="<?= $item['candidat']['code_postal']?>">
             </div>
         </section>
-        <section>
+        <section id='diplome-section'>
             <p>Diplômes</p>
-            <input type="text" id="diplome-1" name="diplome-1" placeholder="Diplome 1" value="<?php if(isset($item['candidat'][0]['diplomes'][0])) echo $item['candidat'][0]['diplomes'][0]["Intitule_Diplomes"]; ?>">
-            <input type="text" id="diplome-2" name="diplome-2" placeholder="Diplome 2" value="<?php if(isset($item['candidat'][0]['diplomes'][1])) echo $item['candidat'][0]['diplomes'][1]["Intitule_Diplomes"]; ?>">
-            <input type="text" id="diplome-3" name="diplome-3" placeholder="Diplome 3" value="<?php if(isset($item['candidat'][0]['diplomes'][2])) echo $item['candidat'][0]['diplomes'][2]["Intitule_Diplomes"]; ?>">
-        </section>
-        <section>
+            <button class="form_button" type="button" style="margin-left: auto">
+                <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
+            </button>
+            <?php foreach($item['candidat'][0]['diplomes'] as $index => $d): ?>
+                <input type="text" id="<?php echo 'diplome-'.$index+1; ?>" name="diplome[]" value="<?= $d["Intitule_Diplomes"]; ?>">
+            <?php endforeach ?>   
+        </section>      
+        <section id='aide-section'>
             <p>Aides au recrutement</p>
-            <select name="aide">
-                <option value="">Aide</option>
-                <?php foreach($item['aide'] as $c): ?>
-                    <option value="<?= $c['id']; ?>">
-                        <?= $c['intitule']; ?>
-                    </option>
-                <?php endforeach ?>    
-            </select>
+            <button class="form_button" type="button" style="margin-left: auto">
+                <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
+            </button>
+            <?php foreach($item['candidat'][1]['aides'] as $a): ?>
+                <select name="aide">
+                    <?php foreach($item['aide'] as $c): ?>
+                        <option value="<?= $c['id']; ?>" <?php if($a == $c['text']) echo 'selected'; ?>>
+                            <?= $c['text']; ?>
+                        </option>
+                    <?php endforeach ?>    
+                </select>
+            <?php endforeach ?>
         </section>
-        <section>
+        <section id='visite-section'>
             <p>Informations de la visite médicale</p>
-            <div class="checkbox-liste">
-                <div class="checkbox-item">
-                    <label for="visite_medicale_true">Visite en règle</label>
-                    <input type="radio" id="visite_medicale_true" name="visite_medicale" value="true"/>
-                </div>
-                <div class="checkbox-item">
-                    <label for="visite_medicale_false">Visible obselète</label>
-                    <input type="radio" id="visite_medicale_false" name="visite_medicale" value="false" checked/>
-                </div>
-                </div> 
+            <?php if(isset($item['candidat']['VisiteMedicale_Candidats'])): ?>
+                <input type="date" id="visite_medicale" name="visite_medicale[]" value="<?= $item['candidat']['VisiteMedicale_Candidats']; ?>">
+            <?php else: ?>
+                <button class="form_button" type="button" style="margin-left: auto">
+                    <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
+                </button>
+            <?php endif ?>    
         </section>
         <section class="buttons_actions">
             <button type="submit" class="submit_button" value="new_user">Mettre à jour</button>
         </section>
     </div> 
 </form>
+
+<script>
+    const diplome = new implementInput('diplome', 'diplome-section', 'autocomplete', <?= count($item['diplome']); ?>, <?= json_encode($item['diplome']); ?>);
+    const aide = new implementInput('aide', 'aide-section', 'liste', <?= count($item['aide']); ?>, <?= json_encode($item['aide']); ?>);
+    const visiteMedicale = new implementInput('visite_medicale', 'visite-section', 'date', 1, []);
+</script>

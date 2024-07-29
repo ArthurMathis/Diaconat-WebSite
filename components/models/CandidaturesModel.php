@@ -29,29 +29,7 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request);
     }
-    /// Métohode publique retournant la liste des aides pour l'autocomplétion
-    public function getAides() {
-        // On inititalise la requête
-        $request = "SELECT 
-        Id_Aides_au_recrutement AS id,
-        Intitule_Aides_au_recrutement AS text
-
-        FROM aides_au_recrutement";
-        
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
-    /// Méthode public retournant la liste des diplomes pour l'autocomplétion
-    public function getDiplomes() {
-        // On initialise la requête
-        $request = "SELECT
-        Intitule_Diplomes AS text
-        
-        FROM Diplomes";
-
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
+    
     protected function searchCandidatByConcat($name) {
         // On initalise la requête
         $request = "SELECT * FROM Candidats
@@ -68,8 +46,6 @@ class CandidaturesModel extends Model {
 
     /// Méthode publique vérifiant l'intégrité d'un candidat avant son inscription en base
     public function verify_candidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale, $coopteur) {
-        var_dump($visite_medicale);
-        echo "<h2>On génère le candidat</h2>";
         // On vérifie l'intégrité des données
         try {
             $candidat = new Candidat(
@@ -91,38 +67,22 @@ class CandidaturesModel extends Model {
         // On ajoute la visite médical
         if(!empty($visite_medicale))
             $candidat->setVisite($visite_medicale);
-
-        var_dump($candidat);  
     
         // On récupère la clé du coopteur
-        echo '<h3>On récupère le coopteur</h3>';
         if($coopteur)
             $coopteur = $this->searchCandidatByConcat($coopteur);
-        echo '<h4>Le résultat</h4>';
-        var_dump($coopteur);
 
         // On enregistre les données dans la session
         $_SESSION['candidat'] = $candidat;
         $_SESSION['diplomes'] = $diplomes;
         $_SESSION['aide']     = $aide;
         $_SESSION['coopteur'] = $coopteur;
-
-        echo "<h3>On inscrit les données en session</h3>";
-        echo "<h4>Le candidat</h4>";
-        var_dump($_SESSION['candidat']);
-        echo "<h4>Les diplomes</h4>";
-        var_dump($_SESSION['diplomes']);
-        echo "<h4>Les aides</h4>";
-        var_dump($_SESSION['aide']);
     }
 
     /// Méthode publique générant un candidat et inscrivant les logs
     public function createCandidat(&$candidat, $diplomes=[], $aide=[], $coopteur) {
-        echo "<h1>On enregistre le candidat</h1>";
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
-
-        echo "<h2>On récupère la clé candidat</h2>";
 
         // On récupère l'Id du candidat
         $search = $this->searchcandidat($candidat->getNom(), $candidat->getPrenom(), $candidat->getEmail());
@@ -130,24 +90,10 @@ class CandidaturesModel extends Model {
         // On ajoute la clé de Candidats
         $candidat->setCle($search['Id_Candidats']);
 
-        var_dump($candidat->getCle());
-
-        echo "<h2>On enregistre les diplômes</h2>";
-        echo "<h3>La liste de diplômes</h3>";
-        var_dump($diplomes); 
-        echo '<br>';
-
         // On enregistre les diplomes
         if(!empty($diplomes)) foreach($diplomes as $item) {
-            var_dump($item);
-            echo '<br>';
             $this->inscriptDiplome($candidat->getCle(), $this->searchDiplome($item)['Id_Diplomes']);
         }
-
-        echo "<h2>On enregistre les aides</h2>";
-        echo "<h3>La liste d'aides</h3>";
-        var_dump($aide); 
-        echo '<br>';
 
         // On enregistre les aides
         if($aide != null) foreach($aide as $item) 
@@ -172,7 +118,6 @@ class CandidaturesModel extends Model {
 
     /// Méthode publique inscrivant une candidature et les logs
     public function inscriptCandidature(&$candidat, $candidatures=[]) {
-        echo "<h1>On enregistre la candidature</h1>";
         // On iscrit la candidature 
         try {
             // On inscrit l'instant 
@@ -208,12 +153,6 @@ class CandidaturesModel extends Model {
                 "poste" => $poste,
                 "contrat" => $contrat
             ];
-
-            echo "<h2>La candidature</h2>";
-            echo "<h3>La requête</h3>";
-            var_dump($request);
-            echo "<h3>Les paramètres</h3>";
-            var_dump($params);
         
             // On ajoute la base de données
             $this->post_request($request, $params);

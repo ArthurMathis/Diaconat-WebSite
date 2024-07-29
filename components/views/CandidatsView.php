@@ -413,6 +413,12 @@ class CandidatsView extends View {
         // On ajoute les barres de navigation
         $this->generateMenu(true);
 
+        $scripts = [
+            'models/objects/AutoComplet.js',
+            'views/form-view.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
+
         // On ajoute le formulaire de connexion
         include EDIT_FORM.DS.'candidat.php';
         include FORMULAIRES.DS.'waves.php';

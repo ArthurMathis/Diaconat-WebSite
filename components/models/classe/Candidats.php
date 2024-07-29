@@ -151,17 +151,32 @@ class Candidat {
     }
 
     public function exportToSQL() {
-        return [
-            "nom" => $this->getNom(),
-            "prenom" => $this->getPrenom(),
-            "email" => $this->getEmail(), 
-            "telephone" => $this->getTelephone(),
-            "adresse" => $this->getAdresse(),
-            "ville" => $this->getVille(),
-            "code_postal" => $this->getCodePostal(),
-            "disponibilite" => $this->getDisponibilite(),
-            "visite" => $this->getVisite_medicale() ? 1 : 0
-        ];
+        // Avec une visité médicale
+        if($this->getVisite_medicale())
+            return [
+                "nom" => $this->getNom(),
+                "prenom" => $this->getPrenom(),
+                "email" => $this->getEmail(), 
+                "telephone" => $this->getTelephone(),
+                "adresse" => $this->getAdresse(),
+                "ville" => $this->getVille(),
+                "code_postal" => $this->getCodePostal(),
+                "disponibilite" => $this->getDisponibilite(),
+                "visite" => $this->getVisite_medicale()
+            ];
+
+        // Sans    
+        else 
+            return [
+                "nom" => $this->getNom(),
+                "prenom" => $this->getPrenom(),
+                "email" => $this->getEmail(), 
+                "telephone" => $this->getTelephone(),
+                "adresse" => $this->getAdresse(),
+                "ville" => $this->getVille(),
+                "code_postal" => $this->getCodePostal(),
+                "disponibilite" => $this->getDisponibilite()
+            ];
     }
     public function exportToSQL_update() {
         return [
