@@ -17,6 +17,94 @@ function setMinDateFin(input_date_debut, input_date_fin) {
     });
 }
 
+/// function ajoutant l'input coopteur si besoin
+function setCooptInput(input, inputName, searchValue, suggestions) {
+    if(input.value == searchValue) {
+        // On génère le nouvel élément
+        const elmt = document.createElement('div');
+        elmt.className = 'autocomplete'
+        const new_i = document.createElement('input');
+        new_i.type = 'text';
+        new_i.name = inputName + '[]';
+        new_i.autocomplete = 'off';
+
+        // On ajoute les élements
+        elmt.appendChild(new_i);
+        elmt.appendChild(document.createElement('article'));
+
+        console.log(elmt);
+
+        // On lance l'autocomplete
+        const tab = [];
+        suggestions.forEach(c => { tab.push(c.text); });
+        const autocomp = new AutoComplete(new_i, tab);
+
+        // On ajoute l'élément au DOM
+        const parent = input.parentNode;
+        if (parent.lastChild === input) parent.appendChild(elmt);
+        else parent.insertBefore(elmt, input.nextSibling);  
+    }
+}
+
+class cooptInput {
+    constructor(input, inputName, searchValue, suggestions) {
+        this.input = input;
+        this.inputName = inputName;
+        this.searchValue = searchValue;
+        this.suggestions = suggestions;
+
+        // On signale l'action
+        Swal.fire({
+            title: 'Information',
+            text: "Vous ne pouvez renseigner qu'une prime de cooptation !",
+            icon: 'info',
+            position: "top-end",
+            backdrop: false,
+            timer: 6000, 
+            showConfirmButton: false,
+            customClass: {
+                popup: 'notification',
+                title: 'notification-title',
+                content: 'notification-content',
+                confirmButton: 'action_button reverse_color'
+            }
+        });
+    }
+
+    react() {
+        if(this.input.value == this.searchValue) this.createInput();
+        else this.destroyInput();
+    }
+
+    createInput() {
+        // On génère le nouvel élément
+        this.elmt = document.createElement('div');
+        this.elmt.className = 'autocomplete'
+        const new_i = document.createElement('input');
+        new_i.type = 'text';
+        new_i.name = this.inputName + '[]';
+        new_i.autocomplete = 'off';
+
+        // On ajoute les élements
+        this.elmt.appendChild(new_i);
+        this.elmt.appendChild(document.createElement('article'));
+
+        // On lance l'autocomplete
+        const tab = [];
+        this.suggestions.forEach(c => { tab.push(c.text); });
+        this.autocomplete = new AutoComplete(new_i, tab);
+
+        // On ajoute l'élément au DOM
+        const parent = this.input.parentNode;
+        if (parent.lastChild === this.input) parent.appendChild(this.elmt);
+        else parent.insertBefore(this.elmt, this.input.nextSibling);  
+    }
+    destroyInput() {
+        if(this.autocomplete) this.autocomplete = null;
+        if(this.elmt) this.elmt.remove();
+    }
+}
+
 // à compléter (ajout des méthodes de génératipn d'input : paramètre sélection de l'autocomplet + parent + type d'input)
 class implementInput {
     /**
@@ -41,9 +129,6 @@ class implementInput {
 
     init() {
         this.button = this.inputParent.querySelector('button');
-        console.log("Le bouton d'ajout :");
-        console.log(this.button);
-
         this.button.addEventListener('click', () => {
             Swal.fire({
                 title: "Question ?",
@@ -80,66 +165,85 @@ class implementInput {
     }
 
     createInput() {
+        // On déclare le nouvel élément
+        let inputElement;
         switch(this.inputType) {
-            // Text + suggestions
-            case 'autocomplete':
-                // On génère le container
-                const autocomplete = document.createElement('div');
-                autocomplete.className = "autocomplete";
-
-                // On génère l'input
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.id = this.inputName + '-' + this.nbInput;
-                input.name = this.inputName + '[]';
-                this.autocomplete = 'off';
-                
-                // On ajoute les élements
-                autocomplete.appendChild(input);
-                autocomplete.appendChild(document.createElement('article'));
-                this.inputParent.appendChild(autocomplete);
-
-                // On lance l'autocomplete
-                const tab = [];
-                this.suggestions.forEach(c => { tab.push(c.text); });
-                this.autocomplete = new AutoComplete(input, tab);
+             // Text + suggestions
+            case 'autocomplete': 
+            inputElement = this.createAutoCopmlete();
                 break;
 
-            // Select  
+            // Select
             case 'liste':
-                // On génère la liste
-                const select = document.createElement('select');
-                select.name = this.inputName + '[]';
-                // On génère les options
-                this.suggestions.forEach(c => {
-                    // On construit l'option
-                    const option = document.createElement('option');
-                    option.value = c.id;
-                    option.textContent = c.text;
+                inputElement = this.createListe();
+                break;   
 
-                    // On l'ajoute à la liste
-                    select.appendChild(option);
-                });
-
-                // On ajoute les éléments
-                this.inputParent.appendChild(select);
-                break;    
-
-            // Date    
+            // Date
             case 'date':
-                // On génère l'input
-                const dateInput = document.createElement('input');
-                dateInput.type = 'date';
-                dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
-                dateInput.name = this.inputName  + '[]';
-                dateInput.id = this.inputName;
-                
-                // On ajoute l'élément
-                this.inputParent.appendChild(dateInput);
-                break;
-                
-            default: throw new Error("Type d'input non reconnu. Génération d'input impossible !");    
+                inputElement = this.createDate();
+                break;  
+
+            default: throw new Error("Type d'input non reconnu. Génération d'input impossible !"); 
         }
+        
+        // On ajoute le nouvel élément au DOM
+        this.inputParent.appendChild(inputElement);
+        const e = new CustomEvent('elementCreated', { detail: { element: inputElement }});
+        document.dispatchEvent(e);
+    }
+
+    createAutoCopmlete() {
+        const autocomplete = document.createElement('div');
+        autocomplete.className = "autocomplete";
+
+        // On génère l'input
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = this.inputName + '-' + this.nbInput;
+        input.name = this.inputName + '[]';
+        this.autocomplete = 'off';
+        
+        // On ajoute les élements
+        autocomplete.appendChild(input);
+        autocomplete.appendChild(document.createElement('article'));
+
+        // On lance l'autocomplete
+        const tab = [];
+        this.suggestions.forEach(c => { tab.push(c.text); });
+        this.autocomplete = new AutoComplete(input, tab);
+
+        // On retourne l'élément
+        return autocomplete;
+    }
+    createListe() {
+        // On génère la liste
+        const select = document.createElement('select');
+        select.name = this.inputName + '[]';
+
+        // On génère les options
+        this.suggestions.forEach(c => {
+            // On construit l'option
+            const option = document.createElement('option');
+            option.value = c.id;
+            option.textContent = c.text;
+        
+            // On l'ajoute à la liste
+            select.appendChild(option);
+        });
+
+        // On retourne l'élément
+        return select;
+    } 
+    createDate() {
+        // On génère l'input
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+        dateInput.name = this.inputName  + '[]';
+        dateInput.id = this.inputName;
+
+        // On retourne l'élément
+        return dateInput;
     }
     deleteButton() {
         this.button.remove();
