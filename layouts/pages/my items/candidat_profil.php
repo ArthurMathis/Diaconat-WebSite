@@ -57,13 +57,14 @@
             <?php endif ?>
         </div>
         <div>
-            <p>Aide au recrutement</p>
+            <p>Aide au recrutement</p>   
             <?php if($item['aide'] == null): ?>
                 <p>Aucune aide au recrutement</p>
             <?php else: ?>
                 <p><?= $item['aide']['intitule']?></p>    
-            <?php endif ?>    
+            <?php endif ?>  
         </div>
+        
     </section>
     <section>
         <div>

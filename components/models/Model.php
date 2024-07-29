@@ -200,6 +200,19 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
+    public function getAutoCompletEmployer() {
+        // On initialise la requête
+        $request = "SELECT 
+        CONCAT(c.Nom_Candidats, ' ', c.Prenom_Candidats) AS text
+        FROM Candidats AS c
+        INNER JOIN Contrats AS con ON c.Id_Candidats = con.Cle_Candidats
+        WHERE con.Date_signature_Contrats IS NOT NULL
+        AND (con.Date_fin_Contrats IS NULL OR con.Date_fin_Contrats > CURDATE())";
+    
+        // On lance la requête
+        return $this->get_request($request, []);
+    }
+    
 
 
 
@@ -695,14 +708,32 @@ abstract class Model {
         $this->post_request($request, $params);
     }
     /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
-    protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide) {
-        // On initialise la requête
-        $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
-        $params = [
-            'candidat' => $cle_candidat,
-            'aide' => $cle_aide
-        ];
+    protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide, $cle_coopteur=null) {
+        if(!empty($cle_coopteur)) {
+            // On initialise la requête
+            $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement, Cle_Coopteur) VALUES (:candidat, :aide, :coopteur)";
+            $params = [
+                'candidat' => $cle_candidat,
+                'aide' => $cle_aide,
+                'coopteur' => $cle_coopteur
+            ];
+    
 
+        } else {
+            // On initialise la requête
+            $request = "INSERT INTO Avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
+            $params = [
+                'candidat' => $cle_candidat,
+                'aide' => $cle_aide
+            ];
+
+        }
+
+        echo "<h4>La requête</h4>";
+        var_dump($request);
+        echo "<h4>Les paramètres</h4>";
+        var_dump($params);
+        
         // On lance la requête
         $this->post_request($request, $params);
     }

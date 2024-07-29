@@ -43,23 +43,7 @@
 <script>
     const diplome = new implementInput('diplome', 'diplome-section', 'autocomplete', <?= count($diplome); ?>, <?= json_encode($diplome); ?>);
     const aide = new implementInput('aide', 'aide-section', 'liste', <?= count($aide); ?>, <?= json_encode($aide); ?>);
-    const visiteMedicale = new implementInput('visite_medicale', 'visite-section', 'date', 1, []);
-
-    // Données de test
-    const suggestions = [
-        {
-            text: 'mathis.a'
-        },
-        {
-            text: 'husser.v'
-        },
-        {
-            text: 'deroussin.e'
-        },
-        {
-            text: 'mathis.l'
-        }
-    ];
+    const visiteMedicale = new implementInput('visite_medicale', 'visite-section', 'date', 1, [])
 
     const nbCooptInput = 0;
     document.addEventListener('elementCreated', function(e) {
@@ -67,7 +51,7 @@
             const aideSection = document.getElementById('aide-section');
             const inputAide = aideSection.querySelectorAll('select');
             
-            const obj = new cooptInput(inputAide[inputAide.length - 1], 'coopteur', 3, suggestions);
+            const obj = new cooptInput(inputAide[inputAide.length - 1], 'coopteur', 3, <?= json_encode($employer); ?>);
             obj.input.addEventListener('change', (e) => obj.react());
         }
     });

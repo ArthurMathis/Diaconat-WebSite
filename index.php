@@ -96,16 +96,11 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $candidatures->dispayCandidatures();
             break; 
 
-        // On affiche le formulaire 
+        // On affiche le formulaire d'inscription d'un candidat
         case 'saisie-nouveau-candidat' : 
             $candidatures->displaySaisieCandidat();
             break;
 
-        // On affiche le formulaire d'inscription d'un candidat    
-        case 'saisie-candidat' :   
-            $candidatures->displayRechercheCandidat();
-            break; 
-            
         // On affiche le formulaire d'inscription d'une candidature    
         case 'saisie-candidature' : 
             $candidatures->displaySaisieCandidature();
@@ -113,8 +108,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
         // On inscrit un nouveau candidat    
         case 'inscription-candidat' :     
-            echo "<h1>Inscription d'un candidat</h1>";
-            echo "<h2>On récupère les données formulaire</h2>";
             // On récupère les données du formulaire
             try {
                 // On récupère le contenu du formulaire d'inscription
@@ -129,6 +122,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 ];
                 $diplomes           = isset($_POST["diplome"]) ? $_POST["diplome"] : null;
                 $aide               = isset($_POST["aide"]) ? $_POST["aide"] : null;
+                $coopteur           = isset($_POST["coopteur"]) ? $_POST['coopteur'][0] : null;
                 $visite_medicale    = isset($_POST["visite_medicale"][0]) ? $_POST["visite_medicale"][0] : null;
 
             } catch(Exception $e) {
@@ -137,17 +131,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     'msg' => $e
                 ]);
             }
-
-            echo "<h3>Le candidat</h3>";
-            var_dump($candidat);
-            echo "<h3>Les diplômes</h3>";
-            var_dump($diplomes);
-            echo "<h3>Les aides</h3>";
-            var_dump($aide);
-            echo "<h3>Lea visite médicale</h3>";
-            var_dump($visite_medicale);
-
-            echo "<h2>On test l'intégrité des données</h2>";
 
             // On vérifie l'intégrité des données
             try {    
@@ -164,6 +147,17 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 } elseif(empty($candidat['code_postal'])) {
                     throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
                 } 
+
+                if(!empty($aide)) {
+                    $i = 0;
+                    $size = count($aide);
+                    $coopt = 0;
+                    while($i < $size) {
+                        if($aide[$i] == 3) $coopt++; // 3 L'id de la prime de cooptation
+                        $i++;
+                    }
+                    if(1 < $coopt) throw new Exception("Il n'est possible de renseigner q'une prime de cooptation");
+                }
             
             // On récupère les éventuelles erreurs    
             } catch(Exception $e) {
@@ -172,14 +166,12 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     'msg' => $e
                 ]);
             }
-
             // On génère le candidat        
-            $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale);
+            $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale, $coopteur);
             break;
 
         // On inscrit une nouvelle candidature
         case 'inscription-candidature' :
-            echo "<h1>On inscrit la candidature</h1>";
             // On récupère les données du formulaire
             try { 
                 // On récupère le contenu des champs
@@ -198,8 +190,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     'msg' => $e
                 ]);
             }
-            echo "<h2>On récupère les données du formulaire</h2>";
-            var_dump($candidature);
 
             // On vérifie l'intégrité des données  
             try {
@@ -222,17 +212,10 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             $candidat = $_SESSION['candidat'];
             $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
             $aide = isset($_SESSION['aide']) && !empty($_SESSION['aide']) ? $_SESSION['aide'] : null;
-
-            echo "<h2>On récupère les données de la session</h2>";
-            echo "<h3>Le candidat</h3>";
-            var_dump($_SESSION['candidat']);
-            echo "<h3>Les diplômes</h3>";
-            var_dump($_SESSION['diplomes']);
-            echo "<h3>Les aides</h3>";
-            var_dump($_SESSION['aide']);
+            $coopteur = isset($_SESSION['coopteur']) && !empty($_SESSION['coopteur']) ? $_SESSION['coopteur'] : null; 
 
             // On génère la candidature
-            $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide);
+            $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide, $coopteur);
 
             // Libérer la mémoire !!
             break;

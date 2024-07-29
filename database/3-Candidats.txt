@@ -32,6 +32,7 @@ CREATE TABLE Aides_au_recrutement (
 CREATE TABLE Avoir_droit_a (
     Cle_Candidats INTEGER UNIQUE NOT NULL,
     Cle_Aides_au_recrutement INTEGER NOT NULL,
+    Cle_Coopteur INTEGER, 
 
     FOREIGN KEY (Cle_Candidats) REFERENCES candidats(Id_Candidats),
     FOREIGN KEY (Cle_Aides_au_recrutement) REFERENCES Aides_au_recrutement(Id_Aides_au_recrutement),

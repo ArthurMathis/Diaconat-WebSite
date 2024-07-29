@@ -52,9 +52,22 @@ class CandidaturesModel extends Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
+    protected function searchCandidatByConcat($name) {
+        // On initalise la requête
+        $request = "SELECT * FROM Candidats
+        WHERE CONCAT(Nom_Candidats, ' ', Prenom_Candidats) = :candidat";
+        $params = ['candidat' => $name];
+
+        echo '<h4>La requête</h4>';
+        var_dump($request);
+        echo '<h4>Les paramètres</h4>';
+        var_dump($params);
+        // On lance la requête
+        return $this->get_request($request, $params, true, true);
+    }
 
     /// Méthode publique vérifiant l'intégrité d'un candidat avant son inscription en base
-    public function verify_candidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale) {
+    public function verify_candidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale, $coopteur) {
         var_dump($visite_medicale);
         echo "<h2>On génère le candidat</h2>";
         // On vérifie l'intégrité des données
@@ -75,45 +88,24 @@ class CandidaturesModel extends Model {
             ]);
         }
 
-        // if($diplomes != null) {
-        //     // On récupère la liste des diplomes
-        //     $temp = [];
-        // 
-        //     foreach($diplomes as $obj) {
-        //         echo "On recherche " . $obj . "<br>";
-        //         // Si un diplome est saisi
-        //         if(!empty($obj) && strlen($obj) > 0) {
-        //             // On recherche dans la base de données
-        //             $search = $this->searchDiplome($obj);
-        // 
-        //             if(empty($search)) {
-        //                 // On ajoute le nouveau diplome à la base de données
-        //                 $this->createDiplome($obj);
-        // 
-        //                 // On récupère le diplome
-        //                 $search = $this->searchDiplome($obj);
-        //             }
-        // 
-        //             $temp[] = $search;
-        //         }
-        //     }
-        // 
-        //     // On gère la mémoire allouée
-        //     unset($diplomes);
-        //     $diplomes = $temp;
-        //     unset($temp);
-        // }
-
         // On ajoute la visite médical
         if(!empty($visite_medicale))
             $candidat->setVisite($visite_medicale);
 
-        var_dump($candidat);    
+        var_dump($candidat);  
+    
+        // On récupère la clé du coopteur
+        echo '<h3>On récupère le coopteur</h3>';
+        if($coopteur)
+            $coopteur = $this->searchCandidatByConcat($coopteur);
+        echo '<h4>Le résultat</h4>';
+        var_dump($coopteur);
 
         // On enregistre les données dans la session
         $_SESSION['candidat'] = $candidat;
         $_SESSION['diplomes'] = $diplomes;
         $_SESSION['aide']     = $aide;
+        $_SESSION['coopteur'] = $coopteur;
 
         echo "<h3>On inscrit les données en session</h3>";
         echo "<h4>Le candidat</h4>";
@@ -122,11 +114,10 @@ class CandidaturesModel extends Model {
         var_dump($_SESSION['diplomes']);
         echo "<h4>Les aides</h4>";
         var_dump($_SESSION['aide']);
-
     }
 
     /// Méthode publique générant un candidat et inscrivant les logs
-    public function createCandidat(&$candidat, $diplomes=[], $aide=[]) {
+    public function createCandidat(&$candidat, $diplomes=[], $aide=[], $coopteur) {
         echo "<h1>On enregistre le candidat</h1>";
         // On inscrit le candidat
         $this->inscriptCandidat($candidat);
@@ -153,10 +144,15 @@ class CandidaturesModel extends Model {
             $this->inscriptDiplome($candidat->getCle(), $this->searchDiplome($item)['Id_Diplomes']);
         }
 
-        // On enregistre les aides
-        if($aide != null) foreach($aide as $item)
-            $this->inscriptAvoir_droit_a($candidat->getCle(), $item);
+        echo "<h2>On enregistre les aides</h2>";
+        echo "<h3>La liste d'aides</h3>";
+        var_dump($aide); 
+        echo '<br>';
 
+        // On enregistre les aides
+        if($aide != null) foreach($aide as $item) 
+            $this->inscriptAvoir_droit_a($candidat->getCle(), $item, $item == 3 ? $coopteur['Id_Candidats'] : null);
+            
         // On enregistre les logs
         $this->writeLogs(
             $_SESSION['user_cle'], 

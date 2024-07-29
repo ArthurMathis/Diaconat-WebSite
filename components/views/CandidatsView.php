@@ -281,7 +281,7 @@ class CandidatsView extends View {
     }
 
     /// Méthode publique retournant la formulaire d'ajout d'une proposition
-    public function getContentProposition($title, $cle_candidat, &$poste=[], &$service=[], &$typeContrat=[]) {
+    public function getContentProposition($title, $cle_candidat, $poste=[], $service=[], $typeContrat=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
@@ -343,7 +343,7 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'un contrat
-    public function getContentContrats($title, $cle_candidat, &$poste=[], &$service=[], &$typeContrat=[]) {
+    public function getContentContrats($title, $cle_candidat, $poste=[], $service=[], $typeContrat=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'big-form.css']);
 
@@ -364,7 +364,7 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant le formulaire d'ajout d'un contrat
-    public function GetContentRendezVous($title, &$cle_candidat, &$utilisateur=[], &$etablissement=[]) {
+    public function GetContentRendezVous($title, $cle_candidat, $utilisateur=[], $etablissement=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 

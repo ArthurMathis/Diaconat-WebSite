@@ -17,11 +17,9 @@ class CandidaturesController extends Controller {
         return $this->View->getSaisieCandidatContent(
             'Ypopsi - Nouveau candidat', 
             $this->Model->getDiplomes(),
-            $this->Model->getAides()
+            $this->Model->getAides(),
+            $this->Model->getAutoCompletEmployer()
         );
-    }
-    public function displayRechercheCandidat() {
-        return $this->View->getRechercheCandidatContent("Ypopsi - Recherche d'un candidat");
     }
     public function displaySaisieCandidature() {
         return $this->View->getSaisieCandidatureContent(
@@ -34,9 +32,9 @@ class CandidaturesController extends Controller {
     }
 
     /// Méthode publique vérifiant les données d'un candidat avant la redirection vers le formulaire de saisie de candidature
-    public function checkCandidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale) {
+    public function checkCandidat(&$candidat=[], $diplomes=[], $aide=[], $visite_medicale, $coopteur) {
         // On contruit le nouveau candidat
-        $this->Model->verify_candidat($candidat, $diplomes, $aide, $visite_medicale);
+        $this->Model->verify_candidat($candidat, $diplomes, $aide, $visite_medicale, $coopteur);
         // On redirige la page
         header('Location: index.php?candidatures=saisie-candidature');
     }
@@ -67,7 +65,7 @@ class CandidaturesController extends Controller {
         header('Location: index.php?candidatures=saisie-candidature');
     }
 
-    public function createCandidature($candidat, &$candidature=[], &$diplomes=[], &$aide=[]) {
+    public function createCandidature($candidat, &$candidature=[], &$diplomes=[], &$aide=[], $coopteur) {
         echo "<h2>On génère la candidat</h2>";
         echo "<h3>On ajoute la disponibilité du candidat</h3>";
         // On ajoute la disponibilité
@@ -88,7 +86,7 @@ class CandidaturesController extends Controller {
             
             if(empty($search)) {
                 // On ajoute le candidat à la base de données
-                $this->Model->createCandidat($candidat, $diplomes, $aide);
+                $this->Model->createCandidat($candidat, $diplomes, $aide, $coopteur);
 
             // On met à jour sa disponibilité
             } else 
@@ -102,6 +100,7 @@ class CandidaturesController extends Controller {
         // On inscrit la candidature
         $this->Model->inscriptCandidature($candidat, $candidature);
         
+        exit;
         // On redirige la page
         alert_manipulation::alert([
             'title' => 'Candidat inscript !',
