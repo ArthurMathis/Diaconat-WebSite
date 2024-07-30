@@ -64,6 +64,10 @@ const filtrer_menu = document.getElementById('filtrer-menu');
 // On ajoute les codes couleurs
 setColor(candidatures, [
     {
+        content: 'Propriétaire',
+        class: 'owner'
+    },
+    {
         content: 'Administrateur', 
         class: 'administrateur'
     },

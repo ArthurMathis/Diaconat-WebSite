@@ -59,9 +59,28 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     } 
+    public function getEditUtilisateur($user=[], $role=[]) {
+        // On ajoute l'entete de page
+        $this->generateCommonHeader("Mise-à-jour de l'utilisateur", [FORMS_STYLES.DS.'small-form.css']);
+
+        // On ajoute la barre de navigation
+        $this->generateMenu(true);
+
+        $scripts = [
+            'models/objects/AutoComplet.js'
+        ];
+        include(COMMON.DS.'import-scripts.php');
+
+        // On ajoute le formulaire de'inscription
+        include EDIT_FORM.DS.'user.php';
+        include FORMULAIRES.DS.'waves.php';
+
+        // On ajoute le pied de page
+        $this->generateCommonFooter();
+    }
 
     /// Méthode publique retournant la liste utilisateurs
-    public function getUtilisateursContent(&$items=[]) {
+    public function getUtilisateursContent($items=[], $direction ) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -76,7 +95,7 @@ class PreferencesView extends View {
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="liste-utilisateurs">';
         include BARRES.DS.'utilisateurs.php';
-        $this->getListesItems("Utilisateurs", $items, null, "main-liste");
+        $this->getListesItems("Utilisateurs", $items, null, "main-liste", null, $direction);
         echo '</main>';
         echo '</content>';
 
@@ -93,7 +112,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des nouveaux utilisateurs
-    public function getNouveauxUtilisateursContent(&$items=[]) {
+    public function getNouveauxUtilisateursContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -125,7 +144,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la vue Historique de connexions
-    public function getConnexionHistoriqueContent(&$items) {
+    public function getConnexionHistoriqueContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -157,7 +176,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la vue Historique d'actions
-    public function getActionHistoriqueContent(&$items) {
+    public function getActionHistoriqueContent($items) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -189,7 +208,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des postes
-    public function getPostesContent(&$items=[]) {
+    public function getPostesContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste postes', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -220,7 +239,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des services
-    public function getServicesContent(&$items=[]) {
+    public function getServicesContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste services', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -251,7 +270,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des établissements
-    public function getEtablissementsContent(&$items=[]) {
+    public function getEtablissementsContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste établissements', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -282,7 +301,7 @@ class PreferencesView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
-    public function getPolesContent(&$items=[]) {
+    public function getPolesContent($items=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste pôles', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -314,7 +333,7 @@ class PreferencesView extends View {
     }
 
     /// Méthode publique retournant la vue saisie utilisateur
-    public function getSaisieUtilisateur(&$role, &$etablissements=[]) {
+    public function getSaisieUtilisateur($role, $etablissements=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'big-form.css']);
 
@@ -349,7 +368,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la vue saisie d'un service
-    public function getSaisieService(&$etablissements=[]) {
+    public function getSaisieService($etablissements=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
 
@@ -369,7 +388,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode pubique retournant la vue de siasise d'un établissement
-    public function getSaisieEtablissement(&$poles=[]) {
+    public function getSaisieEtablissement($poles=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Diaconat - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
 

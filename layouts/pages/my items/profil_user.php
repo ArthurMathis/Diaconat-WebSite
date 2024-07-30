@@ -18,6 +18,34 @@
         </div>
     </content>
     <footer>
-        <a class="action_button reverse_color" href="">Modifier</a>
+        <?php if($items['utilisateur']['Cle'] == $_SESSION['user_cle']): ?>
+            <a class="action_button reverse_color" href="index.php?prenferences=edit-user&cle_utilisateur=<?= $items['utilisateur']['Cle']; ?>">Modifier</a>
+        <?php elseif($items['utilisateur']['Role'] != "Propriétaire"): ?> 
+            <div id="popup" class="sous-menu">
+                <img class="circle_button" src="layouts\assets\img\logo\sous-menu.svg" alt="">
+                <content>
+                    <a href="index.php?preferences=edit-user&cle_utilisateur=<?= $items['utilisateur']['Cle']; ?>">Mise-à-jour du rôle</a>
+                    <a href="index.php?preferences=get-reset-password&cle_utilisateur=<?= $items['utilisateur']['Cle']; ?>">Réinitialiser le mot de passe</a>
+                </content>
+                <script>
+                    const popupButton = document.getElementById('popup').querySelector('img');
+                    const popup = document.getElementById('popup').querySelector('content');
+
+                    let visible = false;
+                    popupButton.addEventListener('click', () => {
+                        if(visible) 
+                            popupButton.parentNode.classList.remove('visible');
+                        else
+                            popupButton.parentNode.classList.add('visible');
+
+                        visible = !visible;    
+                    });
+                    popup.addEventListener('mouseleave', () => { 
+                        popupButton.parentNode.classList.remove('visible'); 
+                        visible = false;
+                    });
+                </script>
+            </div>   
+        <?php endif ?>
     </footer>
 </div>

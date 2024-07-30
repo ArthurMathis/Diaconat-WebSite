@@ -33,9 +33,11 @@ function setColor(items=[], criteres=[], index) {
 
     // On fait défiler le tableau
     items.forEach(ligne => {
+        console.log("On recherche : " + ligne.cells[index].textContent.trim());
         // On recherche le critere
         let i = 0, find = false;
         while (i < criteres.length && !find) {
+            console.log("On compare avec : " + criteres[i].content.trim());
             // On compare
             if (ligne.cells[index].textContent.trim() === criteres[i].content.trim()) {
                 // On implémente 
@@ -47,9 +49,8 @@ function setColor(items=[], criteres=[], index) {
         }
 
         // On vérifie qu'un critère a été sélectionné
-        if (!find) {
+        if (!find)
             throw new Error("Erreur lors de la détermination du code couleur. La ligne : " + ligne + " ne correspond à aucun critères !");
-        }
     });
 }
 /**

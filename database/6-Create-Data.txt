@@ -111,6 +111,7 @@ INSERT INTO Postes (Intitule_Postes, Description_Postes) VALUES
 
 -- On insère les différents Roles des Utilisateurs --
 INSERT INTO Roles (Intitule_Role) VALUES
+    ('Propriétaire'),
     ('Administrateur'),
     ('Modérateur'),
     ('Utilisateur'),

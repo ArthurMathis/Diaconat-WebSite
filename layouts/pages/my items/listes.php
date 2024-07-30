@@ -46,7 +46,11 @@
 
         rows.forEach((obj, index) => {
             obj.addEventListener('click', () => {
-                window.location.href = 'index.php?candidats=' + links[index];
+                <?php if(isset($direction)): ?>
+                    window.location.href = '<?= $direction; ?>' + links[index];
+                <?php else: ?>
+                    window.location.href = 'index.php?candidats=' + links[index];
+                <?php endif; ?>
             });
         });
     </script>

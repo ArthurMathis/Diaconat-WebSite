@@ -8,11 +8,12 @@ require_once(COMPONENTS.DS.'Passwordgenerator.php');
 
 class PreferencesModel extends Model {
     /// Méthode publique retournant les informations du l'utilisateur actuelk
-    public function getProfil(&$cle_utilisateur):array {
+    public function getProfil(&$cle_utilisateur): array {
         // On récupère les informations de l'utilisateur
         try {
             // On initialise la requête
             $request = "SELECT 
+            Id_Utilisateurs As Cle,
             Nom_Utilisateurs AS Nom,
             Prenom_Utilisateurs AS Prénom, 
             Intitule_Role AS Role, 
@@ -83,11 +84,30 @@ class PreferencesModel extends Model {
         // On retourne les données
         return $infos;
     }
+    public function getEditProfil($cle_utilisateur): array {
+        // On initialise la requête
+        $request = "SELECT 
+        Id_Utilisateurs AS cle, 
+        Nom_Utilisateurs AS nom,
+        Prenom_Utilisateurs AS prenom, 
+        Id_Role AS role, 
+        Email_Utilisateurs AS email
+
+        FROM Utilisateurs AS u
+        INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role
+        
+        WHERE u.Id_Utilisateurs = :cle";
+        $params = ['cle' => $cle_utilisateur];
+
+        // On lance la requête
+        return  $this->get_request($request, $params, true, true);
+    }
 
     /// Méthode publique récupérant la liste des Utilisateurs
     public function getUtilisateurs() {
         // On initialise la requête 
         $request = "SELECT 
+        Id_Utilisateurs AS Cle,
         Intitule_Role AS Role,
         Nom_Utilisateurs AS Nom, 
         Prenom_Utilisateurs AS Prenom,
@@ -98,7 +118,7 @@ class PreferencesModel extends Model {
         INNER JOIN Roles AS r ON u.Cle_Roles = r.Id_Role
         INNER JOIN Etablissements AS e ON u.Cle_Etablissements = e.Id_Etablissements
 
-        ORDER BY Role";
+        ORDER BY Role, Cle";
 
         // On lance la requête
         return $this->get_request($request);
@@ -328,6 +348,20 @@ class PreferencesModel extends Model {
         // On compare les mots de passe
         return password_verify($password, $user['MotDePasse_Utilisateurs']);
     }
+    /// Méthode publique réinitialisant le mot de passe d'un utilisateur
+    public function resetPassword($password, $cle_utilisateur) {
+        // On initialise la requête
+        $request = "UPDATE Utilisateurs
+        SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = true
+        WHERE Id_Utilisateurs = :cle";
+        $params = [
+            'cle' => $cle_utilisateur,
+            'password' => password_hash($password, PASSWORD_DEFAULT)
+        ];
+        
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
 
     /// Méthode publique enregistrant les mise-à-jour de mots de passe dans les logs
     public function updatePasswordLogs() {
@@ -336,6 +370,28 @@ class PreferencesModel extends Model {
             $_SESSION['user_cle'],
             "Mise-à-jour mot de passe",
             strtoupper($_SESSION['user_nom']) . " " . forms_manip::nameFormat($_SESSION['user_prenom']) . " a mis-à-jour son mot de passe"
+        );
+    }
+    public function updateUserLogs($cle_utilisateur) {
+        // On récupère les données du candidat
+        $candidat = $this->searchUser($cle_utilisateur);
+
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Mise-à-jour utilisateur",
+            "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Utilisateurs']) . forms_manip::nameFormat($candidat['Nom_Utilisateurs'])
+        );
+    }
+    /// Méthode publique enregistrant les réinitialisations de mots de passe dans les logs
+    public function resetPasswordLogs($cle_utilisateur) {
+        // On récpère l'utilisateur
+        $user = $this->searchUser($cle_utilisateur);
+        // On enregistre les logs
+        $this->writeLogs(
+            $_SESSION['user_cle'],
+            "Mise-à-jour mot de passe",
+            "Le mot de passe de " . strtoupper($user['Nom_Utilisateurs']) . " " . forms_manip::nameFormat($user['Prenom_Utilisateurs']) . " a été réinitialisé"
         );
     }
 }

@@ -27,3 +27,6 @@
 .liste_items .table-wrapper table tbody tr.invite th:first-of-type::before {
     background-color: var(--refusee);
 }
+.liste_items .table-wrapper table tbody tr.owner th:first-of-type::before {
+    background-color: var(--color1);
+}

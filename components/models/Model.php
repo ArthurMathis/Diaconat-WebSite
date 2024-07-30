@@ -60,40 +60,6 @@ abstract class Model {
 
     // METHODES DE REQUETES A LA BASE DE DONNEES //
     
-    /// Méthode publique retournant la liste des postes pour l'autocomplétion
-    public function getAutoCompPostes() {
-        // On inititalise la requête
-        $request = "SELECT Intitule_Postes FROM Postes ORDER BY Intitule_Postes";
-        
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
-    /// Méthode publique retournant la liste des services pour l'autocomplétion
-    public function getAutoCompServices() {
-        // On inititalise la requête
-        $request = "SELECT Intitule_Services FROM Services ORDER BY Intitule_Services";
-        
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
-    /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
-    public function getAutoCompTypesContrat() {
-        // On initialise la requête
-        $request = "SELECT Intitule_Types_de_contrats FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
-
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
-    /// Méthode publique retournant la liste des sources pour l'autocomplétion
-    public function getAutoCompSources() {
-        // On initialise la requête
-        $request = "SELECT Intitule_Sources FROM Sources ORDER BY Intitule_Sources";
-
-        // On lance la requête
-        return $this->get_request($request, [], false, true);
-    }
-
-
 
     /// Méthode privée permettant de vérifier les paramètres fournis au fonction de requêtes
     private function test_data_request(&$request, &$params): bool {
@@ -235,6 +201,52 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
+    /// Méthode publique retournant la liste des postes pour l'autocomplétion
+    public function getAutoCompPostes() {
+        // On inititalise la requête
+        $request = "SELECT Intitule_Postes FROM Postes ORDER BY Intitule_Postes";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des services pour l'autocomplétion
+    public function getAutoCompServices() {
+        // On inititalise la requête
+        $request = "SELECT Intitule_Services FROM Services ORDER BY Intitule_Services";
+        
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
+    public function getAutoCompTypesContrat() {
+        // On initialise la requête
+        $request = "SELECT Intitule_Types_de_contrats FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    /// Méthode publique retournant la liste des sources pour l'autocomplétion
+    public function getAutoCompSources() {
+        // On initialise la requête
+        $request = "SELECT Intitule_Sources FROM Sources ORDER BY Intitule_Sources";
+
+        // On lance la requête
+        return $this->get_request($request, [], false, true);
+    }
+    public function getAccessibleRole() {
+        // ON initialise la requête
+        $request = "SELECT 
+        Id_Role AS id,
+        Intitule_Role AS text
+
+        FROM Roles
+        
+        WHERE Id_Role != :cle";
+        $params = ['cle' => $this->searchRole('Propriétaire')['Id_Role']];
+
+        // On lance la requête
+        return $this->get_request($request, $params);
+    }
 
 
 
@@ -331,7 +343,7 @@ abstract class Model {
             throw new Exception("Le nom ou l'identifiant de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
 
         // On recherche l'Utilisateur via sont identifiant    
-        elseif(is_int($user)) {
+        elseif(is_numeric($user)) {
             // On initialise la requêre
             $request = "SELECT * FROM Utilisateurs WHERE Id_Utilisateurs = :user";
             $params = [
@@ -870,6 +882,22 @@ abstract class Model {
         
         // On lance la requête
         $this->post_request($request, $params);
+    }
+    public function updateUser($cle_utilisateur, $user=[]) {
+        // On initialise la requête
+        $request = "UPDATE Utilisateurs 
+        SET Nom_Utilisateurs = :nom, Prenom_Utilisateurs = :prenom, Email_Utilisateurs = :email, Cle_Roles = :role
+        WHERE Id_Utilisateurs = :cle";
+        $params = [
+            'nom' => $user['nom'],
+            'prenom' => $user['prenom'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'cle' => $cle_utilisateur
+        ];
+
+        // On lance la requête
+        return $this->get_request($request, $params);
     }
     /// Méthode publique mettant à jour la notation d'un candidat 
     public function updateNotation($cle_candidat, &$notation=[]) {

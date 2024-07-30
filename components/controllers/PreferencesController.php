@@ -10,9 +10,10 @@ class PreferencesController extends Controller {
     }
 
     /// Méthode publique retournant la page de préférences
-    public function display() {
-        $items = $this->Model->getProfil($_SESSION['user_cle']);
-        return $this->View->getContent($items);
+    public function display($cle_utilisateur) {
+        return $this->View->getContent(
+            $this->Model->getProfil($cle_utilisateur)
+        );
     }
     /// Méthode publique retournant la page de modification du mot de passe
     public function displayEdit() {
@@ -21,8 +22,10 @@ class PreferencesController extends Controller {
 
     /// Méthode publique retournant la page Utilisateurs
     public function displayUtilisateurs() {
-        $items = $this->Model->getUtilisateurs();
-        return $this->View->getUtilisateursContent($items);
+        return $this->View->getUtilisateursContent(
+            $this->Model->getUtilisateurs(),
+            'index.php?preferences='
+        );
     }
     /// Méthode publique retournant la page de nouvels utilisateurs
     public function displayNouveauxUtilisateurs() {
@@ -88,6 +91,12 @@ class PreferencesController extends Controller {
     public function displaySaisiePole() {
         return $this->View->getSaisiePole();
     }
+    public function displayEditUtilisateur($cle_utilisateur) {
+        return $this->View->getEditUtilisateur(
+            $this->Model->getEditProfil($cle_utilisateur),
+            $this->Model->getAccessibleRole()
+        );
+    }
 
     /// Méthode publique mettant à jour le mot de passe de l'utilisateur actuel
     public function updatePassword(&$password, &$new_password) {
@@ -104,6 +113,29 @@ class PreferencesController extends Controller {
 
         } else 
             forms_manip::error_alert("Erreur lors de la mise à jour du mot de passe", "L'ancien mot de passe ne correspond pas !");
+    }
+    public function updateUser($cle_utilisateur, &$user=[]) {
+        // On met-à-jour
+        $this->Model->updateUser($cle_utilisateur, $user);
+        $this->Model->updateUserLogs($cle_utilisateur);
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+            'msg' => "L'utilisateur a bien été modifié !",
+            'direction' => 'index.php?preferences=' . $cle_utilisateur
+        ]);
+    }
+    /// Méthode publique réinitialisant le mot de passe d'un utilisateur
+    public function resetPassword($password, $cle_utilisateur) {
+        // On réinitialise le mot de passe
+        $this->Model->resetPassword($password, $cle_utilisateur);
+        // On incrit les logs
+        $this->Model->resetPasswordLogs($cle_utilisateur);
+        // On redirige la page
+        alert_manipulation::alert([
+            'title' => 'Opération réussie',
+                'msg' => "Le mot de passe a bien été réinitialisé !",
+                'direction' => 'index.php?preferences=' . $cle_utilisateur
+        ]);
     }
 
     /// Méthode publique générant un nouvel utilisateur

@@ -21,9 +21,11 @@
   --light-blue: #E2E8F8;
   --blue-opacity: #0048fedd;
   --blue: #0046FE;
-  --nontraitee: #F9B61F;
+
+  --color1: #8A2BE2;
   --enattente: #3BF3FF;
   --acceptee: #11CE00;
+  --nontraitee: #F9B61F;
   --refusee: #ff0000;
 
   --font-size-big: 3.5em;
@@ -905,4 +907,53 @@ button.cancel_button:is(:hover, :focus),
 
 .bulles .boutons .fleche span::after {
   transform: translateY(calc(-50% + 1px)) rotate(-45deg);
+}
+
+/******** SOUS-MENU ********/
+.sous-menu > img {
+  position: relative;
+  background-color: var(--white);
+}
+.sous-menu content {
+  position: absolute;
+
+  display: none;
+  flex-direction: column;
+
+  width: fit-content;
+  height: fit-content;
+
+  padding: var(--margin);
+
+  border: none;
+  border-radius: calc(var(--small-radius) + var(--margin));
+  background-color: var(--white);
+  box-shadow: var(--bulle-shadow);
+}
+.sous-menu content a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: fit-content;
+
+  padding: var(--margin);
+}
+.sous-menu > img, 
+.sous-menu content a {
+  border: none;
+  color: var(--black);
+  border-radius: var(--small-radius);
+  background-color: var(--white);
+}
+.sous-menu > img:is(:hover, :focus), 
+.sous-menu content a:is(:hover, :focus) {
+  background-color: #f7f7f7;
+  box-shadow: none;
+}
+
+/******** SOUS-MENU VISIBLE ********/
+.sous-menu.visible content {
+  display: flex;
 }

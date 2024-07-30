@@ -777,12 +777,87 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On déclare le controller de préférences
     $preferences = new PreferencesController();
 
+    // On vérifie s'il s'agit d'une clé de candidat
+    if(is_numeric($_GET['preferences'])) {
+        if($_GET['preferences'] == $_SESSION['user_cle']) 
+            header('Location: index.php?preferences=home');
+        else 
+            $preferences->display($_GET['preferences']);
+
     // On sélectionne l'action
-    try {
+    } else try {
         switch($_GET['preferences']) {
             // On affiche la page d'accueil
             case 'home':
-                $preferences->display(); 
+                $preferences->display($_SESSION['user_cle']); 
+                break;    
+
+            // On affiche la formulaire de mise-à-jour d'un 
+            case 'edit-user':
+                if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
+                    $preferences->displayEditUtilisateur($_GET['cle_utilisateur']);
+
+                } else 
+                    throw new Exception ('La clé utilisateur est nécessaire pour la mise-à-jour de son rôle !');
+                break;
+
+            // On met-à-jour le candidat  
+            case 'update-user':
+                if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
+                    try {
+                        // On récupère les données du formulaire
+                        $user = [
+                            'nom' => $_POST['nom'],
+                            'prenom' => $_POST['prenom'],
+                            'email' => $_POST['email'],
+                            'role' => $_POST['role']
+                        ];
+
+                        // On vérifie l'intégrité des données
+                        if(empty($user['nom'])) 
+                            throw new Exception('Le champs nom doit être rempli !');
+                        elseif(empty($user['prenom'])) 
+                            throw new Exception('Le champs prénom doit être rempli !');
+                        elseif(empty($user['email'])) 
+                            throw new Exception('Le champs email doit être rempli !');
+                        elseif(empty($user['role'])) 
+                            throw new Exception('Le champs rôle doit être rempli !');
+
+                    } catch(Exception $e) {
+                        forms_manip::error_alert([
+                            'msg' => $e
+                        ]);
+                    }
+                    
+                    $preferences->updateUser($_GET['cle_utilisateur'], $user);
+
+                } else 
+                    throw new Exception ('La clé utilisateur est nécessaire pour la mise-à-jour !');
+                break;    
+
+            // On affiche la formulaire de mise-à-jour d'un 
+            case 'get-reset-password':
+                if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
+                    $_SESSION['password'] = PasswordGenerator::random_password();
+                    alert_manipulation::alert([
+                        'title' => "Information importante",
+                        'msg' => "Le mot de passe va être réinitialisé. Le nouveau mot de passe est : <br><b> ". $_SESSION['password'] . "</b><br>Ce mot de passe ne pourra plus être consulté. Mémorisez-le avant de valider ou revenez en arrière.",
+                        'direction' => 'index.php?preferences=reset-password&cle_utilisateur=' . $_GET['cle_utilisateur'],
+                        'confirm' => true
+                    ]);
+
+                } else 
+                    throw new Exception ('La clé utilisateur est nécessaire pour la réinitialisation du mot de passe !');
+                break;
+
+            // On affiche la formulaire de mise-à-jour d'un 
+            case 'reset-password':
+                if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
+                    $preferences->resetPassword($_SESSION['password'], $_GET['cle_utilisateur']);
+                    unset($_SESSION['password']);
+
+                } else 
+                    throw new Exception ('La clé utilisateur est nécessaire pour la réinitialisation du mot de passe !');
                 break;    
 
             // On affiche le formulaire de mise-à-jour du mot de passe    
@@ -827,8 +902,8 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 try {
                     $infos = [
                         'identifiant' => $_POST['identifiant'],
-                        'nom' => $_POST['nom'],
-                        'prenom' => $_POST['prenom'],
+                        'nom' => forms_manip::nameFormat($_POST['nom']  ),
+                        'prenom' => forms_manip::nameFormat($_POST['prenom']),
                         'email' => $_POST['email'],
                         'etablissement' => $_POST['etablissement'],
                         'role' => $_POST['role']
@@ -855,12 +930,12 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     ]);
                 }
 
-                // ON génère le mot de passe de l'utilisateur
+                // On génère le mot de passe de l'utilisateur
                 $infos['mot de passe'] = PasswordGenerator::random_password();
                 $_SESSION['new user data'] = $infos;
                 alert_manipulation::alert([
                     'title' => "Information importante",
-                    'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <br><b> ". $infos['mot de passe'] . "</b><br>Ce mot de passe ne pourra plus être conculté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
+                    'msg' => "Le nouvel utilisateur va être créé avec le mot de passe suivant : <br><b> ". $infos['mot de passe'] . "</b><br>Ce mot de passe ne pourra plus être consulté. Mémorisez-le avant de valider la création du compte ou revenez en arrière.",
                     'direction' => 'index.php?preferences=inscription-utilisateur',
                     'confirm' => true
                 ]);
@@ -1094,7 +1169,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 break;    
 
             default: 
-            throw new Exception("L'action n'a pas pu être identifiée !");
+                throw new Exception("L'action n'a pas pu être identifiée !");
         }
     } catch(Exception $e) {
         forms_manip::error_alert([
