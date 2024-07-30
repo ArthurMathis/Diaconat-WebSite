@@ -87,6 +87,7 @@ class CandidatsModel extends Model {
         return [
             'candidat' => $candidats,
             'aide' => $this->getCandidatAides($index),
+            'coopteur' => $this->searchCoopteur($index, 3)['text'], 
             'candidatures' => $this->getCandidatures($index),
             'contrats' => $this->getContrats($index),
             'rendez-vous' => $this->getRendezVous($index)

@@ -64,7 +64,12 @@
                 <p><?= $item['aide']['intitule']?></p>    
             <?php endif ?>  
         </div>
-        
+        <?php if(isset($item['coopteur'])): ?>
+            <div>
+                <p>Coopteur</p>
+                <p><?= $item['coopteur']; ?></p>
+            </div>
+        <?php endif ?>
     </section>
     <section>
         <div>

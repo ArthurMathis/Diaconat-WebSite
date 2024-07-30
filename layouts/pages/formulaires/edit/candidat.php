@@ -33,11 +33,11 @@
             <?php foreach($item['candidat'][1]['aides'] as $a): ?>
                 <select name="aide">
                     <?php foreach($item['aide'] as $c): ?>
-                        <option value="<?= $c['id']; ?>" <?php if($a == $c['text']) echo 'selected'; ?>>
+                        <option value="<?= $c['id']; ?>" <?php if($a == $c['text']) { $coopt = true; echo 'selected'; }?>>
                             <?= $c['text']; ?>
                         </option>
                     <?php endforeach ?>    
-                </select>
+                </select> 
             <?php endforeach ?>
         </section>
         <section id='visite-section'>
