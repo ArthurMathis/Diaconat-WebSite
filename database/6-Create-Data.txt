@@ -156,7 +156,8 @@ INSERT INTO types (Intitule_Types) VALUES
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES
     ('owner', 'Service informatique', 'Directeur', '$2y$10$vq6oArubtMgZdqtqjWEfS.Xzg./v7a2SCwVP6z3jsdnWgFSUik88W', 'yannick.keller@diaconat-mulhouse.fr', 1, 2),
-    ('mathis.a', 'Mathis', 'Arthur', '$2y$10$u1VYp4jdjVSmkFo5RR7iJ.ws1c3rCWZLjEar6nVqmx6vwAR8nU/Nq','arthur.mathis@diaconat-mulhouse.fr', 2, 1)
+    ('mathis.a', 'Mathis', 'Arthur', '$2y$10$u1VYp4jdjVSmkFo5RR7iJ.ws1c3rCWZLjEar6nVqmx6vwAR8nU/Nq','arthur.mathis@diaconat-mulhouse.fr', 2, 1),
+    ('user', 'Ressources humaines', 'employé', '$2y$10$XUDTalgUk9qMakYVr4SBmO/QySwXc/251ufnYasYTqDQuVnbkN20W', 'ressources-humaines@diaconat-mulhouse.fr', 4, 2)
 ;
 
 -- On insère les candidats --
