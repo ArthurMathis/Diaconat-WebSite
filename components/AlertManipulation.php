@@ -1,16 +1,26 @@
 <?php
 
+/**
+ * Class manipulating notification
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class alert_manipulation {
     /**
-     * Supprime les retours à la ligne dans une chaîne de caractères.
+     * Private static method deleting line break in a string
      *
-     * @param string $string La chaîne de caractères à traiter.
-     * @return string La chaîne de caractères sans retours à la ligne.
+     * @param string $string The string
+     * @return string La chaîne The string without line break
      */
     static private function removeNewLines(string $string): string {
-        // Remplace les caractères de nouvelle ligne par une chaîne vide
         return str_replace(["\r", "\n", "\r\n"], '<br>', $string);
     } 
+
+    /**
+     * Public static method creating a notification (Javascript : SweetAlert2.js)
+     *
+     * @param array $infos The notiication data array 
+     * @return void
+     */
     static public function alert($infos=[]) {
         // On vérifie l'intégrité du message
         if($infos['msg'] instanceof Exception)

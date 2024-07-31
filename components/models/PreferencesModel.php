@@ -380,7 +380,7 @@ class PreferencesModel extends Model {
         $this->writeLogs(
             $_SESSION['user_cle'],
             "Mise-à-jour utilisateur",
-            "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Utilisateurs']) . forms_manip::nameFormat($candidat['Nom_Utilisateurs'])
+            "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Utilisateurs']) . " " . forms_manip::nameFormat($candidat['Prenom_Utilisateurs'])
         );
     }
     /// Méthode publique enregistrant les réinitialisations de mots de passe dans les logs

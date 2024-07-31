@@ -21,7 +21,7 @@
             <button class="form_button" type="button" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
-            <?php foreach($item['candidat'][0]['diplomes'] as $index => $d): ?>
+            <?php if(isset($item['candidat'][0]['diplomes'])) foreach($item['candidat'][0]['diplomes'] as $index => $d): ?>
                 <input type="text" id="<?php echo 'diplome-'.$index+1; ?>" name="diplome[]" value="<?= $d["Intitule_Diplomes"]; ?>">
             <?php endforeach ?>   
         </section>      
@@ -30,7 +30,7 @@
             <button class="form_button" type="button" style="margin-left: auto">
                 <img src="layouts\assets\img\logo\plus.svg" alt="Logo d'ajout d'un item', représenté par un symbole">
             </button>
-            <?php foreach($item['candidat'][1]['aides'] as $a): ?>
+            <?php if(isset($item['candidat'][1]['aides'])) foreach($item['candidat'][1]['aides'] as $a): ?>
                 <select name="aide">
                     <?php foreach($item['aide'] as $c): ?>
                         <option value="<?= $c['id']; ?>" <?php if($a == $c['text']) { $coopt = true; echo 'selected'; }?>>

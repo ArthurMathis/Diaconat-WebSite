@@ -69,7 +69,6 @@ class CandidaturesController extends Controller {
         // On ajoute la disponibilité
         $candidat->setDisponibilite($candidature['disponibilite']);
 
-        echo "<h3>On recherche la clé du candidat</h3>";
         if($candidat->getCle() === null) {
             // On test la présence du candidat dans la base de données
             try {
@@ -81,8 +80,6 @@ class CandidaturesController extends Controller {
                     'msg' => $e
                 ]);
             }
-
-            echo 'Nouveau candidat';
             
             if(empty($search)) {
                 // On ajoute le candidat à la base de données

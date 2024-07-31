@@ -36,10 +36,6 @@ class CandidaturesModel extends Model {
         WHERE CONCAT(Nom_Candidats, ' ', Prenom_Candidats) = :candidat";
         $params = ['candidat' => $name];
 
-        echo '<h4>La requête</h4>';
-        var_dump($request);
-        echo '<h4>Les paramètres</h4>';
-        var_dump($params);
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
@@ -92,7 +88,7 @@ class CandidaturesModel extends Model {
 
         // On enregistre les diplomes
         if(!empty($diplomes)) foreach($diplomes as $item) {
-            $this->inscriptDiplome($candidat->getCle(), $this->searchDiplome($item)['Id_Diplomes']);
+            $this->inscriptObtenir($candidat->getCle(), $this->searchDiplome($item)['Id_Diplomes']);
         }
 
         // On enregistre les aides
@@ -140,7 +136,7 @@ class CandidaturesModel extends Model {
             $poste = $this->searchPoste($candidatures["poste"])['Id_Postes'];
 
             // On inscrit la demande de poste
-            $this->inscriptPostuler_a($candidat, $instant);
+            $this->inscriptPostuler_a($candidat->getCle(), $instant);
 
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Candidatures (Statut_Candidatures, Cle_Candidats, Cle_Instants, Cle_Sources, Cle_Postes, Cle_Types_de_contrats) 
@@ -174,8 +170,7 @@ class CandidaturesModel extends Model {
 
             // On vérifie l'intégrité des données
             try {
-                if(empty($service)) 
-                    throw new Exception('Service introuvable');
+                if(empty($service)) throw new Exception('Service introuvable');
                 
             } catch(Exception $e) {
                 forms_manip::error_alert([

@@ -322,7 +322,7 @@ class CandidatsView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la formulaire d'ajout d'une proposition selon une candidature sans service
-    public function getContentPropositionFromEmptyCandidatures($title, $cle_candidature, $statut_candidature, &$service=[]) {
+    public function getContentPropositionFromEmptyCandidatures($title, $cle_candidature, $statut_candidature, $service=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader($title, [FORMS_STYLES.DS.'small-form.css']);
 
@@ -426,7 +426,7 @@ class CandidatsView extends View {
         // On ajoute le pied de page  
         $this->generateCommonFooter();
     }
-    public function getEditRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, &$item=[]) {
+    public function getEditRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, $item=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Mise-à-jour rendez-vous', [FORMS_STYLES.DS.'small-form.css']);
 

@@ -83,7 +83,7 @@ rechercher.addEventListener('click', () => {
         // On récupère les champs du formulaire
         const champs_infos = [
             {
-                champs: document.getElementById('recherche-utilisateur'),
+                champs: document.getElementById('recherche-poste'),
                 index: 1
             }
         ];

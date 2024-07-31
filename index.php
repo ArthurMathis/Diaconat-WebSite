@@ -1152,7 +1152,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la liste des diplômes    
             case 'liste-diplomes': 
-                echo 'Diplômes';
                 break;
                 
             // On affiche le formulaire d'ajout d'un diplome
@@ -1165,7 +1164,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    
             case 'autres':
-                echo 'autres';
                 break;    
 
             default: 

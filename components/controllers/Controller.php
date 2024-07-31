@@ -1,23 +1,31 @@
 <?php
 
+/**
+ * Abstract class representing a controller
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 abstract class Controller {
-    /// Attributs protégés de la classe contenant le chemin d'accès au model et à la view concernés
-    protected $Model, $View;
+    /**
+     * Protected attributes containing the controller's model
+     */
+    protected $Model;
+    /**
+     * Protected attributes containing the controller's view
+     */
+    protected $View;
 
-    /// Méthode publique téléchargeant le modèle dans le controller
+    /**
+     * Public method downloading the model into the controller
+     */
     public function loadModel(string $model) {
         require_once(MODELS.DS.$model.'.php');
         $this->Model = new $model();
     }
-    /// Méthode publique téléchargeant la vue dans le controller
+    /**
+     * Public method downloading the view into the controller
+     */
     public function loadView(string $view) {
         require_once(VIEWS.DS.$view.'.php');
         $this->View = new $view();
-    }
-
-    /// Méthode publique affaichant une page d'erreur
-    public function displayErreur($e) {
-        echo "<script>alerte(\"" .  $e->getMessage() . "\");</script>";
-        // return $this->Error->getErrorContent($e);
     }
 }

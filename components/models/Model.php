@@ -1,15 +1,25 @@
 <?php 
 
+/**
+ * Abstract class representing a model
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 abstract class Model {
-    /// Attribut privé contenant la connexion à la base de données
+    /**
+     * Private attribute containing the database connection
+     */
     private $connection;
 
-    /// Constructeur de la classe
+    /**
+     * Class constructor
+     */
     public function __construct() {
         $this->makeConnection();
     }
 
-    /// Méthode protégée connectant l'application à la base de données
+    /**
+     * Protected method connecting the application to the database
+     */
     protected function makeConnection() {
         try {
             $db_connection  = getenv('DB_CONNEXION');
@@ -28,16 +38,22 @@ abstract class Model {
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         } catch(PDOException $e) {
-            // forms_manip::error_alert($e->getMessage());
             die("Connexion à la base de données réchouée. " . $e->getMessage());
         }
         return $this->connection;
     }
-    /// Méthode protégée retournant la connexion à la base de données
-    protected function getConnection() {
-        return $this->connection;
-    }
-    /// Méthode privée inscrivant les actions dans la base de données
+    /**
+     * Protected method returning the database connection
+     */
+    protected function getConnection() { return $this->connection; }
+    /**
+     * Protected method recording application logs
+     *
+     * @param integer $user_cle The user identification key in the database
+     * @param string $action The action title
+     * @param string optionnal $description The action description 
+     * @return void
+     */
     protected function writeLogs(&$user_cle, $action, $description=null) {
         try {
             // On récupère le type d'action
@@ -61,22 +77,40 @@ abstract class Model {
     // METHODES DE REQUETES A LA BASE DE DONNEES //
     
 
-    /// Méthode privée permettant de vérifier les paramètres fournis au fonction de requêtes
-    private function test_data_request(&$request, &$params): bool {
-        // On déclare une variable tampon
-        $res = false;
-    
+    /**
+     * Private method checking the request parameters
+     *
+     * @param string $request The SQL request
+     * @param array<string> $params The request data array
+     * @return boolean TRUE if the request executed successfully, FALSE otherwise
+     */
+    private function test_data_request(&$request, &$params=[]): bool {
+        // On vérifie l'intégrité des données
+        try {
+
+        } catch(Exception $e) {
+            forms_manip::error_alert([
+                'msg' => 'Les données de la requête à la base de données sont erronnées. ' . $e->getMessage()
+            ]);
+        }
         // On vérifie l'intégrité des paramètres
         if(empty($request) || !is_string($request)) 
             throw new Exception("La requête doit être passée en paramètre !");
         elseif(!is_array($params))
             throw new Exception("Les données de la requête doivent être passsée en paramètre !");
     
-        // On retourne le résultat
-        else $res = true;
-        return $res;
+        // Aucune alerte, on valide les données    
+        return true;
     }
-    /// Méthode privée exécutant une requête GET à la base de données
+    /**
+     * Private method executing a GET request to the database
+     *
+     * @param string $request The SQL request
+     * @param array<string> $params The request data parameters
+     * @param boolean $unique TRUE if the waiting result is one unique item, FALSE otherwise
+     * @param boolean $present TRUE if if the waiting result can't be null, FALSE otherwise
+     * @return array|null
+     */
     protected function get_request($request, $params = [], $unique=false, $present=false): ?array {
         // On vérifie le paramètre uniquue
         if(empty($unique) || !is_bool($unique)) 
@@ -102,9 +136,9 @@ abstract class Model {
                     throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
                 
                 else return null;
-                    
-            } else
-                // On retourne le résultat de la requête 
+
+            // On retourne le résultat de la requête         
+            } else 
                 return $result;
     
         } catch(Exception $e){
@@ -112,7 +146,6 @@ abstract class Model {
                 'title' => 'Erreur lors de la requête à la base de données',
                 'msg' => $e
             ]);
-            // forms_manip::error_alert("Erreur lors de la requête à la base de données", $e);
         } catch(PDOException $e){
             forms_manip::error_alert([
                 'title' => 'Erreur lors de la requête à la base de données',
@@ -122,7 +155,13 @@ abstract class Model {
 
         return null;
     }
-    /// Méthode privée exécutant une requête POST à la base de données
+    /**
+     * Private method executing a POST request to the database
+     *
+     * @param string  $request The SQL request
+     * @param array<string>  $params The request data array
+     * @return boolean
+     */
     protected function post_request(&$request, $params): bool {
         // On déclare une variable tampon
         $res = true;
@@ -149,8 +188,11 @@ abstract class Model {
     }
 
 
-
-    /// Méthode publique retournant la liste des utilisateurs pour l'autocomp
+    /**
+     * Public method returning the users list to autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompletUtilisateurs() {
         // On initialise la requête
         $request = "SELECT Identifiant_Utilisateurs FROM Utilisateurs ORDER BY Identifiant_Utilisateurs";
@@ -158,7 +200,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des établissements pour l'autocomp
+    /**
+     * Public method returning the establishments list to autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompletEtablissements() {
         // On initialise la requête
         $request = "SELECT Intitule_Etablissements FROM Etablissements ORDER BY Intitule_Etablissements";
@@ -166,6 +212,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
+    /**
+     * Public method returning the candidate who have a job in the foundation list to autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompletEmployer() {
         // On initialise la requête
         $request = "SELECT 
@@ -178,7 +229,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, []);
     }
-    /// Métohode publique retournant la liste des aides pour l'autocomplétion
+    /**
+     * Public method returning the assistants list to autocomplete items
+     *
+     * @return void
+     */
     public function getAides() {
         // On inititalise la requête
         $request = "SELECT 
@@ -190,7 +245,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode public retournant la liste des diplomes pour l'autocomplétion
+    /**
+     * Public method returning the establishments list to autocomplete items
+     *
+     * @return void
+     */
     public function getDiplomes() {
         // On initialise la requête
         $request = "SELECT
@@ -201,7 +260,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des postes pour l'autocomplétion
+    /**
+     * Public method returning the job lost to the autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompPostes() {
         // On inititalise la requête
         $request = "SELECT Intitule_Postes FROM Postes ORDER BY Intitule_Postes";
@@ -209,7 +272,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des services pour l'autocomplétion
+    /**
+     * Public method returning the services list to the autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompServices() {
         // On inititalise la requête
         $request = "SELECT Intitule_Services FROM Services ORDER BY Intitule_Services";
@@ -217,7 +284,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des types de contrats pour l'autocomplétion
+    /**
+     * Public method returning the types of contracts list to the autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompTypesContrat() {
         // On initialise la requête
         $request = "SELECT Intitule_Types_de_contrats FROM Types_de_contrats ORDER BY Intitule_Types_de_contrats";
@@ -225,7 +296,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
-    /// Méthode publique retournant la liste des sources pour l'autocomplétion
+    /**
+     * Public method returning the sources list to the autocomplete items
+     *
+     * @return void
+     */
     public function getAutoCompSources() {
         // On initialise la requête
         $request = "SELECT Intitule_Sources FROM Sources ORDER BY Intitule_Sources";
@@ -233,6 +308,11 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, [], false, true);
     }
+    /**
+     * Public method returning the role liste without the owner
+     *
+     * @return void
+     */
     public function getAccessibleRole() {
         // ON initialise la requête
         $request = "SELECT 
@@ -252,8 +332,13 @@ abstract class Model {
 
     // METHODES DE RECHERCHE DANS LA BASE DE DONNEES //
 
-    /// Méthode protégée recherchant un instant dans la base de données
-    protected function searchInstant($cle_instant) {
+    /**
+     * Public method searching one Instant in the database
+     *
+     * @param integer $cle_instant The Instant's primary key 
+     * @return array
+     */
+    protected function searchInstant($cle_instant): array {
         // On initialise la requête
         $request = "SELECT * FROM Instants WHERE Id_Instants = :cle";
         $params = ['cle' => $cle_instant];
@@ -261,8 +346,13 @@ abstract class Model {
         // On récupère le résultat
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un etablissement dans la base de données
-    protected function searchEtablissement($etablissement) {
+    /**
+     * Public method searching one establishment 
+     *
+     * @param integer|string $etablissement The establishment primary key or intitule 
+     * @return array
+     */
+    protected function searchEtablissement($etablissement): array {
         if(is_numeric($etablissement)) 
             // On initialise la requête
             $request = "SELECT * FROM Etablissements WHERE Id_Etablissements = :etablissement";
@@ -279,8 +369,13 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un pôle dans la base de données
-    protected function searchPole($pole) {
+    /**
+     * Protected method searching one hub in the database
+     *
+     * @param integer|string $pole The hub primary key or intitule
+     * @return array
+     */
+    protected function searchPole($pole): array {
         if(is_numeric($pole)) {
             $request = "SELECT * FROM Poles WHERE Id_Poles = :cle";
             $params = [
@@ -298,7 +393,12 @@ abstract class Model {
 
         return $this->get_request($request, $params, true, true);    
     }
-    /// Méthode protégée recherchant un role dans la base de données
+    /**
+     * Protected method searching one role in the database
+     *
+     * @param integer|string $role The role primary key or intitule
+     * @return array
+     */
     protected function searchRole($role): array {
         // On initialise la requête
         if(is_numeric($role)) {
@@ -318,8 +418,13 @@ abstract class Model {
         // On retourne le rôle
         return $result;
     }
-    /// Méthode protégée recherchant un type d'action dans la base de donnés
-    protected function serachAction_type($action) {
+    /**
+     * Protected method searching one action type in the database
+     *
+     * @param integer|string $action The type primary key or intitule
+     * @return array
+     */
+    protected function serachAction_type($action): array {
         if($action == null) 
             throw new Exception("Données éronnées. La clé action ou son intitulé sont nécessaires pour rechercher une action !");
 
@@ -337,8 +442,13 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un Utilisateur dans la base de données 
-    protected function searchUser($user) {
+    /**
+     * Protected method search one user in the database
+     *
+     * @param integer|string $user The user primary key or intitule
+     * @return array
+     */ 
+    protected function searchUser($user): array {
         if($user == null)
             throw new Exception("Le nom ou l'identifiant de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
 
@@ -368,8 +478,13 @@ abstract class Model {
         } else 
             throw new Exception("Le type n'a pas pu être reconnu. Le nom (string) ou l'identifiant (int) de l'utilisateur sont nécessaires pour le rechercher dans la base de données !");
     }
-    /// Méthode protégée recherchant un utilisateur depuis son nom d'utilisateur
-    protected function searchUserFromUsername($user) {
+    /**
+     * Protected method searching one user according to his name
+     *
+     * @param string $user The user name
+     * @return array
+     */
+    protected function searchUserFromUsername($user): array {
         if(empty($user) || !is_string($user))
             throw new Exception("Erreur lors de la récupération du nom d'utilisateur");
 
@@ -382,18 +497,28 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, false, true);
     }
-
-    /// Méthode protégée recherchant une candidature dans la base de données
-    protected function searchCandidature($cle) {
+    /**
+     * Protected method searching one application in the database
+     *
+     * @param integer $application The application primary key
+     * @return array
+     */
+    protected function searchCandidature($application): array {
         // On initialise la requête
         $request = "SELECT * FROM Candidatures WHERE Id_candidatures = :cle";
-        $params = ['cle' => $cle];
+        $params = ['cle' => $application];
 
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
     /// Méthode publique recherchant un candidat dans la base de données depuis une de ses candidatures
-    public function searchCandidatFromCandidature($cle) {
+    /**
+     * Public method searching one candidate from one of his application in the database
+     *
+     * @param integer $cle The application primary key
+     * @return array
+     */
+    public function searchCandidatFromCandidature($cle): array {
         // On initialise la requête
         $request = "SELECT * 
         FROM Candidatures 
@@ -406,8 +531,14 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode publique recherchant un candidat dans la base de données depuis une de ses contrats
-    public function searchcandidatFromContrat($cle) {
+
+    /**
+     * Public method searching one candidate from one of his contract in the database
+     *
+     * @param integer $cle The contract primary key
+     * @return array
+     */
+    public function searchcandidatFromContrat($cle): array {
         // On initialise la requête
         $request = "SELECT * 
         FROM Contrats 
@@ -420,8 +551,14 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant une candidature depuis sont candidat et son instant dans la base de données
-    protected function searchCandidatureFromCandidat($cle_candidat, $cle_instant) {
+    /**
+     * Protected method searching one application from his candidate in the database
+     *
+     * @param integer $cle_candidat The candidate primary key
+     * @param integer $cle_instant The instant primary key
+     * @return array
+     */
+    protected function searchCandidatureFromCandidat($cle_candidat, $cle_instant): array {
         // On vérifie l'intégrité des données
         if(empty($cle_candidat) || empty($cle_instant)) 
             throw new Exception ('Données éronnées. Pour rechercher une candidatures, lla clé candidat et la clé instant sont nécessaires !');
@@ -436,8 +573,13 @@ abstract class Model {
         // On retourne le résultat
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un diplome dans la base de données
-    protected function searchDiplome($diplome) {
+    /**
+     * Protected method searching one degree in the database 
+     *
+     * @param integer|string $diplome The degree primary key or intitule
+     * @return array
+     */
+    protected function searchDiplome($diplome): array {
         // Si diplome est un ID
         if(is_numeric($diplome)) {
             // On initialise la requête
@@ -463,8 +605,13 @@ abstract class Model {
         // On retourne le résultat
         return $result;
     }
-    /// Méthode protégée recherchant un type de contrat dans la base de données 
-    protected function searchTypeContrat($contrat) {
+    /**
+     * Protected method searching one type of contracts in the database 
+     *
+     * @param integer|string $contrat The types of contracts primary key or intitule
+     * @return array
+     */
+    protected function searchTypeContrat($contrat): array {
         // Si contrat est un ID
         if(is_numeric($contrat)) {
             // On initialise la requête
@@ -486,8 +633,13 @@ abstract class Model {
         // On retourne le résultat
         return $result;
     }
-    /// Méthode recherchant une source dans la base de données
-    protected function searchSource($source) {
+    /**
+     * Protected method one source in the database
+     *
+     * @param integer|string $source The source primary key or intitule
+     * @return array
+     */
+    protected function searchSource($source): array {
         // On initialise la requête
         if(is_numeric($source)) {
             $request = "SELECT * FROM sources WHERE Id_Sources = :Id";
@@ -505,24 +657,34 @@ abstract class Model {
         // On retourne le rôle
         return $result;
     }
-    /// Méthode protégée recherchant un poste dans la base de données
-    protected function searchPoste($poste) {
+    /**
+     * Protected method searching one job in the database
+     *
+     * @param integer|string $job The job primary key or intitule
+     * @return array
+     */
+    protected function searchPoste($job): array {
         // On initialise la requête
-        if(is_numeric($poste)) {
+        if(is_numeric($job)) {
             $request = "SELECT * FROM Postes WHERE Id_Postes = :Id";
-            $params = ["Id" => $poste];
+            $params = ["Id" => $job];
             
-        } elseif(is_string($poste)) {
+        } elseif(is_string($job)) {
             $request = "SELECT * FROM Postes WHERE Intitule_Postes = :Intitule";
-            $params = ["Intitule" => $poste];
+            $params = ["Intitule" => $job];
         } else 
             throw new Exception("Erreur lors de la recherche de poste. La saisie du poste est mal typée. Il doit être un identifiant (entier positif) ou une chaine de caractères !");
 
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un service dans la base de données 
-    protected function searchService($service) {
+    /**
+     * Protected method searching one service in the database
+     *
+     * @param integer|string $service The service primary key or intitule
+     * @return array
+     */
+    protected function searchService($service): array {
         // Si contrat est un ID
         if(is_numeric($service)) {
             // On initialise la requête
@@ -544,8 +706,13 @@ abstract class Model {
         // On retourne le résultat
         return $result;
     }
-    /// Méthode protégée recherchant une aide dans la base de données
-    protected function searchAide($aide) {
+    /**
+     * Protected method searching one assistance in the database
+     *
+     * @param integer|string $aide The assistance primary key or intitule
+     * @return array
+     */
+    protected function searchAide($aide): array {
         // Si aide est un ID
         if(is_numeric($aide)) {
             // On initialise la requête
@@ -570,8 +737,13 @@ abstract class Model {
         // On retourne le résultat
         return $result;
     }
-    /// Méthode protégée recherchant un Appliquer_a depuis sa candidature
-    protected function searchAppliquer_aFromCandidature($cle) {
+    /**
+     * Protected method searching one Appliquer_a from its application
+     *
+     * @param integer $cle The application primary key
+     * @return array
+     */
+    protected function searchAppliquer_aFromCandidature($cle): array {
         // On initialise la requête
         $request = "SELECT * FROM Appliquer_a WHERE Cle_Candidatures = :cle";
         $params = ['cle' => $cle];
@@ -579,8 +751,13 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un Appliquer_a depuis son service
-    protected function searchAppliquer_aFromService($cle) {
+    /**
+     * Protected method searching one Appliquer_a from its service
+     *
+     * @param integer $cle the service primary key
+     * @return array
+     */
+    protected function searchAppliquer_aFromService($cle): array {
         // On initialise la requête
         $request = "SELECT * FROM Appliquer_a WHERE Cle_Services = :cle";
         $params = ['cle' => $cle];
@@ -588,8 +765,13 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée recherchant un contrat dans la base de données
-    protected function searchContrat(&$cle_contrat) {
+    /**
+     * Protected method searching one contract in the database
+     *
+     * @param integer $cle_contrat The contract primary key
+     * @return array
+     */
+    protected function searchContrat(&$cle_contrat): array {
         if(empty($cle_contrat) || !is_numeric($cle_contrat))
             throw new Exception('Erreur lors de la recherche du contrat. La clé contrat doit être un nombre entier positif !');
 
@@ -603,10 +785,16 @@ abstract class Model {
     
 
 
-    // METHODES D'INSCRIPTION DANS LA BASE DE DONNES //
+    // METHODES D'INSCRIPTION DANS LA BASE DE DONNEES //
 
-    /// Méthode protégées inscrivant un instant dans la base de données et reournant son id
-    protected function inscriptInstants($jour=null, $heure=null) {
+    /**
+     * Protected method registering and returning one Instant in the database
+     *
+     * @param string $jour The instant day
+     * @param string $heure The instant hour
+     * @return array
+     */
+    protected function inscriptInstants($jour=null, $heure=null): array {
         if(empty($jour) && empty($heure))
             // On génère l'instant actuel (date et heure actuelles)
             $instant = Instants::currentInstants();
@@ -624,9 +812,14 @@ abstract class Model {
 
         return $this->get_request($request, $params, true, true);
     }
-    /// Méthode protégée inscrivant un Utilisateurs dans la base de données
-    protected function inscriptUtilisateurs($utilisateur=[]) {
-        if(empty($utilisateur)) 
+    /**
+     * protected method registering one user in the database
+     *
+     * @param array $user The user's data array
+     * @return void
+     */
+    protected function inscriptUtilisateurs($user=[]) {
+        if(empty($user)) 
             throw new Exception("Impossible d'inscrire un Utilisateur. Données manquantes !");
 
         else {
@@ -635,20 +828,36 @@ abstract class Model {
                         VALUES (:identifiant, :nom, :prenom, :email, :motdepasse, :cle_etablissement, :cle_role)";
 
             // On lance la requête
-            $this->post_request($request, $utilisateur);
+            $this->post_request($request, $user);
         }
     }
-    /// Méthode protégée enregistrant une action dans la base de données
-    protected function inscriptAction(&$cle_user, &$cle_action, &$cle_instant, $description) {
+    /**
+     * Protected method registering one action in the database
+     *
+     * @param integer $cle_user The user's primary key
+     * @param integer $cle_action The action primary key
+     * @param integer $cle_instant The instant primary key
+     * @param string $description The action description
+     * @return void
+     */
+    protected function inscriptAction(&$cle_user, &$cle_action, &$cle_instant, $description=null) {
         // On vérifie l'intégrité des données
-        if(empty($cle_user) || !is_int($cle_user))
-            throw new Exception("La clé Utilisateur est nécessaire pour l'enregistrement d'une action !");
-        elseif(empty($cle_action) || !is_int($cle_action))
-            throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
-        elseif(empty($cle_instant) || !is_int($cle_instant))
-            throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
+        try {
+            if(empty($cle_user) || !is_int($cle_user))
+                throw new Exception("La clé Utilisateur est nécessaire pour l'enregistrement d'une action !");
+            elseif(empty($cle_action) || !is_int($cle_action))
+                throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
+            elseif(empty($cle_instant) || !is_int($cle_instant))
+                throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
 
-        else if(!empty($description)) {
+        } catch(Exception $e) {
+            forms_manip::error_alert([
+                'msg' => $e
+            ]);
+        }
+        
+        // Sans description
+        if(!empty($description)) {
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants, Description_Actions) VALUES (:user_id, :type_id, :instant_id, :description)";
             $params = [
@@ -657,9 +866,8 @@ abstract class Model {
                 "instant_id" => $cle_instant,
                 'description' => $description
             ];
-            
-            $this->post_request($request, $params);
 
+        // Avec description    
         } else {
             // On ajoute l'action à la base de données
             $request = "INSERT INTO Actions (Cle_Utilisateurs, Cle_Types, Cle_Instants) VALUES (:user_id, :type_id, :instant_id)";
@@ -667,13 +875,18 @@ abstract class Model {
                 "user_id" => $cle_user,
                 "type_id" => $cle_action,
                 "instant_id" => $cle_instant
-            ];
-
-            $this->post_request($request, $params);
+            ];   
         }
-    }
 
-    /// Méthode protégée inscrivant une Candidat dans la base de données
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+    /**
+     * Protected method registering one candidate ine the database
+     *
+     * @param Candidat $candidat The candidate's data 
+     * @return void
+     */
     protected function inscriptCandidat(&$candidat) {
         // On initialise la requête
         if($candidat->getVisite_medicale()) 
@@ -685,31 +898,18 @@ abstract class Model {
             $request = "INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, 
                 Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats)
                 VALUES (:nom, :prenom, :telephone, :email, :adresse, :ville, :code_postal, :disponibilite)";
-        
-        echo "<h2>Le candidat</h2>";
-        var_dump($candidat);
-        echo "<h3>La requête</h3>";
-        var_dump($request);
-        echo "<h3>Les paramètres</h3>";
-        var_dump($candidat->exportToSQL());
 
         // On lance  requête
         $this->post_request($request, $candidat->exportToSQL());
     }
-    /// Méthode protégée inscrivant une Aide dans la base de données
-    protected function inscriptAide($candidat, $aide) {      
-        // On initialise la requête
-        $request = "INSERT INTO avoir_droit_a (Cle_Candidats, Cle_Aides_au_recrutement) VALUES (:candidat, :aide)";
-        $params = [
-            "candidat" => $candidat->getCle(), 
-            "diplome" => $aide["Id_Aides_au_recrutement"]
-        ];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
-    /// Méthode protégée inscrivant un Diplome dans la base de données
-    protected function inscriptDiplome($cle_candidat, $cle_diplome) {
+    /**
+     * Protected method registering one Obtenir in the database
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_diplome The degree primary key
+     * @return void
+     */
+    protected function inscriptObtenir($cle_candidat, $cle_diplome) {
         // On initialise la requête
         $request = "INSERT INTO obtenir (Cle_Candidats, Cle_Diplomes) VALUES (:candidat, :diplome)";
         $params = [
@@ -720,24 +920,43 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un Postuler_a dans la base de données
+    /**
+     * Protected method regstering one Postuler_a in the database
+     *
+     * @param integer $candidat The candidate's primary key
+     * @param integer $instant The instant primary key
+     * @return void
+     */
     protected function inscriptPostuler_a($candidat, $instant) {
         // On initialise la requête 
         $request = "INSERT INTO Postuler_a (Cle_Candidats, Cle_Instants) VALUES (:candidat, :instant)";
         $params = [
-            "candidat" => $candidat->getCle(), 
+            "candidat" => $candidat, 
             "instant" => $instant
         ];
 
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un Appliquer_a dans la base de données
+    /**
+     * Protected method registering one Appliquer_a ine the database
+     *
+     * @param integer $cle_candidature The application primary key
+     * @param integer $cle_service The service primary key
+     * @return void
+     */
     protected function inscriptAppliquer_a($cle_candidature, $cle_service) {
         // On vérifie l'intégrité des données
-        if(empty($cle_candidature) || empty($cle_service)) 
-            throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');        
+        try {
+            if(empty($cle_candidature) || empty($cle_service)) 
+                throw new Exception('Données éronnées. Pour inscrire un Appliquer_a, la clé de candidature et la clé de service sont nécessaires');
 
+        } catch(Exception $e) {
+            forms_manip::error_alert([
+                'msg' => $e
+            ]);
+        }
+        
         // On inititalise la requête
         $request = "INSERT INTO Appliquer_a (Cle_Candidatures, Cle_Services) VALUES (:candidature, :service)";
         $params = [
@@ -748,7 +967,14 @@ abstract class Model {
         // On exécute la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un Avoir_droit_a dans la base de données
+    /**
+     * Protected method registering one Avoir_droit_a in the database
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_aide The assistance primary key
+     * @param integer $cle_coopteur The recommander's primary key
+     * @return void
+     */
     protected function inscriptAvoir_droit_a($cle_candidat, $cle_aide, $cle_coopteur=null) {
         if(!empty($cle_coopteur)) {
             // On initialise la requête
@@ -758,7 +984,6 @@ abstract class Model {
                 'aide' => $cle_aide,
                 'coopteur' => $cle_coopteur
             ];
-    
 
         } else {
             // On initialise la requête
@@ -767,18 +992,18 @@ abstract class Model {
                 'candidat' => $cle_candidat,
                 'aide' => $cle_aide
             ];
-
         }
-
-        echo "<h4>La requête</h4>";
-        var_dump($request);
-        echo "<h4>Les paramètres</h4>";
-        var_dump($params);
         
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un Proposer_a dans la base de données
+    /**
+     * Protected method registerin one Proposer_a in the database
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_instant The instant primary key
+     * @return void
+     */
     protected function inscriptProposer_a($cle_candidat, $cle_instant) {
         // On initialise la requête
         $request = "INSERT INTO Proposer_a (Cle_candidats, Cle_Instants) VALUES (:candidat, :instant)";
@@ -790,7 +1015,13 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant une mission dans la base de données
+    /**
+     * Protected method registering one mission in the database
+     *
+     * @param integer $cle_service The sevice primary key
+     * @param integer $cle_poste The job primary key
+     * @return void
+     */
     protected function inscriptMission($cle_service, $cle_poste) {
         // On intitialise la requête 
         $request = "INSERT INTO Missions (Cle_Services, Cle_Postes) VALUES (:cle_service, :cle_poste)";
@@ -802,7 +1033,15 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un rendez vous dans la base de données
+    /**
+     * Protected method registering one meeting in the database 
+     *
+     * @param integer $cle_utilisateur The user's primary key (recruiter) 
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_etablissement The establishment primary key
+     * @param integer $cle_instants The instant primary key
+     * @return void
+     */
     protected function inscriptAvoir_rendez_vous_avec($cle_utilisateur, $cle_candidat, $cle_etablissement, $cle_instants) {
         // On intitialise la requête 
         $request = "INSERT INTO Avoir_rendez_vous_avec (Cle_Utilisateurs, Cle_Candidats, Cle_Etablissements, Cle_Instants) VALUES (:cle_utilisateurs, :cle_candidats, :cle_etablissements, :cle_instants)";
@@ -816,7 +1055,13 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un poste dans la base de données
+    /**
+     * Protected method registering one job in the database
+     *
+     * @param string $poste The job intitule
+     * @param string $description The job description
+     * @return void
+     */
     protected function inscriptPoste(&$poste, &$description) {
         // On initialise la requête
         $request = "INSERT INTO Postes (Intitule_Postes, Description_Postes) VALUES (:poste, :description)";
@@ -828,7 +1073,13 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un service dans la base de données
+    /**
+     * Protected method registering one service in the database
+     *
+     * @param string $service The service intitule
+     * @param string $cle_etablissement The service description
+     * @return void
+     */
     protected function inscriptService(&$service, $cle_etablissement) {
         // On initialise la requête 
         $request = "INSERT INTO Services (Intitule_Services, Cle_Etablissements) VALUES (:service, :etablissement)";
@@ -840,7 +1091,12 @@ abstract class Model {
         // On lance
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un nouvel établissement dans la base de données
+    /**
+     * Protected method registering one establishment
+     *
+     * @param array<string> $infos The establishment data array 
+     * @return void
+     */
     protected function inscriptEtablissement(&$infos=[]) {
         // On initialise la requête 
         $request = "INSERT INTO Etablissements (Intitule_Etablissements, Adresse_Etablissements, Ville_Etablissements, CodePostal_Etablissements, Cle_Poles) 
@@ -856,7 +1112,13 @@ abstract class Model {
         // On lance
         $this->post_request($request, $params);
     }
-    /// Méthode protégée inscrivant un nouveau pôle dans la base de données
+    /**
+     * Protected method registering one hub in the database
+     *
+     * @param string $intitule The hub intitule
+     * @param string $description The hub description
+     * @return void
+     */
     protected function inscriptPole(&$intitule, &$description) {
         // On initialise la requête 
         $request = "INSERT INTO Poles (Intitule_Poles, Description_Poles) VALUES (:intitule, :desc)";
@@ -868,8 +1130,30 @@ abstract class Model {
         // On lance
         $this->post_request($request, $params);
     }
+    /**
+     * Protected method registering one degree in the database
+     *
+     * @param string $diplome The degree intitule
+     * @return void
+     */
+    protected function inscriptDiplome($diplome) {
+        // On initialise la requête
+        $request = "INSERT INTO Diplomes (Intitule_Diplomes) VALUES (:intitule)";
+        $params = ["intitule" => $diplome];
 
-    /// Méthode publique mettant à jour le mot de passe d'un utilisateur
+        // On lance la requête
+        $this->post_request($request, $params);
+    }
+
+
+    // METHODES DE MISE-A-JOUR // 
+
+    /**
+     * Public method updating one user's password 
+     *
+     * @param string $password The new user's password
+     * @return void
+     */
     public function updatePassword(&$password) {
         // On initialise la requête
         $request = "UPDATE Utilisateurs
@@ -883,6 +1167,13 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
+    /**
+     * Public method updating one user's data
+     *
+     * @param integer $cle_utilisateur The user's primary key
+     * @param array<string> $user The user's data array
+     * @return void
+     */
     public function updateUser($cle_utilisateur, $user=[]) {
         // On initialise la requête
         $request = "UPDATE Utilisateurs 
@@ -899,7 +1190,13 @@ abstract class Model {
         // On lance la requête
         return $this->get_request($request, $params);
     }
-    /// Méthode publique mettant à jour la notation d'un candidat 
+    /**
+     * public method updating one candidate's evaluation
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param array $notation The candidate's data array
+     * @return void
+     */
     public function updateNotation($cle_candidat, &$notation=[]) {
         // On initialise la requête
         $request = "UPDATE Candidats 
@@ -917,8 +1214,14 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode publique mettant à jour la notation d'un candidat 
-    public function updateCandidat($cle_candidat, &$candidat=[]) {
+    /**
+     * Public method updating a candidate's data
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param array<string> $candidat The cadidate's data array
+     * @return void
+     */
+    public function updateCandidat($cle_candidat, $candidat=[]) {
         // On initialise la requête
         $request = "UPDATE Candidats 
         SET Nom_candidats = :nom, Prenom_Candidats = :prenom, Email_Candidats = :email, Telephone_Candidats = :telephone, Adresse_Candidats = :adresse, Ville_Candidats = :ville, CodePostal_Candidats = :code_postal
@@ -937,7 +1240,15 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode publique mettant à jour le rendez-vous d'un candidat
+    /**
+     * Public method updating one candidate's meeting
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_utilisateur The user's primary key
+     * @param integer $cle_instant The instant primary key
+     * @param array $rdv The metting data array
+     * @return void
+     */
     public function updateRendezVous($cle_candidat, $cle_utilisateur, $cle_instant, &$rdv=[]) {
         // On met-à-jour l'utilisateur
         $request = "UPDATE Avoir_rendez_vous_avec
@@ -963,9 +1274,16 @@ abstract class Model {
     }
 
 
-    // METHODE DE SUPPRESSION //
+    // METHODES DE SUPPRESSION //
 
-    /// Méthode protégée supprimant un rendez-vous de la base de données
+    /**
+     * Protected method deleting one meeting
+     *
+     * @param integer $cle_candidat The candidate's primary key
+     * @param integer $cle_utilisateur The use's primary key
+     * @param integer $cle_instant The instant primary key
+     * @return void
+     */
     protected function deleteRendezVous($cle_candidat, $cle_utilisateur, $cle_instant) {
         // On initialise la requête
         $request = "DELETE FROM Avoir_rendez_vous_avec
@@ -981,21 +1299,16 @@ abstract class Model {
         // On lance la requête
         $this->post_request($request, $params);
     }
-    /// Méthode protégée supprimant un instant de la base de données
+    /**
+     * Protected method deleting one instant
+     *
+     * @param integer $cle_instant The instant primary key
+     * @return void
+     */
     protected function deleteInstant($cle_instant) {
         // On initialise la requête
         $request = "DELETE FROM Instants WHERE Id_Instants = :cle";
         $params = ['cle' => $cle_instant];
-
-        // On lance la requête
-        $this->post_request($request, $params);
-    }
-
-    // MÉTHODE À RENOMMER //
-    public function createDiplome($diplome) {
-        // On initialise la requête
-        $request = "INSERT INTO Diplomes (Intitule_Diplomes) VALUES (:intitule)";
-        $params = ["intitule" => $diplome];
 
         // On lance la requête
         $this->post_request($request, $params);

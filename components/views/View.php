@@ -1,14 +1,28 @@
 <?php
 
+/**
+ * Abstract class representing a view
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class View {
-    /// Liste des onglets disponible pour l'utilisateur
+    /**
+     * Private array containing the list of tabs the user can visit
+     *
+     * @var array<object>
+     */
     private $menu;
 
-    /// Constructeur de la classe
+    /**
+     * Class constructor
+     */
     public function __construct() {
         $this->menu = $this->makeMenuListe();
     }
-    /// Méthode privée générant la liste d'onglet duu menu selon le rôle de l'utilisateur
+    /**
+     * Private method generating in according to the user's role, the list of tabs he can visit
+     *
+     * @return void
+     */
     private function makeMenuListe() {
         return [
             [

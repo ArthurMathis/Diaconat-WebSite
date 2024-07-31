@@ -84,10 +84,13 @@ class CandidatsModel extends Model {
         $candidats = $this->getCandidats($index);
         array_push($candidats, ['diplomes' => $this->getCandidatDiplomes($index)]);
 
+        $coopteur = $this->searchCoopteur($index, 3);
+        if(!empty($coopteur)) $coopteur = $coopteur['text'];
+
         return [
             'candidat' => $candidats,
             'aide' => $this->getCandidatAides($index),
-            'coopteur' => $this->searchCoopteur($index, 3)['text'], 
+            'coopteur' => $coopteur, 
             'candidatures' => $this->getCandidatures($index),
             'contrats' => $this->getContrats($index),
             'rendez-vous' => $this->getRendezVous($index)
@@ -373,7 +376,7 @@ class CandidatsModel extends Model {
     }
 
     /// Méthode construisant une nouvelle proposition d'embauche et l'inscrivant dans la base de données
-    public function createPropositions(&$cle, &$propositions) {
+    public function createPropositions($cle, $propositions) {
         try {
             // On génère l'instant actuel
             $instant = $this->inscriptInstants()['Id_Instants'];
@@ -522,7 +525,7 @@ class CandidatsModel extends Model {
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données
-    protected function inscriptContrats(&$contrats=[]) {
+    protected function inscriptContrats($contrats=[]) {
         // Requête avec date de fin de contrat
         if(isset($contrats['date fin'])) {
             // Requête avec salaire
@@ -1287,7 +1290,7 @@ class CandidatsModel extends Model {
 
         // On récupère la liste des diplomes
         for($i = 0; $i < count($candidat['diplome']); $i++) 
-            $this->inscriptDiplome($cle_candidat, $this->searchDiplome($candidat['diplome'][$i])['Id_Diplomes']);
+            $this->inscriptObtenir($cle_candidat, $this->searchDiplome($candidat['diplome'][$i])['Id_Diplomes']);
         unset($candidat['diplome']);
 
         // On supprime l'aide du candidat
