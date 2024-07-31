@@ -45,3 +45,11 @@ function env_start() {
         putenv("$key=$value");
     }
 }
+
+
+// On définit les rôles
+define('OWNER', 1);
+define('ADMIN', 2);
+define('MOD', 3);
+define('USER', 4);
+define('INVITE', 5);

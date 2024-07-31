@@ -1,6 +1,8 @@
 <nav class="options_barre">
     <article>
-        <a class="action_button reverse_color" href="index.php?preferences=saisie-etablissement">Nouvel établissement</a>
+        <?php if($_SESSION['user_role'] == OWNER || $_SESSION['user_role'] == ADMIN): ?>
+            <a class="action_button reverse_color" href="index.php?preferences=saisie-etablissement">Nouvel établissement</a>
+        <?php endif ?>
     </article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>

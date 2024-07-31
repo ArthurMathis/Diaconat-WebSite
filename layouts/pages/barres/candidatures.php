@@ -1,7 +1,9 @@
 <nav class="options_barre">
     <article>
         <a class="action_button reverse_color" href="index.php?candidats=home">Liste des candidats</a>
-        <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Nouvelle candidature</a>
+        <?php if($_SESSION['user_role'] != INVITE): ?>
+            <a class="action_button" href="index.php?candidatures=saisie-nouveau-candidat">Nouvelle candidature</a>
+        <?php endif ?>    
     </article>
     <article>
         <p class="action_button" id="filtrer-button">Filtrer</p>

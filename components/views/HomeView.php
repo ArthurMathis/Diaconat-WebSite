@@ -5,7 +5,7 @@ require_once 'View.php';
 class HomeView extends View {
     public function getContent($items = [], $dashboard = []) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat Web Site - Welcome', [PAGES_STYLES.DS.'index.css']);
+        $this->generateCommonHeader('Ypopsi - Welcome', [PAGES_STYLES.DS.'index.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(false, false);

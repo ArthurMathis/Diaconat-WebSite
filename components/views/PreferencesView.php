@@ -335,7 +335,7 @@ class PreferencesView extends View {
     /// Méthode publique retournant la vue saisie utilisateur
     public function getSaisieUtilisateur($role, $etablissements=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription', [FORMS_STYLES.DS.'big-form.css']);
+        $this->generateCommonHeader('Ypopsi - Inscription', [FORMS_STYLES.DS.'big-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
@@ -355,7 +355,7 @@ class PreferencesView extends View {
     /// Méthode publique retournant la vue saisie d'une poste
     public function getSaisiePoste() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription poste', [FORMS_STYLES.DS.'small-form.css']);
+        $this->generateCommonHeader('Ypopsi - Inscription poste', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
@@ -370,7 +370,7 @@ class PreferencesView extends View {
     /// Méthode publique retournant la vue saisie d'un service
     public function getSaisieService($etablissements=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
+        $this->generateCommonHeader('Ypopsi - Inscription service', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
@@ -390,7 +390,7 @@ class PreferencesView extends View {
     /// Méthode pubique retournant la vue de siasise d'un établissement
     public function getSaisieEtablissement($poles=[]) {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
+        $this->generateCommonHeader('Ypopsi - Inscription établissement', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);
@@ -405,7 +405,7 @@ class PreferencesView extends View {
     /// Méthode pubique retournant la vue de siasie d'un établissement
     public function getSaisiePole() {
         // On ajoute l'entete de page
-        $this->generateCommonHeader('Diaconat - Inscription pôle', [FORMS_STYLES.DS.'small-form.css']);
+        $this->generateCommonHeader('Ypopsi - Inscription pôle', [FORMS_STYLES.DS.'small-form.css']);
 
         // On ajoute la barre de navigation
         $this->generateMenu(true);

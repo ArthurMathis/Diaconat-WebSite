@@ -45,6 +45,8 @@
     <?php endif ?>    
 </div>
 </div>
-<a id="edit_button" class="circle_button" href="index.php?candidats=edit-notation&cle_candidat=<?=$item['candidat']['id'] ?>">
-    <img src="layouts\assets\img\logo\white-edit.svg" alt="Logo de modification du candidat, représenté par un carnet et un stylo">
-</a>
+<?php if($_SESSION['user_role'] != INVITE): ?>
+    <a id="edit_button" class="circle_button" href="index.php?candidats=edit-notation&cle_candidat=<?=$item['candidat']['id'] ?>">
+        <img src="layouts\assets\img\logo\white-edit.svg" alt="Logo de modification du candidat, représenté par un carnet et un stylo">
+    </a>
+<?php endif ?>

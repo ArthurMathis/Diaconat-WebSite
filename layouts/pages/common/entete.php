@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php if(isset($name) && !empty($name)) echo $name; else echo 'Diaconat - Ypopsi'; ?></title>
 
+    <!-- On ajoute le logo de l'application -->
+    <link rel="icon" href="layouts/assets/img/ypopsi.svg">
+
     <!-- Inclusion des feuilles de style -->
     <link rel="stylesheet" href="layouts\assets\stylesheet\styles.css">
     <?php

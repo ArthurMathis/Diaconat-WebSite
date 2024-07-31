@@ -9,6 +9,7 @@
             <a <?php if($_GET['preferences'] == "edit-password") echo 'class="selected"'; ?> href="index.php?preferences=edit-password">Modifier votre mot de passe</a>
         </content>
     </article>
+    <?php if($_SESSION['user_role'] == OWNER || $_SESSION['user_role'] == ADMIN): ?>
     <article>
         <header>
             <img src="layouts\assets\img\logo\white-utilisateurs.svg" alt="Logo de la section utilisateurs représentant un groupe de personne">
@@ -21,6 +22,8 @@
             <a <?php if($_GET['preferences'] == "action-historique") echo 'class="selected"'; ?> href="index.php?preferences=action-historique">Historique d'actions</a>
         </content>
     </article>
+    <?php endif ?>
+    <?php if($_SESSION['user_role'] != INVITE): ?>
     <article>
         <header>
             <img src="layouts\assets\img\logo\white-data.svg" alt="Logo de la section données représentant un nuage">
@@ -35,4 +38,5 @@
             <a <?php if($_GET['preferences'] == "autres") echo 'class="selected"'; ?> href="index.php?preferences=autres">Autres</a>-->
         </content>
     </article>
+    <?php endif ?>
 </aside>

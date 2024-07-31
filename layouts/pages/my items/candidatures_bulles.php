@@ -42,6 +42,7 @@
     </content>
     <?php if($item['statut'] == 'Non-traitée'): ?>
         <footer>
+        <?php if($_SESSION['user_role'] != INVITE): ?>
             <a class="circle_button" href="index.php?candidats=reject-candidatures&cle_candidature=<?= $item['cle']; ?>">
                 <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de refus de la candidature, représenté par une croix">
             </a>
@@ -53,7 +54,8 @@
                 <a class="circle_button" href="index.php?candidats=saisie-propositions-from-candidature&cle_candidature=<?= $item['cle']; ?>">
                     <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la candidature, représenté par une coche">
                 </a>  
-            <?php endif; ?>     
+            <?php endif; ?>   
+        <?php endif ?>     
         </footer>
     <?php endif ?>    
 </div>

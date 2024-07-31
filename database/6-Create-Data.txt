@@ -155,7 +155,8 @@ INSERT INTO types (Intitule_Types) VALUES
 ;
 -- On insère un Utilisateur --
 INSERT INTO Utilisateurs (Identifiant_Utilisateurs, Nom_Utilisateurs, Prenom_Utilisateurs, MotDePasse_Utilisateurs, Email_Utilisateurs, Cle_Roles, Cle_Etablissements) VALUES
-    ('mathis.a', 'Mathis', 'Arthur', '$2y$10$u1VYp4jdjVSmkFo5RR7iJ.ws1c3rCWZLjEar6nVqmx6vwAR8nU/Nq','arthur.mathis@diaconat-mulhouse.fr', 1, 1)
+    ('owner', 'Service informatique', 'Directeur', '$2y$10$vq6oArubtMgZdqtqjWEfS.Xzg./v7a2SCwVP6z3jsdnWgFSUik88W', 'yannick.keller@diaconat-mulhouse.fr', 1, 2),
+    ('mathis.a', 'Mathis', 'Arthur', '$2y$10$u1VYp4jdjVSmkFo5RR7iJ.ws1c3rCWZLjEar6nVqmx6vwAR8nU/Nq','arthur.mathis@diaconat-mulhouse.fr', 2, 1)
 ;
 
 -- On insère les candidats --
@@ -173,7 +174,7 @@ INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Ema
 ;
 
 INSERT INTO Candidats (Nom_Candidats, Prenom_Candidats, Telephone_Candidats, Email_Candidats, Adresse_Candidats, Ville_Candidats, CodePostal_Candidats, Disponibilite_Candidats, Notations_Candidats,Descriptions_Candidats, A_Candidats, B_Candidats, C_Candidats) VALUES
-    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhosue', '68100', '2024-09-06', '4', "Recommandé !", TRUE, FALSE, TRUE)
+    ('Mathis', 'Arthur', '06.38.85.55.57', 'arthur.mathis@uha.fr', "22 Quai d'Isly", 'Mulhouse', '68100', '2024-09-06', '4', "Recommandé !", TRUE, FALSE, TRUE)
 ;
 
 

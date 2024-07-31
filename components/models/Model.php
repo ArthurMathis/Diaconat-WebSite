@@ -490,12 +490,10 @@ abstract class Model {
 
         // On initialise la requête 
         $request = "SELECT * FROM Utilisateurs WHERE Identifiant_Utilisateurs = :user";
-        $params = [
-            'user' => $user
-        ];
+        $params = ['user' => $user];
 
         // On lance la requête
-        return $this->get_request($request, $params, false, true);
+        return $this->get_request($request, $params, false, true)[0];
     }
     /**
      * Protected method searching one application in the database

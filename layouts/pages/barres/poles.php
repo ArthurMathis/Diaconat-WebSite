@@ -1,6 +1,8 @@
 <nav class="options_barre">
     <article>
-        <a class="action_button reverse_color" href="index.php?preferences=saisie-pole">Nouveau pôle</a>
+            <?php if($_SESSION['user_role'] == OWNER || $_SESSION['user_role'] == ADMIN): ?>
+            <a class="action_button reverse_color" href="index.php?preferences=saisie-pole">Nouveau pôle</a>
+        <?php endif ?>
     </article>
     <article>
         <p class="action_button" id="rechercher-button">Rechercher</p>

@@ -89,142 +89,164 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
     // On déclare le controller de candidatures
     $candidatures = new CandidaturesController();
 
-    // On sélectionne l'action
-    switch($_GET['candidatures']) {
-        // On affiche la page liste des candidatures
-        case 'home' :
-            $candidatures->dispayCandidatures();
-            break; 
+    try {
+        // On sélectionne l'action
+        switch($_GET['candidatures']) {
+            // On affiche la page liste des candidatures
+            case 'home' :
+                $candidatures->dispayCandidatures();
+                break; 
 
-        // On affiche le formulaire d'inscription d'un candidat
-        case 'saisie-nouveau-candidat' : 
-            $candidatures->displaySaisieCandidat();
-            break;
+            // On affiche le formulaire d'inscription d'un candidat
+            case 'saisie-nouveau-candidat': 
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
 
-        // On affiche le formulaire d'inscription d'une candidature    
-        case 'saisie-candidature' : 
-            $candidatures->displaySaisieCandidature();
-            break;
+                $candidatures->displaySaisieCandidat();
+                break;
 
-        // On inscrit un nouveau candidat    
-        case 'inscription-candidat' :     
-            // On récupère les données du formulaire
-            try {
-                // On récupère le contenu du formulaire d'inscription
-                $candidat = [
-                    'nom'           => forms_manip::nameFormat($_POST["nom"]), 
-                    'prenom'        => forms_manip::nameFormat($_POST["prenom"]), 
-                    'email'         => $_POST["email"], 
-                    'telephone'     => forms_manip::numberFormat($_POST["telephone"]), 
-                    'adresse'       => $_POST["adresse"],
-                    'ville'         => forms_manip::nameFormat($_POST["ville"]), 
-                    'code_postal'   => $_POST['code-postal']
-                ];
-                $diplomes           = isset($_POST["diplome"]) ? $_POST["diplome"] : null;
-                $aide               = isset($_POST["aide"]) ? $_POST["aide"] : null;
-                $coopteur           = isset($_POST["coopteur"]) ? $_POST['coopteur'][0] : null;
-                $visite_medicale    = isset($_POST["visite_medicale"][0]) ? $_POST["visite_medicale"][0] : null;
+            // On affiche le formulaire d'inscription d'une candidature    
+            case 'saisie-candidature' : 
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
 
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription du candidat",
-                    'msg' => $e
-                ]);
-            }
+                $candidatures->displaySaisieCandidature();
+                break;
 
-            // On vérifie l'intégrité des données
-            try {    
-                if(empty($candidat['nom'])) {
-                    throw new Exception("Le champs nom doit être rempli par une chaine de caractères !");
-                } elseif(empty($candidat['prenom'])) {
-                    throw new Exception("Le champs prenom doit être rempli par une chaine de caractères !");
-                } elseif(empty($candidat['email'])) {
-                    throw new Exception("Le champs email doit être rempli par une chaine de caractères !");
-                } elseif(empty($candidat['adresse'])) {
-                    throw new Exception("Le champs adresse doit être rempli par une chaine de caractères !");
-                } elseif(empty($candidat['ville'])) {
-                    throw new Exception("Le champs ville doit être rempli par une chaine de caractères !");
-                } elseif(empty($candidat['code_postal'])) {
-                    throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
-                } 
+            // On inscrit un nouveau candidat    
+            case 'inscription-candidat' : 
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
 
-                if(!empty($aide)) {
-                    $i = 0;
-                    $size = count($aide);
-                    $coopt = 0;
-                    while($i < $size) {
-                        if($aide[$i] == 3) $coopt++; // 3 L'id de la prime de cooptation
-                        $i++;
-                    }
-                    if(1 < $coopt) throw new Exception("Il n'est possible de renseigner q'une prime de cooptation");
+                    
+                // On récupère les données du formulaire
+                try {
+                    // On récupère le contenu du formulaire d'inscription
+                    $candidat = [
+                        'nom'           => forms_manip::nameFormat($_POST["nom"]), 
+                        'prenom'        => forms_manip::nameFormat($_POST["prenom"]), 
+                        'email'         => $_POST["email"], 
+                        'telephone'     => forms_manip::numberFormat($_POST["telephone"]), 
+                        'adresse'       => $_POST["adresse"],
+                        'ville'         => forms_manip::nameFormat($_POST["ville"]), 
+                        'code_postal'   => $_POST['code-postal']
+                    ];
+                    $diplomes           = isset($_POST["diplome"]) ? $_POST["diplome"] : null;
+                    $aide               = isset($_POST["aide"]) ? $_POST["aide"] : null;
+                    $coopteur           = isset($_POST["coopteur"]) ? $_POST['coopteur'][0] : null;
+                    $visite_medicale    = isset($_POST["visite_medicale"][0]) ? $_POST["visite_medicale"][0] : null;
+
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du candidat",
+                        'msg' => $e
+                    ]);
                 }
-            
-            // On récupère les éventuelles erreurs    
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription du candidat",
-                    'msg' => $e
-                ]);
-            }
-            // On génère le candidat        
-            $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale, $coopteur);
-            break;
 
-        // On inscrit une nouvelle candidature
-        case 'inscription-candidature' :
-            // On récupère les données du formulaire
-            try { 
-                // On récupère le contenu des champs
-                $candidature = [
-                    'poste'             => forms_manip::nameFormat($_POST["poste"]), 
-                    'service'           => $_POST["service"], 
-                    'type de contrat'   => $_POST["type_de_contrat"],
-                    'disponibilite'     => $_POST["disponibilite"], 
-                    'source'            => forms_manip::nameFormat($_POST["source"])
-                ];
+                // On vérifie l'intégrité des données
+                try {    
+                    if(empty($candidat['nom'])) {
+                        throw new Exception("Le champs nom doit être rempli par une chaine de caractères !");
+                    } elseif(empty($candidat['prenom'])) {
+                        throw new Exception("Le champs prenom doit être rempli par une chaine de caractères !");
+                    } elseif(empty($candidat['email'])) {
+                        throw new Exception("Le champs email doit être rempli par une chaine de caractères !");
+                    } elseif(empty($candidat['adresse'])) {
+                        throw new Exception("Le champs adresse doit être rempli par une chaine de caractères !");
+                    } elseif(empty($candidat['ville'])) {
+                        throw new Exception("Le champs ville doit être rempli par une chaine de caractères !");
+                    } elseif(empty($candidat['code_postal'])) {
+                        throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
+                    } 
 
-            // On récupère les éventuelles erreurs    
-            } catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription de la candidature",
-                    'msg' => $e
-                ]);
-            }
+                    if(!empty($aide)) {
+                        $i = 0;
+                        $size = count($aide);
+                        $coopt = 0;
+                        while($i < $size) {
+                            if($aide[$i] == 3) $coopt++; // 3 L'id de la prime de cooptation
+                            $i++;
+                        }
+                        if(1 < $coopt) throw new Exception("Il n'est possible de renseigner q'une prime de cooptation");
+                    }
+                
+                // On récupère les éventuelles erreurs    
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription du candidat",
+                        'msg' => $e
+                    ]);
+                }
+                // On génère le candidat        
+                $candidatures->checkCandidat($candidat, $diplomes, $aide, $visite_medicale, $coopteur);
+                break;
 
-            // On vérifie l'intégrité des données  
-            try {
-                if(empty($candidature['poste'])) 
-                    throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
-                elseif(empty($candidature['disponibilite'])) 
-                    throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
-                elseif(empty($candidature['source'])) 
-                    throw new Exception("Le champs source doit être rempli par une chaine de caractères");
+            // On inscrit une nouvelle candidature
+            case 'inscription-candidature' :
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
 
-            // On récupère les éventuelles erreurs
-            }  catch(Exception $e) {
-                forms_manip::error_alert([
-                    'title' => "Erreur lors de l'inscription de la candidature",
-                    'msg' => $e
-                ]);
-            }
-            
-            // On récupère le candidat
-            $candidat = $_SESSION['candidat'];
-            $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
-            $aide = isset($_SESSION['aide']) && !empty($_SESSION['aide']) ? $_SESSION['aide'] : null;
-            $coopteur = isset($_SESSION['coopteur']) && !empty($_SESSION['coopteur']) ? $_SESSION['coopteur'] : null; 
+                    
+                // On récupère les données du formulaire
+                try { 
+                    // On récupère le contenu des champs
+                    $candidature = [
+                        'poste'             => forms_manip::nameFormat($_POST["poste"]), 
+                        'service'           => $_POST["service"], 
+                        'type de contrat'   => $_POST["type_de_contrat"],
+                        'disponibilite'     => $_POST["disponibilite"], 
+                        'source'            => forms_manip::nameFormat($_POST["source"])
+                    ];
 
-            // On génère la candidature
-            $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide, $coopteur);
+                // On récupère les éventuelles erreurs    
+                } catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la candidature",
+                        'msg' => $e
+                    ]);
+                }
 
-            // Libérer la mémoire !!
-            break;
-    
-        // On renvoie à la page d'accueil    
-        default : 
-            $candidatures->dispayCandidatures();
-            break;
+                // On vérifie l'intégrité des données  
+                try {
+                    if(empty($candidature['poste'])) 
+                        throw new Exception("Le champs poste doit être rempli par une chaine de caractères");
+                    elseif(empty($candidature['disponibilite'])) 
+                        throw new Exception("Le champs disponibilité doit être rempli par une chaine de caractères");
+                    elseif(empty($candidature['source'])) 
+                        throw new Exception("Le champs source doit être rempli par une chaine de caractères");
+
+                // On récupère les éventuelles erreurs
+                }  catch(Exception $e) {
+                    forms_manip::error_alert([
+                        'title' => "Erreur lors de l'inscription de la candidature",
+                        'msg' => $e
+                    ]);
+                }
+                
+                // On récupère le candidat
+                $candidat = $_SESSION['candidat'];
+                $diplomes = isset($_SESSION['diplomes']) && !empty($_SESSION['diplomes']) ? $_SESSION['diplomes'] : null;
+                $aide = isset($_SESSION['aide']) && !empty($_SESSION['aide']) ? $_SESSION['aide'] : null;
+                $coopteur = isset($_SESSION['coopteur']) && !empty($_SESSION['coopteur']) ? $_SESSION['coopteur'] : null; 
+
+                // On génère la candidature
+                $candidatures->createCandidature($candidat, $candidature, $diplomes, $aide, $coopteur);
+
+                // Libérer la mémoire !!
+                break;
+        
+            // On renvoie à la page d'accueil    
+            default : 
+                $candidatures->dispayCandidatures();
+                break;
+        }
+
+    } catch(Exception $e) {
+        forms_manip::error_alert([
+            'msg' => $e
+        ]);
     }
+
 
 } elseif(isset($_GET['candidats'])) {
     // On déclare le controller de candidats
@@ -244,6 +266,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On retourne le formulaire d'ajout d'une candidature    
             case 'saisie-candidatures': 
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieCandidature($_GET['cle_candidat']);
@@ -254,6 +279,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On retourne le formulaire d'ajout d'une proposition d'embauche    
             case 'saisie-propositions' :
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieProposition($_GET['cle_candidat']);
@@ -264,6 +292,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On retourne le fomulaire d'ajout d'un contrat    
             case 'saisie-contrats':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence de la clé candidat
                 if(isset($_GET['cle_candidat']) && is_numeric($_GET['cle_candidat']))
                     $candidats->getSaisieContrats($_GET['cle_candidat']);
@@ -274,6 +305,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On retourne le formulaire d'ajout d'une proposition dans le cas où elle se construit à partir d'une candidature    
             case 'saisie-propositions-from-candidature':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
                     $candidats->getSaisiePropositionFromCandidature($_GET['cle_candidature']);
@@ -284,6 +318,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On retounre le formulaire d'ajout d'une proposition dans le cas pù elle se construit à partir d'une candidature sans service
             case 'saisie-propositions-from-empty-candidature':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && is_numeric($_GET['cle_candidature']))
                     $candidats->getSaisiePropositionFromEmptyCandidature($_GET['cle_candidature']);
@@ -294,6 +331,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche le formulaire d'ajout de rendez-vous    
             case 'saisie-rendez-vous':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie la présence
                 if(isset($_GET['cle_candidat']))
                     $candidats->getSaisieRendezVous($_GET['cle_candidat']);
@@ -304,6 +344,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On inscrit une proposition
             case 'inscript-propositions':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les données du formulaire
                 try {
                     $infos = [
@@ -372,6 +415,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On inscrit une proposition construite à partir d'une candidature 
             case 'inscript-propositions-from-candidatures':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les informations
                 try {
                     // On récupère les données du formulaire
@@ -414,6 +460,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On inscrit une proposition construite à partir d'une candidature sans service    
             case 'inscript-propositions-from-empty-candidatures':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+                
                 try {
                     // On récupère les données du formulaire
                     $infos = [
@@ -457,6 +506,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On refuse une candidature    
             case 'reject-candidatures':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé candidature
                 if(isset($_GET['cle_candidature']) && !empty($_GET['cle_candidature']))
                     $candidats->rejectCandidature($_GET['cle_candidature']);
@@ -467,6 +519,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                
             // On refuse une proposition    
             case 'reject-propositions':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé contrat
                 if(isset($_GET['cle_proposition']))
                     $candidats->rejectProposition($_GET['cle_proposition']);
@@ -477,6 +532,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On construit un contrat    
             case 'inscript-contrats':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les données du formulaire
                 $infos = [
                     'poste' => $_POST['poste'],
@@ -526,6 +584,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On construit un contrat depuis une proposition    
             case 'inscript-contrats-from-proposition':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé contrat
                 if(isset($_GET['cle_proposition']))
                     $candidats->acceptProposition($_GET['cle_proposition']);
@@ -536,6 +597,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On construit un rendez-vous    
             case 'inscript-rendez-vous':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère le formulaire
                 $infos = [
                     'recruteur' => $_POST['recruteur'],
@@ -567,12 +631,15 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                     $candidats->createRendezVous($_GET['cle_candidat'], $infos);
                 // On signale l'erreur
                 else 
-                    throw new Exception("La clé candidat est inrouvale !");
+                    throw new Exception("La clé candidat est introuvale !");
 
                 break;   
                 
             // On ajoute une démission à un contrat
             case 'demission':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé contrat
                 if(isset($_GET['cle_contrat']))
                     $candidats->demissioneContrat($_GET['cle_contrat']);
@@ -583,6 +650,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On affiche le formulaire de mise-à-jour de la notation d'unn candidat    
             case 'edit-notation':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->getEditNotation($_GET['cle_candidat']);
@@ -592,6 +662,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 break;  
             // On affiche le formulaire de mise-à-jour des données d'un cadidat
             case 'edit-candidat':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On test la présence de la clé candidat
                 if(isset($_GET['cle_candidat']))
                     $candidats->getEditCandidat($_GET['cle_candidat']);
@@ -602,6 +675,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On affiche le formulaire de mise-à-jour d'un rendez-vous 
             case 'edit-rendez-vous':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie l'intégrité des données
                 try {
                     if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
@@ -623,6 +699,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On met-à-jour la notation d'un candidat
             case 'update-notation':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vé'rifie l'intégrité des données
                 try {
                     $notation = [
@@ -651,6 +730,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On met-à-jour les données d'un candidat
             case 'update-candidat':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les donnnées du formulaire
                 try {
                     $candidat = [
@@ -684,6 +766,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On met-à-jour un rendez-vous    
             case 'update-rendez-vous':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie l'intégrité des données
                 try {
                     if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
@@ -739,6 +824,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On annule un rendez-vous    
             case 'delete-rendez-vous': 
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie l'intégrité des données
                 try {
                     if(!isset($_GET['cle_candidat']) || empty($_GET['cle_candidat']) || !is_numeric($_GET['cle_candidat']))
@@ -779,6 +867,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
     // On vérifie s'il s'agit d'une clé de candidat
     if(is_numeric($_GET['preferences'])) {
+        if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+            throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+        
         if($_GET['preferences'] == $_SESSION['user_cle']) 
             header('Location: index.php?preferences=home');
         else 
@@ -792,7 +883,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 $preferences->display($_SESSION['user_cle']); 
                 break;    
 
-            // On affiche la formulaire de mise-à-jour d'un 
+            // On affiche la formulaire de mise-à-jour d'un utilisateur
             case 'edit-user':
                 if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
                     $preferences->displayEditUtilisateur($_GET['cle_utilisateur']);
@@ -837,6 +928,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la formulaire de mise-à-jour d'un 
             case 'get-reset-password':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
                     $_SESSION['password'] = PasswordGenerator::random_password();
                     alert_manipulation::alert([
@@ -852,6 +946,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la formulaire de mise-à-jour d'un 
             case 'reset-password':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 if(isset($_GET['cle_utilisateur']) && !empty($_GET['cle_utilisateur']) && is_numeric($_GET['cle_utilisateur'])) {
                     $preferences->resetPassword($_SESSION['password'], $_GET['cle_utilisateur']);
                     unset($_SESSION['password']);
@@ -888,16 +985,25 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
    
             // On affiche la liste des utilisateurs
             case 'liste-utilisateurs':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayUtilisateurs();
                 break;
 
             // On affiche le formulaire d'ajout d'utilisateurs
             case 'saisie-utilisateur':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displaySaisieUtilisateur();
                 break;     
 
             // On prépare l'inscritpion du nouvel utilisateur
             case 'get-inscription-utilisateur':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les données du formulaire
                 try {
                     $infos = [
@@ -943,6 +1049,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On inscrit un nouvel utilisateur
             case 'inscription-utilisateur':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On vérifie l'intégrité des données
                 try {
                     if(isset($_SESSION['new user data']) && !empty($_SESSION['new user data'])) {
@@ -981,31 +1090,49 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la liste des nouveaux utilisateurs
             case 'liste-nouveaux-utilisateurs':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayNouveauxUtilisateurs();
                 break;    
             
             // On affiche l'historique de connexions des utilisateurs
             case 'connexion-historique':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayConnexionHistorique();
                 break;  
             
             // On affiche l'historique d'actions des utilisateurs
             case 'action-historique':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayActionHistorique();
                 break;    
 
             // On affiche la liste des postes de la fondation    
             case 'liste-postes':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayPostes();
                 break;
 
             // On affiche le formulaire d'ajout de poste    
             case 'saisie-poste':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displaySaisiePoste();
                 break;    
 
             // On inscrit un nouveau poste
             case 'inscription-poste':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les informations du formulaire
                 try {
                     $infos = [
@@ -1030,6 +1157,9 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la liste des services de la fondation
             case 'liste-services':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayServices();
                 break;
 
@@ -1059,16 +1189,25 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
             
             // On affiche la liste des établissements de la fondation
             case 'liste-etablissements':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayEtablissements();
                 break;
 
             // On affiche le formulaire d'ajout d'établissement
             case 'saisie-etablissement':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displaySaisieEtablissement();
                 break;  
                 
             // On inscrit un nouvel établissement
             case 'inscription-etablissement':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les données du formulaire
                 try {
                     $infos = [
@@ -1111,16 +1250,25 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
 
             // On affiche la listes des pôles de la fondation
             case 'liste-poles':
+                if($_SESSION['user_role'] == INVITE)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displayPoles();
                 break;
 
             // On affiche le formulaire d'ajout d'un pôle
             case 'saisie-pole':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 $preferences->displaySaisiePole();
                 break;
                 
             // On inscrit un nouveau pôle
             case 'inscription-pole':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 // On récupère les données du formulaire
                 try {
                     $intitule = $_POST['intitule'];
@@ -1156,10 +1304,16 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 
             // On affiche le formulaire d'ajout d'un diplome
             case 'saisie-diplome':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 break;
                 
             // On inscrit un nouveau diplome
             case 'inscript-diplome':
+                if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
+                    throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
+
                 break;    
 
             // On affiche les listes des autres données de la base de données (types de contrats, aides au recrutement, sources)    

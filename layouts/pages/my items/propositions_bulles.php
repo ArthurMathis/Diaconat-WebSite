@@ -40,12 +40,14 @@
     </content>
     <?php if(empty($item['signature']) && empty($item['statut'])): ?>
         <footer>
-            <a class="circle_button" href="index.php?candidats=reject-propositions&cle_proposition=<?= $item['cle']; ?>">
-                <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de refus de la proposition, représenté par une croix">
-            </a>
-            <a class="circle_button" href="index.php?candidats=inscript-contrats-from-proposition&cle_proposition=<?= $item['cle']; ?>">
-                <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la proposition, représenté par une coche">
-            </a>
+            <?php if($_SESSION['user_role'] != INVITE): ?>
+                <a class="circle_button" href="index.php?candidats=reject-propositions&cle_proposition=<?= $item['cle']; ?>">
+                    <img src="layouts\assets\img\logo\white-close.svg" alt="Logo de refus de la proposition, représenté par une croix">
+                </a>
+                <a class="circle_button" href="index.php?candidats=inscript-contrats-from-proposition&cle_proposition=<?= $item['cle']; ?>">
+                    <img src="layouts\assets\img\logo\white-valider.svg" alt="Logo de d'acceptation de la proposition, représenté par une coche">
+                </a>
+            <?php endif ?>
         </footer>
     <?php endif ?>  
 </div>
