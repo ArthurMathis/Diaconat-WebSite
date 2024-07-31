@@ -2,7 +2,7 @@
 
 require_once('define.php');
 require_once(COMPONENTS.DS.'AlertManipulation.php');
-require_once(COMPONENTS.DS.'forms_manip.php');
+require_once(COMPONENTS.DS.'FormsManip.php');
 require_once(CONTROLLERS.DS.'LoginController.php');
 require_once(CONTROLLERS.DS.'HomeController.php');
 require_once(CONTROLLERS.DS.'CandidaturesController.php');

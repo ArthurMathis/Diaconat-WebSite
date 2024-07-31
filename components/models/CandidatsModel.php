@@ -525,6 +525,7 @@ class CandidatsModel extends Model {
     }
 
     /// Méthode protégées inscrivant un contrat dans la base de données
+    // Remanier avec manipulation des strings (request divisé en insert + value) //
     protected function inscriptContrats($contrats=[]) {
         // Requête avec date de fin de contrat
         if(isset($contrats['date fin'])) {
