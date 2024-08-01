@@ -22,6 +22,10 @@
         <section id="role_input" class="small-section">
             <p>Rôles</p>
             <div class="container-statut">
+                <input type="checkbox" name="Propriétaire" checked>
+                <p>Propriétaire</p>
+            </div>
+            <div class="container-statut">
                 <input type="checkbox" name="Administrateur" checked>
                 <p>Administrateur</p>
             </div>

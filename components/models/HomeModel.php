@@ -2,8 +2,16 @@
 
 require_once(MODELS.DS.'Model.php');
 
+/**
+ * Class representing the home page model
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class HomeModel extends Model {
-    /// Méthode publique récupérant les candidatures non traitées de la base de données
+    /**
+     * Public method searching the unprocessed application in the database
+     *
+     * @return void
+     */
     public function getNonTraiteeCandidatures(){
         // On initialise la requête
         $request = "SELECT id_Candidats AS Cle,
@@ -23,12 +31,13 @@ class HomeModel extends Model {
         ORDER BY c.Id_Candidatures DESC";
     
         // On lance la requête
-        $result = $this->get_request($request);
-    
-        // On retourne le rôle
-        return $result;
+        return $this->get_request($request);
     }
-    /// Méthode publique récupérant les propositions de contrats de la base de données
+    /**
+     * Public method searching the contract proposals in the database
+     *
+     * @return void
+     */
     public function getReductProposition() {
         // On initialise la requête
         $request = "SELECT 
@@ -47,6 +56,11 @@ class HomeModel extends Model {
         return $this->get_request($request);
     }
     /// Méthode publique récupérant les rendez-vous
+    /**
+     * Public method searching the metting list
+     *
+     * @return void
+     */
     public function getReductRendezVous() {
         // On initialise la requête
         $request = "SELECT 

@@ -35,7 +35,7 @@
         </table>
     </div>
 </section>
-<?php if(isset($items[0]['Cle']) && $_SESSION['user_role']): ?>
+<?php if(isset($items[0]['Cle'])): ?>
     <?php 
         $links = [];
         foreach($items as $row) array_push($links, $row['Cle']);   

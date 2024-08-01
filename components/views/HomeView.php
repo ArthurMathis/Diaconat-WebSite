@@ -2,8 +2,15 @@
 
 require_once 'View.php';
 
+/**
+ * Class representing the home page view
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class HomeView extends View {
-    public function getContent($items = [], $dashboard = []) {
+    /**
+     * Public function returning the home page 
+     */
+    public function getContent($items=[], $dashboard=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Welcome', [PAGES_STYLES.DS.'index.css']);
 

@@ -2,7 +2,16 @@
 
 require_once 'View.php';
 
+/**
+ * Class representing the login view
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class LoginView extends View {
+    /**
+     * Public method returning the login form
+     *
+     * @return void
+     */
     public function getContent() {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Connexion', [FORMS_STYLES.DS.'small-form.css']);

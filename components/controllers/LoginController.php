@@ -1,24 +1,35 @@
 <?php
 
 require_once 'Controller.php';
-
+/**
+ * Class representing the login controller
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class LoginController extends Controller {
-    /// Constructeur du controller
+    /**
+     * Class constructor
+     */
     public function __construct() {
         $this->loadModel('LoginModel');
         $this->loadView('LoginView');
     }
 
-    /// Méthode publique retournant le formulaire de connexion
+    /**
+     * Public method returning the login form
+     *
+     * @return void
+     */
     function displayLogin() {
         return $this->View->getContent();
     }
-    /// Méthode publique retournant le formulaire de connexion
-    function displaySignin() {
-        return $this->View->getSigninContent();
-    }
 
-    /// Méthode publique connectant un utilisateur à l'application
+    /**
+     * Public method connecting one user to the application
+     *
+     * @param string $identifiant THe user's id (ex: name.f)
+     * @param string $motdepasse The user's password
+     * @return void
+     */
     public function checkIdentification($identifiant, $motdepasse) {
         $this->Model->connectUser($identifiant, $motdepasse);
         alert_manipulation::alert([
@@ -27,7 +38,11 @@ class LoginController extends Controller {
             'direction' => 'index.php'
         ]);
     }
-    /// Méthode publique déconnectant un utilisateur à l'application
+    /**
+     * Public method disconnecting the current user to the application
+     *
+     * @return void
+     */
     public function closeSession() {
         $this->Model->deconnectUser();
         alert_manipulation::alert([

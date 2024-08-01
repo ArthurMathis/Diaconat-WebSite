@@ -30,7 +30,8 @@ class PreferencesController extends Controller {
     /// Méthode publique retournant la page de nouvels utilisateurs
     public function displayNouveauxUtilisateurs() {
         return $this->View->getNouveauxUtilisateursContent(
-            $this->Model->getNouveauxUtilisateurs()
+            $this->Model->getNouveauxUtilisateurs(),
+            'index.php?preferences='
         );
     }
     /// Méthode publique retournant la page Historique

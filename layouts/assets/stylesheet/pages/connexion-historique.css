@@ -28,6 +28,9 @@
 .liste_items .table-wrapper table tbody tr.utilisateur th:nth-of-type(2)::before {
     background-color: var(--acceptee);
 }
-.liste_items .table-wrapper table tbody tr.invite th:nth-of-type(2)::before{
+.liste_items .table-wrapper table tbody tr.invite th:nth-of-type(2)::before {
     background-color: var(--refusee);
+}
+.liste_items .table-wrapper table tbody tr.proprietaire th:nth-of-type(2)::before {
+    background-color: var(--color1);
 }

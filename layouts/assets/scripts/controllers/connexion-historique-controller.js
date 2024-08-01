@@ -72,6 +72,10 @@ setColor(candidatures, [
 ], 0);
 setColor(candidatures, [
     {
+        content: 'Propriétaire',
+        class: 'proprietaire'
+    },
+    {
         content: 'Administrateur', 
         class: 'administrateur'
     },

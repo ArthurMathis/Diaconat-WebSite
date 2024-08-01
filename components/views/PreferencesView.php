@@ -112,7 +112,7 @@ class PreferencesView extends View {
         $this->generateCommonFooter();
     }
     /// Méthode publique retournant la liste des nouveaux utilisateurs
-    public function getNouveauxUtilisateursContent($items=[]) {
+    public function getNouveauxUtilisateursContent($items=[], $direction) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Liste utilisateurs', [
             PAGES_STYLES.DS.'preferences.css', 
@@ -127,7 +127,7 @@ class PreferencesView extends View {
         include(MY_ITEMS.DS.'preferences.php');
         echo '<main id="liste-utilisateurs">';
         include BARRES.DS.'nouveaux-utilisateurs.php';
-        $this->getListesItems("Utilisateurs", $items, null, "main-liste");
+        $this->getListesItems("Nouveaux utilisateurs", $items, null, "main-liste", null, $direction);
         echo '</main>';
         echo '</content>';
 

@@ -127,6 +127,7 @@ class PreferencesModel extends Model {
     public function getNouveauxUtilisateurs() {
         // On initialise la requête
         $request = "SELECT
+        Id_Utilisateurs AS Cle,
         Intitule_Role AS Role, 
         Nom_Utilisateurs AS Nom,
         Prenom_Utilisateurs AS Prénom, 

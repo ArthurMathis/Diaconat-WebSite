@@ -4,8 +4,18 @@ require_once(MODELS.DS.'Model.php');
 require_once(CLASSE.DS.'Utilisateurs.php');
 require_once(CLASSE.DS.'Instants.php');
 
+/**
+ * Class representing the login model
+ * @author Arthur MATHIS - arthur.mathis@diaconat-mulhouse.fr
+ */
 class LoginModel extends Model {
-    /// Méthode publique connectant un utilisateur à l'application
+    /**
+     * Public method connecting the user to the application 
+     *
+     * @param string $identifiant The user's id (ex: name.f)
+     * @param string $motdepasse The user's password
+     * @return void
+     */
     public function connectUser($identifiant, $motdepasse) {
         // On cherche l'utilisateur dans la base de données
         $user = $this->verifyUser($identifiant, $motdepasse);
@@ -23,7 +33,11 @@ class LoginModel extends Model {
         // On enregistre les logs
         $this->writeLogs($_SESSION['user_cle'], "Connexion");
     }
-    /// Méthode publique déconnectant un utilisateur de l'application 
+    /**
+     * Public method disconnecting hte current user to the application
+     *
+     * @return void
+     */
     public function deconnectUser() {
         try {
             // On enregistre les logs
@@ -43,7 +57,13 @@ class LoginModel extends Model {
         }
     }
 
-    /// Méthode privée recherchant parmis les utilisateurs de la base de données les informations de l'utilisateur actuel
+    /**
+     * Private method searching the user's informations
+     *
+     * @param string $identifiant The user's id (ex: name.f)
+     * @param string $motdepasse The user's password
+     * @return Utilisateurs|null The user, if the informations are corrects and null,  if they aren't
+     */
     private function verifyUser($identifiant, $motdepasse): ?Utilisateurs{
         // On récupère les Utilisateurs
         $request = "SELECT * FROM Utilisateurs WHERE Identifiant_Utilisateurs = :nom";
