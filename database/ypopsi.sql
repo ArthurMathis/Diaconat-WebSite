@@ -172,7 +172,7 @@ CREATE TABLE `etablissements` (
   `Ville_Etablissements` varchar(64) DEFAULT NULL,
   `CodePostal_Etablissements` int(11) DEFAULT NULL,
   `Description_Etablissements` text DEFAULT NULL,
-  `Cle_Poles` int(11) NOT NULL
+  `Cle_Poles` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -230,10 +230,11 @@ CREATE TABLE `poles` (
 CREATE TABLE `postes` (
   `Id_Postes` int(11) NOT NULL,
   `Intitule_Postes` varchar(64) NOT NULL,
+  `Intitule_Feminin_Postes` varchar(64), 
   `Description_Postes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+-- ------------------------------------1--------------------
 
 --
 -- Structure de la table `postuler_a`

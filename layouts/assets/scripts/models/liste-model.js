@@ -47,10 +47,6 @@ function setColor(items=[], criteres=[], index) {
             // On implémente
             i++;
         }
-
-        // On vérifie qu'un critère a été sélectionné
-        if (!find)
-            throw new Error("Erreur lors de la détermination du code couleur. La ligne : " + ligne + " ne correspond à aucun critères !");
     });
 }
 /**

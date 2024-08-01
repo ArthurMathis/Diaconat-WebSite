@@ -241,7 +241,7 @@ class PreferencesModel extends Model {
         Intitule_Poles AS Pôle
 
         FROM Etablissements  AS e
-        INNER JOIN Poles AS p ON e.Cle_Poles = p.Id_Poles";
+        LEFT JOIN Poles AS p ON e.Cle_Poles = p.Id_Poles";
 
         // On lance la requête
         return $this->get_request($request);

@@ -385,7 +385,7 @@ class CandidatsView extends View {
     }
 
 
-    public function getEditNotation(&$item=[]) {
+    public function getEditNotation($item=[]) {
         // On ajoute l'entete de page
         $this->generateCommonHeader('Ypopsi - Modification de la notation de ' . forms_manip::majusculeFormat($item['nom']) . ' ' . $item['prenom'], 
         [FORMS_STYLES.DS.'small-form.css', FORMS_STYLES.DS.'edit-notation.css']);

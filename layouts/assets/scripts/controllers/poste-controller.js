@@ -84,7 +84,7 @@ rechercher.addEventListener('click', () => {
         const champs_infos = [
             {
                 champs: document.getElementById('recherche-poste'),
-                index: 1
+                index: 0
             }
         ];
 
