@@ -4,7 +4,7 @@ main {
     justify-content: center;
 
     width: 80%;
-    height: calc(100vh - 8em);
+    height: calc(100vh - 8rem);
 
     padding-right: 15%;
 }
@@ -17,9 +17,9 @@ form {
     gap: var(--gap);
 
     width: 740px;
-    max-width: calc(80vw - 6em);
+    max-width: calc(80vw - 6rem);
     height: 680px;
-    max-height: calc(100vh - 12em);
+    max-height: calc(100vh - 12rem);
     z-index: 1;
 
     background-color: rgba(254, 254, 254, 0.3);

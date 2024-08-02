@@ -9,7 +9,7 @@ body {
 body > content {
     display: flex;
 
-    height: calc(100vh - 8em);
+    height: calc(100vh - 8rem);
 
     margin-top: var(--padding);
 }
@@ -96,7 +96,7 @@ body > content > main {
 }
 
 body > content > main .candidatures-menu {
-    top: 13em;
+    top: 13rem;
     width: 80%;
 }
 body > content > main .options_barre {
@@ -139,7 +139,7 @@ body > content > main .options_barre {
     gap: var(--padding);
 
     width: 100%;
-    height: calc(100vh - 8em);
+    height: calc(100vh - 8rem);
 
     padding: 0 var(--padding) var(--padding);
 
@@ -147,7 +147,7 @@ body > content > main .options_barre {
 }
 #profil-user .left,
 #profil-user .right  {
-    width: max(560px, calc(50% - 1.5em));
+    width: max(560px, calc(50% - 1.5rem));
     padding-bottom: var(--gap);
 } 
 #profil-user .left {

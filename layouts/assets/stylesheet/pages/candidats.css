@@ -15,7 +15,7 @@ body > content {
     display: flex;
      
     width: 100dvw;
-    height: calc(100% - 8em);
+    height: calc(100% - 8rem);
 
     padding-top: var(--gap);
 }
@@ -27,7 +27,7 @@ aside {
     justify-content: space-between;
     width: 30%;
     min-width: 520px;
-    height: calc(100dvh - 8em);
+    height: calc(100dvh - 8rem);
 
     padding: var(--padding);
 
@@ -42,7 +42,7 @@ aside section {
     width: 100%;
 }
 aside p {
-    line-height: 1.4em;
+    line-height: 1.4rem;
 }
 aside footer {
     display: flex;
@@ -84,7 +84,7 @@ aside section {
     gap: calc(var(--margin) / 3);
 }
 aside header h2 {
-    font-size: 2.48em;
+    font-size: 2.48rem;
 }
 aside header h3 {
     font-size: var(--font-size-medium);
@@ -134,7 +134,7 @@ aside section > div > div {
 
     height: fit-content;
     z-index: 1;
-    padding: 0 3em;
+    padding: 0 var(--padding);
 
     background: linear-gradient(175deg, var(--white), 75%, var(--light-blue));
     background-attachment: fixed;
@@ -187,8 +187,8 @@ aside section > div > div {
 /* Mise en page des onglets */
 body > content > main {
     width: 70%;
-    height: calc(100% - 2em);
-    padding-right: 3em;
+    height: calc(100% - var(--gap));
+    padding-right: var(--padding);
 
     overflow-y: scroll;
 }
@@ -202,14 +202,14 @@ main > section {
     height: fit-content;
 
     padding-top : var(--padding);
-    padding-left: 3em;
-    padding-bottom: 3em;
+    padding-left: var(--padding);
+    padding-bottom: var(--padding);
 
     overflow-x: hidden;
     overflow-y: scroll;
 }
 main section * {
-    line-height: 1.2em;
+    line-height: 1.2rem;
 }
 main > section .bulles .bulle-container {
     background-color: var(--blue-opacity);
@@ -434,8 +434,8 @@ main section .candidatures_bulle article p.non-traitee::before {
 #edit_button,
 .add_button {
     position: fixed;
-    bottom: 2em;
-    right: 3em;
+    bottom: var(--gap);
+    right: var(--padding);
 }
 #edit_button:is(:hover, :focus),
 .add_button:is(:hover, :focus) {

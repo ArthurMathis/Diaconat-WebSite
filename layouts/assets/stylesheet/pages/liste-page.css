@@ -20,7 +20,7 @@
   
 .candidatures-menu {
     position: fixed;
-    top: 15em;
+    top: 15rem;
 
     display: none;
     width: 100%;
@@ -101,15 +101,15 @@
   
 .liste_items {
     width: 100%;
-    height: calc(100dvh - 15em);
+    height: calc(100dvh - 15rem);
     padding-top: calc(var(--margin) / 2);
 }
 .liste_items .table-wrapper, .liste_items .entete {
-    padding: 0 3em;
+    padding: 0 var(--padding);
 }
 .liste_items .table-wrapper {
     overflow-y: auto;
-    height: calc(100dvh - 8em - 150px);
+    height: calc(100dvh - 8rem - 150px);
 }
 .liste_items .table-wrapper table th {
     position: relative;
