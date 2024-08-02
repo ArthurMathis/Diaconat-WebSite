@@ -428,7 +428,7 @@ abstract class Model {
         if($action == null) 
             throw new Exception("Données éronnées. La clé action ou son intitulé sont nécessaires pour rechercher une action !");
 
-        elseif(is_int($action)) 
+        elseif(is_numeric($action)) 
             $request = "SELECT * FROM types WHERE Id_Types = :action";
 
         elseif(is_string($action))
@@ -841,11 +841,11 @@ abstract class Model {
     protected function inscriptAction(&$cle_user, &$cle_action, &$cle_instant, $description=null) {
         // On vérifie l'intégrité des données
         try {
-            if(empty($cle_user) || !is_int($cle_user))
+            if(empty($cle_user) || !is_numeric($cle_user))
                 throw new Exception("La clé Utilisateur est nécessaire pour l'enregistrement d'une action !");
-            elseif(empty($cle_action) || !is_int($cle_action))
+            elseif(empty($cle_action) || !is_numeric($cle_action))
                 throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
-            elseif(empty($cle_instant) || !is_int($cle_instant))
+            elseif(empty($cle_instant) || !is_numeric($cle_instant))
                 throw new Exception("La clé Action est nécessaire pour l'enregistrement d'une action !");
 
         } catch(Exception $e) {

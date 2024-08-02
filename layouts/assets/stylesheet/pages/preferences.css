@@ -121,16 +121,16 @@ body > content > main .options_barre {
     transform: translateY(-50%);
 }
 #liste-utilisateurs .liste_items .table-wrapper table tbody tr.moderateur th:first-of-type::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 #liste-utilisateurs .liste_items .table-wrapper table tbody tr.administrateur th:first-of-type::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 #liste-utilisateurs .liste_items .table-wrapper table tbody tr.utilisateur th:first-of-type::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 #liste-utilisateurs .liste_items .table-wrapper table tbody tr.invite th:first-of-type::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }
 
 #profil-user {

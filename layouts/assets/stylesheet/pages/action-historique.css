@@ -16,14 +16,14 @@
     transform: translateY(-50%);
 }
 .liste_items .table-wrapper table tbody tr.candidat th:first-of-type::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 .liste_items .table-wrapper table tbody tr.utilisateur th:first-of-type::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 .liste_items .table-wrapper table tbody tr.candidature th:first-of-type::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 .liste_items .table-wrapper table tbody tr.fondation th:first-of-type::before{
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }

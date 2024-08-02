@@ -136,7 +136,7 @@ class Utilisateurs {
     }
     public function setCle($cle) {
         // On vérifie que l'id est un nombre positif ou nul
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideUtilisateurExceptions("La clé primaire doit être un entier !");
         // On vérifie que l'id est un nombre positif ou nul
         elseif($cle < 0) 

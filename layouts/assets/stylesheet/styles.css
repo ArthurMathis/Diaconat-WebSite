@@ -23,10 +23,10 @@
   --blue: #0046FE;
 
   --color1: #8A2BE2;
-  --enattente: #3BF3FF;
-  --acceptee: #11CE00;
-  --nontraitee: #F9B61F;
-  --refusee: #ff0000;
+  --color2: #3BF3FF;
+  --color3: #11CE00;
+  --color4: #F9B61F;
+  --color5: #ff0000;
 
   --font-size-big: 3.5rem;
   --font-size-medium: 1.55rem;
@@ -410,8 +410,8 @@ button:is(:hover, :focus),
 button.cancel_button,
 .action_button.cancel_button {
   color: var(--white);
-  border: var(--refusee);
-  background-color: var(--refusee);
+  border: var(--color5);
+  background-color: var(--color5);
 }
 button.cancel_button:is(:hover, :focus), 
 .action_button.cancel_button:is(:hover, :focus) {

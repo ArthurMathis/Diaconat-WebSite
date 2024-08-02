@@ -19,17 +19,17 @@
 }
 .liste_items .table-wrapper table tbody tr.deconnexion th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.administrateur th:nth-of-type(2)::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 .liste_items .table-wrapper table tbody tr.connexion th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.moderateur th:nth-of-type(2)::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 .liste_items .table-wrapper table tbody tr.utilisateur th:nth-of-type(2)::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 .liste_items .table-wrapper table tbody tr.invite th:nth-of-type(2)::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }
 .liste_items .table-wrapper table tbody tr.proprietaire th:nth-of-type(2)::before {
     background-color: var(--color1);

@@ -17,11 +17,11 @@
     transform: translateY(-50%);
 }
 .liste_items .table-wrapper table tbody tr.pspdsa th:nth-of-type(5)::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 .liste_items .table-wrapper table tbody tr.pspdca th:nth-of-type(5)::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 .liste_items .table-wrapper table tbody tr.pspdna th:nth-of-type(5)::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }

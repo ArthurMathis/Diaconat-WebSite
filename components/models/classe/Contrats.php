@@ -90,7 +90,7 @@ class Contrat {
     /// Setteurs
     private function setCle($cle) { 
         // On vérifie que l'id est un nombre positif ou nul
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideContratExceptions("La clé du contrat doit être un entier !");
         // On vérifie que l'id est un nombre positif ou nul
         elseif($cle < 0) 
@@ -180,7 +180,7 @@ class Contrat {
     }
     private function setCleInstants($cle) {
         // On vérifie la présence d'une clé
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un instants doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un instants doit être strictement positive !");
@@ -190,7 +190,7 @@ class Contrat {
     }
     private function setCleServices($cle) {
         // On vérifie la présence d'une clé
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un service doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un service doit être strictement positive !");
@@ -200,7 +200,7 @@ class Contrat {
     }
     private function setClePostes($cle) {
         // On vérifie la présence d'une clé
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un poste doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un poste doit être strictement positive !");
@@ -210,7 +210,7 @@ class Contrat {
     }
     private function setCleType($cle) {
         // On vérifie la présence d'une clé
-        if($cle == null || !is_int($cle)) 
+        if($cle == null || !is_numeric($cle)) 
             throw new InvalideCandidatExceptions("La clé d'un type de contrats doit être un entier !");
         elseif($cle < 0)
             throw new InvalideCandidatExceptions("La clé d'un type de contrats doit être strictement positive !");

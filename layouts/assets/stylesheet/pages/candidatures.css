@@ -21,19 +21,19 @@
 }
 .liste_items .table-wrapper table tbody tr.en-attente th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.hublo th:nth-of-type(7)::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 .liste_items .table-wrapper table tbody tr.non-traitee th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.hellowork th:nth-of-type(7)::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 .liste_items .table-wrapper table tbody tr.acceptee th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.email th:nth-of-type(7)::before, 
 .liste_items .table-wrapper table tbody tr th:nth-of-type(8)::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 .liste_items .table-wrapper table tbody tr.refusee th:first-of-type::before, 
 .liste_items .table-wrapper table tbody tr.telephone th:nth-of-type(7)::before, 
 .liste_items .table-wrapper table tbody tr.date_depassee th:nth-of-type(8)::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }

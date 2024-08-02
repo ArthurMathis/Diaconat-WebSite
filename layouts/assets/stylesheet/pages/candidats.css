@@ -325,37 +325,37 @@ main section .rendez_vous_bulle footer {
 
 /* On ajoute les codes couleurs */
 main section .contrats_bulle article p.a_venir::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 main section .contrats_bulle article p.termine::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 main section .contrats_bulle article p.en_cours::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 main section .contrats_bulle article p.refusee::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }
 main section .propositions_bulle article p.acceptee::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 main section .propositions_bulle article p.refusee::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }
 main section .propositions_bulle article p.en-attente::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 main section .candidatures_bulle article p.acceptee::before {
-    background-color: var(--acceptee);
+    background-color: var(--color3);
 }
 main section .candidatures_bulle article p.refusee::before {
-    background-color: var(--refusee);
+    background-color: var(--color5);
 }
 main section .candidatures_bulle article p.en-attente::before {
-    background-color: var(--enattente);
+    background-color: var(--color2);
 }
 main section .candidatures_bulle article p.non-traitee::before {
-    background-color: var(--nontraitee);
+    background-color: var(--color4);
 }
 
 .grid {
