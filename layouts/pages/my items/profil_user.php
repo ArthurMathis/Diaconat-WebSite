@@ -1,6 +1,6 @@
 <div>
     <header>
-        <h2><?php echo strtoupper($items['utilisateur']['Nom']) . " " . forms_manip::nameFormat($items['utilisateur']['Prénom']); ?></h2>
+        <h2><?php echo strtoupper($items['utilisateur']['Nom']) . " " . forms_manip::nameFormat($items['utilisateur']['Prenom']); ?></h2>
         <p><?php echo forms_manip::nameFormat($items['utilisateur']['Role']);?></p>
     </header>
     <content>
@@ -10,7 +10,7 @@
         </div>
         <div class="container">
             <p>Prénom :</p>
-            <p><?= forms_manip::nameFormat($items['utilisateur']['Prénom']); ?></p>
+            <p><?= forms_manip::nameFormat($items['utilisateur']['Prenom']); ?></p>
         </div>
         <div class="container">
             <p>Email :</p>

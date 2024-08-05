@@ -15,7 +15,7 @@ class PreferencesModel extends Model {
             $request = "SELECT 
             Id_Utilisateurs As Cle,
             Nom_Utilisateurs AS Nom,
-            Prenom_Utilisateurs AS Prénom, 
+            Prenom_Utilisateurs AS Prenom, 
             Intitule_Role AS Role, 
             Email_Utilisateurs AS Email,
             LENGTH(MotDePasse_Utilisateurs) AS 'Mot de passe'
@@ -130,7 +130,7 @@ class PreferencesModel extends Model {
         Id_Utilisateurs AS Cle,
         Intitule_Role AS Role, 
         Nom_Utilisateurs AS Nom,
-        Prenom_Utilisateurs AS Prénom, 
+        Prenom_Utilisateurs AS Prenom, 
         Intitule_Etablissements AS Etablissement
         
         FROM Utilisateurs AS u
@@ -234,7 +234,7 @@ class PreferencesModel extends Model {
     public function getEtablissements() {
         // On initialise la requête
         $request = "SELECT 
-        Intitule_Etablissements AS Intitulé,
+        Intitule_Etablissements AS Intitule,
         Adresse_Etablissements AS Adresse,
         Ville_Etablissements AS Ville, 
         CodePostal_Etablissements AS Code,
@@ -250,7 +250,7 @@ class PreferencesModel extends Model {
     public function getPoles() {
         // On initialise la requête
         $request = "SELECT 
-        Intitule_Poles AS Intitulé,
+        Intitule_Poles AS Intitule,
         Description_Poles AS Description,
         COUNT(e.Id_Etablissements) AS `Nombre d'établissements`
 
