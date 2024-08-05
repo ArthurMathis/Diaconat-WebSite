@@ -12,12 +12,12 @@ class CandidaturesModel extends Model {
         id_Candidats AS Cle,
         Statut_Candidatures AS Statut, 
         nom_candidats AS Nom, 
-        prenom_candidats AS Prénom, 
+        prenom_candidats AS Prenom, 
         intitule_postes AS Poste,
         email_candidats AS Email, 
-        telephone_candidats AS Téléphone, 
+        telephone_candidats AS Telephone, 
         intitule_sources AS Source, 
-        Disponibilite_Candidats AS Disponibilité
+        Disponibilite_Candidats AS Disponibilite
 
         FROM `candidatures` as c
         INNER JOIN candidats as i on c.Cle_Candidats = i.Id_Candidats
