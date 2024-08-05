@@ -133,6 +133,7 @@ abstract class Model {
 
             if(empty($result)) {
                 if($present) 
+                    // throw new Exception('Aucun résultat correspondant...');
                     throw new Exception("Requête: " . $request ."\nAucun résultat correspondant");
                 
                 else return null;

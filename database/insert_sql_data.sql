@@ -311,7 +311,6 @@ INSERT INTO sources (Intitule_Sources) VALUES
     ('Téléphone')
 ;   
 
-
 -- On insère les différents Roles des Utilisateurs --
 INSERT INTO Roles (Intitule_Role) VALUES
     ('Propriétaire'),
