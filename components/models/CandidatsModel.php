@@ -18,14 +18,12 @@ class CandidatsModel extends Model {
             FROM Candidats AS c";
     
         // On lance la requête
-        $temp = $this->get_request($request, []);
+        $temp = $this->get_request($request);
     
         // On traite les données
-        foreach ($temp as &$obj) {  // Utilisation de la référence
-            if ($obj['Notation'] == null) {
-                $obj['Notation'] = "Aucune notation";
-            }    
-        }
+        if(!empty($temp)) foreach ($temp as &$obj) 
+            if ($obj['Notation'] == null) 
+                $obj['Notation'] = "Aucune notation";  
         unset($obj);
     
         // On retourne la liste
