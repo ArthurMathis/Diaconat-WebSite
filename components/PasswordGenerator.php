@@ -24,7 +24,7 @@ class PasswordGenerator {
      */
     static public $chiffres = '0123456789';
     /**
-     * Public static string with special caracters
+     * Public static string with special characters
      *
      * @var string The string
      */

@@ -30,7 +30,8 @@ class forms_manip {
         if(!is_string($str))
             throw new Exception("Le formatage d'un nom doit se réaliser sur une chaine de caractères. ");
 
-        return ucwords(strtolower($str));
+        // return ucwords(strtolower($str));
+        return ucwords(strtolower(preg_replace('/[^A-Za-z0-9\- ]/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str))));
     }
 
     /**
@@ -57,7 +58,7 @@ class forms_manip {
     }
     
     /**
-     * Public static method formating string in uppercase without special caracters
+     * Public static method formating string in uppercase without special characters
      *
      * @param string $str The string
      * @return string

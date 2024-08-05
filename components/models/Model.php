@@ -34,7 +34,7 @@ abstract class Model {
     
             $db_fetch = "$db_connection:host=$db_host;port=$db_port;dbname=$db_name";
 
-            $this->connection = new PDO($db_fetch, $db_user, $db_password);
+            $this->connection = new PDO($db_fetch, $db_user, $db_password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         } catch(PDOException $e) {
