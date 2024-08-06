@@ -314,19 +314,16 @@ abstract class Model {
      *
      * @return void
      */
-    public function getAccessibleRole() {
+    public function getAccessibleRoles() {
         // ON initialise la requête
         $request = "SELECT 
         Id_Role AS id,
         Intitule_Role AS text
 
-        FROM Roles
-        
-        WHERE Id_Role != :cle";
-        $params = ['cle' => $this->searchRole('Propriétaire')['Id_Role']];
+        FROM Roles";
 
         // On lance la requête
-        return $this->get_request($request, $params);
+        return $this->get_request($request);
     }
 
 

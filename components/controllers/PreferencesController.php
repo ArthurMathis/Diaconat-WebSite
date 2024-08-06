@@ -95,7 +95,7 @@ class PreferencesController extends Controller {
     public function displayEditUtilisateur($cle_utilisateur) {
         return $this->View->getEditUtilisateur(
             $this->Model->getEditProfil($cle_utilisateur),
-            $this->Model->getAccessibleRole()
+            $this->Model->getAccessibleRoles()
         );
     }
 

@@ -25,8 +25,8 @@ class AutoComplete {
         const suggestionBox = parentDiv.querySelector('article');
 
         // On ajoute les détection d'évênements
-        this.inputElement.addEventListener('input', () => { this.autoSuggest(parentDiv, suggestionBox); });
-        this.inputElement.addEventListener('click', () => { this.autoSuggest(parentDiv, suggestionBox); });
+        this.inputElement.addEventListener('input', () => { this.autoSuggest(suggestionBox); });
+        this.inputElement.addEventListener('click', () => { this.autoSuggest(suggestionBox); });
 
         // On gère la sélection des suggestions avec les flèches directionnelles
         this.inputElement.addEventListener('keydown', (e) => {
@@ -50,9 +50,6 @@ class AutoComplete {
             if (e.target !== this.inputElement) 
                 this.closeAllLists();
         });
-        this.inputElement.addEventListener('blur', () => {
-                this.closeAllLists();
-        });
     }
 
     /**
@@ -65,25 +62,17 @@ class AutoComplete {
         this.currentFocus = -1;
     }
 
-    autoSuggest(parentDiv, suggestionBox) {
-        console.log("L'élément a été sélectionné");
+    autoSuggest(suggestionBox) {
         // On efface l'ancienne liste
         this.closeAllLists();
 
         // On génère le tableau de suggestions selon la saisie de l'utilisateur
         let filteredSuggestions;
-        if(this.inputElement.value) {
-            console.log("L'utilisateur recherche les résultat commençant par : " + this.inputElement.value);
+        if(this.inputElement.value) 
             filteredSuggestions = this.suggestions.filter(suggestion =>
                 suggestion.toLowerCase().trim().startsWith(this.inputElement.value.toLowerCase().trim())
-            );
-
-        } else {
-            console.log("L'utilisateur n'a pas précisé sa recherche");
-            filteredSuggestions = Array.from(this.suggestions);
-        }   
-        console.log("Résultats proposés : ");
-        console.log(filteredSuggestions);
+            ); 
+        else filteredSuggestions = Array.from(this.suggestions);
 
         // On test la présence de résultat
         if (filteredSuggestions.length > 0) {
