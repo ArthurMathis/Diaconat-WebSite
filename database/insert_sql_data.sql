@@ -343,7 +343,7 @@ INSERT INTO `services` (`Intitule_Services`, `Cle_Etablissements`) VALUES
 
     -- EHPAD Notre Dame des Apôtres -- 
     ("EN FORMATION - Notre dame", 11),
-    ("SERVICES TECHNIQUES - Notre dame", 11)
+    ("SERVICES TECHNIQUES - Notre dame", 11),
 
     -- Solidarités Adultes et Familles --
     ("EN FORMATION - Diaconat SAF", 12),
@@ -362,7 +362,7 @@ INSERT INTO `services` (`Intitule_Services`, `Cle_Etablissements`) VALUES
     -- EHPAD les Violettes --
     ("EN FORMATION - Les violettes", 14),
     ("EHPAD LES VIOLETTES - Les violettes", 14),
-    ("DIRECTION - Les violettes", 14),
+    ("DIRECTION - Les violettes", 14)
 ;
 
 -- On insère les diplomes --
