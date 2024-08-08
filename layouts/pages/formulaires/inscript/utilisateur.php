@@ -29,18 +29,8 @@
 </form>
 
 <script>
-    console.log('On lance la récupération des tableaux PHP.');  
-
-    // On récupère la liste des établissements depuis PHP
-    const etablissements = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Etablissements'];
-    }, $etablissements)); ?>;
-    console.log(etablissements);    
-
-    // On récupère la liste 
-    console.log('Récupération des ressources terminées.');
-
-    console.log('Mise en place des AutoComplet');
+    // On récupère les données depuis PHP
+    const etablissements = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Etablissements']; }, $etablissements)); ?>;
+    // On prépare les AutoCompletes
     new AutoComplete(document.getElementById('etablissement'), etablissements);
-
 </script>

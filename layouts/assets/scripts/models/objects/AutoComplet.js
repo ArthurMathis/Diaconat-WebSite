@@ -34,10 +34,12 @@ class AutoComplete {
             const items = suggestionBox.getElementsByTagName('div');
             if (e.key === "ArrowDown") {
                 this.currentFocus++;
-                this.addActive(items);
+                this.addFocus(items, this.currentFocus);
+
             } else if (e.key === "ArrowUp") {
                 this.currentFocus--;
-                this.addActive(items);
+                this.addFocus(items, this.currentFocus);
+
             } else if (e.key === "Enter") {
                 e.preventDefault();
                 if (this.currentFocus > -1 && items[this.currentFocus]) 
@@ -62,6 +64,10 @@ class AutoComplete {
         this.currentFocus = -1;
     }
 
+    /**
+     * @brief Public method generating one suggestion list according to the user's input
+     * @param {HTMLElement} suggestionBox L'article contenant les suggestions
+     */
     autoSuggest(suggestionBox) {
         // On efface l'ancienne liste
         this.closeAllLists();
@@ -90,5 +96,14 @@ class AutoComplete {
                 suggestionBox.appendChild(item);
             });
         }
+    }
+
+    addFocus(items, index) {
+        // On retire la précédente suggestion active
+        if(0 < index) items[index - 1].classList.remove('active');
+        if(index < items.length - 1) items[index + 1].classList.remove('active');
+
+        // On active la nouvelle
+        items[index].classList.add('active');
     }
 }

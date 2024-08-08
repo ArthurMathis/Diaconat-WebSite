@@ -18,7 +18,7 @@ class HomeView extends View {
         $this->generateMenu(false, false);
         // On ajoute le contenu de la page
         echo "<content>";
-        $this->getListesItems("Candidatures non-traitée", $items, null, 'main-liste');
+        $this->getListesItems("Candidatures non-traitées", $items, null, 'main-liste');
         echo "<aside>";
         $this->getDashboard($dashboard);
         echo "</aside>";

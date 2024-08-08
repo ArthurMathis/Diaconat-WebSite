@@ -19,7 +19,7 @@
                 <p>Nouveau rendez-vous</p>
             </div>
             <div class="container-statut">
-                <input type="checkbox" name="Mise-àjour candidat" checked>
+                <input type="checkbox" name="Mise-à-jour candidat" checked>
                 <p>Mise-àjour candidat</p>
             </div>
             <div class="container-statut">
@@ -50,7 +50,7 @@
                 <p>Nouveau contrat</p>
             </div>
             <div class="container-statut">
-                <input type="checkbox" name="refus candidature" checked>
+                <input type="checkbox" name="Refus candidature" checked>
                 <p>refus candidature</p>
             </div>
             <div class="container-statut">

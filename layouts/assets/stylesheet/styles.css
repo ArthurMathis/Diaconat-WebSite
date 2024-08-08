@@ -37,10 +37,10 @@
   --gap: 2rem;
   --padding: 3rem;
 
-  --small-radius: 15px;
-  --radius: 30px;
-  --big-radius: 45px;
-  --extra-radius: 65px;
+  --small-radius: 1rem;
+  --radius: 2rem;
+  --big-radius: 3rem;
+  --extra-radius: 4rem;
   
   --nav-barre-size: 6rem;
   --liste-shadow: -9px 4px 34.4px 7px #0000003B;
@@ -303,7 +303,7 @@ form .checkbox-liste .checkbox-item label {
   will-change: color;
   transition: color ease 150ms;
 }
-.autocomplete-items > div:is(:hover, :focus) {
+.autocomplete-items > div:is(:hover, :focus, .active) {
   color: var(--black);
 }
 

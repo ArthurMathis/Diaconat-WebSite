@@ -597,7 +597,7 @@ abstract class Model {
         // En cas d'erreur de typage
         } else 
             throw new Exception("La saisie du diplome est mal typée. Il doit être un identifiant (entier positif) ou un echaine de caractères !");        
-           
+        
         // On retourne le résultat
         return $result;
     }
@@ -1251,7 +1251,7 @@ abstract class Model {
         SET Cle_utilisateurs = :user, Cle_Etablissements = :etablissement
         WHERE Cle_Candidats = :candidat AND Cle_utilisateurs = :utilisateur AND Cle_Instants = :instant";
         $params = [
-            'user' => $this->searchUserFromUsername($rdv['recruteur'])[0]['Id_Utilisateurs'],
+            'user' => $this->searchUserFromUsername($rdv['recruteur'])['Id_Utilisateurs'],
             'etablissement' => $this->searchEtablissement($rdv['etablissement'])['Id_Etablissements'],
             'candidat' => $cle_candidat,
             'utilisateur' => $cle_utilisateur,

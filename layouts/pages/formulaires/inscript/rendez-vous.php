@@ -27,18 +27,10 @@
 <script>
     console.log('On lance la récupération des tableaux PHP.');  
 
-    // On récupère la liste des utilisateurs depuis PHP
-    const recruteur = <?php echo json_encode(array_map(function($c) {
-        return $c['Identifiant_Utilisateurs'];
-    }, $utilisateur)); ?>;
-    console.log(recruteur);
-
-    // On récupère la liste des établissements depuis PHP
-    const etablissement = <?php echo json_encode(array_map(function($c) {
-        return $c['Intitule_Etablissements'];
-    }, $etablissement)); ?>;
-    console.log(etablissement);
-
+    // On récupère les données depuis PHP
+    const recruteur = <?php echo json_encode(array_map(function($c) { return $c['Identifiant_Utilisateurs']; }, $utilisateur)); ?>;
+    const etablissement = <?php echo json_encode(array_map(function($c) { return $c['Intitule_Etablissements']; }, $etablissement)); ?>;
+    // On prépare les AutoCompletes
     new AutoComplete(document.getElementById('recruteur'), recruteur);
     new AutoComplete(document.getElementById('etablissement'), etablissement);
 </script>
