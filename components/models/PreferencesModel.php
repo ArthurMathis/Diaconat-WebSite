@@ -279,7 +279,7 @@ class PreferencesModel extends Model {
         
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouvel utilisateur",
             "Création du compte de " . strtoupper($user->getNom()) . " " . forms_manip::nameFormat($user->getPrenom()) 
         );
@@ -291,7 +291,7 @@ class PreferencesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouveau poste",
             "Ajout du poste " . $infos['poste'] . " à la base de données"
         );
@@ -306,7 +306,7 @@ class PreferencesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouveau service",
             "Ajout du service " . $service . " dans l'établissement " . $etablissement['Intitule_Etablissements']
         );
@@ -321,7 +321,7 @@ class PreferencesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouvel établissement",
             "Ajout de l'établissement " . $infos['intitule']
         );
@@ -333,7 +333,7 @@ class PreferencesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouveau pôle",
             "Ajout du pôle " . $intitule
         );
@@ -342,7 +342,7 @@ class PreferencesModel extends Model {
     public function verify_password(&$password) {
         // On initialise la requête
         $request = "SELECT * FROM Utilisateurs WHERE Id_Utilisateurs = :cle";
-        $params = ['cle' => $_SESSION['user_cle']];
+        $params = ['cle' => $_SESSION['user_key']];
 
         $user = $this->get_request($request, $params, 1, 1)[0];
 
@@ -368,7 +368,7 @@ class PreferencesModel extends Model {
     public function updatePasswordLogs() {
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour mot de passe",
             strtoupper($_SESSION['user_nom']) . " " . forms_manip::nameFormat($_SESSION['user_prenom']) . " a mis-à-jour son mot de passe"
         );
@@ -379,7 +379,7 @@ class PreferencesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour utilisateur",
             "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Utilisateurs']) . " " . forms_manip::nameFormat($candidat['Prenom_Utilisateurs'])
         );
@@ -390,7 +390,7 @@ class PreferencesModel extends Model {
         $user = $this->searchUser($cle_utilisateur);
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour mot de passe",
             "Le mot de passe de " . strtoupper($user['Nom_Utilisateurs']) . " " . forms_manip::nameFormat($user['Prenom_Utilisateurs']) . " a été réinitialisé"
         );

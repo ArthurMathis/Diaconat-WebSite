@@ -74,7 +74,7 @@ class HomeModel extends Model {
         INNER JOIN Instants AS i ON rdv.Cle_Instants = i.Id_Instants
         
         WHERE rdv.Cle_Utilisateurs = :cle";
-        $params = ['cle' => $_SESSION['user_cle']];
+        $params = ['cle' => $_SESSION['user_key']];
 
         // On lance la requête
         return $this->get_request($request, $params);

@@ -350,7 +350,7 @@ class CandidatsModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Refus candidature", 
             "Refus de la candidature de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . 
             " au poste de " . forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_candidature)['Cle_Postes'])['Intitule_Postes'])
@@ -366,7 +366,7 @@ class CandidatsModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Refus proposition", 
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " refuse la proposition d'embauche au poste de " . 
             forms_manip::nameFormat($this->searchPoste($this->searchCandidature($cle_proposition)['Cle_Postes'])['Intitule_Postes'])
@@ -411,7 +411,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $candidat = $this->searchcandidat($cle);
         $this-> writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouvelle proposition",
             "Nouvelle proposition de contrat pour " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " au poste de " . forms_manip::nameFormat($this->searchPoste($propositions['cle poste'])['Intitule_Postes'])
         );
@@ -487,7 +487,7 @@ class CandidatsModel extends Model {
         $candidat = $this->searchcandidat($contrat->getCleCandidats());
         unset($contrat);
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Nouveau contrat", 
             "Nouveau contrat de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " au poste de " . $poste['Intitule_Postes']
         );
@@ -501,7 +501,7 @@ class CandidatsModel extends Model {
             $rendezvous['cle etablissement'] = $this->searchEtablissement($rendezvous['etablissement'])['Id_Etablissements'];
 
             // On récupère la clé de l'utilisateur
-            $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_cle'] : $this->searchUserFromUsername($rendezvous['recruteur'])['Id_Utilisateurs'];
+            $rendezvous['recruteur'] = $rendezvous['recruteur'] == $_SESSION['user_identifiant'] ? $_SESSION['user_key'] : $this->searchUserFromUsername($rendezvous['recruteur'])['Id_Utilisateurs'];
 
         // On récupère les éventuelles erreurs    
         } catch(Exception $e) {
@@ -516,7 +516,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $candidat = $this->searchcandidat($cle_candidat);
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Nouveau rendez-vous", 
             "Nouveau rendez-vous avec " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . ", le " . $rendezvous['date']
         );
@@ -1190,7 +1190,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $candidat = $this->searchcandidatFromContrat($cle);
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Nouveau contrat",
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a accepté la proposition d'offre pour le poste " . forms_manip::nameFormat($this->searchPoste($this->searchContrat($cle)['Cle_Postes'])['Intitule_Postes'])
         );
@@ -1213,7 +1213,7 @@ class CandidatsModel extends Model {
         // On enregistre les logs
         $candidat = $this->searchcandidatFromContrat($cle);
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Démission",
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a démissioné de son travail de " . forms_manip::nameFormat($this->searchPoste($this->searchContrat($cle)['Cle_Postes'])['Intitule_Postes'])
         );
@@ -1231,7 +1231,7 @@ class CandidatsModel extends Model {
         
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Annulation rendez-vous",
             strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats']) . " a annulé son rendez-vous du " . $instant['Jour_Instants']
         );
@@ -1310,7 +1310,7 @@ class CandidatsModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour notation",
             "Mise-à-jour de la notation de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
         );
@@ -1322,7 +1322,7 @@ class CandidatsModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour candidat",
             "Mise-à-jour du profil de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
         );
@@ -1334,7 +1334,7 @@ class CandidatsModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'],
+            $_SESSION['user_key'],
             "Mise-à-jour rendez-vous",
             "Mise-à-jour du rendez-vous de " . strtoupper($candidat['Nom_Candidats']) . " " . forms_manip::nameFormat($candidat['Prenom_Candidats'])
         );

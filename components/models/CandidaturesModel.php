@@ -53,12 +53,26 @@ class CandidaturesModel extends Model {
                 $candidat['ville'],
                 $candidat['code_postal']
             );
+            
+            if(!empty($aide)) {
+            $i = 0;
+            $size = count($aide);
+            $coopt = 0;
+            while($i < $size) {
+                if($aide[$i] == $this->searchAide('Prime de cooptation')['Id_Aides_au_recrutement']) 
+                    $coopt++; 
+                $i++;
+            }
+            if(1 < $coopt) throw new Exception("Il n'est possible de renseigner q'une prime de cooptation");
+        }
         
         } catch(InvalideCandidatExceptions $e) {
             forms_manip::error_alert([
                 'msg' => $e
             ]);
         }
+
+        
 
         // On ajoute la visite médical
         if(!empty($visite_medicale))
@@ -97,7 +111,7 @@ class CandidaturesModel extends Model {
             
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Nouveau candidat", 
             "Inscription du candidat " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom())
         );
@@ -128,7 +142,7 @@ class CandidaturesModel extends Model {
 
             // On récupère le type de contrat
             $contrat = $this->searchTypeContrat($candidatures['type de contrat'])['Id_Types_de_contrats'];
-            
+
             // On récupère la source
             $source = $this->searchSource($candidatures["source"])['Id_Sources'];
 
@@ -185,7 +199,7 @@ class CandidaturesModel extends Model {
 
         // On enregistre les logs
         $this->writeLogs(
-            $_SESSION['user_cle'], 
+            $_SESSION['user_key'], 
             "Nouvelle candidature", 
             "Nouvelle candidature de " . strtoupper($candidat->getNom()) . " " . forms_manip::nameFormat($candidat->getPrenom()) . " au poste de " . $candidatures["poste"]
         );

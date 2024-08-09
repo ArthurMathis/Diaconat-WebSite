@@ -21,7 +21,7 @@ class LoginModel extends Model {
         $user = $this->verifyUser($identifiant, $motdepasse);
         
         // On récupère les données de l'utilisateur
-        $_SESSION['user_cle']           = $user->getCle();
+        $_SESSION['user_key']           = $user->getCle();
         $_SESSION['user_identifiant']   = $user->getIdentifiant();
         $_SESSION['user_nom']           = $user->getNom();
         $_SESSION['user_prenom']        = $user->getPrenom();
@@ -31,7 +31,7 @@ class LoginModel extends Model {
         $_SESSION['first log in']       = $user->getFirstLog();
 
         // On enregistre les logs
-        $this->writeLogs($_SESSION['user_cle'], "Connexion");
+        $this->writeLogs($_SESSION['user_key'], "Connexion");
     }
     /**
      * Public method disconnecting hte current user to the application
@@ -41,8 +41,8 @@ class LoginModel extends Model {
     public function deconnectUser() {
         try {
             // On enregistre les logs
-            if(isset($_SESSION['user_cle']) && !empty($_SESSION['user_cle']))
-                $this->writeLogs($_SESSION['user_cle'], 'Deconnexion');
+            if(isset($_SESSION['user_key']) && !empty($_SESSION['user_key']))
+                $this->writeLogs($_SESSION['user_key'], 'Deconnexion');
             else 
                 throw new Exception("Inscription des logs impossible. Les données de l'utilisateur sont introuvables...");
 

@@ -615,8 +615,9 @@ INSERT INTO `postes` (`Intitule_Postes`, `Intitule_Feminin_Postes`) VALUES
 -- On insère les aides au recrutement --
 INSERT INTO Aides_au_recrutement (Intitule_Aides_au_recrutement) VALUES 
     ("Bourse d'étude"),
-    ("Rachat de bourse d'étude"),
-    ("Prime de cooptation")
+    ("Rachat de frais d'étude"),
+    ("Prime de cooptation"),
+    ("Rachat de contrat")
 ;
 -- On insère les types de contrats --
 INSERT INTO Types_de_contrats (Intitule_Types_de_contrats, Description_Types_de_contrats) VALUES 

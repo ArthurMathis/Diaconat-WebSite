@@ -18,7 +18,7 @@
         </div>
     </content>
     <footer>
-        <?php if($items['utilisateur']['Cle'] == $_SESSION['user_cle']): ?>
+        <?php if($items['utilisateur']['Cle'] == $_SESSION['user_key']): ?>
             <a class="action_button reverse_color" href="index.php?preferences=edit-user&cle_utilisateur=<?= $items['utilisateur']['Cle']; ?>">Modifier</a>
         <?php elseif($items['utilisateur']['Role'] != "Propriétaire"): ?> 
             <div id="popup" class="sous-menu">

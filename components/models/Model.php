@@ -49,12 +49,12 @@ abstract class Model {
     /**
      * Protected method recording application logs
      *
-     * @param integer $user_cle The user identification key in the database
+     * @param integer $user_key The user identification key in the database
      * @param string $action The action title
      * @param string optionnal $description The action description 
      * @return void
      */
-    protected function writeLogs(&$user_cle, $action, $description=null) {
+    protected function writeLogs(&$user_key, $action, $description=null) {
         try {
             // On récupère le type d'action
             $action_type = $this->serachAction_type($action);
@@ -63,7 +63,7 @@ abstract class Model {
             $instant_id = $this->inscriptInstants();
 
             // On ajoute l'action à la base de données
-            $this->inscriptAction($user_cle, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
+            $this->inscriptAction($user_key, $action_type['Id_Types'], $instant_id['Id_Instants'], $description);
 
         } catch (Exception $e) {
             forms_manip::error_alert([
@@ -721,7 +721,7 @@ abstract class Model {
         // Si aide est un intitule    
         } elseif(is_string($aide)) {
             // On intitialise la requête
-            $request = "SELECT * FROM Aides_au_recrutement WHERE Intitule_Aide_au_recrutement = :intitule";
+            $request = "SELECT * FROM Aides_au_recrutement WHERE Intitule_Aides_au_recrutement = :intitule";
             $params = ["intitule" => $aide];
 
             // On lance la requête
@@ -1156,7 +1156,7 @@ abstract class Model {
         SET MotDePasse_Utilisateurs = :password, MotDePassetemp_Utilisateurs = false
         WHERE Id_Utilisateurs = :cle";
         $params = [
-            'cle' => $_SESSION['user_cle'],
+            'cle' => $_SESSION['user_key'],
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
         

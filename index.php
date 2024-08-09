@@ -157,17 +157,6 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                         throw new Exception("Le champs ville doit être rempli par une chaine de caractères !");
                     } elseif(empty($candidat['code_postal'])) {
                         throw new Exception("Le champs code postal doit être rempli par une chaine de caractères !");
-                    } 
-
-                    if(!empty($aide)) {
-                        $i = 0;
-                        $size = count($aide);
-                        $coopt = 0;
-                        while($i < $size) {
-                            if($aide[$i] == 3) $coopt++; // 3 L'id de la prime de cooptation
-                            $i++;
-                        }
-                        if(1 < $coopt) throw new Exception("Il n'est possible de renseigner q'une prime de cooptation");
                     }
                 
                 // On récupère les éventuelles erreurs    
@@ -516,7 +505,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 else 
                     throw new Exception("Clé de candidature est introuvable !");
                 break;  
-               
+        
             // On refuse une proposition    
             case 'reject-propositions':
                 if($_SESSION['user_role'] == INVITE)
@@ -870,7 +859,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
         if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
             throw new Exception("Accès refusé. Votre rôle est insufissant pour accéder à cette partie du site... ");
         
-        if($_GET['preferences'] == $_SESSION['user_cle']) 
+        if($_GET['preferences'] == $_SESSION['user_key']) 
             header('Location: index.php?preferences=home');
         else 
             $preferences->display($_GET['preferences']);
@@ -880,7 +869,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
         switch($_GET['preferences']) {
             // On affiche la page d'accueil
             case 'home':
-                $preferences->display($_SESSION['user_cle']); 
+                $preferences->display($_SESSION['user_key']); 
                 break;    
 
             // On affiche la formulaire de mise-à-jour d'un utilisateur
@@ -982,7 +971,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
                 // On met-à-jour le mot de passe
                 $preferences->updatePassword($_POST['password'], $_POST['new-password']);
                 break;    
-   
+
             // On affiche la liste des utilisateurs
             case 'liste-utilisateurs':
                 if($_SESSION['user_role'] != OWNER && $_SESSION['user_role'] != ADMIN)
@@ -1329,7 +1318,7 @@ if(isset($_SESSION['first log in']) && $_SESSION['first log in'] == true) {
         ]);
     }
 
-} elseif(isset($_SESSION['user_cle'])) {
+} elseif(isset($_SESSION['user_key']) && !empty($_SESSION['user_key'])) {
     // On affiche la page d'accueil du site
     $home = new HomeController();
     $home->displayHome();
